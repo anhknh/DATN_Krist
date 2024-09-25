@@ -1,4 +1,4 @@
-package com.example.kristp.abc;
+package com.example.kristp.entity;
 
 
 import com.example.kristp.enums.Status;
@@ -30,12 +30,6 @@ public class KhachHang extends BaseEntity {
     private Status trangThai;
 
     @OneToOne
-    @JoinColumn(name = "id_tai_khoan", referencedColumnName = "id")
+    @JoinColumn(name = "id_tai_khoan")
     private TaiKhoan taiKhoan;
-
-    @OneToMany(mappedBy = "khachHang")
-    private List<DiaChi> diaChis;
-
-    @OneToMany(mappedBy = "khachHang")
-    private List<GioHang> gioHangs;
 }

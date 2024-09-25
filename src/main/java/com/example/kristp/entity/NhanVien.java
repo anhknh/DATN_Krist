@@ -1,4 +1,4 @@
-package com.example.kristp.abc;
+package com.example.kristp.entity;
 
 
 import com.example.kristp.enums.Status;
@@ -8,24 +8,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
+import java.util.Date;
+
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 
 @Entity
-@Table(name = "gio_hang")
-public class GioHang extends BaseEntity {
+@Table(name = "nhan_vien")
+public class NhanVien extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_khach_hang")
-    private KhachHang khachHang;
+    private String tenNhanVien;
+    private String soDienThoai;
+    private Date ngaySinh;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "trang_thai")
     private Status trangThai;
 
+    @OneToOne
+    @JoinColumn(name = "id_tai_khoan")
+    private TaiKhoan taiKhoan;
 }

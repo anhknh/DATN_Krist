@@ -19,23 +19,15 @@ public class ChiTietSanPham {
 
     @ManyToOne
     @JoinColumn(name = "idMau")
-    private MauSac idMau ;
+    private MauSac mau;
 
     @ManyToOne
     @JoinColumn(name = "idSize")
-    private Size idSize ;
+    private Size size;
 
     private Float donGia ;
 
     private Integer soLuong ;
 
     private String anhSanPham ;
-
-    private Date ngayTao ;
-
-    private Date ngaySua ;
-
-    @ManyToMany
-    @JoinColumn(name = "idSanPham")
-    private SanPham idSanPham ;
 }

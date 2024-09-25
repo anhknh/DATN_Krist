@@ -1,4 +1,4 @@
-package com.example.kristp.abc;
+package com.example.kristp.entity;
 
 
 import com.example.kristp.enums.Status;
@@ -20,18 +20,15 @@ public class DiaChi extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "sdt", length = 15)
     private String sdt;
 
-    @Column(name = "dia_chi", length = 255)
     private String diaChi;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "trang_thai")
     private Status trangThai;
 
-
     @ManyToOne
-    @JoinColumn(name = "id_khach_hang", referencedColumnName = "id")
+    @JoinColumn(name = "id_khach_hang")
     private KhachHang khachHang;
 }

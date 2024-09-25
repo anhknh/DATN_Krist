@@ -1,42 +1,34 @@
 package com.example.kristp.entity;
 
+
 import com.example.kristp.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Date;
-
-
-
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+
 @Entity
-@Table(name = "san_pham")
-public class SanPham extends BaseEntity {
+@Table(name = "tai_khoan")
+public class TaiKhoan extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id ;
+    private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name="id_danh_muc")
-    private DanhMuc danhMuc;
+    private String tenDangNhap;
 
-    @ManyToOne
-    @JoinColumn(name="id_chat_lieu")
-    private ChatLieu chatLieu;
+    private String matKhau;
 
-
-    private String tenSanPham ;
-
-    private String moTa;
+    private String email;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "trang_thai")
     private Status trangThai;
 
+    private String chucVu;
 }
-
-

@@ -1,4 +1,4 @@
-package com.example.kristp.abc;
+package com.example.kristp.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
