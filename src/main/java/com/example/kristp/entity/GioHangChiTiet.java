@@ -20,7 +20,14 @@ public class GioHangChiTiet extends BaseEntity {
     private Integer id;
     @ManyToOne
     @JoinColumn(name = "id_chi_tiet_san_pham")
-    private ChiTietSanPham chiTietSanPham;
+    private ChiTietSanPham idChiTietSanPham;
+    @Column(name = "ngay_tao")
+    private Date ngayTao;
+    @Column(name = "ngay_sua")
+    private Date ngaySua;
+    @ManyToOne
+    @JoinColumn(name = "id_gio_hang")
+    private GioHang idGioHang;
     private Integer soLuong;
     @ManyToOne
     @JoinColumn(name = "id_gio_hang")
