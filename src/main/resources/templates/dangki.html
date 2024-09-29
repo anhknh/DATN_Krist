@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng kí tài khoản </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+</head>
+<body>
+<div id="wrapper">
+    <div class="container">
+        <div class=" row justify-content-around">
+            <form method="post" action="/dangki/add" class="col-md-8 bg-light p-3 my-3">
+                <h1 class="text-center text-uppercase h3 py-3">ĐĂNG KÍ TÀI KHOẢN KRIST</h1>
+                <div class="form-group">
+                    <label for="tenDangNhap">Tên đăng nhập</label>
+                    <input type="text" name="tenDangNhap" id="tenDangNhap" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="matKhau">Mật khẩu</label>
+                    <input type="password" name="matKhau" id="matKhau" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <div class="text-start mb-4" style="color: #5C5F6A; font-size: 12px; margin-top: 15px;">
+                        "Bằng cách tạo tài khoản, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Bảo mật của chúng tôi."
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <button type="submit" style="border-radius: 4px; width: 100%; background-color: #000; color: #fff; padding: 8px;" class="btn btn-primary text_f14">Tạo tài khoản</button>
+                </div>
+                <div class="card-footer text-center">
+                    <small>Đã có tài khoản? <a href="/dangnhap">Đăng Nhập</a></small>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

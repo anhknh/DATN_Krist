@@ -3,16 +3,13 @@ package com.example.kristp.entity;
 
 import com.example.kristp.enums.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Data
 @Entity
 @Table(name = "tai_khoan")
 public class TaiKhoan extends BaseEntity {
@@ -31,4 +28,6 @@ public class TaiKhoan extends BaseEntity {
     private Status trangThai;
 
     private String chucVu;
+    // Getter và Setter cho tenDangNhap
+
 }
