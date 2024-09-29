@@ -38,11 +38,13 @@ public class SanPhamServiceImpl implements SanPhamServiec {
     }
 
     public ArrayList<SanPham> findSanphamTop4ngaytaoDesc() {
-        return sanPhamRepository.findFirst5ByOrderByNgayTaoDesc();
+//        return sanPhamRepository.findFirst5ByOrderByNgayTaoDesc();
+        return null;
     }
 
     public SanPham findSanphamById(Integer id) {
-        return sanPhamRepository.findSanPhamById(id);
+//        return sanPhamRepository.findSanPhamById(id);
+        return null;
     }
 
     public Integer addSanpham(Integer danhMuc, Integer chatLieu, String tenSanPham, String moTa, Status trangThai) {
@@ -100,7 +102,8 @@ public class SanPhamServiceImpl implements SanPhamServiec {
     public boolean isTenExists(String tenSanPham) {
         // Gọi phương thức từ repository hoặc DAO để kiểm tra trùng mã
         // Trả về true nếu mã đã tồn tại, ngược lại trả về false
-        return sanPhamRepository.existsByTen(tenSanPham);
+//        return sanPhamRepository.existsByTen(tenSanPham);
+        return true;
     }
 
 
