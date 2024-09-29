@@ -15,21 +15,17 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "hoa_don")
-public class HoaDon {
+public class HoaDon extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "khach_hang_chi_tiet")
-    private KhachHangChiTiet idKhachHangChiTiet;
-    @Column(name = "ngay_tao")
-    private Date ngayTao;
-    @Column(name = "ngay_sua")
-    private Date ngaySua;
+    @JoinColumn(name = "id_dia_chi")
+    private DiaChi diaChi;
     @Column(name = "ngay_dat_hang")
     private Date ngayDatHang;
     @Column(name = "tong_tien")
     private BigDecimal tongTien;
     @Column(name = "trang_thai")
-    private Boolean trangThai;
+    private String trangThai;
 }

@@ -1,6 +1,7 @@
 package com.example.kristp.entity;
 
 
+import com.example.kristp.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,16 +13,16 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "Size")
-public class Size {
+public class Size extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id ;
 
     private String tenSize ;
+    private String moTa;
 
-    private Date ngayTao ;
-    private Date ngaySua ;
-
-    private Boolean trangThai ;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "trang_thai")
+    private Status trangThai;
 }

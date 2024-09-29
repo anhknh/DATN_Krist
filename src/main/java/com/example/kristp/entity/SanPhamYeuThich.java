@@ -11,19 +11,16 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "sanPhamYeuThich")
-public class SanPhamYeuThich {
+public class SanPhamYeuThich extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id ;
 
     @ManyToOne
     @JoinColumn(name = "idKhachHang")
-    private KhachHang idKhachHang ;
+    private KhachHang khachHang ;
 
     @ManyToOne
     @JoinColumn(name = "idSanPham")
-    private SanPham idSanPham ;
-
-    private Date ngaySua ;
-    private Date ngayTao ;
+    private SanPham sanPham ;
 }

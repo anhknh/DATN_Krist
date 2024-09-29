@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{../static/css/styleRegister.css}">
+  <title>Register</title>
+</head>
+<body>
+<div class="container">
+  <div class="left-section">
+    <div class="logo-header">
+      <img th:src="@{../static/img/photo_2024-09-26_09-17-15.png}" alt="">
+    </div>
+    <img class="main-image" th:src="@{../static/img/img2.jpg}" alt="Ảnh image 2">
+  </div>
+  <div class="right-section">
+    <div class="register-box">
+      <h2>Create New Account</h2>
+      <p>Please enter details</p>
+      <form action="/register" method="POST">
+        <div class="input-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" >
+        </div>
+        <div class="input-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" name="lastName" >
+        </div>
+        <div class="input-group">
+          <label for="emailAddress">Email Address</label>
+          <input type="text" id="emailAddress" name="emailAddress" >
+        </div>
+        <div class="input-group">
+          <label for="pass">Password</label>
+          <input type="password" id="pass" name="pass" >
+        </div>
+        <div class="remember-terms">
+          <label><input type="checkbox" name="remember">I agree to the <b>Terms & Conditions</b></label>
+        </div>
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "gio_hang_chi_tiet")
-public class GioHangChiTiet {
+public class GioHangChiTiet extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -28,5 +28,9 @@ public class GioHangChiTiet {
     @ManyToOne
     @JoinColumn(name = "id_gio_hang")
     private GioHang idGioHang;
+    private Integer soLuong;
+    @ManyToOne
+    @JoinColumn(name = "id_gio_hang")
+    private GioHang gioHang;
 
 }
