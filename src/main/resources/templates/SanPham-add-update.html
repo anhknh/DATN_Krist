@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+  <!--validate ở đây-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+<!--  <script>-->
+<!--    document.addEventListener('DOMContentLoaded', function () {-->
+<!--      document.getElementById('submitBtn').addEventListener('click', function () {-->
+<!--        // bỏ nút button ra ngoài-->
+<!--        if (!validateForm()) {-->
+<!--          return;-->
+<!--        }-->
+
+<!--        // validate đc thì sẽ submit file-->
+<!--        document.getElementById('myForm').submit();-->
+<!--      });-->
+
+<!--      function validateForm() {-->
+<!--        // Thêm TT m Vào đây-->
+<!--        var ten = document.getElementById('ten').value;-->
+<!--        var moTa = document.getElementById('moTa').value;-->
+<!--        var trangThai = document.getElementById('trangThai').value;-->
+<!--        var danhMucSanPham = document.getElementById('danhMucSanPham').value;-->
+<!--        var thuongHieu = document.getElementById('thuongHieu').value;-->
+<!--        var hinhNen = document.getElementById('hinhNen').value;-->
+
+
+<!--        // trả về fale thì thông báo lên-->
+<!--        if (ten.trim() === '') {-->
+<!--          Swal.fire({-->
+<!--            icon: 'error',-->
+<!--            title: 'Validation Error',-->
+<!--            text: 'Tên Sản Phẩm không được để trống',-->
+<!--          });-->
+<!--          return false;-->
+<!--        }-->
+
+<!--        if(ten.length > 100) {-->
+<!--          Swal.fire({-->
+<!--            icon: 'error',-->
+<!--            title: 'Validation Error',-->
+<!--            text: 'Tên sản phẩm không được vượt quá 100 ký tự',-->
+<!--          });-->
+<!--          return false;-->
+<!--        }-->
+
+
+<!--        if (moTa.trim() === '') {-->
+<!--          Swal.fire({-->
+<!--            icon: 'error',-->
+<!--            title: 'Validation Error',-->
+<!--            text: 'Mô tả không được để trống',-->
+<!--          });-->
+<!--          return false;-->
+<!--        }-->
+<!--        if(moTa.length > 200) {-->
+<!--          Swal.fire({-->
+<!--            icon: 'error',-->
+<!--            title: 'Validation Error',-->
+<!--            text: 'Mô tả không được vượt quá 200 ký tự',-->
+<!--          });-->
+<!--          return false;-->
+<!--        }-->
+
+<!--        if (trangThai.trim() === '') {-->
+<!--          Swal.fire({-->
+<!--            icon: 'error',-->
+<!--            title: 'Validation Error',-->
+<!--            text: 'Vui lòng chọn trạng thái',-->
+<!--          });-->
+<!--          return false;-->
+<!--        }-->
+
+<!--        if (danhMucSanPham.trim() === '') {-->
+<!--          Swal.fire({-->
+<!--            icon: 'error',-->
+<!--            title: 'Validation Error',-->
+<!--            text: 'Vui lòng chọn danh mục',-->
+<!--          });-->
+<!--          return false;-->
+<!--        }-->
+
+<!--        if (thuongHieu.trim() === '') {-->
+<!--          Swal.fire({-->
+<!--            icon: 'error',-->
+<!--            title: 'Validation Error',-->
+<!--            text: 'Vui lòng chọn thương hiệu',-->
+<!--          });-->
+<!--          return false;-->
+<!--        }-->
+
+<!--        if (hinhNen.trim() === '') {-->
+<!--          Swal.fire({-->
+<!--            icon: 'error',-->
+<!--            title: 'Validation Error',-->
+<!--            text: 'Vui lòng chọn hình nền',-->
+<!--          });-->
+<!--          return false;-->
+<!--        }-->
+
+
+<!--        return true;-->
+<!--      }-->
+<!--    });-->
+<!--  </script>-->
+
+
+</head>
+<!--validate ở đây-->
+
+<body>
+<div layout:fragment="content">
+  <div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Thêm Sản Phẩm</h4>
+        <h6>& Chỉnh Sửa Sản Phẩm</h6>
+      </div>
+    </div>
+
+
+    <form id="myForm" th:object="${sanPham}"
+          th:action="${sanPham.id != null ? '/updateSanPham/' + sanPham.id : '/addProduct'}"
+          method="post" class="container mt-5" enctype="multipart/form-data">
+
+      <div class="form-group">
+        <label for="danhMuc">Chọn Danh Mục: </label>
+        <div class="input-group mb-3">
+          <select id="danhMuc" th:field="*{danhMuc}"
+                  class="form-control">
+            <option value=""> Chọn Danh Mục</option>
+            <option th:each="danhMuc: ${danhMucSanPhamList}" th:value="${danhMuc.id}"
+                    th:text="${danhMuc.tenDanhMuc}" th:selected="${danhMuc.id == (sanPham.danhMuc != null ? sanPham.danhMuc.id : null)}"></option>
+          </select>
+<!--          <span th:if="${#fields.hasErrors('danhMucSanPham')}" th:errors="*{danhMucSanPham}" class="invalid-feedback"-->
+<!--                th:id="moTaError"></span>-->
+          <div class="form-group">
+            <label for="chatLieu">Chọn Chất Liệu: </label>
+            <div class="input-group mb-3">
+              <select id="chatLieu" th:field="*{chatLieu}"
+                      class="form-control">
+                <option value=""> Chọn Chất Liệu</option>
+                <option th:each="chatLieu: ${chatLieuList}" th:value="${chatLieu.id}"
+                        th:text="${chatLieu.tenChatLieu}" th:selected="${chatLieu.id == (sanPham.chatLieu != null ? sanPham.chatLieu.id : null)}"></option>
+              </select>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="tenSanPham">Tên sản phẩm :</label>
+        <input type="text" id="tenSanPham" th:field="*{tenSanPham}" class="form-control" th:errorclass="is-invalid" required>
+        <span th:if="${#fields.hasErrors('tenSanPham')}" th:errors="*{tenSanPham}" class="invalid-feedback" ></span>
+        <div th:if="${errorMessage}" class="error-message" style="color: red">
+          <p th:text="${errorMessage}"></p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="moTa">Mô tả :</label>
+        <input type="text" id="moTa" th:field="*{moTa}" class="form-control" th:errorclass="is-invalid"
+               required>
+        <span th:if="${#fields.hasErrors('moTa')}" th:errors="*{moTa}" class="invalid-feedback"
+              th:id="moTaError"></span>
+      </div>
+
+
+      <div class="form-group">
+        <label for="trangThai">Trạng thái :</label>
+        <select id="trangThai" th:field="*{trangThai}" class="form-control" th:errorclass="is-invalid" required>
+          <option value="1">Còn hàng</option>
+          <option value="0">Hết hàng</option>
+        </select>
+        <span th:if="${#fields.hasErrors('trangThai')}" th:errors="*{trangThai}"
+              class="invalid-feedback" th:id="trangThaiError"></span>
+      </div>
+      <button type="button" id="submitBtn" class="btn btn-submit me-2">Lưu SP</button>
+
+    </form>
+  </div>
+</div>
+</body>
+</html>
