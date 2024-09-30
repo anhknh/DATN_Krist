@@ -58,12 +58,14 @@ body {
 }
 
 .login-box {
-    width: 100%;
+    width: 500px;
+    margin: 130px auto 0;
 }
 
 .login-box h2 {
     font-size: 28px;
     margin-bottom: 10px;
+    font-weight: 600;
 }
 
 .login-box p {
@@ -77,16 +79,17 @@ body {
 
 .input-group label {
     display: block;
-    font-size: 14px;
-    color: #555;
+    font-size: 12px;
+    color: #000;
     margin-bottom: 5px;
+
 }
 
 .input-group input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 12px;
 }
 
 .remember-forgot {
@@ -96,8 +99,19 @@ body {
     margin-bottom: 20px;
 }
 
+#remember-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#remember-checkbox:checked {
+    background-color: black;
+    border-color: black;
+}
+
 .remember-forgot a {
-    color: #3498db;
+    color: #000;
     text-decoration: none;
     font-size: 14px;
 }
@@ -108,11 +122,11 @@ body {
 
 .login-btn {
     width: 100%;
-    padding: 10px;
+    padding: 24px 0;
     background-color: #000;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 16px;
     cursor: pointer;
 }
 

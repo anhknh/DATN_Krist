@@ -3,35 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" th:href="@{../static/css/style.css}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
+  <link rel="stylesheet" href="/css/style.css" >
   <title>Document</title>
 </head>
 <body>
-<div class="container">
-  <div class="left-section">
-    <div class="logo-header">
-      <img th:src="@{../static/img/photo_2024-09-26_09-17-15.png}" alt="">
+<div class="container-fluid d-flex g-0" style="height: 100%">
+  <div style="background-image: url('/img/img1.jpg'); background-size:cover; flex: 1">
+    <div class="d-flex align-items-center">
+      <img style="height: 36px; margin-right: 8px;" src="/img/logo.png" alt="logo">
+      <p class="title d-inline p-0 m-0">Krist</p>
     </div>
-    <img class="main-img" th:src="@{../static/img/img1.jpg}" alt="Fashion Image">
   </div>
-  <div class="right-section">
+  <div style="flex: 1">
     <div class="login-box">
-      <h2>Welcome 👋</h2>
-      <p>Please login here</p>
+      <h2>Chào Mừng 👋</h2>
+      <p>Vui lòng đăng nhập</p>
       <form action="/login" method="POST">
         <div class="input-group">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" value="robertfox@example.com">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="krist@example.com" value="">
         </div>
         <div class="input-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" value="•••••••••">
+          <label for="password">Mật khẩu</label>
+          <input type="password" id="password" name="password" placeholder="password" value="">
         </div>
         <div class="remember-forgot">
-          <label><input type="checkbox" name="remember"> Remember Me</label>
-          <a href="#">Forgot Password?</a>
+          <label>
+            <input type="checkbox" name="remember" id="remember-checkbox"> Lưu thông tin
+          </label>
+          <a href="#">Quên mật khẩu?</a>
         </div>
-        <button type="submit" class="login-btn">Login</button>
+        <button type="submit" class="login-btn">Đăng nhập</button>
       </form>
     </div>
   </div>
