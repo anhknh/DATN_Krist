@@ -18,12 +18,20 @@ public class ChiTietSanPham {
     private Integer id ;
 
     @ManyToOne
-    @JoinColumn(name = "idMau")
+    @JoinColumn(name = "id_mau")
     private MauSac mau;
 
     @ManyToOne
-    @JoinColumn(name = "idSize")
+    @JoinColumn(name = "id_size")
     private Size size;
+
+    @ManyToOne
+    @JoinColumn(name = "id_tay_ao")
+    private TayAo tayAo;
+
+    @ManyToOne
+    @JoinColumn(name = "id_co_ao")
+    private CoAo coAo;
 
     private Float donGia ;
 

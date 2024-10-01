@@ -17,10 +17,10 @@ public class SanPhamYeuThich extends BaseEntity {
     private Integer id ;
 
     @ManyToOne
-    @JoinColumn(name = "idKhachHang")
+    @JoinColumn(name = "id_khach_hang")
     private KhachHang khachHang ;
 
     @ManyToOne
-    @JoinColumn(name = "idSanPham")
-    private SanPham sanPham ;
+    @JoinColumn(name = "id_hoa_don_chi_tiet")
+    private HoaDonChiTiet hoaDonChiTiet ;
 }
