@@ -1,0 +1,33 @@
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+}
+
+.toast {
+    transition: 0.6s ease-in-out, transform 0.6s ease-in-out;
+}
+
+.toast.show {
+    transform: translateY(0);
+}
+
+.toast.hide {
+    transform: translateY(-100%);
+}
+
+.toast-header {
+    display: flex;
+    align-items: center;
+}
+
+.toast-header img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.toast-body {
+    font-size: 1rem;
+}

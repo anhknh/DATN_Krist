@@ -2,6 +2,7 @@ package com.example.kristp.service.impl;
 
 import com.example.kristp.entity.KhachHang;
 import com.example.kristp.entity.TaiKhoan;
+import com.example.kristp.enums.Status;
 import com.example.kristp.repository.KhachHangRepository;
 import com.example.kristp.repository.TaiKhoanRepository;
 import com.example.kristp.service.KhachHangService;
@@ -29,14 +30,14 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public void saveKhachHang(KhachHang kh) {
-        Date ngayTao = new Date();
-        kh.setNgayTao(ngayTao);
-        if (kh.getId() == 0) {  // Tạo mới
-            kh.setNgayTao(ngayTao);
-        }
-        khachHangRepository.save(kh);
+    public KhachHang saveKhachHang(String tenKhachHang, TaiKhoan taiKhoan) {
+        KhachHang khachHang = new KhachHang();
+        khachHang.setTaiKhoan(taiKhoan);
+        khachHang.setTenKhachHang(tenKhachHang);
+        khachHang.setTrangThai(Status.ACTIVE);
+        return khachHangRepository.save(khachHang);
     }
+
 
     public void updateKhachHang(KhachHang kh) {
         Date ngaySua = new Date();

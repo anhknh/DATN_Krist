@@ -9,6 +9,5 @@ public interface TaiKhoanService {
     TaiKhoan getTenDangNhap(String tenDangNhap);
     TaiKhoan getUserId(Integer id);
     TaiKhoan dangNhap(String tenDangNhap, String matKhau);
-
-
+    TaiKhoan taoTaiKhoan(TaiKhoan taiKhoan, String tenKhachHang);
 }

@@ -1,7 +1,9 @@
 package com.example.kristp.service.impl;
 
 import com.example.kristp.entity.TaiKhoan;
+import com.example.kristp.enums.Status;
 import com.example.kristp.repository.TaiKhoanRepository;
+import com.example.kristp.service.KhachHangService;
 import com.example.kristp.service.TaiKhoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     @Autowired
     TaiKhoanRepository taiKhoanRepository;
+    @Autowired
+    KhachHangService khachHangService;
 
 
     @Override
@@ -32,14 +36,15 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     @Override
     public TaiKhoan dangNhap(String tenDangNhap, String matKhau) {
-        TaiKhoan taiKhoan = taiKhoanRepository.findByTenDangNhapAndMatKhau(tenDangNhap, matKhau);
-
-        if (taiKhoan != null && matKhau.matches(taiKhoan.getMatKhau())) {
-            return taiKhoan;
-        } else {
-            throw new RuntimeException("Tên đăng nhập hoặc mật khẩu không chính xác");
-        }
+        return taiKhoanRepository.findByTenDangNhapAndMatKhau(tenDangNhap, matKhau);
     }
 
-
+    @Override
+    public TaiKhoan taoTaiKhoan(TaiKhoan taiKhoan, String tenKhachHang) {
+        taiKhoan.setChucVu("KhachHang");
+        taiKhoan.setTrangThai(Status.ACTIVE);
+        TaiKhoan taiKhoanNew = taiKhoanRepository.save(taiKhoan);
+        khachHangService.saveKhachHang(tenKhachHang, taiKhoanNew);
+        return taiKhoanNew;
+    }
 }

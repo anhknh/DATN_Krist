@@ -1,53 +1,152 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" lang="">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css">
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
-  <link rel="stylesheet" href="/css/styleRegister.css" >
-  <title>Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
+    <link rel="stylesheet" href="/css/LoginStyle.css">
+    <title>Document</title>
 </head>
 <body>
-<div class="container">
-  <div class="left-section">
-    <div class="logo-header">
-      <img src="/img/photo_2024-09-26_09-17-15.png" alt="">
+<div class="container-fluid d-flex g-0" style="height: 100%">
+    <div style="background-image: url('/img/img2.jpg'); background-size:cover; flex: 1;">
+        <div class="d-flex align-items-center" style=" margin: 60px 0 0 80px">
+            <img style="height: 36px; margin-right: 8px;" src="/img/logo.png" alt="logo">
+            <p class="title d-inline p-0 m-0">Krist</p>
+        </div>
     </div>
-    <img class="main-image" src="/img/img2.jpg" alt="Ảnh image 2">
-  </div>
-  <div class="right-section">
-    <div class="register-box">
-      <h2>Create New Account</h2>
-      <p>Please enter details</p>
-      <form action="/register" method="POST">
-        <div class="input-group">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" name="firstName" >
+    <div style="flex: 1">
+        <div class="login-box" style="width: 500px; margin: 60px auto 0">
+            <div class="d-flex justify-content-between align-items-center">
+                <div><h2 class="header">Tạo tài khoản mới</h2></div>
+                <div><a href="/dang-nhap" style="color: #000; text-decoration: none">
+                    <i class="fa-thin fa-angle-left"></i>
+                    Đăng nhập
+                </a></div>
+            </div>
+            <p class="title-login mb-2">Vui lòng nhập thông tin tài khoản</p>
+            <form class="needs-validation" novalidate th:action="@{/dang-ki-tai-khoan}" method="post">
+                <div class="mb-2">
+                    <label for="nameForm" class="form-label">Họ tên</label>
+                    <input style="border: 1px solid #000" type="text" class="form-control custom-input"
+                           id="nameForm" placeholder="Nguyen Van A" th:name="tenKhachHang" minlength="5" maxlength="255" required>
+                    <div class="invalid-feedback">Họ tên không hợp lệ.</div>
+                </div>
+                <div class="mb-2">
+                    <label for="usernameForm" class="form-label">Tên đăng nhập</label>
+                    <input style="border: 1px solid #000" type="text" class="form-control custom-input"
+                           id="usernameForm" placeholder="abc123" th:name="tenDangNhap" required>
+                    <div class="invalid-feedback">Tên đăng nhập không hợp lệ.</div>
+                </div>
+                <div class="mb-2">
+                    <label for="emailForm" class="form-label">Email</label>
+                    <input style="border: 1px solid #000" type="email" class="form-control custom-input"
+                           id="emailForm" placeholder="name@example.com" th:name="email" required>
+                    <div class="invalid-feedback">Email không hợp lệ.</div>
+                </div>
+                <div class="mb-2">
+                    <label for="passForm" class="form-label">Mật khẩu</label>
+                    <input style="border: 1px solid #000" type="password" class="form-control custom-input"
+                           id="passForm" placeholder="mật khẩu" th:name="matKhau" required>
+                    <div class="invalid-feedback">Mật khẩu không hợp lệ.</div>
+                </div>
+                <div class="remember-forgot mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="chapNhap" id="flexCheckChecked" th:name="chinhSach" required>
+                        <label class="form-check-label" for="flexCheckChecked">Đồng ý với chính sách của chúng tôi</label>
+                        <div class="invalid-feedback">Bạn phải đồng ý với chính sách.</div>
+                    </div>
+                </div>
+                <button type="submit" class="login-btn" style="border-radius: 10px">Đăng ký</button>
+            </form>
         </div>
-        <div class="input-group">
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" name="lastName" >
-        </div>
-        <div class="input-group">
-          <label for="emailAddress">Email Address</label>
-          <input type="text" id="emailAddress" name="emailAddress" >
-        </div>
-        <div class="input-group">
-          <label for="pass">Password</label>
-          <input type="password" id="pass" name="pass" >
-        </div>
-        <div class="remember-terms">
-          <label><input type="checkbox" name="remember">I agree to the <b>Terms & Conditions</b></label>
-        </div>
-        <button type="submit" class="login-btn">Login</button>
-      </form>
     </div>
-  </div>
 </div>
+
+<!-- Alert thông báo thất bại -->
+<div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage" style="display: none;">
+    <strong>Thất bại!</strong> <span id="alertBody">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<!-- Alert thông báo từ backend -->
+<div th:if="${message}" th:class="${messageType} + ' alert alert-dismissible fade show position-fixed top-0 end-0 m-3'" id="successAlert" role="alert">
+    <strong th:text="${titleMsg}">Thất bại!</strong> <span th:text="${message}">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    (function () {
+        'use strict';
+
+        // Fetch all forms with class 'needs-validation'
+        var forms = document.querySelectorAll('.needs-validation');
+
+        // Loop over forms and prevent submission if validation fails
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    showAlert( "error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
+                }
+                form.classList.add('was-validated');
+            }, false);
+
+            // Add 'change' event listener for all inputs to validate them dynamically
+            var inputs = form.querySelectorAll('input');
+            Array.prototype.slice.call(inputs).forEach(function (input) {
+                input.addEventListener('change', function () {
+                    if (input.checkValidity()) {
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+                    } else {
+                        input.classList.remove('is-valid');
+                        input.classList.add('is-invalid');
+                        showAlert("error","Dữ liệu không hợp lệ trong " + input.placeholder);
+                    }
+                });
+            });
+        });
+
+        //thông báo
+        function showAlert(type, message) {
+            let alertElement;
+
+            if (type === 'success') {
+                alertElement = document.getElementById('successAlert');
+                alertElement.querySelector('span').textContent = message; // Thiết lập nội dung thông báo thành công
+                alertElement.style.display = 'block'; // Hiển thị thông báo thành công
+            } else if (type === 'error') {
+                alertElement = document.getElementById('alertMessage');
+                alertElement.querySelector('#alertBody').textContent = message; // Thiết lập nội dung thông báo lỗi
+                alertElement.style.display = 'block'; // Hiển thị thông báo lỗi
+            }
+
+            // Tự động ẩn thông báo sau 5 giây
+            setTimeout(() => {
+                if (alertElement) {
+                    var bootstrapAlert = new bootstrap.Alert(alertElement);
+                    bootstrapAlert.close();
+                }
+            }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Kiểm tra và ẩn thông báo thành công nếu có
+            var successAlert = document.getElementById('successAlert');
+            if (successAlert && successAlert.style.display !== 'none') {
+                setTimeout(function () {
+                    var bootstrapAlert = new bootstrap.Alert(successAlert);
+                    bootstrapAlert.close();
+                }, 5000);
+            }
+        });
+
+    })();
+</script>
+
 </body>
 </html>

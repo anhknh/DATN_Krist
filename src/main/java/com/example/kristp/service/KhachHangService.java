@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface KhachHangService {
     KhachHang getKHByUserId(TaiKhoan id);
-    void saveKhachHang(KhachHang kh);
+    KhachHang saveKhachHang(String tenKhachHang, TaiKhoan taiKhoan);
     List<KhachHang> getAllKhachHang();
 
     void deleteKhachHang(Integer id);

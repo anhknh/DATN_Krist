@@ -38,7 +38,7 @@ public class KhachHangController {
     // Lưu khách hàng
     @PostMapping("/luu")
     public String saveKhachHang(@ModelAttribute("khachHang") KhachHang khachHang) {
-        khachHangServiceImpl.saveKhachHang(khachHang);
+        //khachHangServiceImpl.saveKhachHang(khachHang);
         return "redirect:/khachhang";
     }
 
