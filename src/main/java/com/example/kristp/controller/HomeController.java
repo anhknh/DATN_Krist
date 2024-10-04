@@ -10,4 +10,9 @@ public class HomeController {
     public String hello() {
         return "view/home/HomePage";
     }
+
+    @GetMapping("/san-pham")
+    public String hellooooo() {
+        return "DanhSachSP";
+    }
 }
