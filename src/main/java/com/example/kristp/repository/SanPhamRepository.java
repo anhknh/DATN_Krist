@@ -2,12 +2,14 @@ package com.example.kristp.repository;
 
 import com.example.kristp.entity.SanPham;
 import com.example.kristp.enums.Status;
+import org.hibernate.query.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
@@ -26,4 +28,29 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
 //                                  @Param("trang_thai" ) Status trangThai);
 //
 //    boolean existsByTen(String tenSanPham);
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Query("SELECT sp FROM SanPham sp " +
+            "JOIN ChiTietSanPham cts ON sp.id = cts.sanPham.id " +
+            "WHERE (:tenSanPham IS NULL OR sp.tenSanPham LIKE %:tenSanPham%) " +
+            "AND (:danhMucId IS NULL OR sp.danhMuc.id IN :danhMucId) " +
+            "AND (:chatLieuId IS NULL OR sp.chatLieu.id IN :chatLieuId) " +
+            "AND (:tayAoId IS NULL OR cts.tayAo.id IN :tayAoId) " +
+            "AND (:coAoId IS NULL OR cts.coAo.id IN :coAoId) " +
+            "AND (:mauSacId IS NULL OR cts.mau.id IN :mauSacId) " +
+            "AND (:sizeId IS NULL OR cts.size.id IN :sizeId)")
+    List<SanPham> timKiemSanPham(@Param("tenSanPham") List<String> tenSanPham,
+                                 @Param("danhMucId") List<Integer> danhMucId,
+                                 @Param("chatLieuId") List<Integer> chatLieuId,
+                                 @Param("tayAoId") List<Integer> tayAoId,
+                                 @Param("coAoId") List<Integer> coAoId,
+                                 @Param("mauSacId") List<Integer> mauSacId,
+                                 @Param("sizeId") List<Integer> sizeId);
+
+
+    boolean existsByTenSanPhamAndTrangThai(String tenSanPham, int trangThai);
+
 }
