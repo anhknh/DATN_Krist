@@ -61,7 +61,6 @@
   <strong>Thất bại!</strong> <span id="alertBody">Thông báo này sẽ hiển thị kết quả.</span>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-
 <!-- Alert thông báo từ backend -->
 <div th:if="${message}" th:class="${messageType} + ' alert alert-dismissible fade show position-fixed top-0 end-0 m-3'" id="successAlert" role="alert">
   <strong th:text="${titleMsg}">Tiêu đề</strong> <span th:text="${message}">Thông báo này sẽ hiển thị kết quả.</span>
