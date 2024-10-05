@@ -51,6 +51,6 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
                                  @Param("sizeId") List<Integer> sizeId);
 
 
-    boolean existsByTenSanPhamAndTrangThai(String tenSanPham, int trangThai);
+    boolean existsByTenSanPhamAndTrangThai(String tenSanPham, Status trangThai);
 
 }
