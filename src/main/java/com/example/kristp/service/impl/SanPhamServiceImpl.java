@@ -9,7 +9,7 @@ import com.example.kristp.repository.DanhMucRepository;
 import com.example.kristp.repository.SanPhamRepository;
 import com.example.kristp.service.ChatLieuService;
 import com.example.kristp.service.DanhMucService;
-import com.example.kristp.service.SanPhamServiec;
+import com.example.kristp.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SanPhamServiceImpl implements SanPhamServiec {
+public class SanPhamServiceImpl implements SanPhamService {
     @Autowired
     SanPhamRepository sanPhamRepository;
     @Autowired
@@ -105,6 +105,11 @@ public class SanPhamServiceImpl implements SanPhamServiec {
 //        return sanPhamRepository.existsByTen(tenSanPham);
         return true;
     }
+
+
+
+
+
 
 
 }

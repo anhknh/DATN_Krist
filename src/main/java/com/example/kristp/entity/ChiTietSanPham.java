@@ -11,14 +11,14 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "chiTietSanPham")
+@Table(name = "chi_tiet_san_pham")
 public class ChiTietSanPham {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id ;
 
     @ManyToOne
-    @JoinColumn(name = "id_mau")
+    @JoinColumn(name = "id_mau_sac")
     private MauSac mau;
 
     @ManyToOne
@@ -32,6 +32,11 @@ public class ChiTietSanPham {
     @ManyToOne
     @JoinColumn(name = "id_co_ao")
     private CoAo coAo;
+
+    @ManyToOne
+    @JoinColumn(name = "id_san_pham")
+    private SanPham sanPham;
+
 
     private Float donGia ;
 

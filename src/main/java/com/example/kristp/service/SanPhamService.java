@@ -4,8 +4,9 @@ import com.example.kristp.entity.SanPham;
 import com.example.kristp.enums.Status;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public interface SanPhamServiec {
+public interface SanPhamService {
     ArrayList<SanPham> findSanphamTop4ngaytaoDesc();
     ArrayList<SanPham> findAllSanPham();
     SanPham findSanphamById(Integer Id);
@@ -14,4 +15,6 @@ public interface SanPhamServiec {
     SanPham update(SanPham sanPham, Integer id);
     SanPham delete(Integer id);
     boolean isTenExists(String tenSanPham);
+
+
 }
