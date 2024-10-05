@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+.display_block {
+    display: block;
+}
+.display_none {
+    display: none;
+}
+
 .cl-black {
     color: black;
 }
@@ -33,6 +40,22 @@
 .title {
     font-size: 36px;
 }
+
+.nav_link {
+    text-decoration: none;
+    color: #5C5F6A;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 40px;
+}
+.nav_link_active {
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 40px;
+}
+
 
 .banner{
     position: relative;
