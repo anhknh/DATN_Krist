@@ -70,7 +70,8 @@ public class ChatLieuController {
         attributes.addFlashAttribute("titileMsg" , "Thành công");
         return "capNhatThanhCong";
     }
-    
+
+
     @PostMapping("/delete-chat-lieu/{id}")
     private String deleteChatLieu(@PathVariable("id")Integer idChatLieu ,  RedirectAttributes attributes){
         try {
