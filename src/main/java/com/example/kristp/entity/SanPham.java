@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,6 +27,9 @@ public class SanPham extends BaseEntity {
     @ManyToOne
     @JoinColumn(name="id_chat_lieu")
     private ChatLieu chatLieu;
+
+    @OneToMany(mappedBy = "sanPham",cascade = CascadeType.ALL)
+    private List<ChiTietSanPham> chiTietSanPham;
 
 
     private String tenSanPham ;

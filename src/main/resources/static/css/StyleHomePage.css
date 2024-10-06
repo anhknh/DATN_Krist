@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+.display_block {
+    display: block;
+}
+.display_none {
+    display: none;
+}
+
 .cl-black {
     color: black;
 }
@@ -15,6 +22,10 @@
 
 .s-18 {
     font-size: 18px;
+}
+
+.bg_profile_btn{
+    background-color: #F6F6F6;
 }
 
 .heading-1 {
@@ -33,6 +44,22 @@
 .title {
     font-size: 36px;
 }
+
+.nav_link {
+    text-decoration: none;
+    color: #5C5F6A;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 40px;
+}
+.nav_link_active {
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 40px;
+}
+
 
 .banner{
     position: relative;
@@ -117,3 +144,5 @@
     width: 20px;
     height: 20px;
 }
+/*admin*/
+

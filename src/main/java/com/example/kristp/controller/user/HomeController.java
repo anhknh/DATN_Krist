@@ -1,4 +1,4 @@
-package com.example.kristp.controller;
+package com.example.kristp.controller.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
