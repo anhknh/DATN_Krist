@@ -24,6 +24,10 @@
     font-size: 18px;
 }
 
+.bg_profile_btn{
+    background-color: #F6F6F6;
+}
+
 .heading-1 {
     font-weight: 500;
     font-size: 26px;
@@ -140,3 +144,5 @@
     width: 20px;
     height: 20px;
 }
+/*admin*/
+
