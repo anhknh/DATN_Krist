@@ -12,8 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class DanhMucController {
-    @Autowired
-    private DanhMucService danhMucService ;
+        @Autowired
+        private DanhMucService danhMucService ;
 
     @GetMapping("/list-danh-muc")
     private String getAllDanhMuc(RedirectAttributes attributes){
