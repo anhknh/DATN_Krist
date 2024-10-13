@@ -18,7 +18,6 @@ import java.util.Date;
 public class ChatLieu extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Integer id ;
 
     @NotBlank
@@ -29,8 +28,17 @@ public class ChatLieu extends BaseEntity {
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "trang_thai")
-    @NotBlank
     private Status trangThai;
 
+
+    @Override
+    public String toString() {
+        return "ChatLieu{" +
+                "id=" + id +
+                ", tenChatLieu='" + tenChatLieu + '\'' +
+                ", moTa='" + moTa + '\'' +
+                ", trangThai=" + trangThai +
+                '}';
+    }
 }
 

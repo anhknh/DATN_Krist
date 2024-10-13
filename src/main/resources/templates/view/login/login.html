@@ -48,7 +48,6 @@
             <a href="#" style="color: #000; text-decoration: none">Quên mật khẩu?</a> |
             <a href="/dang-ki" style="color: #000; text-decoration: none">Đăng ký</a>
           </div>
-
         </div>
         <button type="submit" class="login-btn" style="border-radius: 10px">Đăng nhập</button>
       </form>
@@ -70,7 +69,7 @@
 <script>
   (function () {
     'use strict';
-
+window.alert("Da vao day");
     // Fetch all forms with class 'needs-validation'
     var forms = document.querySelectorAll('.needs-validation');
 
@@ -124,7 +123,7 @@
       }, 5000);
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function (){
       // Kiểm tra và ẩn thông báo thành công nếu có
       var successAlert = document.getElementById('successAlert');
       if (successAlert && successAlert.style.display !== 'none') {

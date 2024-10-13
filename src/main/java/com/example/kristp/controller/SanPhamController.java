@@ -28,7 +28,6 @@ public class SanPhamController {
     @Autowired
     ChatLieuService chatLieuService;
 
-
     @GetMapping("/getAllProduct")
     public String getAll(Model model) {
         List<SanPham> sanPhamList = sanPhamServiec.findAllSanPham();

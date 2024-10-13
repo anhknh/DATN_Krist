@@ -1,13 +1,18 @@
 package com.example.kristp.service.impl;
 
 import com.example.kristp.entity.ChatLieu;
+import com.example.kristp.entity.DanhMuc;
 import com.example.kristp.enums.Status;
 import com.example.kristp.repository.ChatLieuRepository;
 import com.example.kristp.service.ChatLieuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,19 +41,24 @@ public class ChatLieuServiceImpl implements ChatLieuService {
 
     @Override
     public ChatLieu updateChatLieu(ChatLieu chatLieu, Integer idChatLieu) {
-        if (timTheoTen(chatLieu.getTenChatLieu()) != null) {
+       ChatLieu chatlieutheoten = timTheoTen(chatLieu.getTenChatLieu());
+        if(chatlieutheoten != null && !chatlieutheoten.getId().equals(idChatLieu)) {
             return null;
         }
+
         ChatLieu chatLieu1 = getChatlieuById(idChatLieu);
         chatLieu1.setTenChatLieu(chatLieu.getTenChatLieu());
         chatLieu1.setMoTa(chatLieu.getMoTa());
         chatLieu1.setTrangThai(chatLieu.getTrangThai());
         return chatLieuRepository.save(chatLieu1);
+
     }
 
     @Override
     public void deleteChatLieu(Integer idChatLieu) {
-        chatLieuRepository.deleteById(idChatLieu);
+        ChatLieu chatLieu = getChatlieuById(idChatLieu);
+        chatLieu.setTrangThai(Status.INACTIVE);
+        chatLieuRepository.save(chatLieu);
     }
 
     @Override
@@ -59,6 +69,20 @@ public class ChatLieuServiceImpl implements ChatLieuService {
         } else {
             return null;
         }
+    }
+
+
+//    Phân trang cho phần quản lý chất liệu thay cho get all
+    @Override
+    public Page<ChatLieu> getPaginationChatLieu(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo , 5);
+        return chatLieuRepository.findAll(pageable);
+    }
+// tim kiem thong tin chat lieu theo ten
+    @Override
+    public Page<ChatLieu> timTatCaTheoTen(Integer pageNo,String ten) {
+        Pageable pageable = PageRequest.of(pageNo , 5);
+        return chatLieuRepository.findAllByTenLike(pageable,ten);
     }
 
 
