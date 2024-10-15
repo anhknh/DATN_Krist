@@ -75,7 +75,7 @@ public class SizeController {
         }
 
         sizeService.updateSize(size , idSize) ;
-        attributes.addFlashAttribute("message" , "Cập nhật chất liệu thành công .");
+        attributes.addFlashAttribute("message" , "Cập nhật size thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-size/pagination-size";
