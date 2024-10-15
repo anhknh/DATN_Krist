@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,36 +41,22 @@
                                         <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;" aria-labelledby="navbarDropdown">
                                             <div class="d-flex">
                                                 <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
-                                                    <p class="font-blod">Men</p>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
+                                                    <p class="font-blod">Danh mục</p>
+                                                    <div class="p-2" th:each="item : ${listDanhMuc}">
+                                                        <a href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getTenDanhMuc()}"></span></a>
+                                                    </div>
                                                 </div>
                                                 <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
-                                                    <p class="font-blod">Men</p>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
+                                                    <p class="font-blod">Cổ áo</p>
+                                                    <div class="p-2" th:each="item : ${listCoAo}">
+                                                        <a href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuCoAo()}"></span></a>
+                                                    </div>
                                                 </div>
-                                                <div class="text-center"  style="flex: 1; border-right: 1px solid #000;">
-                                                    <p class="font-blod">Men</p>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
-                                                </div>
-                                                <div class="text-center" style="flex: 1;">
-                                                    <p class="font-blod">Men</p>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
-                                                    <div class="p-2">hoanganh</div>
+                                                <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
+                                                    <p class="font-blod">Tay áo</p>
+                                                    <div class="p-2" th:each="item : ${listTayAo}">
+                                                        <a href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuTayAo()}"></span></a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </ul>
@@ -114,7 +100,6 @@
             </div>
         </div>
     </div>
-
     <!-- banner -->
     <div class="container-fulid" style="background-color: #F6F6F6; height: 440px; margin:0px 0px 72px 0px;">
         <div class="container d-flex align-items-center justify-content-between">

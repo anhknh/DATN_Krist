@@ -2,7 +2,8 @@ package com.example.kristp.repository;
 
 import com.example.kristp.entity.SanPham;
 import com.example.kristp.enums.Status;
-import org.hibernate.query.Page;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -52,5 +53,9 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
 
 
     boolean existsByTenSanPhamAndTrangThai(String tenSanPham, Status trangThai);
+
+
+    @Query(value = "select sp from SanPham sp where size(sp.chiTietSanPham) > 0 ")
+    Page<SanPham> findSanPhamsWithChiTietSanPham(Pageable pageable);
 
 }
