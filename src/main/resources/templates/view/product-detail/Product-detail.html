@@ -287,7 +287,7 @@
         <div>
             <div>
                 <div style=" display: inline-block;">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal_popup"
                        style=" color: #fff; text-decoration: none; background-color: #000; font-size: 14px; font-weight: 500; border-radius: 4px; padding: 12px 68px; margin-right: 8px;">Thêm
                         vào giỏ hàng</a>
                 </div>
@@ -568,6 +568,102 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal popup-->
+<div class="modal fade" id="modal_popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 370px; margin-left: auto; margin-right: 250px;">
+        <div class="modal-content" style="margin-top: 70px;">
+            <div class="modal-header">
+                <p class="modal-title" id="exampleModalLabel">you have 2 items in your cart</p>
+            </div>
+            <div class="modal-body" style="margin-top: 5px;">
+                <!-- cart_product -->
+                <div class="cart_product_row" style="border-bottom: 2px solid #F6F6F6; padding: 12px 4px;">
+                    <div class="d-flex">
+                        <!-- img_product_cart -->
+                        <div class="text-center img_product_cart" style="width: 80px; height: 80px; background-color: #F6F6F6;">
+                            <img src="/img/monochrome_tees.png" style="width: 74%;" alt="">
+                        </div>
+
+                        <!-- product_cart_detail -->
+                        <div class="product_cart" style="margin-left: 10px;">
+                            <p style="font-size: 14px; font-weight: 500;">Áo phông cộc tay</p>
+                            <div class="d-flex justify-content-between align-items-center" style="width: 62px; height: 22px;">
+                                <div style="padding: 8px; border-radius: 50%; border: 1px solid #5C5F6A; background-color: cadetblue;"></div>
+                                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
+                                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">M</div>
+                            </div>
+                            <div style="display: inline-block;">
+                                <div class="d-flex justify-content-between align-items-center" style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height: 40px;">
+                                    <div class="btn_Subtrac" style="cursor: pointer;">
+                                        <button type="button" style="background-color: #fff; border: none;">&#8722;</button>
+                                    </div>
+                                    <div class="quantity_number">1</div>
+                                    <div class="btn_plus" style="cursor: pointer;">
+                                        <button type="button" style="background-color: #fff; border: none;">&#43;</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="font-size: 14px; font-weight: 500; display: inline-block; margin-left: 8px;"><i class="fa-regular fa-dollar-sign"></i>30.00</p>
+
+                            <a class="btn">
+                                <div class="prevent_select" style="padding: 1px 12px; background-color: #F6F6F6; border-radius: 6px; display: inline-block;">
+                                    <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--        2-->
+                <div class="cart_product_row" style="border-bottom: 2px solid #F6F6F6; padding: 12px 4px;">
+                    <div class="d-flex">
+                        <!-- img_product_cart -->
+                        <div class="text-center img_product_cart" style="width: 80px; height: 80px; background-color: #F6F6F6;">
+                            <img src="/img/monochrome_tees.png" style="width: 74%;" alt="">
+                        </div>
+
+                        <!-- product_cart_detail -->
+                        <div class="product_cart" style="margin-left: 10px;">
+                            <p style="font-size: 14px; font-weight: 500;">Áo phông cộc tay</p>
+                            <div class="d-flex justify-content-between align-items-center" style="width: 62px; height: 22px;">
+                                <div style="padding: 8px; border-radius: 50%; border: 1px solid #5C5F6A; background-color: cadetblue;"></div>
+                                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
+                                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">M</div>
+                            </div>
+                            <div style="display: inline-block;">
+                                <div class="d-flex justify-content-between align-items-center" style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height: 40px;">
+                                    <div class="btn_Subtrac" style="cursor: pointer;">
+                                        <button type="button" style="background-color: #fff; border: none;">&#8722;</button>
+                                    </div>
+                                    <div class="quantity_number">1</div>
+                                    <div class="btn_plus" style="cursor: pointer;">
+                                        <button type="button" style="background-color: #fff; border: none;">&#43;</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="font-size: 14px; font-weight: 500; display: inline-block; margin-left: 8px;"><i class="fa-regular fa-dollar-sign"></i>30.00</p>
+
+                            <a class="btn">
+                                <div class="prevent_select" style="padding: 1px 12px; background-color: #F6F6F6; border-radius: 6px; display: inline-block;">
+                                    <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none; align-items: normal; justify-content: unset;">
+                    <div class="d-flex justify-content-between" style="border-top: 2px solid #F6F6F6; width: 100%; padding: 12px; margin-bottom: 12px;">
+                        <div style="font-size: 14px; font-weight: 500;">Subtotal</div>
+                        <div style="font-size: 14px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>60.00</div>
+                    </div>
+                    <button class="btn bg-black" style="font-size: 14px; font-weight: 500; width: 100%; height: 40px;">
+                        <a href="/gio-hang" style="text-decoration: none; color: #fff;">Thanh toán</a>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
