@@ -79,4 +79,10 @@ public class MauSacServiceImpl implements MauSacService {
         Pageable pageable = PageRequest.of(pageNo , 5);
         return mauSacRepository.findAll(pageable);
     }
+
+    @Override
+    public Page<MauSac> timTatCaTheoTen(Integer pageNo, String ten) {
+        Pageable pageable = PageRequest.of(pageNo , 5);
+        return mauSacRepository.findAllByTenLike(pageable,ten);
+    }
 }

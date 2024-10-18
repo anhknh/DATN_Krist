@@ -1,6 +1,7 @@
 package com.example.kristp.service;
 
 import com.example.kristp.entity.CoAo;
+import com.example.kristp.entity.Size;
 import com.example.kristp.entity.TayAo;
 import org.springframework.data.domain.Page;
 
@@ -17,4 +18,5 @@ public interface CoAoService {
 
     CoAo timTheoTenCoAo(String kieuCoAo);
     Page<CoAo> getPaginationCoAo(Integer pageNo);
+    Page<CoAo> timTatCaTheoTen(Integer pageNo, String ten);
 }

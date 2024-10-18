@@ -2,6 +2,7 @@ package com.example.kristp.controller.admin;
 
 
 
+import com.example.kristp.entity.ChatLieu;
 import com.example.kristp.entity.Size;
 import com.example.kristp.service.SizeService;
 import jakarta.validation.Valid;
@@ -88,6 +89,16 @@ public class SizeController {
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-size/pagination-size";
 
+    }
+
+    @GetMapping("/tim-kiem-tat-ca-theo-ten")
+    private String timKiemTatCaTheoTen(@RequestParam("tenTimKiem")String ten ,@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo, Model model){
+        Page<Size> sizes = sizeService.timTatCaTheoTen(pageNo,"%"+ten+"%");
+        model.addAttribute("sizeList" , sizes.getContent());
+        model.addAttribute("currentPage" , pageNo);
+        model.addAttribute("totalPage" , sizes.getTotalPages());
+        model.addAttribute("sizeCre" , new Size() );
+        return "view-admin/dashbroad/crud-size";
     }
 
 

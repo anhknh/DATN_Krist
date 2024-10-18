@@ -1,6 +1,7 @@
 package com.example.kristp.entity;
 
 
+import com.example.kristp.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +27,9 @@ public class KhuyenMai {
     private String kieuKhuyenMai;
     private Float giaTri;
     private Float mucGiamToiDa;
+
     private String trangThai;
+
     private Date ngayBatDau;
     private Date ngayKetThuc;
 

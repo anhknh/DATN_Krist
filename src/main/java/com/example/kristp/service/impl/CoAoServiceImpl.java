@@ -76,4 +76,10 @@ public class CoAoServiceImpl implements CoAoService {
         Pageable pageable = PageRequest.of(pageNo , 5);
         return coAoRepository.findAll(pageable);
     }
+
+    @Override
+    public Page<CoAo> timTatCaTheoTen(Integer pageNo, String ten) {
+        Pageable pageable = PageRequest.of(pageNo , 5);
+        return coAoRepository.findAllByTenLike(pageable,ten);
+    }
 }

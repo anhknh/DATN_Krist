@@ -1,6 +1,7 @@
 package com.example.kristp.controller.admin;
 
 import com.example.kristp.entity.CoAo;
+import com.example.kristp.entity.Size;
 import com.example.kristp.entity.TayAo;
 import com.example.kristp.service.CoAoService;
 
@@ -90,4 +91,15 @@ public class CoAoController {
         return "redirect:/quan-ly-co-ao/pagination-co-ao";
 
     }
+
+    @GetMapping("/tim-kiem-tat-ca-theo-ten")
+    private String timKiemTatCaTheoTen(@RequestParam("tenTimKiem")String ten ,@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo, Model model){
+        Page<CoAo> coaos = coAoService.timTatCaTheoTen(pageNo,"%"+ten+"%");
+        model.addAttribute("coAoList" , coaos.getContent());
+        model.addAttribute("currentPage" , pageNo);
+        model.addAttribute("totalPage" , coaos.getTotalPages());
+        model.addAttribute("coAoCre" , new CoAo() );
+        return "view-admin/dashbroad/crud-co-ao";
+    }
+
 }
