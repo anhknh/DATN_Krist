@@ -16,7 +16,6 @@ public interface ChatLieuRepository extends JpaRepository<ChatLieu, Integer> {
     @Query(value = "SELECT cl FROM ChatLieu cl where cl.tenChatLieu = :ten")
     public Optional<ChatLieu> timKiemChatLieuTheoTen(@Param("ten") String tenChatLieu);
 
-
     @Query(value = "select cl from ChatLieu cl where cl.tenChatLieu LIKE :ten")
     Page<ChatLieu> findAllByTenLike(Pageable pageable, @Param("ten") String ten);
 }

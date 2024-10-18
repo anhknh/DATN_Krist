@@ -88,7 +88,6 @@ public class SizeController {
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-size/pagination-size";
-
     }
 
     @GetMapping("/tim-kiem-tat-ca-theo-ten")

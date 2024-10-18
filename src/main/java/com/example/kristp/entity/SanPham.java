@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -28,9 +29,9 @@ public class SanPham extends BaseEntity {
     @JoinColumn(name="id_chat_lieu")
     private ChatLieu chatLieu;
 
-    @OneToMany(mappedBy = "sanPham",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sanPham",cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @ToString.Exclude
     private List<ChiTietSanPham> chiTietSanPham;
-
 
     private String tenSanPham ;
 
