@@ -83,9 +83,9 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
 
     @Override
     public KhuyenMai timTheoMaKhuyenMai(String maKhuyenMai) {
-        Optional<KhuyenMai> khuyenMai = khuyenMaiRepository.timKiemMaKhuyenMai(maKhuyenMai);
-        if (khuyenMai.isPresent()) {
-            return khuyenMai.get();
+        Optional<KhuyenMai> khuyenMai1 = khuyenMaiRepository.timKiemMaKhuyenMai(maKhuyenMai);
+        if (khuyenMai1.isPresent()) {
+            return khuyenMai1.get();
         } else {
             return null;
         }
