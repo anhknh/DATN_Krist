@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -198,242 +198,56 @@
         </div>
     </div>
 
-
-
     <div class="container">
             <div >
                 <div class="container-fluid">
                     <div class="row mt-5">
-                        <div class="col-3 mb-4">
+<!--                        1 ô-->
+                        <div class="col-3 mb-4" th:each="product : ${productList}" th:if="${product.getChiTietSanPham().size() > 0}">
                             <div class="cart">
                                 <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                                    <img src="/img/monochrome_tees.png" alt="Product Image">
+                                        <img th:src="${product.chiTietSanPham.size() > 0 ? '/img/' + product.chiTietSanPham[0].getAnhSanPham() : '/img/monochrome.png'}" alt="Product Image">
                                 </div>
                                 <button class="wishlist-btn">
                                     <i class="fa-sharp fa-regular fa-heart"></i>
                                 </button>
                                 <button class="btn-add__cart">
-                                    thêm vào gỏ hàng
+                                    Thêm vào gỏ hàng
                                 </button>
                                 <div class="cart-content">
-                                    <div class="category-name">Áo phông trơn</div>
-                                    <div class="product-name">Áo phông cộc tay</div>
-                                    <div class="price">500,000₫</div>
+                                    <div class="category-name" th:text="${product.getDanhMuc().getTenDanhMuc()}"></div>
+                                    <div class="product-name" th:text="${product.getTenSanPham()}">Áo phông cộc tay</div>
+                                    <div class="price" th:text="${product.chiTietSanPham.size() > 0 ? product.chiTietSanPham[0].donGia : 'N/A'}"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3 mb-4">
-                            <div class="cart">
-                                <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                                    <img src="/img/monochrome_tees.png" alt="Product Image">
-                                </div>
-                                <button class="wishlist-btn">
-                                    <i class="fa-sharp fa-regular fa-heart"></i>
-                                </button>
-                                <button class="btn-add__cart">
-                                    thêm vào gỏ hàng
-                                </button>
-                                <div class="cart-content">
-                                    <div class="category-name">Áo phông trơn</div>
-                                    <div class="product-name">Áo phông cộc tay</div>
-                                    <div class="price">500,000₫</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 mb-4">
-                            <div class="cart">
-                                <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                                    <img src="/img/monochrome_tees.png" alt="Product Image">
-                                </div>
-                                <button class="wishlist-btn">
-                                    <i class="fa-sharp fa-regular fa-heart"></i>
-                                </button>
-                                <button class="btn-add__cart">
-                                    thêm vào gỏ hàng
-                                </button>
-                                <div class="cart-content">
-                                    <div class="category-name">Áo phông trơn</div>
-                                    <div class="product-name">Áo phông cộc tay</div>
-                                    <div class="price">500,000₫</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 mb-4">
-                            <div class="cart">
-                                <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                                    <img src="/img/monochrome_tees.png" alt="Product Image">
-                                </div>
-                                <button class="wishlist-btn">
-                                    <i class="fa-sharp fa-regular fa-heart"></i>
-                                </button>
-                                <button class="btn-add__cart">
-                                    thêm vào gỏ hàng
-                                </button>
-                                <div class="cart-content">
-                                    <div class="category-name">Áo phông trơn</div>
-                                    <div class="product-name">Áo phông cộc tay</div>
-                                    <div class="price">500,000₫</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 mb-4">
-                            <div class="cart">
-                                <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                                    <img src="/img/monochrome_tees.png" alt="Product Image">
-                                </div>
-                                <button class="wishlist-btn">
-                                    <i class="fa-sharp fa-regular fa-heart"></i>
-                                </button>
-                                <button class="btn-add__cart">
-                                    thêm vào gỏ hàng
-                                </button>
-                                <div class="cart-content">
-                                    <div class="category-name">Áo phông trơn</div>
-                                    <div class="product-name">Áo phông cộc tay</div>
-                                    <div class="price">500,000₫</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 mb-4">
-                            <div class="cart">
-                                <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                                    <img src="/img/monochrome_tees.png" alt="Product Image">
-                                </div>
-                                <button class="wishlist-btn">
-                                    <i class="fa-sharp fa-regular fa-heart"></i>
-                                </button>
-                                <button class="btn-add__cart">
-                                    thêm vào gỏ hàng
-                                </button>
-                                <div class="cart-content">
-                                    <div class="category-name">Áo phông trơn</div>
-                                    <div class="product-name">Áo phông cộc tay</div>
-                                    <div class="price">500,000₫</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 mb-4">
-                            <div class="cart">
-                                <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                                    <img src="/img/monochrome_tees.png" alt="Product Image">
-                                </div>
-                                <button class="wishlist-btn">
-                                    <i class="fa-sharp fa-regular fa-heart"></i>
-                                </button>
-                                <button class="btn-add__cart">
-                                    thêm vào gỏ hàng
-                                </button>
-                                <div class="cart-content">
-                                    <div class="category-name">Áo phông trơn</div>
-                                    <div class="product-name">Áo phông cộc tay</div>
-                                    <div class="price">500,000₫</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 mb-4">
-                            <div class="cart">
-                                <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                                    <img src="/img/monochrome_tees.png" alt="Product Image">
-                                </div>
-                                <button class="wishlist-btn">
-                                    <i class="fa-sharp fa-regular fa-heart"></i>
-                                </button>
-                                <button class="btn-add__cart">
-                                    thêm vào gỏ hàng
-                                </button>
-                                <div class="cart-content">
-                                    <div class="category-name">Áo phông trơn</div>
-                                    <div class="product-name">Áo phông cộc tay</div>
-                                    <div class="price">500,000₫</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 mb-4">
-                            <div class="cart">
-                                <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                                    <img src="/img/monochrome_tees.png" alt="Product Image">
-                                </div>
-                                <button class="wishlist-btn">
-                                    <i class="fa-sharp fa-regular fa-heart"></i>
-                                </button>
-                                <button class="btn-add__cart">
-                                    thêm vào gỏ hàng
-                                </button>
-                                <div class="cart-content">
-                                    <div class="category-name">Áo phông trơn</div>
-                                    <div class="product-name">Áo phông cộc tay</div>
-                                    <div class="price">500,000₫</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 mb-4">
-                            <div class="cart">
-                                <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                                    <img src="/img/monochrome_tees.png" alt="Product Image">
-                                </div>
-                                <button class="wishlist-btn">
-                                    <i class="fa-sharp fa-regular fa-heart"></i>
-                                </button>
-                                <button class="btn-add__cart">
-                                    thêm vào gỏ hàng
-                                </button>
-                                <div class="cart-content">
-                                    <div class="category-name">Áo phông trơn</div>
-                                    <div class="product-name">Áo phông cộc tay</div>
-                                    <div class="price">500,000₫</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 mb-4">
-                            <div class="cart">
-                                <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                                    <img src="/img/monochrome_tees.png" alt="Product Image">
-                                </div>
-                                <button class="wishlist-btn">
-                                    <i class="fa-sharp fa-regular fa-heart"></i>
-                                </button>
-                                <button class="btn-add__cart">
-                                    thêm vào gỏ hàng
-                                </button>
-                                <div class="cart-content">
-                                    <div class="category-name">Áo phông trơn</div>
-                                    <div class="product-name">Áo phông cộc tay</div>
-                                    <div class="price">500,000₫</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 mb-4">
-                            <div class="cart">
-                                <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                                    <img src="/img/monochrome_tees.png" alt="Product Image">
-                                </div>
-                                <button class="wishlist-btn">
-                                    <i class="fa-sharp fa-regular fa-heart"></i>
-                                </button>
-                                <button class="btn-add__cart">
-                                    thêm vào gỏ hàng
-                                </button>
-                                <div class="cart-content">
-                                    <div class="category-name">Áo phông trơn</div>
-                                    <div class="product-name">Áo phông cộc tay</div>
-                                    <div class="price">500,000₫</div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                     <div style="padding-left: 1000px">
                         <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
+                            <ul class="pagination justify-content-end">
+                                <!-- Nút Previous -->
+                                <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+                                    <a class="page-link" style="color: #5C5F6A"
+                                       th:href="@{/danh-sach-san-pham(pageNo=0)}"
+                                       aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
+                                <!-- Vòng lặp phân trang -->
+                                <li th:if="${totalPage > 0}" th:each="i : ${#numbers.sequence(1, totalPage)}"
+                                    th:classappend="${currentPage == i - 1 ? 'active' : ''}"
+                                    class="page-item">
+                                    <a class="page-link"
+                                       th:href="@{/danh-sach-san-pham(pageNo=${i - 1})}"
+                                       th:text="${i}" style="color: #5C5F6A"></a>
+                                </li>
+                                <!-- Nút Next -->
+                                <li class="page-item"
+                                    th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}">
+                                    <a class="page-link" style="color: #5C5F6A"
+                                       th:href="@{/danh-sach-san-pham(pageNo=${totalPage - 1})}"
+                                       aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>

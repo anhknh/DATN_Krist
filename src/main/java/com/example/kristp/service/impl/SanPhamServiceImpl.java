@@ -106,10 +106,11 @@ public class SanPhamServiceImpl implements SanPhamService {
         return true;
     }
 
-
-
-
-
+    @Override
+    public Page<SanPham> getPaginationSanPham(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo , 12);
+        return sanPhamRepository.findSanPhamsWithChiTietSanPham(pageable);
+    }
 
 
 }
