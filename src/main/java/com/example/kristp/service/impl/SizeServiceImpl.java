@@ -27,6 +27,11 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
+    public ArrayList<Size> getAllSizeHD() {
+        return (ArrayList<Size>) sizeRepository.findAllSize();
+    }
+
+    @Override
     public Size getSizeById(int id) {
         return sizeRepository.findById(id).get();
     }

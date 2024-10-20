@@ -26,6 +26,11 @@ public class ChatLieuServiceImpl implements ChatLieuService {
     }
 
     @Override
+    public ArrayList<ChatLieu> getAllChatLieuHD() {
+        return (ArrayList<ChatLieu>) chatLieuRepository.findAllChatLieu();
+    }
+
+    @Override
     public ChatLieu getChatlieuById(int id) {
         return chatLieuRepository.findById(id).get();
     }

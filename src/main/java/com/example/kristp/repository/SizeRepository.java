@@ -8,10 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface SizeRepository  extends JpaRepository<Size,Integer>{
     @Query(value = "SELECT sz FROM Size sz where sz.tenSize = :tenSize")
     Optional<Size> timKiemTenSize(@Param("tenSize") String tenSize);
+
+    @Query("from Size s where s.trangThai = 1 ")
+    List<Size> findAllSize();
 }

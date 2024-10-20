@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public interface MauSacService {
     ArrayList<MauSac> getAllMauSac();
+    ArrayList<MauSac> getAllMauSacHD();
     ////////////////////////////////////////// CRUD
     MauSac getMauSacById(int id);
 

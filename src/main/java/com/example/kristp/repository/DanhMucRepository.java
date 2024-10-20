@@ -19,4 +19,7 @@ public interface DanhMucRepository extends JpaRepository<DanhMuc, Integer> {
 
     @Query(value = "select dm from DanhMuc dm where dm.tenDanhMuc LIKE :ten")
     Page<DanhMuc> findAllByTenLike(Pageable pageable, @Param("ten") String ten);
+
+    @Query("from DanhMuc dm where  dm.trangThai = 1")
+    List<DanhMuc> findAllDanhMuc();
 }

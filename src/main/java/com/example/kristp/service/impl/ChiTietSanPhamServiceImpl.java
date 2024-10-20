@@ -2,6 +2,7 @@ package com.example.kristp.service.impl;
 
 import com.example.kristp.entity.ChiTietSanPham;
 import com.example.kristp.entity.CoAo;
+import com.example.kristp.entity.SanPham;
 import com.example.kristp.repository.ChatLieuRepository;
 import com.example.kristp.repository.ChiTietSanPhamRepository;
 import com.example.kristp.service.ChiTietSanPhamService;
@@ -22,5 +23,10 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     @Override
     public ChiTietSanPham getCTSPById(int id) {
         return chiTietSanPhamRepository.findById(id).get();
+    }
+
+    @Override
+    public ChiTietSanPham findFristProductDetail(SanPham sanPham) {
+        return chiTietSanPhamRepository.findFirstBySanPham(sanPham);
     }
 }

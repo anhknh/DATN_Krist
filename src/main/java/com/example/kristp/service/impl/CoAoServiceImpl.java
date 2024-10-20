@@ -19,6 +19,11 @@ public class CoAoServiceImpl implements CoAoService {
     }
 
     @Override
+    public ArrayList<CoAo> getAllCoAoHD() {
+        return (ArrayList<CoAo>) coAoRepository.findAllCoAo();
+    }
+
+    @Override
     public CoAo getCoAoById(int id) {
         return coAoRepository.findById(id).get();
     }

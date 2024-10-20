@@ -19,6 +19,11 @@ public class TayAoServiceImpl implements TayAoService {
     }
 
     @Override
+    public ArrayList<TayAo> getAllTayAoHD() {
+        return (ArrayList<TayAo>) tayAoRepository.findAllTayAo();
+    }
+
+    @Override
     public TayAo getTayAoById(int id) {
         return tayAoRepository.findById(id).get();
     }

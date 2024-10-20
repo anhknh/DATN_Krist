@@ -26,6 +26,11 @@ public class MauSacServiceImpl implements MauSacService {
             return (ArrayList<MauSac>) mauSacRepository.findAll();
     }
 
+    @Override
+    public ArrayList<MauSac> getAllMauSacHD() {
+        return (ArrayList<MauSac>) mauSacRepository.findAllMauSac();
+    }
+
 
     @Override
     public MauSac getMauSacById(int id) {

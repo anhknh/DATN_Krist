@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"/>
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css">
@@ -19,10 +20,12 @@
             margin: 0;
             overflow: hidden; /* Ẩn thanh cuộn của body */
         }
+
         .main {
             height: 100%;
             display: flex;
         }
+
         .col-10 {
             height: 100vh; /* Đảm bảo chiều cao bằng chiều cao màn hình */
             overflow-y: auto; /* Cho phép cuộn nội dung khi vượt quá chiều cao */
@@ -32,11 +35,12 @@
     </style>
 </head>
 <body class="overflow-hidden">
-<div class="main" >
+<div class="main">
     <div class="container-fluid g-0">
         <div class="row g-0">
             <div class="col-2" style="height: 100vh;">
-                <div style="height: 72px; margin-bottom: 42px;" class="d-flex align-items-center justify-content-center">
+                <div style="height: 72px; margin-bottom: 42px;"
+                     class="d-flex align-items-center justify-content-center">
                     <div>
                         <img src="/img/logo.png" alt="logo">
                     </div>
@@ -47,57 +51,71 @@
 
                 <!-- Main Menu Items -->
                 <div style="padding: 0px 22px 28px; border-bottom: 1px solid #E9E9EB;" class="mb-4">
-                    <a href="./adminDashBroad.html" class="bg_profile_btn mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                    <a href="./adminDashBroad.html" class="bg_profile_btn mb-3"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Dashboard
                     </a>
 
                     <!-- Product Management Tree Menu -->
                     <div class="menu-item mb-3">
-                        <p style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center; cursor: pointer;" onclick="toggleSubmenu('productSubMenu')">
+                        <p style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center; cursor: pointer;"
+                           onclick="toggleSubmenu('productSubMenu')">
                             <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Products
                             <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
                         </p>
-                        <ul id="productSubMenu" class="submenu" style="list-style: none; padding-left: 20px; display: none;">
+                        <ul id="productSubMenu" class="submenu"
+                            style="list-style: none; padding-left: 20px; display: none;">
                             <li style="padding: 8px 0;">
-                                <a href="./adminCategories.html" style="text-decoration: none; color: #000;">Manage Categories</a>
+                                <a href="./adminCategories.html" style="text-decoration: none; color: #000;">Manage
+                                    Categories</a>
                             </li>
                             <li style="padding: 8px 0;">
-                                <a href="./adminMaterial.html" style="text-decoration: none; color: #000;">Manage Materials</a>
+                                <a href="./adminMaterial.html" style="text-decoration: none; color: #000;">Manage
+                                    Materials</a>
                             </li>
                         </ul>
                     </div>
 
-                    <a href="./adminOrder.html" class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                    <a href="./adminOrder.html" class="mb-3"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Orders
                     </a>
-                    <a href="./adminCustomer.html" class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                    <a href="./adminCustomer.html" class="mb-3"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Customers
                     </a>
-                    <a href="./adminReviews.html" class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                    <a href="./adminReviews.html" class="mb-3"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-star" style="margin-right: 10px;"></i> Reviews
                     </a>
-                    <a href="./adminSetting.html" class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                    <a href="./adminSetting.html" class="mb-3"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Settings
                     </a>
                 </div>
 
                 <!-- Extra Menu -->
-                <div id="drop_right" style="padding: 0px 22px 28px; cursor: pointer;" onclick="toggleSubmenu('extrasSubMenu')">
-                    <p class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center;">
+                <div id="drop_right" style="padding: 0px 22px 28px; cursor: pointer;"
+                     onclick="toggleSubmenu('extrasSubMenu')">
+                    <p class="mb-3"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center;">
                         <i class="fa-regular fa-plus" style="margin-right: 10px;"></i> Extras
                         <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
                     </p>
                     <ul id="extrasSubMenu" class="submenu" style="list-style: none; padding-left: 20px; display: none;">
-                        <li style="padding: 8px;"><a href="./adminSize.html" style="text-decoration: none; color: #000;">Size</a></li>
-                        <li style="padding: 8px;"><a href="./adminColor.html" style="text-decoration: none; color: #000;">Color</a></li>
+                        <li style="padding: 8px;"><a href="./adminSize.html"
+                                                     style="text-decoration: none; color: #000;">Size</a></li>
+                        <li style="padding: 8px;"><a href="./adminColor.html"
+                                                     style="text-decoration: none; color: #000;">Color</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-10">
                 <!-- navigator_link -->
-                <div class="d-flex justify-content-between align-items-center" style="height: 28px; margin-bottom: 18px;">
+                <div class="d-flex justify-content-between align-items-center"
+                     style="height: 28px; margin-bottom: 18px;">
                     <div>
-                        <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb" >
+                        <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb">
                             <ol class="breadcrumb" style="height: 40px; margin: 0px;">
                                 <li class="breadcrumb-item "><a href="#" class="nav_link">Admin</a></li>
                                 <li class="breadcrumb-item "><a href="#" class="nav_link_active">Dashboard</a></li>
@@ -105,11 +123,12 @@
                         </nav>
                     </div>
                     <div>
-                        <a href="../login.html" style="text-decoration: none; color: #000; font-size: 20px;"><i class="fa-thin fa-arrow-right-from-bracket"></i></a>
+                        <a href="../login.html" style="text-decoration: none; color: #000; font-size: 20px;"><i
+                                class="fa-thin fa-arrow-right-from-bracket"></i></a>
                     </div>
                 </div>
                 <div class="d-flex">
-                    <div style="flex: 3;" >
+                    <div style="flex: 3;">
                         <div class="box">
                             <div class="d-flex justify-content-between mb-3">
                                 <div> Hóa đơn chờ</div>
@@ -117,33 +136,49 @@
                             </div>
                             <div>
                                 <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                                    <input class="form-check-input radio_size" type="radio" name="size" id="inlineRadio4" value="size1" style="display: none;" checked>
-                                    <label class="form-check-label lable_radio_size selected_radio_size" for="inlineRadio4" style="padding: 10px 16px; cursor: pointer;border-radius: 4px;">
-                                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">Hóa đơn 1</p>
+                                    <input class="form-check-input radio_size" type="radio" name="size"
+                                           id="inlineRadio4" value="size1" style="display: none;" checked>
+                                    <label class="form-check-label lable_radio_size selected_radio_size"
+                                           for="inlineRadio4"
+                                           style="padding: 10px 16px; cursor: pointer;border-radius: 4px;">
+                                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">Hóa đơn
+                                            1</p>
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                                    <input class="form-check-input radio_size" type="radio" name="size" id="inlineRadio5" style="display: none;" value="size1">
-                                    <label class="form-check-label lable_radio_size non_radio_size" for="inlineRadio5" style="padding: 10px 16px; cursor: pointer;border-radius: 4px;;">
-                                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">Hóa đơn 2</p>
+                                    <input class="form-check-input radio_size" type="radio" name="size"
+                                           id="inlineRadio5" style="display: none;" value="size1">
+                                    <label class="form-check-label lable_radio_size non_radio_size" for="inlineRadio5"
+                                           style="padding: 10px 16px; cursor: pointer;border-radius: 4px;;">
+                                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">Hóa đơn
+                                            2</p>
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                                    <input class="form-check-input radio_size" type="radio" name="size" id="inlineRadio6" style="display: none;" value="size1">
-                                    <label class="form-check-label lable_radio_size non_radio_size" for="inlineRadio6" style="padding: 10px 16px; cursor: pointer;border-radius: 4px;;">
-                                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">Hóa đơn 3</p>
+                                    <input class="form-check-input radio_size" type="radio" name="size"
+                                           id="inlineRadio6" style="display: none;" value="size1">
+                                    <label class="form-check-label lable_radio_size non_radio_size" for="inlineRadio6"
+                                           style="padding: 10px 16px; cursor: pointer;border-radius: 4px;;">
+                                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">Hóa đơn
+                                            3</p>
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                                    <input class="form-check-input radio_size" type="radio" name="size" id="inlineRadio7" style="display: none;" value="size1">
-                                    <label class="form-check-label lable_radio_size non_radio_size" for="inlineRadio7" style="padding: 10px 16px; cursor: pointer;border-radius: 4px;;">
-                                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">Hóa đơn 4</p>
+                                    <input class="form-check-input radio_size" type="radio" name="size"
+                                           id="inlineRadio7" style="display: none;" value="size1">
+                                    <label class="form-check-label lable_radio_size non_radio_size" for="inlineRadio7"
+                                           style="padding: 10px 16px; cursor: pointer;border-radius: 4px;;">
+                                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">Hóa đơn
+                                            4</p>
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                                    <input class="form-check-input radio_size" type="radio" name="size" id="inlineRadio8" style="display: none;" value="size1">
-                                    <label class="form-check-label lable_radio_size non_radio_size" for="inlineRadio8" style="padding: 10px 16px; cursor: pointer;border-radius: 4px;;">
-                                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">Hóa đơn 5</p>
+                                    <input class="form-check-input radio_size" type="radio" name="size"
+                                           id="inlineRadio8" style="display: none;" value="size1">
+                                    <label class="form-check-label lable_radio_size non_radio_size" for="inlineRadio8"
+                                           style="padding: 10px 16px; cursor: pointer;border-radius: 4px;;">
+                                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">Hóa đơn
+                                            5</p>
                                     </label>
                                 </div>
                             </div>
@@ -174,12 +209,14 @@
                                         <td>@mdo</td>
                                         <td>@mdo</td>
                                         <td class="text-center">
-                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Cập nhật">
+                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip"
+                                                 data-bs-placement="top" title="Cập nhật">
                                                 <div data-bs-toggle="modal" data-bs-target="#modalCategories">
                                                     <i class="fa-sharp fa-regular fa-pen-to-square"></i>
                                                 </div>
                                             </div>
-                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xóa">
+                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip"
+                                                 data-bs-placement="top" title="Xóa">
                                                 <i class="fa-regular fa-trash-can"></i>
                                             </div>
                                         </td>
@@ -193,12 +230,14 @@
                                         <td>@fat</td>
                                         <td>@fat</td>
                                         <td class="text-center">
-                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Cập nhật">
+                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip"
+                                                 data-bs-placement="top" title="Cập nhật">
                                                 <div data-bs-toggle="modal" data-bs-target="#modalCategories">
                                                     <i class="fa-sharp fa-regular fa-pen-to-square"></i>
                                                 </div>
                                             </div>
-                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xóa">
+                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip"
+                                                 data-bs-placement="top" title="Xóa">
                                                 <i class="fa-regular fa-trash-can"></i>
                                             </div>
                                         </td>
@@ -212,12 +251,14 @@
                                         <td>@fat</td>
                                         <td>@fat</td>
                                         <td class="text-center">
-                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Cập nhật">
+                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip"
+                                                 data-bs-placement="top" title="Cập nhật">
                                                 <div data-bs-toggle="modal" data-bs-target="#modalCategories">
                                                     <i class="fa-sharp fa-regular fa-pen-to-square"></i>
                                                 </div>
                                             </div>
-                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xóa">
+                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip"
+                                                 data-bs-placement="top" title="Xóa">
                                                 <i class="fa-regular fa-trash-can"></i>
                                             </div>
                                         </td>
@@ -231,12 +272,14 @@
                                         <td>@fat</td>
                                         <td>@fat</td>
                                         <td class="text-center">
-                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Cập nhật">
+                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip"
+                                                 data-bs-placement="top" title="Cập nhật">
                                                 <div data-bs-toggle="modal" data-bs-target="#modalCategories">
                                                     <i class="fa-sharp fa-regular fa-pen-to-square"></i>
                                                 </div>
                                             </div>
-                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xóa">
+                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip"
+                                                 data-bs-placement="top" title="Xóa">
                                                 <i class="fa-regular fa-trash-can"></i>
                                             </div>
                                         </td>
@@ -250,12 +293,14 @@
                                         <td>@fat</td>
                                         <td>@fat</td>
                                         <td class="text-center">
-                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Cập nhật">
+                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip"
+                                                 data-bs-placement="top" title="Cập nhật">
                                                 <div data-bs-toggle="modal" data-bs-target="#modalCategories">
                                                     <i class="fa-sharp fa-regular fa-pen-to-square"></i>
                                                 </div>
                                             </div>
-                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xóa">
+                                            <div class="d-inline-block me-3" data-bs-toggle="tooltip"
+                                                 data-bs-placement="top" title="Xóa">
                                                 <i class="fa-regular fa-trash-can"></i>
                                             </div>
                                         </td>
@@ -287,162 +332,118 @@
                         </div>
                         <div class="box mt-2">
                             <div class="mb-2"> Danh sách sản phẩm -
-                                <div class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="Làm mới">
+                                <div class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top"
+                                     title="Làm mới">
                                     <i class="fa-regular fa-repeat"></i>
                                 </div>
                             </div>
-                            <div >
-                                <div>
-                                    <div class="input-group input-group-sm mb-3">
-                                        <span class="input-group-text" id="inputGroup-sizing-smm">Tên sản phẩm</span>
-                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                                        <div class="btn btn-dark btn-sm ms-2">tìm kiếm</div>
+                            <div>
+                                <form action="">
+                                    <div>
+                                        <div class="input-group input-group-sm mb-3">
+                                            <span class="input-group-text" id="inputGroup-sizing-smm">Tên sản phẩm</span>
+                                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                                   aria-describedby="inputGroup-sizing-sm">
+                                            <div class="btn btn-dark btn-sm ms-2">tìm kiếm</div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="input-group input-group-sm mb-3">
-                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                            <option selected>Màu sắc</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                            <option selected>Size</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                            <option selected>Tay áo</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                            <option selected>Cổ áo</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select><select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                        <option selected>Chất liệu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                        </select><select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                        <option selected>Danh mục</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                        <div class="btn btn-dark btn-sm ms-2">Chọn tất cả</div>
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <div class="card p-2">
+                                                <select class="form-select livesearch" name="size" multiple data-placeholder="Danh mục">
+                                                    <option th:each="danhMuc, iterStat : ${listDanhMuc}"
+                                                            th:value="${danhMuc.id}"
+                                                            th:text="${danhMuc.tenDanhMuc}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="card p-2">
+                                                <select class="form-select livesearch" name="size" multiple data-placeholder="Chất liệu">
+                                                    <option th:each="chatLieu, iterStat : ${listChatLieu}"
+                                                            th:value="${chatLieu.id}"
+                                                            th:text="${chatLieu.tenChatLieu}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="card p-2">
+                                                <select class="form-select livesearch" name="size" multiple data-placeholder="Tay áo">
+                                                    <option th:each="tayAo, iterStat : ${listTayAo}"
+                                                            th:value="${tayAo.id}"
+                                                            th:text="${tayAo.kieuTayAo}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="card p-2">
+                                                <select class="form-select livesearch" name="size" multiple data-placeholder="Cổ áo">
+                                                    <option th:each="coAo, iterStat : ${listCoAo}"
+                                                            th:value="${coAo.id}"
+                                                            th:text="${coAo.kieuCoAo}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="card p-2">
+                                                <select class="form-select livesearch" name="size" multiple data-placeholder="Màu sắc">
+                                                    <option th:each="mauSac, iterStat : ${listMauSac}"
+                                                            th:value="${mauSac.id}"
+                                                        th:text="${mauSac.maMauSac}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="card p-2">
+                                                <select class="form-select livesearch" name="size" multiple data-placeholder="Size">
+                                                    <option th:each="size, iterStat : ${listSize}"
+                                                            th:value="${size.id}"
+                                                            th:text="${size.tenSize}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                             <div>
                                 <table class="table table-hover table-bordered table-sm">
                                     <thead>
                                     <tr>
-                                        <th scope="col">STT</th>
-                                        <th scope="col">Ảnh</th>
-                                        <th scope="col">Tên sản phẩm</th>
-                                        <th scope="col">Màu sắc</th>
-                                        <th scope="col">Size</th>
-                                        <th scope="col">Tay áo</th>
-                                        <th scope="col">Cổ áo</th>
-                                        <th scope="col">Giá bán</th>
-                                        <th scope="col">Số lượng</th>
-                                        <th class="text-center" scope="col">Thao tác</th>
+                                        <th class="text-center align-middle" scope="col">STT</th>
+                                        <th class="text-center align-middle" scope="col">Ảnh</th>
+                                        <th class="text-center align-middle" scope="col">Tên sản phẩm</th>
+                                        <th class="text-center align-middle" scope="col">Danh mục</th>
+                                        <th class="text-center align-middle" scope="col">Chất liệu</th>
+                                        <th class="text-center align-middle" scope="col">Thao tác</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td class="text-center">
-                                            <div data-bs-toggle="modal" data-bs-target="#modalCategories">
-                                                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng">
-                                                    <i class="fa-regular fa-cart-plus" ></i>
+                                    <tr th:each="sanPham, iterStat : ${listSanPham}">
+                                        <th class="text-center align-middle" scope="row" th:text="${iterStat.count}">1
+                                        </th>
+                                        <td>
+                                            <div class="d-flex justify-content-center align-items-center"
+                                                 style="background-color: #f6f6f6; border-radius: 4px;">
+                                                <div>
+                                                    <div th:style="|width: 46px; height: 46px; background: url('/img/${chiTietSanPhamService.findFristProductDetail(sanPham).anhSanPham}') no-repeat center center / cover; border: none;|">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td class="text-center">
-                                            <div data-bs-toggle="modal" data-bs-target="#modalCategories">
-                                                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng">
-                                                    <i class="fa-regular fa-cart-plus" ></i>
-                                                </div>
-                                            </div>
+                                        <td class="text-center align-middle" th:text="${sanPham.tenSanPham}">Tên sản
+                                            phẩm
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Jacob</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td class="text-center">
-                                            <div data-bs-toggle="modal" data-bs-target="#modalCategories">
-                                                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng">
-                                                    <i class="fa-regular fa-cart-plus" ></i>
-                                                </div>
-                                            </div>
+                                        <td class="text-center align-middle" th:text="${sanPham.danhMuc.tenDanhMuc}">
+                                            Danh mục
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">4</th>
-                                        <td>Jacob</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td class="text-center">
-                                            <div data-bs-toggle="modal" data-bs-target="#modalCategories">
-                                                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng">
-                                                    <i class="fa-regular fa-cart-plus" ></i>
-                                                </div>
-                                            </div>
+                                        <td class="text-center align-middle" th:text="${sanPham.chatLieu.tenChatLieu}">
+                                            Chất liệu
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">5</th>
-                                        <td>Jacob</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td>Otto</td>
-                                        <td class="text-center">
+                                        <td class="text-center align-middle">
                                             <div data-bs-toggle="modal" data-bs-target="#modalCategories">
-                                                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm vào giỏ hàng">
-                                                    <i class="fa-regular fa-cart-plus" ></i>
+                                                <div data-bs-toggle="tooltip" data-bs-placement="top"
+                                                     title="Thêm vào giỏ hàng">
+                                                    <i class="fa-regular fa-cart-plus"></i>
                                                 </div>
                                             </div>
                                         </td>
@@ -451,23 +452,38 @@
                                 </table>
                                 <div class="d-flex justify-content-end">
                                     <div>
+                                        <!-- Pagination for SanPham -->
                                         <nav aria-label="Page navigation example">
-                                            <ul class="pagination">
+                                            <ul class="pagination justify-content-end">
+                                                <!-- Link to the first page -->
                                                 <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Previous">
+                                                    <a class="page-link" th:style="'color: #5C5F6A'"
+                                                       th:href="@{/quan-ly/ban-hang(page=0)}" aria-label="Previous">
                                                         <span aria-hidden="true">&laquo;</span>
                                                     </a>
                                                 </li>
-                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                                                <!-- Loop through each page number in the pagination -->
+                                                <li th:each="p : ${pagination}"
+                                                    th:classappend="${page.number == p} ? 'active' : ''">
+                                                    <a class="page-link"
+                                                       th:style="${page.number == p} ? 'color: #ffffff; background-color: #5C5F6A' : 'color: #5C5F6A'"
+                                                       th:href="@{/quan-ly/ban-hang(page=${p})}">
+                                                        <span th:text="${p + 1}">1</span>
+                                                    </a>
+                                                </li>
+
+                                                <!-- Link to the last page -->
                                                 <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Next">
+                                                    <a class="page-link" th:style="'color: #5C5F6A'"
+                                                       th:href="@{/quan-ly/ban-hang(page=${totalPage})}"
+                                                       aria-label="Next">
                                                         <span aria-hidden="true">&raquo;</span>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </nav>
+
                                     </div>
                                 </div>
                             </div>
@@ -480,21 +496,27 @@
                         <div style="font-weight: 600;">Thông tin Khách hàng</div>
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text" id="inputGroup-sizing-m">SĐT</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-m">
-                            <div class=" ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm nhanh khách hàng">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                   aria-describedby="inputGroup-sizing-m">
+                            <div class=" ms-2" data-bs-toggle="tooltip" data-bs-placement="top"
+                                 title="Thêm nhanh khách hàng">
                                 <i class="fa-regular fa-user-plus"></i>
                             </div>
                         </div>
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text" id="inputGroup-sizing-sm">Họ Tên</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                   aria-describedby="inputGroup-sizing-sm">
                         </div>
                         <div style="font-weight: 600;">Thông tin Thanh toán</div>
-                        <div class="mb-3" style="max-height: 330px; overflow: auto;"> <!-- Thẻ chứa danh sách thẻ khuyến mại -->
+                        <div class="mb-3" style="max-height: 330px; overflow: auto;">
+                            <!-- Thẻ chứa danh sách thẻ khuyến mại -->
                             <div>
-                                <div class="d-flex" style="border: 1px dashed  #000; border-radius: 8px; padding: 6px; margin-bottom: 10px;">
+                                <div class="d-flex"
+                                     style="border: 1px dashed  #000; border-radius: 8px; padding: 6px; margin-bottom: 10px;">
                                     <div style="border-right: 1px dashed  #000; flex: 1; padding: 18px 0;">
-                                        <i class="fa-solid fa-tickets-perforated" style="font-size: 36px; padding: 0px 12px;"></i>
+                                        <i class="fa-solid fa-tickets-perforated"
+                                           style="font-size: 36px; padding: 0px 12px;"></i>
                                     </div>
                                     <div style="flex: 3; padding: 4px;font-size: 14px;">
                                         <div>Khuyến mại: hoàng anh</div>
@@ -505,9 +527,11 @@
                                 </div>
 
                                 <!-- Thẻ khuyến mại khác -->
-                                <div class="d-flex" style="border: 1px dashed  #000; border-radius: 8px; padding: 6px; margin-bottom: 10px;">
+                                <div class="d-flex"
+                                     style="border: 1px dashed  #000; border-radius: 8px; padding: 6px; margin-bottom: 10px;">
                                     <div style="border-right: 1px dashed  #000; flex: 1; padding: 18px 0;">
-                                        <i class="fa-solid fa-tickets-perforated" style="font-size: 36px; padding: 0px 12px;"></i>
+                                        <i class="fa-solid fa-tickets-perforated"
+                                           style="font-size: 36px; padding: 0px 12px;"></i>
                                     </div>
                                     <div style="flex: 3; padding: 4px;font-size: 14px;">
                                         <div>Khuyến mại: khuyến mại 1</div>
@@ -516,9 +540,11 @@
                                         <div>Ngày hết hạn: 10/11/2024</div>
                                     </div>
                                 </div>
-                                <div class="d-flex" style="border: 1px dashed  #000; border-radius: 8px; padding: 6px; margin-bottom: 10px;">
+                                <div class="d-flex"
+                                     style="border: 1px dashed  #000; border-radius: 8px; padding: 6px; margin-bottom: 10px;">
                                     <div style="border-right: 1px dashed  #000; flex: 1; padding: 18px 0;">
-                                        <i class="fa-solid fa-tickets-perforated" style="font-size: 36px; padding: 0px 12px;"></i>
+                                        <i class="fa-solid fa-tickets-perforated"
+                                           style="font-size: 36px; padding: 0px 12px;"></i>
                                     </div>
                                     <div style="flex: 3; padding: 4px; font-size: 12px;">
                                         <div>Khuyến mại: khuyến mại 1</div>
@@ -527,9 +553,11 @@
                                         <div>Ngày hết hạn: 10/11/2024</div>
                                     </div>
                                 </div>
-                                <div class="d-flex" style="border: 1px dashed  #000; border-radius: 8px; padding: 6px; margin-bottom: 10px;">
+                                <div class="d-flex"
+                                     style="border: 1px dashed  #000; border-radius: 8px; padding: 6px; margin-bottom: 10px;">
                                     <div style="border-right: 1px dashed  #000; flex: 1; padding: 18px 0;">
-                                        <i class="fa-solid fa-tickets-perforated" style="font-size: 36px; padding: 0px 12px;"></i>
+                                        <i class="fa-solid fa-tickets-perforated"
+                                           style="font-size: 36px; padding: 0px 12px;"></i>
                                     </div>
                                     <div style="flex: 3; padding: 4px;font-size: 14px;">
                                         <div>Khuyến mại: khuyến mại 1</div>
@@ -538,9 +566,11 @@
                                         <div>Ngày hết hạn: 10/11/2024</div>
                                     </div>
                                 </div>
-                                <div class="d-flex" style="border: 1px dashed  #000; border-radius: 8px; padding: 6px; margin-bottom: 10px;">
+                                <div class="d-flex"
+                                     style="border: 1px dashed  #000; border-radius: 8px; padding: 6px; margin-bottom: 10px;">
                                     <div style="border-right: 1px dashed  #000; flex: 1; padding: 18px 0;">
-                                        <i class="fa-solid fa-tickets-perforated" style="font-size: 36px; padding: 0px 12px;"></i>
+                                        <i class="fa-solid fa-tickets-perforated"
+                                           style="font-size: 36px; padding: 0px 12px;"></i>
                                     </div>
                                     <div style="flex: 3; padding: 4px;font-size: 14px;">
                                         <div>Khuyến mại: khuyến mại 1</div>
@@ -565,7 +595,7 @@
                         </select>
                         <div class="text-center mt-4">
                             <div class="btn btn-dark btn-sm">Thanh toán</div>
-                            <div class="btn btn-dark btn-sm">Hủy hóa đơn </div>
+                            <div class="btn btn-dark btn-sm">Hủy hóa đơn</div>
                         </div>
                     </div>
                 </div>
@@ -581,9 +611,9 @@
                 <h5 class="modal-title" id="exampleModalLabel">Thêm vào giỏ hàng</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body"  style="padding:30px">
+            <div class="modal-body" style="padding:30px">
                 <div>
-                    <form >
+                    <form>
                         <div class="display_none">
                             <input type="text" class="form-control" id="idCustomer" value="">
                         </div>
@@ -602,7 +632,18 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src = "/js/ProductDetail.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+<script src="/js/ProductDetail.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".livesearch").chosen({
+            width: "100%", // Đảm bảo các select box có độ rộng đầy đủ
+            disable_search_threshold: 10, // Chỉ hiện tìm kiếm khi có hơn 10 lựa chọn
+            no_results_text: "Không có kết quả nào trùng khớp!"
+        });
+    });
+</script>
 <script>
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {

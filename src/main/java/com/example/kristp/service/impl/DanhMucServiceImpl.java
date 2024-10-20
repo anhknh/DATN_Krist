@@ -26,6 +26,11 @@ public class DanhMucServiceImpl implements DanhMucService {
     }
 
     @Override
+    public ArrayList<DanhMuc> getAllDanhMucHD() {
+        return (ArrayList<DanhMuc>) danhMucRepository.findAllDanhMuc();
+    }
+
+    @Override
     public DanhMuc getDanhmucById(int id) {
         return danhMucRepository.findById(id).get();
     }
