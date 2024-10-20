@@ -1,6 +1,7 @@
 package com.example.kristp.controller.admin;
 
 
+import com.example.kristp.entity.MauSac;
 import com.example.kristp.entity.Size;
 import com.example.kristp.entity.TayAo;
 import com.example.kristp.service.TayAoService;
@@ -90,5 +91,15 @@ public class TayAoController {
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-tay-ao/pagination-tay-ao";
 
+    }
+
+    @GetMapping("/tim-kiem-tat-ca-theo-ten")
+    private String timKiemTatCaTheoTen(@RequestParam("tenTimKiem")String ten ,@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo, Model model){
+        Page<TayAo> tayaos= tayAoService.timTatCaTheoTen(pageNo,"%"+ten+"%");
+        model.addAttribute("tayAoList" , tayaos.getContent());
+        model.addAttribute("currentPage" , pageNo);
+        model.addAttribute("totalPage" , tayaos.getTotalPages());
+        model.addAttribute("tayAoCre" , new TayAo() );
+        return "view-admin/dashbroad/crud-tay-ao";
     }
 }

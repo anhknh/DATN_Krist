@@ -19,4 +19,5 @@ public interface TayAoService {
 
     TayAo timTheoTenTayAo(String kieuTayAo);
     Page<TayAo> getPaginationTayAo(Integer pageNo);
+    Page<TayAo> timTatCaTheoTen(Integer pageNo, String ten);
 }

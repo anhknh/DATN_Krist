@@ -77,4 +77,10 @@ public class SizeServiceImpl implements SizeService {
         Pageable pageable = PageRequest.of(pageNo , 5);
         return sizeRepository.findAll(pageable);
     }
+
+    @Override
+    public Page<Size> timTatCaTheoTen(Integer pageNo, String ten) {
+        Pageable pageable = PageRequest.of(pageNo , 5);
+        return sizeRepository.findAllByTenLike(pageable,ten);
+    }
 }

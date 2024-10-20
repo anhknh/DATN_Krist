@@ -75,4 +75,10 @@ public class TayAoServiceImpl implements TayAoService {
         Pageable pageable = PageRequest.of(pageNo , 5);
         return tayAoRepository.findAll(pageable);
     }
+
+    @Override
+    public Page<TayAo> timTatCaTheoTen(Integer pageNo, String ten) {
+        Pageable pageable = PageRequest.of(pageNo , 5);
+        return tayAoRepository.findAllByTenLike(pageable,ten);
+    }
 }

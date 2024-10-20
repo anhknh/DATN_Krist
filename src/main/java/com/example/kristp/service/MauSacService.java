@@ -20,4 +20,5 @@ public interface MauSacService {
 
     MauSac timTheoMaMauSac(String maMauSac);
     Page<MauSac> getPaginationMauSac(Integer pageNo);
+    Page<MauSac> timTatCaTheoTen(Integer pageNo, String ten);
 }

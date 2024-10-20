@@ -124,235 +124,67 @@
           <!-- headre_content -->
           <div class="mb-4">
             <div class="w-100">
-              <h4>Sửa khuyến mãi</h4>
+              <h4>Update khuyến mại</h4>
+
             </div>
-            <div class="w-100">
-              <form action="/duong-dan-xu-ly" method="POST"> <!-- Thay thế /duong-dan-xu-ly bằng URL xử lý -->
-                <div class="row">
-                  <!-- Mã khuyến mãi -->
-                  <div class="col-md-6 mt-2">
-                    <div class="form-group">
-                      <label for="ma_khuyen_mai">Mã khuyến mãi</label>
-                      <input type="text" id="ma_khuyen_mai" name="ma_khuyen_mai" class="form-control" placeholder="Nhập mã khuyến mãi" required>
-                    </div>
-                  </div>
-
-                  <!-- Tên khuyến mãi -->
-                  <div class="col-md-6 mt-2">
-                    <div class="form-group">
-                      <label for="ten_khuyen_mai">Tên khuyến mãi</label>
-                      <input type="text" id="ten_khuyen_mai" name="ten_khuyen_mai" class="form-control" placeholder="Nhập tên khuyến mãi">
-                    </div>
-                  </div>
-
-                  <!-- Kiểu khuyến mãi -->
-                  <div class="col-md-6 mt-2">
-                    <div class="form-group">
-                      <label for="kieu_khuyen_mai">Kiểu khuyến mãi</label>
-                      <input type="text" id="kieu_khuyen_mai" name="kieu_khuyen_mai" class="form-control" placeholder="Nhập kiểu khuyến mãi">
-                    </div>
-                  </div>
-
-                  <!-- Giá trị khuyến mãi -->
-                  <div class="col-md-6 mt-2">
-                    <div class="form-group">
-                      <label for="gia_tri">Giá trị</label>
-                      <input type="number" step="0.01" id="gia_tri" name="gia_tri" class="form-control" placeholder="Nhập giá trị khuyến mãi">
-                    </div>
-                  </div>
-
-                  <!-- Mức giảm tối đa -->
-                  <div class="col-md-6 mt-2">
-                    <div class="form-group">
-                      <label for="muc_giam_toi_da">Mức giảm tối đa</label>
-                      <input type="number" step="0.01" id="muc_giam_toi_da" name="muc_giam_toi_da" class="form-control" placeholder="Nhập mức giảm tối đa">
-                    </div>
-                  </div>
-
-                  <!-- Trạng thái -->
-                  <div class="col-md-6 mt-2">
-                    <div class="form-group">
-                      <label for="trang_thai">Trạng thái</label>
-                      <select id="trang_thai" name="trang_thai" class="form-control">
-                        <option selected>Chọn trạng thái</option>
-                        <option value="Hoạt động">Hoạt động</option>
-                        <option value="Không hoạt động">Không hoạt động</option>
-                        <!-- Thêm các tùy chọn khác nếu cần -->
-                      </select>
-                    </div>
-                  </div>
-
-                  <!-- Ngày bắt đầu -->
-                  <div class="col-md-6 mt-2">
-                    <div class="form-group">
-                      <label for="ngay_bat_dau">Ngày bắt đầu</label>
-                      <input type="datetime-local" id="ngay_bat_dau" name="ngay_bat_dau" class="form-control">
-                    </div>
-                  </div>
-
-                  <!-- Ngày kết thúc -->
-                  <div class="col-md-6 mt-2">
-                    <div class="form-group">
-                      <label for="ngay_ket_thuc">Ngày kết thúc</label>
-                      <input type="datetime-local" id="ngay_ket_thuc" name="ngay_ket_thuc" class="form-control">
-                    </div>
-                  </div>
-
-                  <!-- Ngày tạo -->
-                  <div class="col-md-6 mt-2">
-                    <div class="form-group">
-                      <label for="ngay_tao">Ngày tạo</label>
-                      <input type="datetime-local" id="ngay_tao" name="ngay_tao" class="form-control" value="<%= current_date %>" readonly>
-                    </div>
-                  </div>
-
-                  <!-- Ngày sửa -->
-                  <div class="col-md-6 mt-2">
-                    <div class="form-group">
-                      <label for="ngay_sua">Ngày sửa</label>
-                      <input type="datetime-local" id="ngay_sua" name="ngay_sua" class="form-control" value="<%= current_date %>" readonly>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Nút submit -->
-                <div class="form-group d-flex justify-content mt-4">
-                  <button type="submit" class="btn btn-primary">Lưu</button>
-                </div>
-              </form>
+            <!-- Hiển thị thông báo nếu có -->
+            <div th:if="${message}" class="alert" th:class="${messageType}">
+              <strong th:text="${titleMsg}">Thông báo</strong>: <span th:text="${message}"></span>
             </div>
+
+            <!-- Form cập nhật khuyến mãi -->
+            <form th:action="@{/update-khuyen-mai/{id}(id=${khuyenMaiCre.id})}" th:object="${khuyenMaiCre}" method="post">
+              <div class="form-group">
+                <label for="maKhuyenMai">Mã khuyến mãi:</label>
+                <input type="text" class="form-control" id="maKhuyenMai" th:field="*{maKhuyenMai}" required />
+              </div>
+              <div class="form-group">
+                <label for="tenKhuyenMai">Tên khuyến mãi:</label>
+                <input type="text" class="form-control" id="tenKhuyenMai" th:field="*{tenKhuyenMai}" required />
+              </div>
+              <div class="form-group">
+                <label for="kieuKhuyenMai">Kiểu khuyến mãi:</label>
+                <input type="text" class="form-control" id="kieuKhuyenMai" th:field="*{kieuKhuyenMai}" required />
+              </div>
+              <div class="form-group">
+                <label for="giaTri">Giá trị:</label>
+                <input type="number" class="form-control" id="giaTri" th:field="*{giaTri}" required />
+              </div>
+              <div class="form-group">
+                <label for="mucGiamToiDa">Mức giảm tối đa:</label>
+                <input type="number" class="form-control" id="mucGiamToiDa" th:field="*{mucGiamToiDa}" required />
+              </div>
+              <div class="form-group">
+                <label for="ngayBatDau">Ngày bắt đầu:</label>
+                <input type="date" class="form-control" id="ngayBatDau" th:field="*{ngayBatDau}" required />
+              </div>
+              <div class="form-group">
+                <label for="ngayKetThuc">Ngày kết thúc:</label>
+                <input type="date" class="form-control" id="ngayKetThuc" th:field="*{ngayKetThuc}" required />
+              </div>
+              <div class="form-group">
+                <label for="trangThai">Trạng thái:</label>
+                <select class="form-control" id="trangThai" th:field="*{trangThai}">
+                  <option value="Dang hoat dong">Đang hoạt động</option>
+                  <option value="Ngung hoat dong"> Ngừng hoạt động</option>
+                  <option value="Het han"> Hết Hạn </option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Cập nhật</button>
+              <a th:href="@{/quan-ly-khuyen-mai/pagination-khuyen-mai}" class="btn btn-secondary">Trở về</a>
+            </form>
+          </div>
           </div>
         </div>
-
-
-        <!-- table -->
-        <div style="margin-bottom: 28px;">
-          <table class="table" style="border-top: 1px solid #E9E9EB;">
-            <thead>
-            <tr>
-              <th scope="col" style="padding-left: 20px;">Id</th>
-              <th scope="col">Name</th>
-              <th scope="col">Describe</th>
-              <th scope="col" class="text-center">Is Active</th>
-              <th scope="col" class="text-center">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="category , stat : ${CategoryList}">
-              <td style="padding: 12px 6px;" th:text="${category.id}">
-              </td>
-              <td style="padding: 12px 6px; line-height: 305%;" th:text="${category.tenDanhMuc}"
-                  th:class="valueName">
-              </td>
-              <td style="padding: 12px 6px; line-height: 305%;" th:text="${category.moTa}"
-                  th:class="valueDes">
-              </td>
-              <td class="text-center" style="padding: 12px 6px; line-height: 305%;">
-                <i class="fa-regular"
-                   th:classappend="${category.trangThai == category.trangThai.ACTIVE ? 'fa-check' : 'fa-x'}"></i>
-              </td>
-
-              </td>
-              <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">
-                <div class="d-flex justify-content-center">
-                  <a th:href="@{/quan-ly-danh-muc/delete-danh-muc/{id}(id=${category.id})}"
-                     class="btn btn-outline-secondary me-2">Delete</a>
-                  <div class="btn btn-outline-secondary" style="display: inline-block;"
-                       data-bs-toggle="modal"
-                       data-bs-target="#modalCategories"
-                       th:attr="onclick=|saveIdOrder('${category.id}','${stat.index}' , '${category.trangThai}' )|">
-                    Update
-                  </div>
-                </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <!-- page_number -->
-          <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end">
-              <!-- Nút Previous -->
-              <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
-                <a class="page-link" style="color: #5C5F6A"
-                   th:href="@{/quan-ly-danh-muc/pagination-danh-muc(pageNo=0)}"
-                   aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <!-- Vòng lặp phân trang -->
-              <li th:if="${totalPage > 0}" th:each="i : ${#numbers.sequence(1, totalPage)}"
-                  th:classappend="${currentPage == i - 1 ? 'active' : ''}"
-                  class="page-item">
-                <a class="page-link"
-                   th:href="@{/quan-ly-danh-muc/pagination-danh-muc(pageNo=${i - 1})}"
-                   th:text="${i}" style="color: #5C5F6A"></a>
-              </li>
-              <!-- Nút Next -->
-              <li class="page-item"
-                  th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}">
-                <a class="page-link" style="color: #5C5F6A"
-                   th:href="@{/quan-ly-danh-muc/pagination-danh-muc(pageNo=${totalPage - 1})}"
-                   aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-
-        </div>
       </div>
-    </div>
+
   </div>
 </div>
 </div>
 
-<div class="modal fade" id="modalCategories" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="margin-top: 100px;">
-      <div class="modal-header">`
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" style="padding:30px">
-        <div>
-          <form method="post" id="form_submit" novalidate th:object="${categoryCre}" class="needs-validation">
-            <div class="display_none">
-              <input type="text" class="form-control" id="idCustomer" name="idColor" value=""
-                     th:field="*{id}">
-            </div>
-            <div class="mb-4">
-              <label for="nameCate" class="form-label">Name Category</label>
-              <input type="text" class="form-control" id="nameCate" placeholder="Enter category name"
-                     name="categoryName" th:field="*{tenDanhMuc}" required>
-              <div class="invalid-feedback">Tên danh mục không hợp lệ .</div>
-            </div>
-            <div class="mb-4">
-              <label for="desCate" class="form-label">Describe</label>
-              <input type="text" class="form-control" name="describe" id="desCate"
-                     placeholder="Enter describe" th:field="*{moTa}" required>
-              <div class="invalid-feedback">Mô tả không hợp lệ không hợp lệ .</div>
-            </div>
-            <div class="mb-4 display_none" id="statusSection">
-              <label class="form-label">Status</label><br>
-              <input type="radio" th:field="*{trangThai}" id="active"
-                     th:value="${T(com.example.kristp.enums.Status).ACTIVE}">
-              <label for="active">Active</label><br>
 
-              <input type="radio" th:field="*{trangThai}" id="inactive"
-                     th:value="${T(com.example.kristp.enums.Status).INACTIVE}">
-              <label for="inactive">Inactive</label>
-            </div>
-            <div>
-              <button type="submit" class="btn btn-dark">Save</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+
 <!-- Alert thông báo thất bại -->
 <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert"
      id="alertMessage" style="display: none;">
@@ -368,36 +200,36 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 
-  const idCustomer = document.getElementById("idCustomer");
-  const valueName = document.querySelectorAll(".valueName");
-  const valueDes = document.querySelectorAll(".valueDes");
-  // Lấy về thuộc tính có id và điều chỉnh theo mong muốn trong hàm saveIdOrder
-  const nameCate = document.getElementById('nameCate');
-  const desCate = document.getElementById('desCate');
+  const idKhuyenMai = document.getElementById("idKhuyenMai");
+  const maKhuyenMai = document.getElementById('maKhuyenMai');
+  const tenKhuyenMai = document.getElementById('tenKhuyenMai');
+  const kieuKhuyenMai = document.getElementById('kieuKhuyenMai');
+  const mucGiam = document.getElementById('mucGiam');
+  const giaTri = document.getElementById('giaTri');
   const statusSection = document.getElementById('statusSection');
 
   function saveIdOrder(id, index, hanhDong) {
-    idCustomer.value = id;
+    idKhuyenMai.value = id;
     if (index != null) {
-      nameCate.value = valueName[index].textContent.trim();
-      desCate.value = valueDes[index].textContent.trim();
+      maKhuyenMai.value = valueName[index].textContent.trim();  // Cập nhật mã khuyến mại
+      tenKhuyenMai.value = valueDes[index].textContent.trim();  // Cập nhật tên khuyến mại
       statusSection.classList.remove('display_none');
-      document.getElementById('exampleModalLabel').innerText = 'Update category';
-      // Kiểm tra class của icon
-      if (hanhDong == "ACTIVE") {
-        // Nếu class là 'fa-check', chọn radio button active
+      document.getElementById('exampleModalLabel').innerText = 'Cập nhật khuyến mại';
+      // Kiểm tra trạng thái và chọn radio button tương ứng
+      if (hanhDong == "Dang hoat dong") {
         document.getElementById('active').checked = true;
-      } else {
-        // Ngược lại nếu class là 'fa-x', chọn radio button inactive
+      } else if (hanhDong == "Ngung hoat dong") {
         document.getElementById('inactive').checked = true;
+      } else if (hanhDong == "Het han") {
+        document.getElementById('hethan').checked = true;
       }
-      document.getElementById("form_submit").action = '/quan-ly-danh-muc/update-danh-muc';
+      document.getElementById("form_submit").action = '/quan-ly-khuyen-mai/update-khuyen-mai';
     } else {
       statusSection.classList.add('display_none');
-      document.getElementById('exampleModalLabel').innerText = 'Add category';
-      nameCate.value = "";
-      desCate.value = "";
-      document.getElementById("form_submit").action = '/quan-ly-danh-muc/add-danh-muc';
+      document.getElementById('exampleModalLabel').innerText = 'Thêm mới khuyến mại';
+      maKhuyenMai.value = "";
+      tenKhuyenMai.value = "";
+      document.getElementById("form_submit").action = '/quan-ly-khuyen-mai/add-khuyen-mai';
     }
   }
 

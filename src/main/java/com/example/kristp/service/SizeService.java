@@ -21,4 +21,5 @@ public interface SizeService {
 
     Size timTheoTenSize(String tenSize);
     Page<Size> getPaginationSize(Integer pageNo);
+    Page<Size> timTatCaTheoTen(Integer pageNo, String ten);
 }
