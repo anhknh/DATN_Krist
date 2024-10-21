@@ -1,5 +1,6 @@
 package com.example.kristp.entity;
 
+import com.example.kristp.enums.HoaDonStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,16 @@ public class HoaDon extends BaseEntity {
     private Date ngayDatHang;
     @Column(name = "tong_tien")
     private BigDecimal tongTien;
+    @Enumerated(EnumType.STRING)
     @Column(name = "trang_thai")
-    private String trangThai;
+    private HoaDonStatus trangThai;
+    private String trangThaiThanhToan;
+    private float phiVanChuyen;
+    private String hinhThucThanhToan;
+    @ManyToOne
+    @JoinColumn(name = "id_nhan_vien")
+    private NhanVien nhanVien;
+    @ManyToOne
+    @JoinColumn(name = "id_khuyen_mai")
+    private KhuyenMai khuyenMai;
 }
