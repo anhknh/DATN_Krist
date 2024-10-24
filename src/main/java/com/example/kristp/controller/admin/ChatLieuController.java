@@ -1,7 +1,6 @@
 package com.example.kristp.controller.admin;
 
 import com.example.kristp.entity.ChatLieu;
-import com.example.kristp.entity.DanhMuc;
 import com.example.kristp.service.ChatLieuService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
