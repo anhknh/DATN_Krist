@@ -43,8 +43,7 @@ public class SanPhamServiceImpl implements SanPhamService {
     }
 
     public SanPham findSanphamById(Integer id) {
-//        return sanPhamRepository.findSanPhamById(id);
-        return null;
+        return sanPhamRepository.findById(id).orElse(null);
     }
 
     public Integer addSanpham(Integer danhMuc, Integer chatLieu, String tenSanPham, String moTa, Status trangThai) {

@@ -25,7 +25,7 @@ public class HoaDonChiTiet extends BaseEntity {
     @Column(name = "so_luong")
     private Integer soLuong;
     @Column(name = "gia_tien")
-    private BigDecimal giaTien;
+    private Float giaTien;
     @ManyToOne
     @JoinColumn(name = "id_chi_tiet_san_pham")
     private ChiTietSanPham chiTietSanPham;

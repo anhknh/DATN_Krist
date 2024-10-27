@@ -1,7 +1,6 @@
 package com.example.kristp.controller.admin;
 
-import com.example.kristp.entity.HoaDon;
-import com.example.kristp.entity.SanPham;
+import com.example.kristp.entity.*;
 import com.example.kristp.service.*;
 import com.example.kristp.utils.Pagination;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,12 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +39,10 @@ public class BanHangController {
     SizeService sizeService;
     @Autowired
     HoaDonService hoaDonService;
+    @Autowired
+    HoaDonChiTietService hoaDonChiTietService;
+    @Autowired
+    BanHangService banHangService;
     HoaDon hoaDonSelected = null;
 
 
@@ -55,21 +56,34 @@ public class BanHangController {
                           @RequestParam(value = "coAoId", required = false) List<Integer>  coAoId,
                           @RequestParam(value = "mauSacId", required = false) List<Integer>  mauSacId,
                           @RequestParam(value = "sizeId", required = false) List<Integer>  sizeId,
+                          @RequestParam("pageHd") Optional<Integer> pageHd,
                           @RequestParam("page") Optional<Integer> page) {
         Pagination pagination = new Pagination();
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
+        Pageable pageablehd = PageRequest.of(pageHd.orElse(0), 5);
         Page<SanPham> listSanPham = timKiemSanPhamService.timKiemSanPham(tenSanPham,danhMucId,chatLieuId,
                 tayAoId,coAoId,mauSacId,sizeId,pageable);
+
+        Page<HoaDonChiTiet> listHoaDonChiTiet = hoaDonChiTietService.getHoaDonChiTietByHoaDon(hoaDonSelected, pageablehd);
         model.addAttribute("totalPage", listSanPham.getTotalPages() - 1);
         model.addAttribute("page", listSanPham);
         model.addAttribute("pagination", pagination.getPage(listSanPham.getNumber(), listSanPham.getTotalPages()));
         model.addAttribute("listSanPham", listSanPham.getContent());
+
+        //page hoa don
+
+        model.addAttribute("totalPageHd", listHoaDonChiTiet.getTotalPages() - 1);
+        model.addAttribute("pagehd", listHoaDonChiTiet);
+        model.addAttribute("paginationHd", pagination.getPage(listHoaDonChiTiet.getNumber(), listHoaDonChiTiet.getTotalPages()));
+        model.addAttribute("listHoaDonChiTiet", listHoaDonChiTiet.getContent());
         //load bill
         List<HoaDon> hoaDons = hoaDonService.findAllHoaDonCho();
         if (hoaDonSelected == null) {
             hoaDonSelected = hoaDons.get(0);
         } else {
-            hoaDonSelected = hoaDonService.findHoaDonById(idHoaDon);
+            if(idHoaDon != null) {
+                hoaDonSelected = hoaDonService.findHoaDonById(idHoaDon);
+            }
         }
         model.addAttribute("listHoaDon", hoaDons);
         model.addAttribute("hoaDonSelected", hoaDonSelected);
@@ -82,8 +96,42 @@ public class BanHangController {
         model.addAttribute("listMauSac", mauSacService.getAllMauSacHD());
         model.addAttribute("listSize", sizeService.getAllSizeHD());
         model.addAttribute("chiTietSanPhamService", chiTietSanPhamService);
-        System.out.println(idHoaDon);
+        //thông tin hóa đơn
+        model.addAttribute("tongTien", banHangService.getTongTien(hoaDonSelected));
+        //khuyến mại
+        List<KhuyenMai> khuyenMaiList = new ArrayList<>();
+        model.addAttribute("listKM", khuyenMaiList);
         return "view-admin/dashbroad/ban-hang";
+    }
+
+    // Trả về chi tiet san pham theo productId
+    @GetMapping("/chi-tiet-san-pham/{productId}")
+    @ResponseBody
+    public List<ChiTietSanPham> getCTSPByProductId(@PathVariable Integer productId) {
+        return chiTietSanPhamService.getProductDetailsByProductId(productId);
+    }
+
+    // Trả về danh sách màu sắc theo productId
+    @GetMapping("/colors/{productId}")
+    @ResponseBody
+    public List<MauSac> getColorsByProductId(@PathVariable Integer productId) {
+        return chiTietSanPhamService.getColorsByProductId(productId);
+    }
+
+    // Trả về danh sách size theo productId
+    @GetMapping("/sizes/{productId}")
+    @ResponseBody
+    public List<Size> getSizesByProductId(@PathVariable Integer productId) {
+        return chiTietSanPhamService.getSizesByProductId(productId);
+    }
+
+    // Trả về chi tiết sản phẩm theo productId, colorId và sizeId
+    @GetMapping("/details/{productId}/{colorId}/{sizeId}")
+    @ResponseBody
+    public ChiTietSanPham getProductDetailByColorAndSize(@PathVariable Integer productId,
+                                                         @PathVariable Integer colorId,
+                                                         @PathVariable Integer sizeId) {
+        return chiTietSanPhamService.getProductDetailByColorAndSize(productId, colorId, sizeId);
     }
 
 
@@ -100,6 +148,30 @@ public class BanHangController {
         }
 
 
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
+    }
+
+    @PostMapping("/them-gio-hang")
+    public String themGioHang(HttpServletRequest request, Model model,
+                              @RequestParam("chiTietSanPhamId") Integer chiTietSanPhamId,
+                              @RequestParam("soLuong") Integer soLuong,
+                              RedirectAttributes redirectAttributes) {
+
+
+        if (hoaDonSelected == null) {
+            redirectAttributes.addFlashAttribute("message", "Vui lòng chọn hóa đơn thao tác!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+
+        } else {
+            banHangService.addGioHang(hoaDonSelected, chiTietSanPhamId, soLuong);
+            redirectAttributes.addFlashAttribute("message", "Thêm Thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        }
         //get url request
         String referer = request.getHeader("referer");
         //reload page

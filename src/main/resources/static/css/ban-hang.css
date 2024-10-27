@@ -3,3 +3,146 @@
     background-color: #fff;
     padding: 8px 12px;
 }
+/* Modal custom styles */
+.modal-dialog {
+    max-width: 90%;
+    width: 1024px;
+}
+
+.modal-content {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    display: flex;
+    gap: 20px;
+    padding: 30px;
+}
+
+.content_left {
+    flex: 1;
+    background-color: #F6F6F6;
+    border-radius: 6px;
+    padding: 16px;
+}
+
+.content_left img {
+    width: 80%;
+    border-radius: 8px;
+    object-fit: cover;
+    margin: 0 auto;
+}
+
+.content_right {
+    flex: 1;
+}
+
+.carousel-inner {
+    padding: 28px;
+}
+
+.carousel-inner img {
+    border-radius: 8px;
+    max-height: 300px;
+}
+
+#colorSizeOptions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+/* Color and Size Options */
+.color-size-option {
+    padding: 8px;
+    border: 1px solid #E6E7E8;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    display: inline-flex;
+    align-items: center;
+}
+
+.color-size-option:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.color-size-option.selected {
+    border-color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Product Info and Quantity Controls */
+#productPrice {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+#productQuantity {
+    font-size: 12px;
+    color: #5C5F6A;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.6px;
+}
+
+.product_cart {
+    margin-top: 12px;
+}
+
+.product_cart .quantity_number {
+    font-size: 1rem;
+    padding: 0 8px;
+}
+
+.product_cart button {
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.product_cart .btn_Subtrac,
+.product_cart .btn_plus {
+    color: #333;
+}
+
+/* Add to Cart Button */
+a[data-bs-target="#modal_cart"] {
+    display: inline-block;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 68px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+a[data-bs-target="#modal_cart"]:hover {
+    background-color: #333;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .modal-body {
+        flex-direction: column;
+    }
+
+    .content_left,
+    .content_right {
+        width: 100%;
+    }
+}
+
