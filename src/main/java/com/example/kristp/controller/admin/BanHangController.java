@@ -47,7 +47,138 @@ public class BanHangController {
 
 
     @GetMapping("/ban-hang")
-    public String banHang() {
+    public String banHang(Model model,
+                          @RequestParam(value = "idHoaDon", required = false) Integer idHoaDon,
+                          @RequestParam(value = "tenSanPham", required = false) String tenSanPham,
+                          @RequestParam(value = "danhMucId", required = false) List<Integer> danhMucId,
+                          @RequestParam(value = "chatLieuId", required = false) List<Integer>  chatLieuId,
+                          @RequestParam(value = "tayAoId", required = false) List<Integer>  tayAoId,
+                          @RequestParam(value = "coAoId", required = false) List<Integer>  coAoId,
+                          @RequestParam(value = "mauSacId", required = false) List<Integer>  mauSacId,
+                          @RequestParam(value = "sizeId", required = false) List<Integer>  sizeId,
+                          @RequestParam("pageHd") Optional<Integer> pageHd,
+                          @RequestParam("page") Optional<Integer> page) {
+        Pagination pagination = new Pagination();
+        Pageable pageable = PageRequest.of(page.orElse(0), 5);
+        Pageable pageablehd = PageRequest.of(pageHd.orElse(0), 5);
+        Page<SanPham> listSanPham = timKiemSanPhamService.timKiemSanPham(tenSanPham,danhMucId,chatLieuId,
+                tayAoId,coAoId,mauSacId,sizeId,pageable);
+
+        Page<HoaDonChiTiet> listHoaDonChiTiet = hoaDonChiTietService.getHoaDonChiTietByHoaDon(hoaDonSelected, pageablehd);
+        model.addAttribute("totalPage", listSanPham.getTotalPages() - 1);
+        model.addAttribute("page", listSanPham);
+        model.addAttribute("pagination", pagination.getPage(listSanPham.getNumber(), listSanPham.getTotalPages()));
+        model.addAttribute("listSanPham", listSanPham.getContent());
+
+        //page hoa don
+
+        model.addAttribute("totalPageHd", listHoaDonChiTiet.getTotalPages() - 1);
+        model.addAttribute("pagehd", listHoaDonChiTiet);
+        model.addAttribute("paginationHd", pagination.getPage(listHoaDonChiTiet.getNumber(), listHoaDonChiTiet.getTotalPages()));
+        model.addAttribute("listHoaDonChiTiet", listHoaDonChiTiet.getContent());
+        //load bill
+        List<HoaDon> hoaDons = hoaDonService.findAllHoaDonCho();
+        if (hoaDonSelected == null) {
+            hoaDonSelected = hoaDons.get(0);
+        } else {
+            if(idHoaDon != null) {
+                hoaDonSelected = hoaDonService.findHoaDonById(idHoaDon);
+            }
+        }
+        model.addAttribute("listHoaDon", hoaDons);
+        model.addAttribute("hoaDonSelected", hoaDonSelected);
+
+        //load filter
+        model.addAttribute("listDanhMuc", danhMucService.getAllDanhMucHD());
+        model.addAttribute("listChatLieu", chatLieuService.getAllChatLieuHD());
+        model.addAttribute("listTayAo", tayAoService.getAllTayAoHD());
+        model.addAttribute("listCoAo", coAoService.getAllCoAoHD());
+        model.addAttribute("listMauSac", mauSacService.getAllMauSacHD());
+        model.addAttribute("listSize", sizeService.getAllSizeHD());
+        model.addAttribute("chiTietSanPhamService", chiTietSanPhamService);
+        //thông tin hóa đơn
+        model.addAttribute("tongTien", banHangService.getTongTien(hoaDonSelected));
+        //khuyến mại
+        List<KhuyenMai> khuyenMaiList = new ArrayList<>();
+        model.addAttribute("listKM", khuyenMaiList);
         return "view-admin/dashbroad/ban-hang";
     }
+
+    // Trả về chi tiet san pham theo productId
+    // Trả về chi tiet san pham theo productId
+    // Trả về chi tiet san pham theo productId
+    // Trả về chi tiet san pham theo productId
+    @GetMapping("/chi-tiet-san-pham/{productId}")
+    @ResponseBody
+    public List<ChiTietSanPham> getCTSPByProductId(@PathVariable Integer productId) {
+        return chiTietSanPhamService.getProductDetailsByProductId(productId);
+    }
+
+    // Trả về danh sách màu sắc theo productId
+    @GetMapping("/colors/{productId}")
+    @ResponseBody
+    public List<MauSac> getColorsByProductId(@PathVariable Integer productId) {
+        return chiTietSanPhamService.getColorsByProductId(productId);
+    }
+
+    // Trả về danh sách size theo productId
+    @GetMapping("/sizes/{productId}")
+    @ResponseBody
+    public List<Size> getSizesByProductId(@PathVariable Integer productId) {
+        return chiTietSanPhamService.getSizesByProductId(productId);
+    }
+
+    // Trả về chi tiết sản phẩm theo productId, colorId và sizeId
+    @GetMapping("/details/{productId}/{colorId}/{sizeId}")
+    @ResponseBody
+    public ChiTietSanPham getProductDetailByColorAndSize(@PathVariable Integer productId,
+                                                         @PathVariable Integer colorId,
+                                                         @PathVariable Integer sizeId) {
+        return chiTietSanPhamService.getProductDetailByColorAndSize(productId, colorId, sizeId);
+    }
+
+
+    @GetMapping("/tao-hoa-don")
+    public String taoHoaDon(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
+        if (hoaDonService.taoHoaDon()) {
+            redirectAttributes.addFlashAttribute("message", "Tạo hóa đơn chờ thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Hóa đơn chờ đã đạt giới hạn!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+        }
+
+
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
+    }
+
+    @PostMapping("/them-gio-hang")
+    public String themGioHang(HttpServletRequest request, Model model,
+                              @RequestParam("chiTietSanPhamId") Integer chiTietSanPhamId,
+                              @RequestParam("soLuong") Integer soLuong,
+                              RedirectAttributes redirectAttributes) {
+
+
+        if (hoaDonSelected == null) {
+            redirectAttributes.addFlashAttribute("message", "Vui lòng chọn hóa đơn thao tác!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+
+        } else {
+            banHangService.addGioHang(hoaDonSelected, chiTietSanPhamId, soLuong);
+            redirectAttributes.addFlashAttribute("message", "Thêm Thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        }
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
+    }
+
 }
