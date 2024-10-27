@@ -105,6 +105,9 @@ public class BanHangController {
     }
 
     // Trả về chi tiet san pham theo productId
+    // Trả về chi tiet san pham theo productId
+    // Trả về chi tiet san pham theo productId
+    // Trả về chi tiet san pham theo productId
     @GetMapping("/chi-tiet-san-pham/{productId}")
     @ResponseBody
     public List<ChiTietSanPham> getCTSPByProductId(@PathVariable Integer productId) {
