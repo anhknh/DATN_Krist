@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface DanhMucService {
     ArrayList<DanhMuc> getAllDanhMuc();
+    ArrayList<DanhMuc> getAllDanhMucHD();
     DanhMuc getDanhmucById(int id);
     DanhMuc addDanhMuc(DanhMuc danhMuc);
 

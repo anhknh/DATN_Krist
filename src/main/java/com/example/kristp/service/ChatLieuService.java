@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface ChatLieuService {
     ArrayList<ChatLieu> getAllChatLieu();
+    ArrayList<ChatLieu> getAllChatLieuHD();
     ChatLieu getChatlieuById(int id);
 
     ChatLieu addChatLieu(ChatLieu chatLieu);

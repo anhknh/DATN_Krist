@@ -29,9 +29,8 @@ public class SanPham extends BaseEntity {
     @JoinColumn(name="id_chat_lieu")
     private ChatLieu chatLieu;
 
-    @OneToMany(mappedBy = "sanPham",cascade = CascadeType.ALL , fetch = FetchType.EAGER)
-    @ToString.Exclude
-    private List<ChiTietSanPham> chiTietSanPham;
+//    @OneToMany(mappedBy = "sanPham",cascade = CascadeType.ALL)
+//    private List<ChiTietSanPham> chiTietSanPham;
 
     private String tenSanPham ;
 

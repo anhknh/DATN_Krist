@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public interface CoAoService {
     ArrayList<CoAo> getAllCoAo();
+    ArrayList<CoAo> getAllCoAoHD();
     CoAo getCoAoById(int id);
     CoAo addCoAo(CoAo coAo);
 

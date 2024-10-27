@@ -8,9 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+
+import java.util.List;
 
 @Repository
 public interface CoAoRepository extends JpaRepository<CoAo, Integer> {
@@ -19,4 +22,7 @@ public interface CoAoRepository extends JpaRepository<CoAo, Integer> {
 
     @Query(value = "select ca from CoAo ca where ca.kieuCoAo LIKE :ten")
     Page<CoAo> findAllByTenLike(Pageable pageable, @Param("ten") String ten);
+
+    @Query("from CoAo co where co.trangThai = 1")
+    List<CoAo> findAllCoAo();
 }

@@ -4,6 +4,8 @@ import com.example.kristp.entity.SanPham;
 import com.example.kristp.repository.SanPhamRepository;
 import com.example.kristp.service.TimKiemSanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,13 +18,15 @@ public class TimKiemSanPhamServiceImpl implements TimKiemSanPhamService {
 
 
     @Override
-    public ArrayList<SanPham> timKiemSanPham(List<String> tenSanPham,
-                                             List<Integer> danhMucId,
-                                             List<Integer> chatLieuId,
-                                             List<Integer> tayAoId,
-                                             List<Integer> coAoId,
-                                             List<Integer> mauSacId,
-                                             List<Integer> sizeId) {
-        return (ArrayList<SanPham>) sanPhamRepository.timKiemSanPham(tenSanPham, danhMucId, chatLieuId, tayAoId, coAoId, mauSacId, sizeId);
+    public Page<SanPham> timKiemSanPham(String tenSanPham,
+                                        List<Integer> danhMucId,
+                                        List<Integer> chatLieuId,
+                                        List<Integer> tayAoId,
+                                        List<Integer> coAoId,
+                                        List<Integer> mauSacId,
+                                        List<Integer> sizeId,
+                                        Pageable pageable) {
+        return sanPhamRepository.timKiemSanPham(tenSanPham, danhMucId, chatLieuId,
+                tayAoId, coAoId, mauSacId, sizeId, pageable);
     }
 }
