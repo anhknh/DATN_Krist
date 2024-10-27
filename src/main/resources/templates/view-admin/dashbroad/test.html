@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý địa chỉ</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Quản lý địa chỉ</h2>
+
+    <!-- Hiển thị thông báo -->
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+    <button class="btn btn-primary" data-toggle="modal" data-target="#addDiaChiModal">Thêm địa chỉ</button>
+
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="diaChi : ${diaChiList}">
+            <td th:text="${diaChi.id}"></td>
+            <td th:text="${diaChi.sdt}"></td>
+            <td th:text="${diaChi.diaChi}"></td>
+            <td>
+                <button class="btn btn-warning"
+                        data-toggle="modal"
+                        data-target="#editDiaChiModal"
+                        th:data-id="${diaChi.id}"
+                        th:data-sdt="${diaChi.sdt}"
+                        th:data-diachi="${diaChi.diaChi}">
+                    Cập nhật
+                </button>
+                <a th:href="@{/user-dia-chi/delete-dia-chi/{id}(id=${diaChi.id})}" class="btn btn-danger">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal thêm địa chỉ -->
+    <div class="modal fade" id="addDiaChiModal" tabindex="-1" role="dialog" aria-labelledby="addDiaChiModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addDiaChiModalLabel">Thêm địa chỉ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="#" th:action="@{/user-dia-chi/add-dia-chi}" method="post" th:object="${diaChiCre}">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="sdt">Số điện thoại</label>
+                            <input type="text" class="form-control" id="sdt" th:field="*{sdt}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="diaChi">Địa chỉ</label>
+                            <input type="text" class="form-control" id="diaChi" th:field="*{diaChi}" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Thêm địa chỉ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal cập nhật địa chỉ -->
+    <div class="modal fade" id="editDiaChiModal" tabindex="-1" role="dialog" aria-labelledby="editDiaChiModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editDiaChiModalLabel">Cập nhật địa chỉ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="#" th:action="@{/user-dia-chi/update-dia-chi}" method="post">
+                    <div class="modal-body">
+                        <!-- Truyền ID địa chỉ như một trường ẩn -->
+                        <input type="hidden" name="id" id="editDiaChiId" />
+                        <div class="form-group">
+                            <label for="editSdt">Số điện thoại</label>
+                            <input type="text" class="form-control" id="editSdt" name="sdt" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editDiaChi">Địa chỉ</label>
+                            <input type="text" class="form-control" id="editDiaChi" name="diaChi" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Cập nhật địa chỉ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // Khi mở modal cập nhật, điền dữ liệu vào form
+    $('#editDiaChiModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Nút kích hoạt modal
+        var id = button.data('id');
+        var sdt = button.data('sdt');
+        var diaChi = button.data('diachi');
+
+        var modal = $(this);
+        modal.find('#editDiaChiId').val(id); // Gán ID địa chỉ
+        modal.find('#editSdt').val(sdt); // Gán số điện thoại
+        modal.find('#editDiaChi').val(diaChi); // Gán địa chỉ
+    });
+</script>
+</body>
+</html>
