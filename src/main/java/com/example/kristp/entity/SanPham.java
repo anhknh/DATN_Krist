@@ -1,6 +1,7 @@
 package com.example.kristp.entity;
 
 import com.example.kristp.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,8 +30,9 @@ public class SanPham extends BaseEntity {
     @JoinColumn(name="id_chat_lieu")
     private ChatLieu chatLieu;
 
-//    @OneToMany(mappedBy = "sanPham",cascade = CascadeType.ALL)
-//    private List<ChiTietSanPham> chiTietSanPham;
+    @OneToMany(mappedBy = "sanPham",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ChiTietSanPham> chiTietSanPham;
 
     private String tenSanPham ;
 

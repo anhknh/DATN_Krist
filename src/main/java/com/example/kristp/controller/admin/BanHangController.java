@@ -43,6 +43,8 @@ public class BanHangController {
     HoaDonChiTietService hoaDonChiTietService;
     @Autowired
     BanHangService banHangService;
+    @Autowired
+    KhuyenMaiService khuyenMaiService;
     HoaDon hoaDonSelected = null;
 
 
@@ -99,8 +101,7 @@ public class BanHangController {
         //thông tin hóa đơn
         model.addAttribute("tongTien", banHangService.getTongTien(hoaDonSelected));
         //khuyến mại
-        List<KhuyenMai> khuyenMaiList = new ArrayList<>();
-        model.addAttribute("listKM", khuyenMaiList);
+        model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
         return "view-admin/dashbroad/ban-hang";
     }
 
