@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nhân viên</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
+  <link rel="stylesheet" href="/css/StyleHomePage.css">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden; /* Ẩn thanh cuộn của body */
+    }
+    .main {
+      height: 100%;
+      display: flex;
+    }
+    .col-10 {
+      height: 100vh; /* Đảm bảo chiều cao bằng chiều cao màn hình */
+      overflow-y: auto; /* Cho phép cuộn nội dung khi vượt quá chiều cao */
+      padding: 12px 32px 48px;
+      background-color: #f6f6f6;
+    }
+  </style>
+</head>
+<body class="overflow-hidden">
+<div class="main" >
+  <div class="container-fluid g-0">
+    <div class="row g-0">
+      <div class="col-2" style="height: 100vh;">
+        <div style="height: 72px; margin-bottom: 42px;" class="d-flex align-items-center justify-content-center">
+          <div>
+            <img style="width: 78%" src="/img/logo.png" alt="logo">
+          </div>
+          <div style="font-size: 20px; font-weight: 800; margin-left: 12px;">
+            Krist
+          </div>
+        </div>
+
+        <!-- Main Menu Items -->
+        <div style="padding: 0px 22px 28px; border-bottom: 1px solid #E9E9EB;" class="mb-4">
+          <a href="./adminDashBroad.html" class="bg_profile_btn mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
+          </a>
+          <!-- Product Management Tree Menu -->
+          <div class="menu-item mb-3">
+            <p style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center; cursor: pointer;" onclick="toggleSubmenu('productSubMenu')">
+              <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Sản phẩm
+              <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
+            </p>
+            <ul id="productSubMenu" class="submenu" style="list-style: none; padding-left: 20px; display: none;">
+              <li style="padding: 8px 12px;">
+                <a href="./adminCategories.html" style="text-decoration: none; color: #000;">Danh mục</a>
+              </li>
+              <li style="padding: 8px 12px;">
+                <a href="./adminMaterial.html" style="text-decoration: none; color: #000;">Chất liệu</a>
+              </li>
+            </ul>
+          </div>
+
+          <a href="./adminOrder.html" class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Đơn hàng
+          </a>
+          <a href="./adminCustomer.html" class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
+          </a>
+          <a href="./adminCustomer.html" class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-user"></i> Nhân viên
+          </a>
+          <a href="./adminReviews.html" class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-star" style="margin-right: 10px;"></i> Đánh giá
+          </a>
+          <a href="./adminSetting.html" class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Settings
+          </a>
+        </div>
+
+        <!-- Extra Menu -->
+        <div id="drop_right" style="padding: 0px 22px 28px; cursor: pointer;" onclick="toggleSubmenu('extrasSubMenu')">
+          <p class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center;">
+            <i class="fa-regular fa-plus" style="margin-right: 10px;"></i> Extras
+            <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
+          </p>
+          <ul id="extrasSubMenu" class="submenu" style="list-style: none; padding-left: 20px; display: none;">
+            <li style="padding: 8px;"><a href="./adminSize.html" style="text-decoration: none; color: #000;">Size</a></li>
+            <li style="padding: 8px;"><a href="./adminColor.html" style="text-decoration: none; color: #000;">Color</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-10">
+        <!-- navigator_link -->
+        <div class="d-flex justify-content-between align-items-center" style="height: 72px; margin-bottom: 18px;">
+          <div>
+            <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb" >
+              <ol class="breadcrumb" style="height: 40px; margin: 0px;">
+                <li class="breadcrumb-item "><a href="#" class="nav_link">Admin</a></li>
+                <li class="breadcrumb-item "><a href="#" class="nav_link_active">Nhân viên</a></li>
+              </ol>
+            </nav>
+          </div>
+          <div>
+            <a href="../login.html" style="text-decoration: none; color: #000; font-size: 20px;"><i class="fa-thin fa-arrow-right-from-bracket"></i></a>
+          </div>
+        </div>
+        <div style="background-color: #fff; border-radius: 6px; padding: 24px 40px; border: 1px solid #f6f7f8;">
+          <!-- headre_content -->
+          <div class="d-flex justify-content-between" style="padding-bottom: 28px;">
+            <div>
+              <h4>Nhân viên Attribute</h4>
+            </div>
+            <div style="width: 350px;">
+
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <form action="/quan-ly-nhan-vien/tim-ma-nhan-vien" method="GET">
+                    <div class="input-group flex-nowrap" style="width: 240px;">
+                                        <span class="input-group-text" id="addon-wrapping" style="background-color: #fff;">
+                                            <i class="fa-solid fa-magnifying-glass" style="color: #5C5F6A;"></i>
+                                        </span>
+                      <input type="text" class="form-control" name="timKiemMa"
+                             placeholder="Search Category"
+                             style="border-left: none; padding: 8px 10px 8px 0px;">
+                      <button type="submit" class="btn btn-outline-secondary">Search</button>
+                    </div>
+                  </form>
+                </div>
+                <div>
+                  <div class="btn btn-outline-secondary" style="display: inline-block;" data-bs-toggle="modal"
+                       data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('',null , '' )|">Add</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- table -->
+          <div style="margin-bottom: 28px;">
+            <table class="table" style="border-top: 1px solid #E9E9EB;">
+              <thead>
+              <tr>
+                <th scope="col" style="padding-left: 20px;">Id</th>
+                <th scope="col">Ma nhân viên</th>
+                <th scope="col">Tên nhân viên</th>
+                <th scope="col">Số điện thoại</th>
+                <th scope="col">Ngày sinh</th>
+                <th scope="col">Địa chỉ</th>
+                <th scope="col" class="text-center">Is Active</th>
+                <th scope="col" class="text-center">Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="nhanvien , stat : ${NVList}">
+                <td style="padding: 12px 6px;" th:text="${nhanvien.id}">
+                </td>
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${nhanvien.maNhanVien}" th:class="valueMa"></td>
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${nhanvien.tenNhanVien}" th:class="valueName"></td>
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${nhanvien.soDienThoai}" th:class="valueSDT"></td>
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${#dates.format(nhanvien.ngaySinh, 'dd-MM-yyyy')}" th:class="valueNgaySinh"></td>
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${nhanvien.diaChi}" th:class="valueDiaChi"></td>
+                <td class="text-center" style="padding: 12px 6px; line-height: 305%;">
+                  <i class="fa-regular"
+                     th:classappend="${nhanvien.trangThai == nhanvien.trangThai.ACTIVE ? 'fa-check' : 'fa-x'}"></i>
+                </td>
+
+                </td>
+                <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">
+                  <div class="d-flex justify-content-center">
+                    <a th:href="@{/quan-ly-nhan-vien/delete-nhan-vien/{id}(id=${nhanvien.id})}" class="btn btn-outline-secondary me-2">Delete</a>
+                    <div class="btn btn-outline-secondary" style="display: inline-block;" data-bs-toggle="modal"
+                         data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('${nhanvien.id}','${stat.index}' , '${nhanvien.trangThai}' )|" >Update
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <!-- page_number -->
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-end">
+                <!-- Nút Previous -->
+                <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+                  <a class="page-link" style="color: #5C5F6A"
+                     th:href="@{/quan-ly-nhan-vien/phan-trang-nhan-vien(pageNo=0)}"
+                     aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <!-- Vòng lặp phân trang -->
+                <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i - 1 ? 'active' : ''}"
+                    class="page-item">
+                  <a class="page-link"
+                     th:href="@{/quan-ly-nhan-vien/phan-trang-nhan-vien(pageNo=${i - 1})}"
+                     th:text="${i}" style="color: #5C5F6A"></a>
+                </li>
+                <!-- Nút Next -->
+                <li class="page-item"
+                    th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}">
+                  <a class="page-link" style="color: #5C5F6A"
+                     th:href="@{/quan-ly-nhan-vien/phan-trang-nhan-vien(pageNo=${totalPage - 1})}"
+                     aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalCategories" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="margin-top: 100px;">
+      <div class="modal-header">`
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"  style="padding:30px">
+        <div>
+          <form  method="post"  id="form_submit" novalidate th:object="${NVCre}" class="needs-validation">
+            <div class="display_none">
+              <input type="text" class="form-control" id="idCustomer" name="id" value="" th:field="*{id}">
+            </div>
+            <div class="mb-4">
+              <label for="maCate" class="form-label">Mã nhân viên</label>
+              <input type="text" class="form-control" id="maCate" placeholder="Mã nhân viên" name="maNhanVien" th:field="*{maNhanVien}" required>
+              <div class="invalid-feedback">Mã nhân viên không hợp lệ</div>
+            </div>
+            <div class="mb-4">
+              <label for="nameCate" class="form-label">Tên nhân viên</label>
+              <input type="text" class="form-control" name="tenNhanVien" id="nameCate" placeholder="Tên nhân viên" th:field="*{tenNhanVien}" required >
+              <div class="invalid-feedback">Tên nhân viên không hợp lệ</div>
+            </div>
+            <div class="mb-4">
+              <label for="sdtCate" class="form-label">Số điện thoại</label>
+              <input type="text" class="form-control" name="soDienThoai" id="sdtCate" placeholder="số điện thoại nhân viên" th:field="*{soDienThoai}" required >
+              <div class="invalid-feedback">Số điện thoại không hợp lệ</div>
+            </div>
+            <div class="mb-4">
+              <label for="ngaysinhCate" class="form-label">Ngày sinh</label>
+              <input type="date" class="form-control" name="ngaySinh" id="ngaysinhCate" placeholder="Ngày sinh nhân viên" th:field="*{ngaySinh}" required >
+              <div class="invalid-feedback">Ngày sinh không hợp lệ</div>
+            </div>
+            <div class="mb-4">
+              <label for="diachiCate" class="form-label">Địa chỉ</label>
+              <input type="text" class="form-control" name="diaChi" id="diachiCate" placeholder="Địa chỉ nhân viên" th:field="*{diaChi}" required >
+              <div class="invalid-feedback">Địa chỉ nhân viên không hợp lệ</div>
+            </div>
+            <div class="mb-4 display_none" id="statusSection">
+              <label class="form-label">Trạng thái</label><br>
+              <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">
+              <label for="active">Active</label><br>
+              <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">
+              <label for="inactive">Inactive</label>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-outline-secondary">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Alert thông báo thất bại -->
+<div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage" style="display: none;">
+  <strong>Thất bại!</strong> <span id="alertBody">Thông báo này sẽ hiển thị kết quả.</span>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<!-- Alert thông báo từ backend -->
+<div th:if="${message}" th:class="${messageType} + ' alert alert-dismissible fade show position-fixed top-0 end-0 m-3'" id="successAlert" role="alert">
+  <strong th:text="${titleMsg}">Tiêu đề</strong> <span th:text="${message}">Thông báo này sẽ hiển thị kết quả.</span>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+  const idCustomer = document.getElementById("idCustomer");
+  const valueMa = document.querySelectorAll(".valueMa");
+  const valueName = document.querySelectorAll(".valueName");
+  const valueSDT = document.querySelectorAll(".valueSDT");
+  const valueNgaySinh = document.querySelectorAll(".valueNgaySinh");
+  const valueDiaChi = document.querySelectorAll(".valueDiaChi");
+  // Lấy về thuộc tính có id và điều chỉnh theo mong muốn trong hàm saveIdOrder
+  const maCate = document.getElementById('maCate');
+  const nameCate = document.getElementById('nameCate');
+  const sdtCate = document.getElementById('sdtCate');
+  const ngaysinhCate = document.getElementById('ngaysinhCate');
+  const diachiCate = document.getElementById('diachiCate');
+  const statusSection = document.getElementById('statusSection');
+
+  function saveIdOrder(id , index , hanhDong){
+    idCustomer.value = id;
+    if(index != null) {
+      maCate.value = valueMa[index].textContent.trim();
+      nameCate.value = valueName[index].textContent.trim();
+      sdtCate.value = valueSDT[index].textContent.trim();
+      ngaysinhCate.value = valueNgaySinh[index].textContent.trim();
+      diachiCate.value = valueDiaChi[index].textContent.trim();
+      statusSection.classList.remove('display_none');
+      document.getElementById('exampleModalLabel').innerText = 'Update material';
+      // Kiểm tra class của icon
+      if (hanhDong == "ACTIVE") {
+        // Nếu class là 'fa-check', chọn radio button active
+        document.getElementById('active').checked = true;
+      } else {
+        // Ngược lại nếu class là 'fa-x', chọn radio button inactive
+        document.getElementById('inactive').checked = true;
+      }
+      document.getElementById("form_submit").action = '/quan-ly-nhan-vien/update-nhan-vien' ;
+    } else {
+      statusSection.classList.add('display_none');
+      document.getElementById('exampleModalLabel').innerText = 'Add material';
+      maCate.value = "";
+      nameCate.value = "";
+      sdtCate.value = "";
+      ngaysinhCate.value = "";
+      diachiCate.value = "";
+      document.getElementById("form_submit").action = '/quan-ly-nhan-vien/add-nhan-vien' ;
+    }
+  }
+
+  (function () {
+    'use strict';
+    // Fetch all forms with class 'needs-validation'
+    var forms = document.querySelectorAll('.needs-validation');
+
+    // Loop over forms and prevent submission if validation fails
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+          showAlert( "error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
+        }
+        form.classList.add('was-validated');
+      }, false);
+
+      // Add 'change' event listener for all inputs to validate them dynamically
+      var inputs = form.querySelectorAll('input');
+      Array.prototype.slice.call(inputs).forEach(function (input) {
+        input.addEventListener('change', function () {
+          if (input.checkValidity()) {
+            input.classList.remove('is-invalid');
+            input.classList.add('is-valid');
+          } else {
+            input.classList.remove('is-valid');
+            input.classList.add('is-invalid');
+            showAlert("error","Dữ liệu không hợp lệ trong " + input.placeholder);
+          }
+        });
+      });
+    });
+
+    //thông báo
+    function showAlert(type, message) {
+      let alertElement;
+
+      if (type === 'success') {
+        alertElement = document.getElementById('successAlert');
+        alertElement.querySelector('span').textContent = message; // Thiết lập nội dung thông báo thành công
+        alertElement.style.display = 'block'; // Hiển thị thông báo thành công
+      } else if (type === 'error') {
+        alertElement = document.getElementById('alertMessage');
+        alertElement.querySelector('#alertBody').textContent = message; // Thiết lập nội dung thông báo lỗi
+        alertElement.style.display = 'block'; // Hiển thị thông báo lỗi
+      }
+
+      // Tự động ẩn thông báo sau 5 giây
+      setTimeout(() => {
+        if (alertElement) {
+          var bootstrapAlert = new bootstrap.Alert(alertElement);
+          bootstrapAlert.close();
+        }
+      }, 5000);
+    }
+
+    document.addEventListener('DOMContentLoaded', function (){
+      // Kiểm tra và ẩn thông báo thành công nếu có
+      var successAlert = document.getElementById('successAlert');
+      if (successAlert && successAlert.style.display !== 'none') {
+        setTimeout(function () {
+          var bootstrapAlert = new bootstrap.Alert(successAlert);
+          bootstrapAlert.close();
+        }, 5000);
+      }
+    });
+
+  })();
+</script>
+</body>
+</html>
