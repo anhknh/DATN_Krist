@@ -1,8 +1,18 @@
 package com.example.kristp.service.impl;
 
+import com.example.kristp.entity.HoaDon;
+import com.example.kristp.enums.HoaDonStatus;
+import com.example.kristp.repository.HoaDonRepository;
 import com.example.kristp.service.HoaDonPdfService;
+
+import javax.swing.JFileChooser;
+
+
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
+
+import com.example.kristp.service.HoaDonService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +25,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
@@ -25,20 +36,31 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @Service
 public class HoaDonPdfServiceImpl implements HoaDonPdfService {
+
+    @Autowired
+    HoaDonRepository hoaDonRepository;
+
+    @Autowired
+    HoaDonService hoaDonService;
+
     @Override
-    public void inHoaDon() {
+// khi lấy được id hóadđơn
+//    public void inHoaDon(Integer idOrder) {
+    public void inHoaDon(Integer idOrder) {  // code test
         try (PDDocument taiLieu = new PDDocument()) {
             PDPage trang = new PDPage(PDRectangle.A4);
             taiLieu.addPage(trang);
-
+            // Truy xuất hóa đơn từ cơ sở dữ liệu
+            HoaDon hoaDon = hoaDonService.findHoaDonById(idOrder);
             // Thêm nội dung vào trang
             try (PDPageContentStream luoiNoiDung = new PDPageContentStream(taiLieu, trang)) {
+                Integer maHoaDon = hoaDon.getId();
                 // Fake data
-                String maHoaDon = "HD123456";
                 String tenNhanVien = "Đoàn Hiếu";
                 String tenKhachHang = "Đỗ Nghèo Khỉ";
                 String sdt = "0986465398";
@@ -85,7 +107,7 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
                     for (int i = 0; i < sanPham.length; i++) {
                         myTextClass.addSingleLineText(sanPham[i], 50, yPosition, font, 14, Color.BLACK);
                         myTextClass.addSingleLineText(String.valueOf(soLuong[i]), 200, yPosition, font, 14, Color.BLACK);
-                        myTextClass.addSingleLineText(currencyFormat.format(giaBan[i]) , 300, yPosition, font, 14, Color.BLACK);
+                        myTextClass.addSingleLineText(currencyFormat.format(giaBan[i]), 300, yPosition, font, 14, Color.BLACK);
                         myTextClass.addSingleLineText(currencyFormat.format(soLuong[i] * giaBan[i]), 400, yPosition, font, 14, Color.BLACK);
 
                         yPosition -= rowHeight; // Giảm vị trí y cho mỗi dòng
@@ -102,7 +124,7 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
             } // Kết thúc luồng nội dung trước khi lưu tài liệu
 
             // Lưu file PDF vào đường dẫn
-            taiLieu.save("E:\\KHOI SU DOANH NGHIEP\\hoa_don.pdf"); // Đường dẫn và tên file
+            taiLieu.save("E:\\KHOI SU DOANH NGHIEP\\Hoa Don " + hoaDon.getId() + " .pdf"); // Đường dẫn và tên file
             System.out.println("HÓA ĐƠN ĐÃ ĐƯỢC TẠO");
 
         } catch (IOException e) {
@@ -110,13 +132,11 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
         }
     }
 
-    private void drawTableBorder(PDPageContentStream contentStream, float x, float y, float width, float height) throws IOException {
-        contentStream.moveTo(x, y);
-        contentStream.lineTo(x + width, y);
-        contentStream.lineTo(x + width, y - height);
-        contentStream.lineTo(x, y - height);
-        contentStream.closePath();
-        contentStream.stroke();
+
+    // chỉ hiện những hóa đơn có trạng thái là đã thanh toán
+    @Override
+    public List<HoaDon> findAllHoaDon() {
+        return hoaDonRepository.findByTrangThai(HoaDonStatus.DA_THANH_TOAN);
     }
 
     @AllArgsConstructor

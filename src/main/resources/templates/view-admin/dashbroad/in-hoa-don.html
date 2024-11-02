@@ -9,14 +9,33 @@
 <body>
 
 <div class="container mt-5">
-    <h1 class="text-center">Hóa Đơn</h1>
+    <h2>Danh Sách Hóa Đơn</h2>
+    <!-- Hiển thị thông báo nếu có -->
+    <div th:if="${message}" class="alert alert-success" role="alert">
+        <span th:text="${message}"></span>
+    </div>
 
-    <form th:action="@{/hoa-don-pdf/in}" method="post">
-        <button type="submit" class="btn btn-primary">In Hóa Đơn</button>
-    </form>
-
-    <!-- Thêm thông báo thành công hoặc lỗi -->
-    <div th:if="${message}" class="alert alert-info mt-3" th:text="${message}"></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Mã Hóa Đơn</th>
+            <th>Ngày Tạo</th>
+            <th>Thao Tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hoaDon : ${hoaDonList}">
+            <td th:text="${hoaDon.id}">1</td>
+            <td th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}">01/01/2024</td>
+            <td>
+                //nút In Hóa Đơn
+                <form th:action="@{/hoa-don-pdf/in/{idOrder}(idOrder=${hoaDon.id})}" method="post">
+                    <button type="submit" class="btn btn-primary">In Hóa Đơn</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
