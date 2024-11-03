@@ -1,192 +1,192 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Title</title>-->
+<!--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+<!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
 
 
-  <!--validate ở đây-->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<!--  &lt;!&ndash;validate ở đây&ndash;&gt;-->
+<!--  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>-->
 
 
-<!--  <script>-->
-<!--    document.addEventListener('DOMContentLoaded', function () {-->
-<!--      document.getElementById('submitBtn').addEventListener('click', function () {-->
-<!--        // bỏ nút button ra ngoài-->
-<!--        if (!validateForm()) {-->
-<!--          return;-->
-<!--        }-->
+<!--&lt;!&ndash;  <script>&ndash;&gt;-->
+<!--&lt;!&ndash;    document.addEventListener('DOMContentLoaded', function () {&ndash;&gt;-->
+<!--&lt;!&ndash;      document.getElementById('submitBtn').addEventListener('click', function () {&ndash;&gt;-->
+<!--&lt;!&ndash;        // bỏ nút button ra ngoài&ndash;&gt;-->
+<!--&lt;!&ndash;        if (!validateForm()) {&ndash;&gt;-->
+<!--&lt;!&ndash;          return;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
 
-<!--        // validate đc thì sẽ submit file-->
-<!--        document.getElementById('myForm').submit();-->
-<!--      });-->
+<!--&lt;!&ndash;        // validate đc thì sẽ submit file&ndash;&gt;-->
+<!--&lt;!&ndash;        document.getElementById('myForm').submit();&ndash;&gt;-->
+<!--&lt;!&ndash;      });&ndash;&gt;-->
 
-<!--      function validateForm() {-->
-<!--        // Thêm TT m Vào đây-->
-<!--        var ten = document.getElementById('ten').value;-->
-<!--        var moTa = document.getElementById('moTa').value;-->
-<!--        var trangThai = document.getElementById('trangThai').value;-->
-<!--        var danhMucSanPham = document.getElementById('danhMucSanPham').value;-->
-<!--        var thuongHieu = document.getElementById('thuongHieu').value;-->
-<!--        var hinhNen = document.getElementById('hinhNen').value;-->
-
-
-<!--        // trả về fale thì thông báo lên-->
-<!--        if (ten.trim() === '') {-->
-<!--          Swal.fire({-->
-<!--            icon: 'error',-->
-<!--            title: 'Validation Error',-->
-<!--            text: 'Tên Sản Phẩm không được để trống',-->
-<!--          });-->
-<!--          return false;-->
-<!--        }-->
-
-<!--        if(ten.length > 100) {-->
-<!--          Swal.fire({-->
-<!--            icon: 'error',-->
-<!--            title: 'Validation Error',-->
-<!--            text: 'Tên sản phẩm không được vượt quá 100 ký tự',-->
-<!--          });-->
-<!--          return false;-->
-<!--        }-->
+<!--&lt;!&ndash;      function validateForm() {&ndash;&gt;-->
+<!--&lt;!&ndash;        // Thêm TT m Vào đây&ndash;&gt;-->
+<!--&lt;!&ndash;        var ten = document.getElementById('ten').value;&ndash;&gt;-->
+<!--&lt;!&ndash;        var moTa = document.getElementById('moTa').value;&ndash;&gt;-->
+<!--&lt;!&ndash;        var trangThai = document.getElementById('trangThai').value;&ndash;&gt;-->
+<!--&lt;!&ndash;        var danhMucSanPham = document.getElementById('danhMucSanPham').value;&ndash;&gt;-->
+<!--&lt;!&ndash;        var thuongHieu = document.getElementById('thuongHieu').value;&ndash;&gt;-->
+<!--&lt;!&ndash;        var hinhNen = document.getElementById('hinhNen').value;&ndash;&gt;-->
 
 
-<!--        if (moTa.trim() === '') {-->
-<!--          Swal.fire({-->
-<!--            icon: 'error',-->
-<!--            title: 'Validation Error',-->
-<!--            text: 'Mô tả không được để trống',-->
-<!--          });-->
-<!--          return false;-->
-<!--        }-->
-<!--        if(moTa.length > 200) {-->
-<!--          Swal.fire({-->
-<!--            icon: 'error',-->
-<!--            title: 'Validation Error',-->
-<!--            text: 'Mô tả không được vượt quá 200 ký tự',-->
-<!--          });-->
-<!--          return false;-->
-<!--        }-->
+<!--&lt;!&ndash;        // trả về fale thì thông báo lên&ndash;&gt;-->
+<!--&lt;!&ndash;        if (ten.trim() === '') {&ndash;&gt;-->
+<!--&lt;!&ndash;          Swal.fire({&ndash;&gt;-->
+<!--&lt;!&ndash;            icon: 'error',&ndash;&gt;-->
+<!--&lt;!&ndash;            title: 'Validation Error',&ndash;&gt;-->
+<!--&lt;!&ndash;            text: 'Tên Sản Phẩm không được để trống',&ndash;&gt;-->
+<!--&lt;!&ndash;          });&ndash;&gt;-->
+<!--&lt;!&ndash;          return false;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
 
-<!--        if (trangThai.trim() === '') {-->
-<!--          Swal.fire({-->
-<!--            icon: 'error',-->
-<!--            title: 'Validation Error',-->
-<!--            text: 'Vui lòng chọn trạng thái',-->
-<!--          });-->
-<!--          return false;-->
-<!--        }-->
-
-<!--        if (danhMucSanPham.trim() === '') {-->
-<!--          Swal.fire({-->
-<!--            icon: 'error',-->
-<!--            title: 'Validation Error',-->
-<!--            text: 'Vui lòng chọn danh mục',-->
-<!--          });-->
-<!--          return false;-->
-<!--        }-->
-
-<!--        if (thuongHieu.trim() === '') {-->
-<!--          Swal.fire({-->
-<!--            icon: 'error',-->
-<!--            title: 'Validation Error',-->
-<!--            text: 'Vui lòng chọn thương hiệu',-->
-<!--          });-->
-<!--          return false;-->
-<!--        }-->
-
-<!--        if (hinhNen.trim() === '') {-->
-<!--          Swal.fire({-->
-<!--            icon: 'error',-->
-<!--            title: 'Validation Error',-->
-<!--            text: 'Vui lòng chọn hình nền',-->
-<!--          });-->
-<!--          return false;-->
-<!--        }-->
+<!--&lt;!&ndash;        if(ten.length > 100) {&ndash;&gt;-->
+<!--&lt;!&ndash;          Swal.fire({&ndash;&gt;-->
+<!--&lt;!&ndash;            icon: 'error',&ndash;&gt;-->
+<!--&lt;!&ndash;            title: 'Validation Error',&ndash;&gt;-->
+<!--&lt;!&ndash;            text: 'Tên sản phẩm không được vượt quá 100 ký tự',&ndash;&gt;-->
+<!--&lt;!&ndash;          });&ndash;&gt;-->
+<!--&lt;!&ndash;          return false;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
 
 
-<!--        return true;-->
-<!--      }-->
-<!--    });-->
-<!--  </script>-->
+<!--&lt;!&ndash;        if (moTa.trim() === '') {&ndash;&gt;-->
+<!--&lt;!&ndash;          Swal.fire({&ndash;&gt;-->
+<!--&lt;!&ndash;            icon: 'error',&ndash;&gt;-->
+<!--&lt;!&ndash;            title: 'Validation Error',&ndash;&gt;-->
+<!--&lt;!&ndash;            text: 'Mô tả không được để trống',&ndash;&gt;-->
+<!--&lt;!&ndash;          });&ndash;&gt;-->
+<!--&lt;!&ndash;          return false;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        if(moTa.length > 200) {&ndash;&gt;-->
+<!--&lt;!&ndash;          Swal.fire({&ndash;&gt;-->
+<!--&lt;!&ndash;            icon: 'error',&ndash;&gt;-->
+<!--&lt;!&ndash;            title: 'Validation Error',&ndash;&gt;-->
+<!--&lt;!&ndash;            text: 'Mô tả không được vượt quá 200 ký tự',&ndash;&gt;-->
+<!--&lt;!&ndash;          });&ndash;&gt;-->
+<!--&lt;!&ndash;          return false;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        if (trangThai.trim() === '') {&ndash;&gt;-->
+<!--&lt;!&ndash;          Swal.fire({&ndash;&gt;-->
+<!--&lt;!&ndash;            icon: 'error',&ndash;&gt;-->
+<!--&lt;!&ndash;            title: 'Validation Error',&ndash;&gt;-->
+<!--&lt;!&ndash;            text: 'Vui lòng chọn trạng thái',&ndash;&gt;-->
+<!--&lt;!&ndash;          });&ndash;&gt;-->
+<!--&lt;!&ndash;          return false;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        if (danhMucSanPham.trim() === '') {&ndash;&gt;-->
+<!--&lt;!&ndash;          Swal.fire({&ndash;&gt;-->
+<!--&lt;!&ndash;            icon: 'error',&ndash;&gt;-->
+<!--&lt;!&ndash;            title: 'Validation Error',&ndash;&gt;-->
+<!--&lt;!&ndash;            text: 'Vui lòng chọn danh mục',&ndash;&gt;-->
+<!--&lt;!&ndash;          });&ndash;&gt;-->
+<!--&lt;!&ndash;          return false;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        if (thuongHieu.trim() === '') {&ndash;&gt;-->
+<!--&lt;!&ndash;          Swal.fire({&ndash;&gt;-->
+<!--&lt;!&ndash;            icon: 'error',&ndash;&gt;-->
+<!--&lt;!&ndash;            title: 'Validation Error',&ndash;&gt;-->
+<!--&lt;!&ndash;            text: 'Vui lòng chọn thương hiệu',&ndash;&gt;-->
+<!--&lt;!&ndash;          });&ndash;&gt;-->
+<!--&lt;!&ndash;          return false;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        if (hinhNen.trim() === '') {&ndash;&gt;-->
+<!--&lt;!&ndash;          Swal.fire({&ndash;&gt;-->
+<!--&lt;!&ndash;            icon: 'error',&ndash;&gt;-->
+<!--&lt;!&ndash;            title: 'Validation Error',&ndash;&gt;-->
+<!--&lt;!&ndash;            text: 'Vui lòng chọn hình nền',&ndash;&gt;-->
+<!--&lt;!&ndash;          });&ndash;&gt;-->
+<!--&lt;!&ndash;          return false;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
 
 
-</head>
-<!--validate ở đây-->
-
-<body>
-<div layout:fragment="content">
-  <div class="content">
-    <div class="page-header">
-      <div class="page-title">
-        <h4>Thêm Sản Phẩm</h4>
-        <h6>& Chỉnh Sửa Sản Phẩm</h6>
-      </div>
-    </div>
+<!--&lt;!&ndash;        return true;&ndash;&gt;-->
+<!--&lt;!&ndash;      }&ndash;&gt;-->
+<!--&lt;!&ndash;    });&ndash;&gt;-->
+<!--&lt;!&ndash;  </script>&ndash;&gt;-->
 
 
-    <form id="myForm" th:object="${sanPham}"
-          th:action="${sanPham.id != null ? '/updateSanPham/' + sanPham.id : '/addProduct'}"
-          method="post" class="container mt-5" enctype="multipart/form-data">
+<!--</head>-->
+<!--&lt;!&ndash;validate ở đây&ndash;&gt;-->
 
-      <div class="form-group">
-        <label for="danhMuc">Chọn Danh Mục: </label>
-        <div class="input-group mb-3">
-          <select id="danhMuc" th:field="*{danhMuc}"
-                  class="form-control">
-            <option value=""> Chọn Danh Mục</option>
-            <option th:each="danhMuc: ${danhMucSanPhamList}" th:value="${danhMuc.id}"
-                    th:text="${danhMuc.tenDanhMuc}" th:selected="${danhMuc.id == (sanPham.danhMuc != null ? sanPham.danhMuc.id : null)}"></option>
-          </select>
-<!--          <span th:if="${#fields.hasErrors('danhMucSanPham')}" th:errors="*{danhMucSanPham}" class="invalid-feedback"-->
-<!--                th:id="moTaError"></span>-->
-          <div class="form-group">
-            <label for="chatLieu">Chọn Chất Liệu: </label>
-            <div class="input-group mb-3">
-              <select id="chatLieu" th:field="*{chatLieu}"
-                      class="form-control">
-                <option value=""> Chọn Chất Liệu</option>
-                <option th:each="chatLieu: ${chatLieuList}" th:value="${chatLieu.id}"
-                        th:text="${chatLieu.tenChatLieu}" th:selected="${chatLieu.id == (sanPham.chatLieu != null ? sanPham.chatLieu.id : null)}"></option>
-              </select>
-
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="tenSanPham">Tên sản phẩm :</label>
-        <input type="text" id="tenSanPham" th:field="*{tenSanPham}" class="form-control" th:errorclass="is-invalid" required>
-        <span th:if="${#fields.hasErrors('tenSanPham')}" th:errors="*{tenSanPham}" class="invalid-feedback" ></span>
-        <div th:if="${errorMessage}" class="error-message" style="color: red">
-          <p th:text="${errorMessage}"></p>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="moTa">Mô tả :</label>
-        <input type="text" id="moTa" th:field="*{moTa}" class="form-control" th:errorclass="is-invalid"
-               required>
-        <span th:if="${#fields.hasErrors('moTa')}" th:errors="*{moTa}" class="invalid-feedback"
-              th:id="moTaError"></span>
-      </div>
+<!--<body>-->
+<!--<div layout:fragment="content">-->
+<!--  <div class="content">-->
+<!--    <div class="page-header">-->
+<!--      <div class="page-title">-->
+<!--        <h4>Thêm Sản Phẩm</h4>-->
+<!--        <h6>& Chỉnh Sửa Sản Phẩm</h6>-->
+<!--      </div>-->
+<!--    </div>-->
 
 
-      <div class="form-group">
-        <label for="trangThai">Trạng thái :</label>
-        <select id="trangThai" th:field="*{trangThai}" class="form-control" th:errorclass="is-invalid" required>
-          <option value="1">Còn hàng</option>
-          <option value="0">Hết hàng</option>
-        </select>
-        <span th:if="${#fields.hasErrors('trangThai')}" th:errors="*{trangThai}"
-              class="invalid-feedback" th:id="trangThaiError"></span>
-      </div>
-      <button type="button" id="submitBtn" class="btn btn-submit me-2">Lưu SP</button>
+<!--    <form id="myForm" th:object="${sanPham}"-->
+<!--          th:action="${sanPham.id != null ? '/updateSanPham/' + sanPham.id : '/addProduct'}"-->
+<!--          method="post" class="container mt-5" enctype="multipart/form-data">-->
 
-    </form>
-  </div>
-</div>
-</body>
-</html>
+<!--      <div class="form-group">-->
+<!--        <label for="danhMuc">Chọn Danh Mục: </label>-->
+<!--        <div class="input-group mb-3">-->
+<!--          <select id="danhMuc" th:field="*{danhMuc}"-->
+<!--                  class="form-control">-->
+<!--            <option value=""> Chọn Danh Mục</option>-->
+<!--            <option th:each="danhMuc: ${danhMucSanPhamList}" th:value="${danhMuc.id}"-->
+<!--                    th:text="${danhMuc.tenDanhMuc}" th:selected="${danhMuc.id == (sanPham.danhMuc != null ? sanPham.danhMuc.id : null)}"></option>-->
+<!--          </select>-->
+<!--&lt;!&ndash;          <span th:if="${#fields.hasErrors('danhMucSanPham')}" th:errors="*{danhMucSanPham}" class="invalid-feedback"&ndash;&gt;-->
+<!--&lt;!&ndash;                th:id="moTaError"></span>&ndash;&gt;-->
+<!--          <div class="form-group">-->
+<!--            <label for="chatLieu">Chọn Chất Liệu: </label>-->
+<!--            <div class="input-group mb-3">-->
+<!--              <select id="chatLieu" th:field="*{chatLieu}"-->
+<!--                      class="form-control">-->
+<!--                <option value=""> Chọn Chất Liệu</option>-->
+<!--                <option th:each="chatLieu: ${chatLieuList}" th:value="${chatLieu.id}"-->
+<!--                        th:text="${chatLieu.tenChatLieu}" th:selected="${chatLieu.id == (sanPham.chatLieu != null ? sanPham.chatLieu.id : null)}"></option>-->
+<!--              </select>-->
+
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="form-group">-->
+<!--        <label for="tenSanPham">Tên sản phẩm :</label>-->
+<!--        <input type="text" id="tenSanPham" th:field="*{tenSanPham}" class="form-control" th:errorclass="is-invalid" required>-->
+<!--        <span th:if="${#fields.hasErrors('tenSanPham')}" th:errors="*{tenSanPham}" class="invalid-feedback" ></span>-->
+<!--        <div th:if="${errorMessage}" class="error-message" style="color: red">-->
+<!--          <p th:text="${errorMessage}"></p>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="form-group">-->
+<!--        <label for="moTa">Mô tả :</label>-->
+<!--        <input type="text" id="moTa" th:field="*{moTa}" class="form-control" th:errorclass="is-invalid"-->
+<!--               required>-->
+<!--        <span th:if="${#fields.hasErrors('moTa')}" th:errors="*{moTa}" class="invalid-feedback"-->
+<!--              th:id="moTaError"></span>-->
+<!--      </div>-->
+
+
+<!--      <div class="form-group">-->
+<!--        <label for="trangThai">Trạng thái :</label>-->
+<!--        <select id="trangThai" th:field="*{trangThai}" class="form-control" th:errorclass="is-invalid" required>-->
+<!--          <option value="1">Còn hàng</option>-->
+<!--          <option value="0">Hết hàng</option>-->
+<!--        </select>-->
+<!--        <span th:if="${#fields.hasErrors('trangThai')}" th:errors="*{trangThai}"-->
+<!--              class="invalid-feedback" th:id="trangThaiError"></span>-->
+<!--      </div>-->
+<!--      <button type="button" id="submitBtn" class="btn btn-submit me-2">Lưu SP</button>-->
+
+<!--    </form>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

@@ -1,210 +1,210 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div layout:fragment="content">
-  <script>
-    function showConfigModalDialog(id, name) {
-      $('#name').text(name);
-      console.assert("Xóa Thành công")
-      $('#yesOption').attr('href', '/deleteSanPham/' + id);
-      $('#configmationId').modal('show');
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div layout:fragment="content">-->
+<!--  <script>-->
+<!--    function showConfigModalDialog(id, name) {-->
+<!--      $('#name').text(name);-->
+<!--      console.assert("Xóa Thành công")-->
+<!--      $('#yesOption').attr('href', '/deleteSanPham/' + id);-->
+<!--      $('#configmationId').modal('show');-->
 
 
-    }
-    function cancelDelete() {
-      $('#configmationId').modal('hide'); // Đóng modal
-    }
-  </script>
-  <div class="content">
-    <div class="page-header">
-      <div class="page-title">
-        <h4>Sản Phẩm</h4>
-        <h6>View/Search Sản Phẩm</h6>
+<!--    }-->
+<!--    function cancelDelete() {-->
+<!--      $('#configmationId').modal('hide'); // Đóng modal-->
+<!--    }-->
+<!--  </script>-->
+<!--  <div class="content">-->
+<!--    <div class="page-header">-->
+<!--      <div class="page-title">-->
+<!--        <h4>Sản Phẩm</h4>-->
+<!--        <h6>View/Search Sản Phẩm</h6>-->
 
-        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
-          <span th:text="${errorMessage}"></span>
-        </div>
+<!--        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">-->
+<!--          <span th:text="${errorMessage}"></span>-->
+<!--        </div>-->
 
-        <div th:if="${successMessage}" class="alert alert-success" role="alert">
-          <span th:text="${successMessage}"></span>
-        </div>
-      </div>
-      <div class="page-btn">
-        <a th:href="@{/admin/product/addProductFrom}" class="btn btn-added">
-<!--          <img th:src="" alt="img">Thêm sản phẩm-->
-        </a>
-      </div>
+<!--        <div th:if="${successMessage}" class="alert alert-success" role="alert">-->
+<!--          <span th:text="${successMessage}"></span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="page-btn">-->
+<!--        <a th:href="@{/admin/product/addProductFrom}" class="btn btn-added">-->
+<!--&lt;!&ndash;          <img th:src="" alt="img">Thêm sản phẩm&ndash;&gt;-->
+<!--        </a>-->
+<!--      </div>-->
 
-    </div>
+<!--    </div>-->
 
-    <div class="card">
-      <div class="card-body">
-        <div class="table-top">
-          <div class="search-set">
-            <div class="search-path">
+<!--    <div class="card">-->
+<!--      <div class="card-body">-->
+<!--        <div class="table-top">-->
+<!--          <div class="search-set">-->
+<!--            <div class="search-path">-->
 
-            </div>
-            <div class="search-input">
+<!--            </div>-->
+<!--            <div class="search-input">-->
 
-              <form action="/search" method="get">
+<!--              <form action="/search" method="get">-->
 
-              </form>
+<!--              </form>-->
 
-            </div>
-          </div>
-
-
-        </div>
-
-        <div class="card" id="filter_inputs">
-          <div class="card-body pb-0">
-            <div class="row">
-              <div class="col-lg-2 col-sm-6 col-12">
-                <div class="form-group">
-                  <select class="select select2-hidden-accessible" data-select2-id="1" tabindex="-1"
-                          aria-hidden="true">
-                    <option data-select2-id="3">Choose Category</option>
-                    <option>Computers</option>
-                  </select>
-
-                </div>
-              </div>
-              <div class="col-lg-2 col-sm-6 col-12">
-                <div class="form-group">
-                  <select class="select select2-hidden-accessible" data-select2-id="4" tabindex="-1"
-                          aria-hidden="true">
-                    <option data-select2-id="6">Choose Sub Category</option>
-                    <option>Fruits</option>
-                  </select>
-
-                </div>
-              </div>
-              <div class="col-lg-2 col-sm-6 col-12">
-                <div class="form-group">
-                  <select class="select select2-hidden-accessible" data-select2-id="7" tabindex="-1"
-                          aria-hidden="true">
-                    <option data-select2-id="9">Choose Sub Brand</option>
-                    <option>Iphone</option>
-                  </select>
-
-                </div>
-              </div>
-              <div class="col-lg-1 col-sm-6 col-12 ms-auto">
-                <div class="form-group">
-                  <a class="btn btn-filters ms-auto"><img src=""
-                                                          alt="img"></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="table-responsive">
-          <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-            <table class="table datanew dataTable no-footer" id="DataTables_Table_0" role="grid"
-                   aria-describedby="DataTables_Table_0_info">
-              <thead>
-              <tr role="row">
-                <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                    colspan="1" aria-sort="ascending" aria-label="
+<!--            </div>-->
+<!--          </div>-->
 
 
+<!--        </div>-->
+
+<!--        <div class="card" id="filter_inputs">-->
+<!--          <div class="card-body pb-0">-->
+<!--            <div class="row">-->
+<!--              <div class="col-lg-2 col-sm-6 col-12">-->
+<!--                <div class="form-group">-->
+<!--                  <select class="select select2-hidden-accessible" data-select2-id="1" tabindex="-1"-->
+<!--                          aria-hidden="true">-->
+<!--                    <option data-select2-id="3">Choose Category</option>-->
+<!--                    <option>Computers</option>-->
+<!--                  </select>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="col-lg-2 col-sm-6 col-12">-->
+<!--                <div class="form-group">-->
+<!--                  <select class="select select2-hidden-accessible" data-select2-id="4" tabindex="-1"-->
+<!--                          aria-hidden="true">-->
+<!--                    <option data-select2-id="6">Choose Sub Category</option>-->
+<!--                    <option>Fruits</option>-->
+<!--                  </select>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="col-lg-2 col-sm-6 col-12">-->
+<!--                <div class="form-group">-->
+<!--                  <select class="select select2-hidden-accessible" data-select2-id="7" tabindex="-1"-->
+<!--                          aria-hidden="true">-->
+<!--                    <option data-select2-id="9">Choose Sub Brand</option>-->
+<!--                    <option>Iphone</option>-->
+<!--                  </select>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="col-lg-1 col-sm-6 col-12 ms-auto">-->
+<!--                <div class="form-group">-->
+<!--                  <a class="btn btn-filters ms-auto"><img src=""-->
+<!--                                                          alt="img"></a>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="table-responsive">-->
+<!--          <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">-->
+<!--            <table class="table datanew dataTable no-footer" id="DataTables_Table_0" role="grid"-->
+<!--                   aria-describedby="DataTables_Table_0_info">-->
+<!--              <thead>-->
+<!--              <tr role="row">-->
+<!--                <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                    colspan="1" aria-sort="ascending" aria-label="-->
 
 
-: activate to sort column descending" style="width: 78.05px;">
-                  <label class="checkboxs">
-                    <input type="checkbox" id="select-all">
-                    <span class="checkmarks"></span>
-                  </label>
-                </th>
-                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                    colspan="1" aria-label="Category name: activate to sort column ascending"
-                    style="width: 187.363px;">Id
-                </th>
-                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                    colspan="1" aria-label="Category name: activate to sort column ascending"
-                    style="width: 187.363px;">Tên Danh Mục
-                </th>
-                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                    colspan="1" aria-label="Category Code: activate to sort column ascending"
-                    style="width: 172.212px;">Tên Chất Liệu
-                </th>
-                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                    colspan="1" aria-label="Description: activate to sort column ascending"
-                    style="width: 227.863px;">Tên Sản Phẩm
 
-                </th>
 
-                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                    colspan="1" aria-label="Description: activate to sort column ascending"
-                    style="width: 227.863px;">Mô Tả
-
-                </th>
-
-                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                    colspan="1" aria-label="Description: activate to sort column ascending"
-                    style="width: 227.863px;">Trạng Thái
-
-                </th>
-
+<!--: activate to sort column descending" style="width: 78.05px;">-->
+<!--                  <label class="checkboxs">-->
+<!--                    <input type="checkbox" id="select-all">-->
+<!--                    <span class="checkmarks"></span>-->
+<!--                  </label>-->
+<!--                </th>-->
+<!--                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                    colspan="1" aria-label="Category name: activate to sort column ascending"-->
+<!--                    style="width: 187.363px;">Id-->
+<!--                </th>-->
+<!--                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                    colspan="1" aria-label="Category name: activate to sort column ascending"-->
+<!--                    style="width: 187.363px;">Tên Danh Mục-->
+<!--                </th>-->
+<!--                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                    colspan="1" aria-label="Category Code: activate to sort column ascending"-->
+<!--                    style="width: 172.212px;">Tên Chất Liệu-->
+<!--                </th>-->
 <!--                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
 <!--                    colspan="1" aria-label="Description: activate to sort column ascending"-->
-<!--                    style="width: 227.863px;">Hình Nền-->
+<!--                    style="width: 227.863px;">Tên Sản Phẩm-->
 
 <!--                </th>-->
 
-              </tr>
-              </thead>
-              <tbody>
-              <tr th:each="sanPham : ${sanPhamList}">
-                <td class="sorting_1">
-                  <label class="checkboxs">
-                    <input type="checkbox">
-                    <span class="checkmarks"></span>
-                  </label>
-                </td>
+<!--                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                    colspan="1" aria-label="Description: activate to sort column ascending"-->
+<!--                    style="width: 227.863px;">Mô Tả-->
 
-                <td class="sanPhamI" th:text="${sanPham.id}"></td>
-                <td th:text="${sanPham.danhMuc.tenDanhMuc}"></td>
-                <td th:text="${sanPham.chatLieu.tenChatLieu}"></td>
-                <td th:text="${sanPham.tenSanPham}"></td>
-                <td th:utext="${sanPham.moTa}"></td>
-                <td th:text="${sanPham.trangThai}"></td>
-                <td>
-                  <a class="btn btn-warning btn-sm" th:href="@{/updateSanPhamFrom/{id}(id=${sanPham.id})}">Sửa</a>
-                  <a class="btn btn-danger btn-sm" th:href="@{/deleteSanPham/{id}(id=${sanPham.id})}" onclick="return confirm('Bạn có chắc chắn xóa?');">Xóa</a>
-                </td>
+<!--                </th>-->
 
-<!--                <td>-->
-<!--                  <a class="me-3" th:href="@{'/admin/product/updateProductFrom/' + ${sanPham.id}}">-->
-<!--                    <img th:src="@{~/static/assets/admin/img/icons/edit.svg}" alt="img">-->
+<!--                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"-->
+<!--                    colspan="1" aria-label="Description: activate to sort column ascending"-->
+<!--                    style="width: 227.863px;">Trạng Thái-->
 
-<!--                  </a>-->
-<!--                  <a class="me-3 confirm-text"-->
-<!--                     th:href="@{'/admin/product/deleteProduct/' + ${sanPham.id}}">-->
-<!--                    <img th:src="@{~/static/assets/admin/img/icons/delete.svg}"-->
-<!--                         alt="img">-->
-<!--                  </a>-->
+<!--                </th>-->
 
+<!--&lt;!&ndash;                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                    colspan="1" aria-label="Description: activate to sort column ascending"&ndash;&gt;-->
+<!--&lt;!&ndash;                    style="width: 227.863px;">Hình Nền&ndash;&gt;-->
+
+<!--&lt;!&ndash;                </th>&ndash;&gt;-->
+
+<!--              </tr>-->
+<!--              </thead>-->
+<!--              <tbody>-->
+<!--              <tr th:each="sanPham : ${sanPhamList}">-->
+<!--                <td class="sorting_1">-->
+<!--                  <label class="checkboxs">-->
+<!--                    <input type="checkbox">-->
+<!--                    <span class="checkmarks"></span>-->
+<!--                  </label>-->
 <!--                </td>-->
-              </tr>
-              </tbody>
-            </table>
-            <div class="dataTables_paginate paging_numbers" id="DataTables_Table_0_paginate">
-              <ul class="pagination">
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-  </div>
-</div>
-</body>
-</html>
+<!--                <td class="sanPhamI" th:text="${sanPham.id}"></td>-->
+<!--                <td th:text="${sanPham.danhMuc.tenDanhMuc}"></td>-->
+<!--                <td th:text="${sanPham.chatLieu.tenChatLieu}"></td>-->
+<!--                <td th:text="${sanPham.tenSanPham}"></td>-->
+<!--                <td th:utext="${sanPham.moTa}"></td>-->
+<!--                <td th:text="${sanPham.trangThai}"></td>-->
+<!--                <td>-->
+<!--                  <a class="btn btn-warning btn-sm" th:href="@{/updateSanPhamFrom/{id}(id=${sanPham.id})}">Sửa</a>-->
+<!--                  <a class="btn btn-danger btn-sm" th:href="@{/deleteSanPham/{id}(id=${sanPham.id})}" onclick="return confirm('Bạn có chắc chắn xóa?');">Xóa</a>-->
+<!--                </td>-->
+
+<!--&lt;!&ndash;                <td>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <a class="me-3" th:href="@{'/admin/product/updateProductFrom/' + ${sanPham.id}}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <img th:src="@{~/static/assets/admin/img/icons/edit.svg}" alt="img">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                  </a>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <a class="me-3 confirm-text"&ndash;&gt;-->
+<!--&lt;!&ndash;                     th:href="@{'/admin/product/deleteProduct/' + ${sanPham.id}}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <img th:src="@{~/static/assets/admin/img/icons/delete.svg}"&ndash;&gt;-->
+<!--&lt;!&ndash;                         alt="img">&ndash;&gt;-->
+<!--&lt;!&ndash;                  </a>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                </td>&ndash;&gt;-->
+<!--              </tr>-->
+<!--              </tbody>-->
+<!--            </table>-->
+<!--            <div class="dataTables_paginate paging_numbers" id="DataTables_Table_0_paginate">-->
+<!--              <ul class="pagination">-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

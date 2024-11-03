@@ -2,6 +2,7 @@ package com.example.kristp.entity;
 
 
 import com.example.kristp.enums.Status;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
