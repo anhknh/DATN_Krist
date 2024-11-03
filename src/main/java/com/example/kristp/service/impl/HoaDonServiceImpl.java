@@ -32,8 +32,18 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
+    public Boolean thanhToanHoaDon(HoaDon hoaDon) {
+        if(hoaDon == null ) {
+            return false;
+        }
+        hoaDon.setTrangThai(HoaDonStatus.DA_THANH_TOAN);
+         hoaDonRepository.save(hoaDon);
+         return true;
+    }
+
+    @Override
     public List<HoaDon> findAllHoaDonCho() {
-        return hoaDonRepository.findAll();
+        return hoaDonRepository.findByTrangThai(HoaDonStatus.HOA_DON_CHO);
     }
 
     @Override
