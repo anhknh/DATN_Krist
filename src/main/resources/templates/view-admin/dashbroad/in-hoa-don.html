@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Hóa Đơn</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Danh Sách Hóa Đơn</h2>
+    <!-- Hiển thị thông báo nếu có -->
+    <div th:if="${message}" class="alert alert-success" role="alert">
+        <span th:text="${message}"></span>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Mã Hóa Đơn</th>
+            <th>Ngày Tạo</th>
+            <th>Thao Tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hoaDon : ${hoaDonList}">
+            <td th:text="${hoaDon.id}">1</td>
+            <td th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}">01/01/2024</td>
+            <td>
+                //nút In Hóa Đơn
+                <form th:action="@{/hoa-don-pdf/in/{idOrder}(idOrder=${hoaDon.id})}" method="post">
+                    <button type="submit" class="btn btn-primary">In Hóa Đơn</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
