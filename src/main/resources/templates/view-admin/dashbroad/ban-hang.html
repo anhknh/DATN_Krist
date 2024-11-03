@@ -42,6 +42,21 @@
             height: 200px;
             object-fit: cover;
         }
+        .list-group-item {
+            max-width: 286px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+        .list-group-item.checked {
+            background-color: #e7f3ff; /* Màu nền cho mục đã chọn */
+            border-color: #007bff; /* Đổi màu viền cho mục đã chọn */
+        }
+        .list-group-item:hover {
+            background-color: #f1f1f1; /* Màu nền khi di chuột qua */
+        }
     </style>
 </head>
 <body class="overflow-hidden">
@@ -158,10 +173,11 @@
 
                         </div>
                         <div class="box mt-2">
-                            <div class="d-flex justify-content-between">
-                                <div> Giỏ hàng - hóa đơn 001</div>
-                                <div class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#scanModal"> Quét QR</div>
-
+                            <div class="d-flex justify-content-between mb-3">
+                                <div> Giỏ hàng - hóa đơn chờ</div>
+                                <div class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#scanModal">
+                                    <i class="fa-thin fa-qrcode me-2"></i>
+                                    Quét QR</div>
                             </div>
                             <div>
                                 <table class="table table-hover table-bordered table-sm">
@@ -434,22 +450,22 @@
                         <div style="font-weight: 600;">Thông tin Thanh toán</div>
                         <div class="mb-3" style="max-height: 330px; overflow: auto;">
                             <!-- Thẻ chứa danh sách thẻ khuyến mại -->
-                            <div>
-                                <div class="d-flex" th:each="khuyenMai, iterStat : ${listKM}"
-                                     style="border: 1px dashed  #000; border-radius: 8px; padding: 6px; margin-bottom: 10px;">
-                                    <div style="border-right: 1px dashed  #000; flex: 1; padding: 18px 0;">
-                                        <i class="fa-solid fa-tickets-perforated"
-                                           style="font-size: 36px; padding: 0px 12px;"></i>
+                            <div class="list-group mb-3" th:each="khuyenMai, iterStat : ${listKM}">
+                                <div class="list-group-item d-flex align-items-center">
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="checkbox" value="" aria-label="Checkbox for following text input"
+                                               th:id="'checkbox_' + ${iterStat.index}"
+                                               th:onclick="'toggleSelection(this)'">
                                     </div>
-                                    <div style="flex: 3; padding: 4px;font-size: 14px;">
-                                        <div th:text="'Khuyến mại: ' + ${khuyenMai.tenKhuyenMai}">Khuyến mại</div>
-                                        <div th:text="'Giá trị: ' + ${khuyenMai.giaTri}">Giá trị</div>
-<!--                                        <div th:text="'Số lượng: ' + ${khuyenMai.so}">số lượng</div>-->
-                                        <div th:text="'Ngày hết hạn: ' + ${khuyenMai.ngayKetThuc}">Ngày hết hạn</div>
+                                    <div class="d-flex align-items-center flex-grow-1">
+                                        <i class="fa-solid fa-tickets-perforated" style="font-size: 36px; margin-right: 15px; color: #007bff;"></i>
+                                        <div>
+                                            <p class="mb-1" th:text="'Khuyến mại: ' + ${khuyenMai.tenKhuyenMai}">Khuyến mại</p>
+                                            <p class="mb-1" th:text="'Giá trị: ' + ${khuyenMai.giaTri}">Giá trị</p>
+                                            <small class="text-muted" th:text="'Ngày hết hạn: ' + ${#dates.format(khuyenMai.ngayKetThuc, 'dd-MM-yyyy')}">Ngày hết hạn</small>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <!-- Thêm nhiều thẻ khuyến mại nếu cần -->
                             </div>
                         </div>
 
@@ -571,22 +587,24 @@
 <!-- Modal thanh toán-->
 <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="width: 600px; height: 400px">
+        <div class="modal-content" style="width: 600px; margin: 0; padding: 0">
             <div class="modal-header">
                 <h5 class="modal-title" >Mã QR Thanh Toán</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body justify-content-center">
                 <div class="text-center">
                     <img
-                            th:src="@{https://img.vietqr.io/image/970418-2171025740-bank.png(amount=${tongTien}, addInfo='THANH TOAN DON HANG', accountName='KIEU NGOC HOANG ANH')}"
+                            th:src="@{https://img.vietqr.io/image/970418-2171025740-bank.png(amount=${tongTien}, addInfo='THANH TOAN DON HANG - KRISTSHOP', accountName='KIEU NGOC HOANG ANH')}"
                             alt="QR Thanh Toán"
                             class="qr-image"
                     />
                 </div>
             </div>
-            <div class="modal-footer">
-                <a class="btn btn-dark" href="/quan-ly/thanh-toan-hoa-don">Xác nhận thanh toán</a>
+            <div class="modal-footer justify-content-center">
+                <a class="btn btn-dark" href="#"
+                                         th:attr="data-id-order=${hoaDonSelected.id}"
+                                         onclick="thanhToanVaInHoaDon(this)">Xác nhận thanh toán</a>
             </div>
         </div>
     </div>
@@ -652,6 +670,16 @@
             submenu.style.display = "block";
         } else {
             submenu.style.display = "none";
+        }
+    }
+
+    //khuynmai
+    function toggleSelection(checkbox) {
+        const listItem = checkbox.closest('.list-group-item');
+        if (checkbox.checked) {
+            listItem.classList.add('selected');
+        } else {
+            listItem.classList.remove('selected');
         }
     }
 </script>
@@ -848,12 +876,9 @@
                     fps: 10,    // Số lần quét mỗi giây
                     qrbox: { width: 250, height: 250 } // Kích thước vùng quét
                 },
-                (decodedText, decodedResult) => {
-                    html5QrCode.stop().then(() => {
-                        alert("đã quét thành công với kết quả là ", decodedText)
-                    }).catch(err => console.error("Không thể dừng quét", err));
-                    let modalInstance = bootstrap.Modal.getInstance(document.getElementById('scanModal'));
-                    modalInstance.hide();
+                (decodedText) => {
+                    // Gọi hàm addToCart mà không dừng scanner
+                    addToCart(decodedText);
                 },
                 (errorMessage) => {
                     // Xử lý lỗi nếu có (nếu cần thiết)
@@ -870,14 +895,70 @@
                 html5QrCode.stop().catch(err => console.error("Không thể dừng Html5Qrcode", err));
             }
         });
+
+        function addToCart(qrCode) {
+            const soLuong = 1; // Thiết lập số lượng mặc định hoặc lấy từ input nếu có
+            $.ajax({
+                url: '/quan-ly/them-gio-hang',
+                type: "POST",
+                data: {
+                    qrCode: qrCode,
+                    soLuong: soLuong
+                },
+                success: function (response) {
+                    showAlert('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
+                },
+                error: function (error) {
+                    showAlert('error', 'Đã có lỗi xảy ra, vui lòng thử lại.');
+                    console.log(error);
+                }
+            });
+        }
     });
 </script>
+<!--inhoadon-->
+<script type="text/javascript">
+    function thanhToanVaInHoaDon(element) {
+        const hoaDonSelected = element.getAttribute('data-id-order');
 
+        $.ajax({
+            url: '/quan-ly/thanh-toan-hoa-don',
+            method: 'GET',
+            success: function (response) {
+                showAlert('success', 'Thanh toán hóa đơn thành công!');
+                inHoaDon(hoaDonSelected)
+            },
+            error: function (error) {
+                showAlert('error', 'Đã có lỗi xảy ra, vui lòng thử lại.');
+            }
+        });
+    }
 
+    function inHoaDon(idOrder) {
+        $.ajax({
+            url: '/hoa-don-pdf/in/' + idOrder,
+            method: 'GET',
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(data) {
+                const filename = "HoaDon.pdf";
+                const url = window.URL.createObjectURL(new Blob([data], { type: 'application/pdf' }));
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
 
-
-
-
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            },
+            error: function() {
+                alert("Lỗi khi in hóa đơn!");
+            }
+        });
+    }
+</script>
 
 
 </body>

@@ -8,6 +8,7 @@ import com.example.kristp.service.HoaDonPdfService;
 import javax.swing.JFileChooser;
 
 
+import java.io.*;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -26,14 +27,14 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import java.awt.*;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.NoSuchElementException;
@@ -51,16 +52,16 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
     @Override
 // khi lấy được id hóadđơn
 //    public void inHoaDon(Integer idOrder) {
-    public void inHoaDon(Integer idOrder) {  // code test
+    public ResponseEntity<InputStreamResource> inHoaDon(Integer idOrder) {
         try (PDDocument taiLieu = new PDDocument()) {
             PDPage trang = new PDPage(PDRectangle.A4);
             taiLieu.addPage(trang);
+
             // Truy xuất hóa đơn từ cơ sở dữ liệu
             HoaDon hoaDon = hoaDonService.findHoaDonById(idOrder);
-            // Thêm nội dung vào trang
+
             try (PDPageContentStream luoiNoiDung = new PDPageContentStream(taiLieu, trang)) {
                 Integer maHoaDon = hoaDon.getId();
-                // Fake data
                 String tenNhanVien = "Đoàn Hiếu";
                 String tenKhachHang = "Đỗ Nghèo Khỉ";
                 String sdt = "0986465398";
@@ -76,33 +77,27 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
                 MyTextClass myTextClass = new MyTextClass(taiLieu, luoiNoiDung);
                 NumberFormat currencyFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
 
-                // Kiểm tra font
                 try (InputStream fontStream = getClass().getResourceAsStream("/fonts/NotoSans-Rengular.ttf")) {
                     if (fontStream == null) {
                         log.error("Không tìm thấy tệp font!");
-                        return;
+                        return ResponseEntity.internalServerError().build();
                     }
                     PDFont font = PDType0Font.load(taiLieu, fontStream);
 
-
-                    // Tiêu đề
                     myTextClass.addSingleLineText("KRIST CẢM ƠN", 200, 750, font, 24, Color.BLACK);
-
-                    // Thêm thông tin hóa đơn
                     myTextClass.addSingleLineText("Mã hóa đơn: " + maHoaDon, 50, 710, font, 14, Color.BLACK);
                     myTextClass.addSingleLineText("Tên nhân viên: " + tenNhanVien, 50, 690, font, 14, Color.BLACK);
                     myTextClass.addSingleLineText("Tên khách hàng: " + tenKhachHang, 50, 670, font, 14, Color.BLACK);
-                    myTextClass.addSingleLineText("Số điện thoại: " + sdt, 50, 650, font, 14, Color.BLACK); // Thêm số điện thoại
+                    myTextClass.addSingleLineText("Số điện thoại: " + sdt, 50, 650, font, 14, Color.BLACK);
                     myTextClass.addSingleLineText("Ngày tạo: " + ngayTao, 50, 630, font, 14, Color.BLACK);
 
-                    // Thêm tiêu đề bảng sản phẩm
                     myTextClass.addSingleLineText("Sản phẩm", 50, 600, font, 14, Color.BLACK);
                     myTextClass.addSingleLineText("Số lượng", 200, 600, font, 14, Color.BLACK);
                     myTextClass.addSingleLineText("Đơn giá", 300, 600, font, 14, Color.BLACK);
                     myTextClass.addSingleLineText("Tổng tiền", 400, 600, font, 14, Color.BLACK);
 
-                    int yPosition = 580; // Vị trí bắt đầu
-                    int rowHeight = 20;  // Chiều cao mỗi hàng
+                    int yPosition = 580;
+                    int rowHeight = 20;
 
                     for (int i = 0; i < sanPham.length; i++) {
                         myTextClass.addSingleLineText(sanPham[i], 50, yPosition, font, 14, Color.BLACK);
@@ -110,10 +105,9 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
                         myTextClass.addSingleLineText(currencyFormat.format(giaBan[i]), 300, yPosition, font, 14, Color.BLACK);
                         myTextClass.addSingleLineText(currencyFormat.format(soLuong[i] * giaBan[i]), 400, yPosition, font, 14, Color.BLACK);
 
-                        yPosition -= rowHeight; // Giảm vị trí y cho mỗi dòng
+                        yPosition -= rowHeight;
                     }
 
-                    // Thêm thông tin tổng kết
                     myTextClass.addSingleLineText("Tổng tiền: " + currencyFormat.format(tongTien) + " VNĐ", 50, yPosition - 20, font, 14, Color.BLACK);
                     myTextClass.addSingleLineText("Giảm giá: " + currencyFormat.format(giamGia) + " VNĐ", 50, yPosition - 40, font, 14, Color.BLACK);
                     myTextClass.addSingleLineText("Tổng sau giảm: " + currencyFormat.format(tongSauGiam) + " VNĐ", 50, yPosition - 60, font, 14, Color.BLACK);
@@ -121,14 +115,22 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
                 } catch (IOException e) {
                     log.error("Lỗi khi tải font: " + e.getMessage());
                 }
-            } // Kết thúc luồng nội dung trước khi lưu tài liệu
+            }
 
-            // Lưu file PDF vào đường dẫn
-            taiLieu.save("E:\\KHOI SU DOANH NGHIEP\\Hoa Don " + hoaDon.getId() + " .pdf"); // Đường dẫn và tên file
-            System.out.println("HÓA ĐƠN ĐÃ ĐƯỢC TẠO");
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            taiLieu.save(outputStream);
+
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+            InputStreamResource resource = new InputStreamResource(inputStream);
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=HoaDon_" + hoaDon.getId() + ".pdf")
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(resource);
 
         } catch (IOException e) {
             log.error("Lỗi khi tạo hóa đơn PDF: " + e.getMessage());
+            return ResponseEntity.internalServerError().build();
         }
     }
 

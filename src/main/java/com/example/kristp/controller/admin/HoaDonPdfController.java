@@ -4,6 +4,7 @@ import com.example.kristp.entity.DanhMuc;
 import com.example.kristp.entity.HoaDon;
 import com.example.kristp.service.HoaDonPdfService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,11 +34,9 @@ public class HoaDonPdfController {
     }
 
     //In Hóa Đơn
-    @PostMapping("/in/{idOrder}")
-    public String printHoaDon(@PathVariable Integer idOrder, RedirectAttributes redirectAttributes) {
-        hoaDonPdfService.inHoaDon(idOrder);
-        redirectAttributes.addFlashAttribute("message", "Hóa đơn đã được in thành công!");
-        return "redirect:/hoa-don-pdf/in-hoa-don"; // Chuyển hướng về danh sách hóa đơn sau khi in
+    @GetMapping("/in/{id}")
+    public ResponseEntity<InputStreamResource> printHoaDon(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+        return hoaDonPdfService.inHoaDon(id);
     }
 
 

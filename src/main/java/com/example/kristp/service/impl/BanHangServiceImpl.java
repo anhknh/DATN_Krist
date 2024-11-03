@@ -27,9 +27,15 @@ public class BanHangServiceImpl implements BanHangService {
 
 
     @Override
-    public HoaDonChiTiet addGioHang(HoaDon hoaDon, Integer idChiTietSanPham, Integer soLuong) {
-        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getCTSPById(idChiTietSanPham);
-        HoaDonChiTiet chiTiet = hoaDonChiTietRepo.findByHoaDonAndChiTietSanPham(hoaDon, chiTietSanPham);
+    public HoaDonChiTiet addGioHang(HoaDon hoaDon, Integer idChiTietSanPham,String qrCode , Integer soLuong) {
+        ChiTietSanPham chiTietSanPham = null;
+        System.out.println(qrCode);
+        if(qrCode != null) {
+            chiTietSanPham = chiTietSanPhamRepository.findByQrCode(qrCode);
+        } else {
+            chiTietSanPham = chiTietSanPhamService.getCTSPById(idChiTietSanPham);
+        }
+        HoaDonChiTiet chiTiet  = hoaDonChiTietRepo.findByHoaDonAndChiTietSanPham(hoaDon, chiTietSanPham);
         if (chiTiet == null) {
             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
             hoaDonChiTiet.setHoaDon(hoaDon);

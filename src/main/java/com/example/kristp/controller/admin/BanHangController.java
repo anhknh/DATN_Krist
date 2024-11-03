@@ -138,16 +138,16 @@ public class BanHangController {
 
     @GetMapping("/tao-hoa-don")
     public String taoHoaDon(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
-        if (hoaDonService.taoHoaDon()) {
-            redirectAttributes.addFlashAttribute("message", "Tạo hóa đơn chờ thành công!");
-            redirectAttributes.addFlashAttribute("messageType", "alert-success");
-            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
-        } else {
-            redirectAttributes.addFlashAttribute("message", "Hóa đơn chờ đã đạt giới hạn!");
-            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
-            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
-        }
-
+//        if (hoaDonService.taoHoaDon()) {
+//            redirectAttributes.addFlashAttribute("message", "Tạo hóa đơn chờ thành công!");
+//            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+//            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+//        } else {
+//            redirectAttributes.addFlashAttribute("message", "Hóa đơn chờ đã đạt giới hạn!");
+//            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+//            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+//        }
+        hoaDonService.taoHoaDon();
 
         //get url request
         String referer = request.getHeader("referer");
@@ -161,6 +161,7 @@ public class BanHangController {
             redirectAttributes.addFlashAttribute("message", "Thanh toán hóa đơn thành công!");
             redirectAttributes.addFlashAttribute("messageType", "alert-success");
             redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+
         } else {
             redirectAttributes.addFlashAttribute("message", "Thanh toán hóa đơn thất bại!");
             redirectAttributes.addFlashAttribute("messageType", "alert-danger");
@@ -173,10 +174,11 @@ public class BanHangController {
 
     @PostMapping("/them-gio-hang")
     public String themGioHang(HttpServletRequest request, Model model,
-                              @RequestParam("chiTietSanPhamId") Integer chiTietSanPhamId,
+                              @RequestParam(value = "chiTietSanPhamId", required = false) Integer chiTietSanPhamId,
+                              @RequestParam(value = "qrCode", required = false) String qrCode,
                               @RequestParam("soLuong") Integer soLuong,
                               RedirectAttributes redirectAttributes) {
-
+        System.out.println("qrcode: " + qrCode);
 
         if (hoaDonSelected == null) {
             redirectAttributes.addFlashAttribute("message", "Vui lòng chọn hóa đơn thao tác!");
@@ -184,7 +186,7 @@ public class BanHangController {
             redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
 
         } else {
-            banHangService.addGioHang(hoaDonSelected, chiTietSanPhamId, soLuong);
+            banHangService.addGioHang(hoaDonSelected, chiTietSanPhamId, qrCode, soLuong);
         }
         //get url request
         String referer = request.getHeader("referer");

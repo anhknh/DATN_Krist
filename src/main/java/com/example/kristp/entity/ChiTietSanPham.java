@@ -43,4 +43,5 @@ public class ChiTietSanPham {
     private Integer soLuong ;
 
     private String anhSanPham ;
+    private String qrCode;
 }
