@@ -33,8 +33,10 @@
 <div class="main" >
   <div class="container-fluid g-0">
     <div class="row g-0">
+      <!--            sider bar-->
       <div class="col-2" style="height: 100vh;">
-        <div style="height: 72px; margin-bottom: 42px;" class="d-flex align-items-center justify-content-center">
+        <div style="height: 72px; margin-bottom: 42px;"
+             class="d-flex align-items-center justify-content-center">
           <div>
             <img style="width: 78%" src="/img/logo.png" alt="logo">
           </div>
@@ -42,54 +44,94 @@
             Krist
           </div>
         </div>
-
         <!-- Main Menu Items -->
         <div style="padding: 0px 22px 28px; border-bottom: 1px solid #E9E9EB;" class="mb-4">
-          <a href="./adminDashBroad.html" class="bg_profile_btn mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+          <!--                    Hiện tại vẫn chưa có tính năng doanh thu đường dẫn là #-->
+          <a href="#" class="bg_profile_btn mb-3"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;"
+             onclick="highlightLink(this)">
             <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
+          </a>
+          <a href="#" class="mb-3"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
+            <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
           </a>
           <!-- Product Management Tree Menu -->
           <div class="menu-item mb-3">
-            <p style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center; cursor: pointer;" onclick="toggleSubmenu('productSubMenu')">
+            <p style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center; cursor: pointer;"
+               onclick="toggleSubmenu('productSubMenu')">
               <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Sản phẩm
               <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
             </p>
-            <ul id="productSubMenu" class="submenu" style="list-style: none; padding-left: 20px; display: none;">
+            <ul id="productSubMenu" class="submenu"
+                style="list-style: none; padding-left: 20px; display: none;">
               <li style="padding: 8px 12px;">
-                <a href="./adminCategories.html" style="text-decoration: none; color: #000;">Danh mục</a>
+                <a href="/quan-ly-danh-muc/pagination-danh-muc"
+                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Danh
+                  mục</a>
               </li>
               <li style="padding: 8px 12px;">
-                <a href="./adminMaterial.html" style="text-decoration: none; color: #000;">Chất liệu</a>
+                <a href="/quan-ly-chat-lieu/pagination-chat-lieu"
+                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Chất liệu</a>
+              </li>
+              <li style="padding: 8px 12px;">
+                <a href="/quan-ly-mau-sac/pagination-mau-sac"
+                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Màu sắc</a>
+              </li>
+              <li style="padding: 8px 12px;">
+                <a href="/quan-ly-size/pagination-size"
+                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Size</a>
+              </li>
+              <li style="padding: 8px 12px;">
+                <a href="/quan-ly-tay-ao/pagination-tay-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Tay
+                  áo</a>
+              </li>
+              <li style="padding: 8px 12px;">
+                <a href="/quan-ly-co-ao/pagination-co-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Cổ
+                  áo</a>
               </li>
             </ul>
           </div>
-
-          <a href="./adminOrder.html" class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
-            <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Đơn hàng
+          <!--                    Chức năng chưa có đường dẫn là #-->
+          <a href="" class="mb-3" onclick="highlightLink(this)"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-cart-shopping" style="margin-right: 10px;" ></i> Đơn hàng
           </a>
-          <a href="./adminCustomer.html" class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+          <!--                    Chức năng chưa có đường dẫn là #-->
+          <a href="#" class="mb-3" onclick="highlightLink(this)"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
           </a>
-          <a href="./adminReviews.html" class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+          <!--                    Chức năng chưa có đường dẫn là #-->
+
+          <a href="#" class="mb-3" onclick="highlightLink(this)"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-star" style="margin-right: 10px;"></i> Đánh giá
           </a>
-          <a href="./adminSetting.html" class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
-            <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Settings
+          <!--                    Chức năng chưa có đường dẫn là #-->
+          <a href="#" class="mb-3" onclick="highlightLink(this)"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
           </a>
         </div>
-
         <!-- Extra Menu -->
-        <div id="drop_right" style="padding: 0px 22px 28px; cursor: pointer;" onclick="toggleSubmenu('extrasSubMenu')">
-          <p class="mb-3" style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center;">
-            <i class="fa-regular fa-plus" style="margin-right: 10px;"></i> Extras
+        <div id="drop_right" style="padding: 0px 22px 28px; cursor: pointer;"
+             onclick="toggleSubmenu('extrasSubMenu')">
+          <p class="mb-3"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center;">
+            <!--                        tính năng chưa được xác định hiện tại để trống-->
+            <i class="fa-regular fa-plus" style="margin-right: 10px;"></i> Bổ sung
             <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
           </p>
           <ul id="extrasSubMenu" class="submenu" style="list-style: none; padding-left: 20px; display: none;">
-            <li style="padding: 8px;"><a href="./adminSize.html" style="text-decoration: none; color: #000;">Size</a></li>
-            <li style="padding: 8px;"><a href="./adminColor.html" style="text-decoration: none; color: #000;">Color</a></li>
+            <li style="padding: 8px;"><a href="./adminSize.html"
+                                         style="text-decoration: none; color: #000;">Size</a></li>
+            <li style="padding: 8px;"><a href="./adminColor.html"
+                                         style="text-decoration: none; color: #000;">Color</a></li>
           </ul>
         </div>
       </div>
+      <!--            end sider bar-->
       <div class="col-10">
         <!-- navigator_link -->
         <div class="d-flex justify-content-between align-items-center" style="height: 72px; margin-bottom: 18px;">
@@ -362,6 +404,21 @@
     });
 
   })();
+
+  function toggleSubmenu(id) {
+    const submenu = document.getElementById(id);
+    // Toggle between 'none' and 'block' to show/hide submenu
+    submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+  }
+
+  function highlightLink(link){
+    //     Remove the 'bg_profile_btn' class from all links
+    const links = document.querySelectorAll('.bg_profile_btn');
+    links.forEach(link => {
+      link.classList.remove('bg_profile_btn');
+    })
+    link.classList.add('bg_profile_btn');
+  }
 </script>
 </body>
 </html>
