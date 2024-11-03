@@ -1,5 +1,6 @@
 package com.example.kristp.repository;
 
+import com.example.kristp.entity.CoAo;
 import com.example.kristp.entity.SanPham;
 import com.example.kristp.enums.Status;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
@@ -55,8 +57,20 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
 
     boolean existsByTenSanPhamAndTrangThai(String tenSanPham, Status trangThai);
 
+    boolean existsByTenSanPham(String tenSanPham);
+
 
     @Query(value = "select sp from SanPham sp where size(sp.chiTietSanPham) > 0 ")
     Page<SanPham> findSanPhamsWithChiTietSanPham(Pageable pageable);
+
+
+    @Query(value = "select sp from SanPham sp where sp.tenSanPham = :tenSanPham")
+    Optional<SanPham> timKiemTenSanPham(@Param("tenSanPham") String tenSanPham);
+
+    @Query(value = "select sp from SanPham sp where sp.tenSanPham LIKE :ten")
+    Page<SanPham> findAllByTenLike(Pageable pageable, @Param("ten") String ten);
+
+    @Query(value = "select sp from SanPham sp order by sp.ngayTao desc")
+    Page<SanPham> findAllSanPham(Pageable pageable);
 
 }

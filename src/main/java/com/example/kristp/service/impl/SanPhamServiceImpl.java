@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,44 +47,71 @@ public class SanPhamServiceImpl implements SanPhamService {
         return sanPhamRepository.findById(id).orElse(null);
     }
 
-    public Integer addSanpham(Integer danhMuc, Integer chatLieu, String tenSanPham, String moTa, Status trangThai) {
-        SanPham sanPham = new SanPham();
-        DanhMuc danhMuc1 = danhMucService.getDanhmucById(danhMuc);
-        sanPham.setDanhMuc(danhMuc1);
-        ChatLieu chatLieu1 = chatLieuService.getChatlieuById(chatLieu);
-        sanPham.setChatLieu(chatLieu1);
-        sanPham.setTenSanPham(tenSanPham);
-        sanPham.setMoTa(moTa);
-        sanPham.setTrangThai(trangThai);
-        SanPham saveSanPham = sanPhamRepository.save(sanPham);
-        return saveSanPham.getId(); // Trả về ID của sản phẩm vừa thêm
-    }
+    @Override
+    public SanPham addSanPham(SanPham sanPham) {
+        sanPham.setNgayTao(new Date());
+        sanPham.setNgaySua(new Date());
 
-    // Phương thức để cập nhật sản phẩm
-    public void updateSanPham(Integer id, Integer danhMuc, Integer chatLieu, String tenSanPham, String moTa, Status trangThai) {
-        SanPham sanPham = sanPhamRepository.findById(id).orElseThrow(() -> new RuntimeException("khong thay san pham"));
-        DanhMuc danhMuc1 = danhMucService.getDanhmucById(danhMuc);
-        sanPham.setDanhMuc(danhMuc1);
-        ChatLieu chatLieu1 = chatLieuService.getChatlieuById(chatLieu);
-        sanPham.setChatLieu(chatLieu1);
-        sanPham.setTenSanPham(tenSanPham);
-        sanPham.setMoTa(moTa);
-        sanPham.setTrangThai(trangThai);
-        sanPhamRepository.save(sanPham);
-    }
-    public SanPham add(SanPham sanPham) {
+        // Kiểm tra id_chat_lieu và id_danh_muc
+//        if (sanPham.getChatLieu() == null || sanPham.getDanhMuc() == null) {
+//            throw new IllegalArgumentException("Chất liệu và danh mục không được để trống.");
+//        }
         return sanPhamRepository.save(sanPham);
     }
 
-    public SanPham update(SanPham sanPham, Integer id) {
-        sanPham.setId(id);
+    @Override
+    public SanPham updateSanPham(SanPham sanPham, Integer idSanPham) {
+        sanPham.setNgaySua(new Date());  // Cập nhật ngày sửa
         return sanPhamRepository.save(sanPham);
     }
-    public SanPham delete(Integer id) {
-        SanPham sanPham = sanPhamRepository.findById(id).orElse(null);
-        sanPhamRepository.delete(sanPham);
-        return sanPham;
+
+    @Override
+    public void deleteSanPham(Integer idSanPham) {
+        SanPham sanPham = sanPhamRepository.findById(idSanPham).orElse(null);
+        if (sanPham != null) {
+            sanPham.setTrangThai(Status.INACTIVE);  // Đặt trạng thái thành không hoạt động
+            sanPhamRepository.save(sanPham);
+        }
     }
+
+//    public Integer addSanpham(Integer danhMuc, Integer chatLieu, String tenSanPham, String moTa, Status trangThai) {
+//        SanPham sanPham = new SanPham();
+//        DanhMuc danhMuc1 = danhMucService.getDanhmucById(danhMuc);
+//        sanPham.setDanhMuc(danhMuc1);
+//        ChatLieu chatLieu1 = chatLieuService.getChatlieuById(chatLieu);
+//        sanPham.setChatLieu(chatLieu1);
+//        sanPham.setTenSanPham(tenSanPham);
+//        sanPham.setMoTa(moTa);
+//        sanPham.setTrangThai(trangThai);
+//        SanPham saveSanPham = sanPhamRepository.save(sanPham);
+//        return saveSanPham.getId(); // Trả về ID của sản phẩm vừa thêm
+//    }
+//
+//    // Phương thức để cập nhật sản phẩm
+//    public void updateSanPham(Integer id, Integer danhMuc, Integer chatLieu, String tenSanPham, String moTa, Status trangThai) {
+//        SanPham sanPham = sanPhamRepository.findById(id).orElseThrow(() -> new RuntimeException("khong thay san pham"));
+//        DanhMuc danhMuc1 = danhMucService.getDanhmucById(danhMuc);
+//        sanPham.setDanhMuc(danhMuc1);
+//        ChatLieu chatLieu1 = chatLieuService.getChatlieuById(chatLieu);
+//        sanPham.setChatLieu(chatLieu1);
+//        sanPham.setTenSanPham(tenSanPham);
+//        sanPham.setMoTa(moTa);
+//        sanPham.setTrangThai(trangThai);
+//        sanPhamRepository.save(sanPham);
+//    }
+//    public SanPham add(SanPham sanPham) {
+//        return sanPhamRepository.save(sanPham);
+//    }
+//
+//    public SanPham update(SanPham sanPham, Integer id) {
+//        sanPham.setId(id);
+//        return sanPhamRepository.save(sanPham);
+//    }
+//    public SanPham delete(Integer id) {
+//        SanPham sanPham = sanPhamRepository.findById(id).orElse(null);
+//        sanPhamRepository.delete(sanPham);
+//        return sanPham;
+//    }
 
     public Page<SanPham> getAllSanphamPhantrang(Optional<Integer> page) {
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
@@ -99,16 +127,24 @@ public class SanPhamServiceImpl implements SanPhamService {
     }
 
     public boolean isTenExists(String tenSanPham) {
-        // Gọi phương thức từ repository hoặc DAO để kiểm tra trùng mã
-        // Trả về true nếu mã đã tồn tại, ngược lại trả về false
-//        return sanPhamRepository.existsByTen(tenSanPham);
-        return true;
+        return sanPhamRepository.existsByTenSanPham(tenSanPham);
+    }
+
+    @Override
+    public SanPham timTheoTenSanPham(String tenSanPham) {
+        return null;
     }
 
     @Override
     public Page<SanPham> getPaginationSanPham(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo , 12);
-        return sanPhamRepository.findSanPhamsWithChiTietSanPham(pageable);
+        Pageable pageable = PageRequest.of(pageNo , 6);
+        return sanPhamRepository.findAllSanPham(pageable);
+    }
+
+    @Override
+    public Page<SanPham> timTatCaTheoTen(Integer pageNo, String ten) {
+        Pageable pageable = PageRequest.of(pageNo , 6);
+        return sanPhamRepository.findAllByTenLike(pageable,ten);
     }
 
 
