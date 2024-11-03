@@ -16,6 +16,7 @@ import java.util.List;
 public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, Integer> {
 
     ChiTietSanPham findFirstBySanPham(SanPham sanPham);
+    ChiTietSanPham findByQrCode(String qrCode);
 
         @Query("SELECT DISTINCT ms FROM ChiTietSanPham ctp " +
                 "JOIN ctp.sanPham sp " +
