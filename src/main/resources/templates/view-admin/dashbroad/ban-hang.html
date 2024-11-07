@@ -38,24 +38,9 @@
             align-items: center;
         }
         .qr-image {
-            width: 200px;
-            height: 200px;
+            width: 300px;
+            height: 440px;
             object-fit: cover;
-        }
-        .list-group-item {
-            max-width: 286px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 10px;
-            transition: background-color 0.3s;
-        }
-        .list-group-item.checked {
-            background-color: #e7f3ff; /* Màu nền cho mục đã chọn */
-            border-color: #007bff; /* Đổi màu viền cho mục đã chọn */
-        }
-        .list-group-item:hover {
-            background-color: #f1f1f1; /* Màu nền khi di chuột qua */
         }
     </style>
 </head>
@@ -76,12 +61,12 @@
                 <!-- Main Menu Items -->
                 <div style="padding: 0px 22px 28px; border-bottom: 1px solid #E9E9EB;" class="mb-4">
                     <!--                    Hiện tại vẫn chưa có tính năng doanh thu đường dẫn là #-->
-                    <a href="#" class="bg_profile_btn mb-3"
+                    <a href="#" class=" mb-3"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;"
                        onclick="highlightLink(this)">
                         <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
                     </a>
-                    <a href="#" class="mb-3"
+                    <a href="#" class="mb-3 bg_profile_btn"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
                         <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
                     </a>
@@ -232,13 +217,16 @@
                                         <td class="text-center">
                                             <div class="d-inline-block me-3" data-bs-toggle="tooltip"
                                                  data-bs-placement="top" title="Cập nhật">
-                                                <div data-bs-toggle="modal" data-bs-target="#modalCategories">
+                                                <div data-bs-toggle="modal" data-bs-target="#modalUpdateCart" th:data-id="${hoaDonChiTiet.id}"
+                                                     th:data-quantity="${hoaDonChiTiet.soLuong}">
                                                     <i class="fa-sharp fa-regular fa-pen-to-square"></i>
                                                 </div>
                                             </div>
                                             <div class="d-inline-block me-3" data-bs-toggle="tooltip"
                                                  data-bs-placement="top" title="Xóa">
-                                                <i class="fa-regular fa-trash-can"></i>
+                                                <a style="color: #000; text-decoration: none"
+                                                   th:href="@{/quan-ly/xoa-gio-hang(inHoaDonChiTiet=${hoaDonChiTiet.id})}"
+                                                ><i class="fa-regular fa-trash-can"></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -446,65 +434,140 @@
                         </div>
                     </div>
                     <div style="flex: 1;" class="box ms-3">
+                        <!-- Thông tin hóa đơn -->
                         <div style="font-weight: 600;">Thông tin hóa đơn</div>
                         <div th:text="'Ngày tạo: ' + ${hoaDonSelected.ngayTao}">Ngày tạo</div>
                         <div th:text="'Người tạo: ' + ${hoaDonSelected.nhanVien.tenNhanVien}">Người tạo</div>
+
+                        <!-- Thông tin Khách hàng -->
                         <div style="font-weight: 600;">Thông tin Khách hàng</div>
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text" id="inputGroup-sizing-m">SĐT</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
-                                   aria-describedby="inputGroup-sizing-m">
-                            <div class=" ms-2" data-bs-toggle="tooltip" data-bs-placement="top"
-                                 title="Thêm nhanh khách hàng">
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-m">
+                            <div class="ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm nhanh khách hàng">
                                 <i class="fa-regular fa-user-plus"></i>
                             </div>
                         </div>
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text" id="inputGroup-sizing-sm">Họ Tên</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input"
-                                   aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                        <div style="font-weight: 600;">Thông tin Thanh toán</div>
-                        <div class="mb-3" style="max-height: 330px; overflow: auto;">
-                            <!-- Thẻ chứa danh sách thẻ khuyến mại -->
-                            <div class="list-group mb-3" th:each="khuyenMai, iterStat : ${listKM}">
-                                <div class="list-group-item d-flex align-items-center">
-                                    <div class="form-check me-3">
-                                        <input class="form-check-input" type="checkbox" value="" aria-label="Checkbox for following text input"
-                                               th:id="'checkbox_' + ${iterStat.index}"
-                                               th:onclick="'toggleSelection(this)'">
-                                    </div>
-                                    <div class="d-flex align-items-center flex-grow-1">
-                                        <i class="fa-solid fa-tickets-perforated" style="font-size: 36px; margin-right: 15px; color: #007bff;"></i>
-                                        <div>
-                                            <p class="mb-1" th:text="'Khuyến mại: ' + ${khuyenMai.tenKhuyenMai}">Khuyến mại</p>
-                                            <p class="mb-1" th:text="'Giá trị: ' + ${khuyenMai.giaTri}">Giá trị</p>
-                                            <small class="text-muted" th:text="'Ngày hết hạn: ' + ${#dates.format(khuyenMai.ngayKetThuc, 'dd-MM-yyyy')}">Ngày hết hạn</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                         </div>
 
-                        <div>Tên khuyến mãi</div>
-                        <div>Mức giảm</div>
-                        <div th:text="'Tổng tiền; ' + ${tongTien}">Tổng tiền</div>
-                        <div>Tổng tiền sau giảm</div>
-                        <select class="form-select form-select-sm mt-3" aria-label=".form-select-sm example">
-                            <option selected>Phương thức thanh toán</option>
+                        <!-- Thông tin Thanh toán -->
+                        <div style="font-weight: 600;">Thông tin Thanh toán</div>
+
+                        <!-- Input nhập mã giảm giá và nút Áp dụng -->
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" class="form-control" placeholder="Nhập mã giảm giá" id="discountCode">
+                            <button class="btn btn-outline-secondary" type="button" onclick="applyDiscount()">Áp dụng</button>
+                        </div>
+
+                        <!-- Nút mở modal danh sách khuyến mại -->
+                        <button class="btn btn-sm btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#promoListModal">Chọn từ danh sách khuyến mại</button>
+
+                        <div th:if="${hoaDonSelected.khuyenMai != null}" th:text="'Tên khuyến mại: ' + ${hoaDonSelected.khuyenMai.tenKhuyenMai}">Tên khuyến mại</div>
+                        <div th:if="${hoaDonSelected.khuyenMai == null}">Tên khuyến mại: Không có khuyến mại</div>
+
+                        <div th:if="${hoaDonSelected.khuyenMai != null}" th:text="'Mức giảm: ' + ${hoaDonSelected.khuyenMai.giaTri}">Mức giảm</div>
+                        <div th:if="${hoaDonSelected.khuyenMai == null}">Mức giảm: 0</div>
+
+                        <div id="totalAmount" th:text="'Tổng tiền: ' + ${tongTien}">Tổng tiền</div>
+                        <div th:if="${hoaDonSelected.khuyenMai != null}" th:text="'Tổng tiền sau giảm: ' + ${tongTienSauGiam}">Tổng tiền sau giảm</div>
+                        <div th:if="${hoaDonSelected.khuyenMai == null}" th:text="'Tổng tiền: ' + ${tongTien}">Tổng tiền sau giảm</div>
+
+
+                        <!-- Phương thức thanh toán -->
+                        <select class="form-select form-select-sm mt-3" aria-label=".form-select-sm example" id="paymentMethod" onchange="toggleCashFields()">
+                            <option selected hidden>Phương thức thanh toán</option>
                             <option value="1">Trực tiếp</option>
                             <option value="2">Chuyển khoản</option>
                         </select>
+
+                        <!-- Tiền khách đưa và Tiền thừa -->
+                        <div class=" mt-3" id="cashGivenField" style="display: none;">
+                            <label for="cashGiven">Tiền khách đưa</label>
+                            <input type="number" class="form-control" id="cashGiven" placeholder="Nhập số tiền khách đưa" oninput="calculateChange()">
+                        </div>
+                        <div class=" mt-2" id="changeField" style="display: none;">
+                            <label for="changeAmount">Tiền thừa</label>
+                            <input type="text" class="form-control" id="changeAmount" readonly>
+                        </div>
+
+                        <!-- Nút hành động -->
                         <div class="text-center mt-4">
                             <div class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#qrModal">Thanh toán</div>
                             <div class="btn btn-dark btn-sm">Hủy hóa đơn</div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!--modal cập nhật giỏ hàng-->
+<div class="modal fade" id="modalUpdateCart" tabindex="-1" aria-labelledby="modalCategoriesLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="width: 500px">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCategoriesLabel">Cập nhật số lượng trong giỏ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"  style="padding:0; display: block">
+                <div>
+                    <form class="needs-validation" novalidate th:action="@{/quan-ly/cap-nhat-gio-hang-hoa-don}" method="post">
+                        <!-- Hidden ID Field -->
+                        <input type="hidden" id="productId" name="inHoaDonChiTiet">
+
+                        <!-- Quantity (Editable) -->
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Số lượng:</label>
+                            <input type="number" class="form-control" id="quantity" name="soLuong" min="1" required>
+                            <div class="invalid-feedback">Số lượng không hợp lệ</div>
+                        </div>
+                        <div style="text-align: end;">
+                            <button type="submit" class="btn btn-dark">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--modal khuyen mai-->
+<div class="modal fade" id="promoListModal" tabindex="-1" aria-labelledby="promoListModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="width: 500px">
+            <div class="modal-header">
+                <h5 class="modal-title" id="promoListModalLabel">Danh sách khuyến mại</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Thẻ chứa khuyến mại -->
+                <div th:each="khuyenMai, iterStat : ${listKM}" style="width: 100%">
+                    <div class="d-flex" style="border: 1px dashed #000; border-radius: 8px; padding: 6px; margin-bottom: 10px; width: 100%">
+                        <div style="border-right: 1px dashed #000; flex: 1; padding: 18px 0;">
+                            <i class="fa-solid fa-tickets-perforated" style="font-size: 36px; padding: 0px 12px;"></i>
+                        </div>
+                        <div style="flex: 3; padding: 4px; font-size: 14px;">
+                            <div th:text="'Khuyến mại: ' + ${khuyenMai.tenKhuyenMai}">Khuyến mại</div>
+                            <div th:text="'Giá trị: ' + ${khuyenMai.giaTri} ">Giá trị - Số lượng</div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div th:text="'Ngày hết hạn: ' + ${#dates.format(khuyenMai.ngayKetThuc, 'dd-MM-yyyy')}">Ngày hết hạn</div>
+                                <a class="btn btn-dark btn-sm"
+                                   th:href="@{/quan-ly/add-khuyen-mai(idKhuyenMai=${khuyenMai.id})}"
+                                >Áp dụng</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Thêm các khuyến mại khác tương tự -->
+            </div>
+        </div>
+    </div>
+</div>
+<!--thêm giỏ hàng-->
 <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="#productModal" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 90%; width: 1024px;"> <!-- Điều chỉnh chiều rộng của modal -->
         <div class="modal-content" style="margin-top: 30px;">
@@ -599,7 +662,6 @@
         </div>
     </div>
 </div>
-
 <!-- Modal thanh toán-->
 <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -611,7 +673,7 @@
             <div class="modal-body justify-content-center">
                 <div class="text-center">
                     <img
-                            th:src="@{https://img.vietqr.io/image/970418-2171025740-bank.png(amount=${tongTien}, addInfo='THANH TOAN DON HANG - KRISTSHOP', accountName='KIEU NGOC HOANG ANH')}"
+                            th:src="@{https://img.vietqr.io/image/970418-2171025740-print.png(amount=${tongTien}, addInfo='THANH TOAN DON HANG - KRISTSHOP', accountName='KIEU NGOC HOANG ANH')}"
                             alt="QR Thanh Toán"
                             class="qr-image"
                     />
@@ -626,7 +688,6 @@
     </div>
 </div>
 <!--modal quét qr-->
-
 <div class="modal fade" id="scanModal" tabindex="-1" aria-labelledby="scanModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"> <!-- modal-lg để tăng kích thước modal -->
         <div class="modal-content" style="width: 800px; height: 600px">
@@ -651,7 +712,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage2" style="display: none;">
-    <strong>Thất bại!</strong> <span id="alertBody2">Thông báo này sẽ hiển thị kết quả.</span>
+    <strong>Thành công!</strong> <span id="alertBody2">Thông báo này sẽ hiển thị kết quả.</span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
     <!-- Alert thông báo từ backend -->
@@ -698,8 +759,55 @@
             listItem.classList.remove('selected');
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const updateDivs = document.querySelectorAll('div[data-bs-target="#modalUpdateCart"]');
+
+        updateDivs.forEach(div => {
+            div.addEventListener('click', function () {
+                // Lấy dữ liệu từ các thuộc tính `data-*`
+                const productId = div.getAttribute('data-id');
+                const quantity = div.getAttribute('data-quantity');
+
+                // Kiểm tra giá trị
+                console.log('Product ID:', productId);  // Xem giá trị ID trong console
+                console.log('Quantity:', quantity);      // Xem số lượng trong console
+
+                // Gán giá trị vào các input trong modal
+                document.getElementById('productId').value = productId;
+                document.getElementById('quantity').value = quantity;
+            });
+        });
+    });
 </script>
 
+<!--tien thua-->
+<script>
+    function toggleCashFields() {
+        var paymentMethod = document.getElementById("paymentMethod").value;
+        var cashGivenField = document.getElementById("cashGivenField");
+        var changeField = document.getElementById("changeField");
+
+        if (paymentMethod === "1") { // "Trực tiếp"
+            cashGivenField.style.display = "block";
+            changeField.style.display = "block";
+        } else { // "Chuyển khoản"
+            cashGivenField.style.display = "none";
+            changeField.style.display = "none";
+        }
+    }
+
+    function calculateChange() {
+        // Lấy tổng tiền từ phần tử HTML
+        var totalAmountText = document.getElementById("totalAmount").textContent;
+        var totalAmount = parseFloat(totalAmountText.replace('Tổng tiền: ', '').replace(',', ''));
+
+        var cashGiven = document.getElementById("cashGiven").value;
+        var changeAmount = cashGiven - totalAmount;
+
+        document.getElementById("changeAmount").value = changeAmount > 0 ? changeAmount : 0;
+    }
+</script>
 
 
 <script>
@@ -715,6 +823,35 @@
 <script>
     (function () {
         'use strict';
+        // Fetch all forms with class 'needs-validation'
+        var forms = document.querySelectorAll('.needs-validation');
+
+        // Loop over forms and prevent submission if validation fails
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    showAlert( "error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
+                }
+                form.classList.add('was-validated');
+            }, false);
+
+            // Add 'change' event listener for all inputs to validate them dynamically
+            var inputs = form.querySelectorAll('input');
+            Array.prototype.slice.call(inputs).forEach(function (input) {
+                input.addEventListener('change', function () {
+                    if (input.checkValidity()) {
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+                    } else {
+                        input.classList.remove('is-valid');
+                        input.classList.add('is-invalid');
+                        showAlert("error","Dữ liệu không hợp lệ trong " + input.placeholder);
+                    }
+                });
+            });
+        });
 
         // thông báo
         window.showAlert = function(type, message) {

@@ -109,7 +109,10 @@ public class SanPhamController {
 
 
     @PostMapping("/update-san-pham")
-    private String updateDanhMuc(@Valid @ModelAttribute("sanPham")SanPham sanPham , BindingResult result , RedirectAttributes attributes , @RequestParam("id")Integer idSanPham){
+    private String updateDanhMuc(@Valid @ModelAttribute("sanPham")SanPham sanPham , BindingResult result , RedirectAttributes attributes ,
+                                 @RequestParam("id")Integer idSanPham,
+                                 @RequestParam("idChatLieu") Integer idChatLieu,
+                                 @RequestParam("idDanhMuc") Integer idDanhMuc){
         if (result.hasErrors()) {
             attributes.addFlashAttribute("sanPham", sanPham);
             attributes.addFlashAttribute("message", "Cập nhật sản phẩm không thành công.");
@@ -117,14 +120,25 @@ public class SanPhamController {
             attributes.addFlashAttribute("titleMsg", "Thất bại");
             return "redirect:/quan-ly-san-pham/pagination-san-pham";
         }
-
-        // Kiểm tra tên sản phẩm đã tồn tại trừ trường hợp sản phẩm hiện tại
-        if (sanPhamService.isTenExists(sanPham.getTenSanPham().trim()) && sanPhamService.findSanphamById(idSanPham).getTenSanPham().equals(sanPham.getTenSanPham().trim())) {
-            attributes.addFlashAttribute("sanPham", sanPham);
-            attributes.addFlashAttribute("message", "Tên của sản phẩm đã tồn tại.");
+        // Đảm bảo rằng các giá trị được thiết lập trước khi cập nhật
+        if (idChatLieu != null) {
+            sanPham.setChatLieu(chatLieuService.getChatlieuById(idChatLieu));
+        } else {
+            // Xử lý trường hợp không có idChatLieu
+            attributes.addFlashAttribute("message", "Chưa chọn chất liệu!");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
-            return "redirect:/quan-ly-san-pham/pagination-san-pham";
+            return "redirect:/quan-ly-san-pham/pagination-san-pham"; // Chuyển hướng trở lại nếu có lỗi
+        }
+
+        if (idDanhMuc != null) {
+            sanPham.setDanhMuc(danhMucService.getDanhmucById(idDanhMuc));
+        } else {
+            // Xử lý trường hợp không có idDanhMuc
+            attributes.addFlashAttribute("message", "Chưa chọn danh mục!");
+            attributes.addFlashAttribute("messageType", "alert-danger");
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
+            return "redirect:/quan-ly-san-pham/pagination-san-pham"; // Chuyển hướng trở lại nếu có lỗi
         }
 
         // Cập nhật sản phẩm nếu không trùng lặp
