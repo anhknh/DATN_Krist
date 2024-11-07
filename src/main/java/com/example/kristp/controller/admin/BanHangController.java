@@ -3,6 +3,7 @@ package com.example.kristp.controller.admin;
 import com.example.kristp.entity.*;
 import com.example.kristp.service.*;
 import com.example.kristp.utils.Pagination;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -100,6 +101,7 @@ public class BanHangController {
         model.addAttribute("chiTietSanPhamService", chiTietSanPhamService);
         //thông tin hóa đơn
         model.addAttribute("tongTien", banHangService.getTongTien(hoaDonSelected));
+        model.addAttribute("tongTienSauGiam", banHangService.findTongTienKhuyenMai(hoaDonSelected));
         //khuyến mại
         model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
         return "view-admin/dashbroad/ban-hang";
@@ -187,6 +189,64 @@ public class BanHangController {
 
         } else {
             banHangService.addGioHang(hoaDonSelected, chiTietSanPhamId, qrCode, soLuong);
+        }
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
+    }
+
+    @GetMapping("/add-khuyen-mai")
+    public String addKhuyenMai(HttpServletRequest request,
+                               @RequestParam Integer idKhuyenMai,
+                               Model model, RedirectAttributes redirectAttributes) {
+        if (banHangService.addKhuyenMai(idKhuyenMai, hoaDonSelected)) {
+            redirectAttributes.addFlashAttribute("message", "Áp dụng khuyến mại thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Áp dụng khuyến mại thất bại!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+        }
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
+    }
+
+    @GetMapping("/xoa-gio-hang")
+    public String xoaGioHang(HttpServletRequest request,
+                               @RequestParam Integer inHoaDonChiTiet,
+                               Model model, RedirectAttributes redirectAttributes) {
+        if (banHangService.xoaSanPhamGioHang(inHoaDonChiTiet)) {
+            redirectAttributes.addFlashAttribute("message", "Xóa sản phẩm thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Xóa sản phẩm thất bại!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+        }
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
+    }
+
+    @PostMapping("/cap-nhat-gio-hang-hoa-don")
+    public String capNhatGioHangHoaDon(HttpServletRequest request,
+                             @RequestParam("inHoaDonChiTiet") Integer inHoaDonChiTiet,
+                             @RequestParam("soLuong") Integer soLuong,
+                             Model model, RedirectAttributes redirectAttributes) {
+        if (banHangService.updateSoLuongGioHang(inHoaDonChiTiet, soLuong)) {
+            redirectAttributes.addFlashAttribute("message", "Cập nhật sản phẩm trong giỏ hàng thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Cập nhật sản phẩm trong giỏ hàng thất bại!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
         }
         //get url request
         String referer = request.getHeader("referer");
