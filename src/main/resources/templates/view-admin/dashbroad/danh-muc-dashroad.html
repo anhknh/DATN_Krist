@@ -17,7 +17,6 @@
             margin: 0;
             overflow: hidden; /* Ẩn thanh cuộn của body */
         }
-
         .main {
             height: 100%;
             display: flex;
@@ -31,7 +30,7 @@
         }
     </style>
 </head>
-<body class="overflow-hidden">
+<body class="overflow-hidden" th:attr="onload=|initializeChart('${labels}' , '${data}','${backgroundColor}','${borderColor}');initializeChart1('${labels2}', '${data2}')|">
 <div class="main">
     <div class="container-fluid g-0">
         <div class="row g-0">
@@ -95,7 +94,7 @@
                         </ul>
                     </div>
                     <!--                    Chức năng chưa có đường dẫn là #-->
-                    <a href="" class="mb-3" onclick="highlightLink(this)"
+                    <a href="#" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-cart-shopping" style="margin-right: 10px;" ></i> Đơn hàng
                     </a>
@@ -260,14 +259,12 @@
                                 </li>
                             </ul>
                         </nav>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="modalCategories" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" style="margin-top: 100px;">

@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
     <link rel="stylesheet" href="/css/StyleHomePage.css">
+    <link rel="stylesheet" href="/css/thongke.css">
+    <script src="/js/thongke.js"></script>
     <style>
         html, body {
             height: 100%;
@@ -30,7 +32,7 @@
     </style>
 </head>
 <body class="overflow-hidden">
-<div class="main" >
+<div class="main">
     <div class="container-fluid g-0">
         <div class="row g-0">
             <!--            sider bar-->
@@ -134,170 +136,83 @@
             <!--            end sider bar-->
             <div class="col-10">
                 <!-- navigator_link -->
-                <div class="d-flex justify-content-between align-items-center" style="height: 72px; margin-bottom: 18px;">
-                    <div>
-                        <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb" >
-                            <ol class="breadcrumb" style="height: 40px; margin: 0px;">
-                                <li class="breadcrumb-item "><a href="#" class="nav_link">Admin</a></li>
-                                <li class="breadcrumb-item "><a href="#" class="nav_link_active">Dashboard</a></li>
-                            </ol>
-                        </nav>
+<!--                <div class="d-flex justify-content-between align-items-center"-->
+<!--                     style="height: 72px; margin-bottom: 18px;">-->
+<!--                    <div>-->
+<!--                        <nav style="&#45;&#45;bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb">-->
+<!--                            <ol class="breadcrumb" style="height: 40px; margin: 0px;">-->
+<!--                                <li class="breadcrumb-item "><a href="#" class="nav_link">Admin</a></li>-->
+<!--                                <li class="breadcrumb-item "><a href="#" class="nav_link_active">Dashboard</a></li>-->
+<!--                            </ol>-->
+<!--                        </nav>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <a href="../login.html" style="text-decoration: none; color: #000; font-size: 20px;"><i-->
+<!--                                class="fa-thin fa-arrow-right-from-bracket"></i></a>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="container">
+                    <!-- <div class="card">
+                  <i class="fas fa-eye">
+                  </i>
+                  <h2>
+                   1,504
+                  </h2>
+                  <p>
+                   Daily Views
+                  </p>
+                 </div> -->
+                    <div class="card">
+                        <i class="fas fa-shopping-cart"> </i>
+                        <h2 th:text="${totalorder}"></h2>
+                        <p>Total Order</p>
                     </div>
-                    <div>
-                        <a href="../login.html" style="text-decoration: none; color: #000; font-size: 20px;"><i class="fa-thin fa-arrow-right-from-bracket"></i></a>
+                    <div class="card">
+                        <i class="fas fa-comments"> </i>
+                        <h2 th:text="${comments}"></h2>
+                        <p>Comments</p>
                     </div>
-                </div>
-                <div style="background-color: #fff; border-radius: 6px; padding: 24px 40px; border: 1px solid #f6f7f8;">
-                    <!-- headre_content -->
-                    <div class="d-flex justify-content-between" style="padding-bottom: 28px;">
-                        <div>
-                            <h4>Material Attribute</h4>
-                        </div>
-                        <div style="width: 350px;">
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <form action="/quan-ly-chat-lieu/tim-kiem-tat-ca-theo-ten" method="GET">
-                                        <div class="input-group flex-nowrap" style="width: 240px;">
-                                        <span class="input-group-text" id="addon-wrapping" style="background-color: #fff;">
-                                            <i class="fa-solid fa-magnifying-glass" style="color: #5C5F6A;"></i>
-                                        </span>
-                                            <input type="text" class="form-control" name="tenTimKiem"
-                                                   placeholder="Search Category"
-                                                   style="border-left: none; padding: 8px 10px 8px 0px;">
-                                            <button type="submit" class="btn btn-outline-secondary">Search</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div>
-                                    <div class="btn btn-outline-secondary" style="display: inline-block;" data-bs-toggle="modal"
-                                         data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('',null , '' )|">Add</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- table -->
-                    <div style="margin-bottom: 28px;">
-                        <table class="table" style="border-top: 1px solid #E9E9EB;">
-                            <thead>
-                            <tr>
-                                <th scope="col" style="padding-left: 20px;">Id</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Describe</th>
-                                <th scope="col" class="text-center">Is Active</th>
-                                <th scope="col" class="text-center">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="material , stat : ${chatLieuList}">
-                                <td style="padding: 12px 6px;" th:text="${material.id}">
-                                </td>
-                                <td style="padding: 12px 6px; line-height: 305%;" th:text="${material.tenChatLieu}" th:class="valueName">
-                                </td>
-                                <td style="padding: 12px 6px; line-height: 305%;" th:text="${material.moTa}" th:class="valueDes">
-                                </td>
-                                <td class="text-center" style="padding: 12px 6px; line-height: 305%;">
-                                    <i class="fa-regular"
-                                       th:classappend="${material.trangThai == material.trangThai.ACTIVE ? 'fa-check' : 'fa-x'}"></i>
-                                </td>
-                                </td>
-                                <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">
-                                    <div class="d-flex justify-content-center">
-                                        <a th:href="@{/quan-ly-chat-lieu/delete-chat-lieu/{id}(id=${material.id})}" class="btn btn-outline-secondary me-2">Delete</a>
-                                        <div class="btn btn-outline-secondary" style="display: inline-block;" data-bs-toggle="modal"
-                                             data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('${material.id}','${stat.index}' , '${material.trangThai}' )|" >Update
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-<!--                    xảy ra vấn đề khi không có bản ghi nào thì nó sẽ lập ra phân trang 1 và 0-->
-                    <div>
-                        <!-- page_number -->
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-end">
-                                <!-- Nút Previous -->
-                                <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
-                                    <a class="page-link" style="color: #5C5F6A"
-                                       th:href="@{/quan-ly-chat-lieu/pagination-chat-lieu(pageNo=0)}"
-                                       aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <!-- Vòng lặp phân trang -->
-                                <li th:if="${totalPage > 0}" th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i - 1 ? 'active' : ''}"
-                                    class="page-item">
-                                    <a class="page-link"
-                                       th:href="@{/quan-ly-chat-lieu/pagination-chat-lieu(pageNo=${i - 1})}"
-                                       th:text="${i}" style="color: #5C5F6A"></a>
-                                </li>
-                                <!-- Nút Next -->
-                                <li class="page-item"
-                                    th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}">
-                                    <a class="page-link" style="color: #5C5F6A"
-                                       th:href="@{/quan-ly-chat-lieu/pagination-chat-lieu(pageNo=${totalPage - 1})}"
-                                       aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-
+                    <div class="card">
+                        <i class="fas fa-money-bill-wave"> </i>
+                        <h2 th:text="${totalrevenue}"></h2>
+                        <p>Total revenue</p>
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="ml">
+                        <label for="year" class="form-label">Hiển thị theo :</label>
+                        <select id="year" class="form-select" onchange="fetchChartData()">
+                            <option value="Theo tháng">Theo tháng</option>
+                            <option value="Theo năm">Theo năm</option>
+                            <!-- Thêm các năm khác nếu cần -->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="charts">
+                    <div class="chart">
+                        <h3>Biểu đồ doanh thu theo ngày</h3>
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <div class="chart">
+                        <h3>Biểu đồ doanh thu theo tháng/năm</h3>
+                        <canvas id="myChart1"></canvas>
+                    </div>
+                </div>
+           </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="modalCategories" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content" style="margin-top: 100px;">
-            <div class="modal-header">`
-                <h5 class="modal-title" id="exampleModalLabel"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body"  style="padding:30px">
-                <div>
-                    <form method="post" id="form_submit" novalidate th:object="${chatLieuCre}" class="needs-validation">
-                        <div class="display_none">
-                            <input type="text" class="form-control" id="idCustomer" name="idColor" value="" th:field="*{id}">
-                        </div>
-                        <div class="mb-4">
-                            <label for="nameCate" class="form-label">Name Material</label>
-                            <input type="text" class="form-control" id="nameCate" placeholder="Enter category name" name="categoryName" th:field="*{tenChatLieu}" required>
-                            <div class="invalid-feedback">Tên chất liệu không hợp lệ .</div>
-                        </div>
-                        <div class="mb-4">
-                            <label for="desCate" class="form-label">Describe</label>
-                            <input type="text" class="form-control" name="describe" id="desCate" placeholder="Enter describe" th:field="*{moTa}" required >
-                            <div class="invalid-feedback">Mô tả không hợp lệ không hợp lệ .</div>
-                        </div>
-                        <div class="mb-4 display_none" id="statusSection">
-                            <label class="form-label">Status</label><br>
-                            <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">
-                            <label for="active">Active</label><br>
-                            <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">
-                            <label for="inactive">Inactive</label>
-                        </div>
-                        <div>
-                            <button type="submit" class="btn btn-outline-secondary">Save</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- Alert thông báo thất bại -->
-<div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage" style="display: none;">
+<div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert"
+     id="alertMessage" style="display: none;">
     <strong>Thất bại!</strong> <span id="alertBody">Thông báo này sẽ hiển thị kết quả.</span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 <!-- Alert thông báo từ backend -->
-<div th:if="${message}" th:class="${messageType} + ' alert alert-dismissible fade show position-fixed top-0 end-0 m-3'" id="successAlert" role="alert">
+<div th:if="${message}" th:class="${messageType} + ' alert alert-dismissible fade show position-fixed top-0 end-0 m-3'"
+     id="successAlert" role="alert">
     <strong th:text="${titleMsg}">Tiêu đề</strong> <span th:text="${message}">Thông báo này sẽ hiển thị kết quả.</span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
@@ -312,13 +227,13 @@
     const desCate = document.getElementById('desCate');
     const statusSection = document.getElementById('statusSection');
 
-    function saveIdOrder(id , index , hanhDong){
+    function saveIdOrder(id, index, hanhDong) {
         idCustomer.value = id;
-        if(index != null) {
+        if (index != null) {
             nameCate.value = valueName[index].textContent.trim();
             desCate.value = valueDes[index].textContent.trim();
             statusSection.classList.remove('display_none');
-            document.getElementById('exampleModalLabel').innerText = 'Update material';
+            document.getElementById('exampleModalLabel').innerText = 'Update category';
             // Kiểm tra class của icon
             if (hanhDong == "ACTIVE") {
                 // Nếu class là 'fa-check', chọn radio button active
@@ -327,13 +242,13 @@
                 // Ngược lại nếu class là 'fa-x', chọn radio button inactive
                 document.getElementById('inactive').checked = true;
             }
-            document.getElementById("form_submit").action = '/quan-ly-chat-lieu/update-chat-lieu' ;
+            document.getElementById("form_submit").action = '/quan-ly-danh-muc/update-danh-muc';
         } else {
             statusSection.classList.add('display_none');
-            document.getElementById('exampleModalLabel').innerText = 'Add material';
+            document.getElementById('exampleModalLabel').innerText = 'Add category';
             nameCate.value = "";
             desCate.value = "";
-            document.getElementById("form_submit").action = '/quan-ly-chat-lieu/add-chat-lieu' ;
+            document.getElementById("form_submit").action = '/quan-ly-danh-muc/add-danh-muc';
         }
     }
 
@@ -348,7 +263,7 @@
                 if (!form.checkValidity()) {
                     event.preventDefault();
                     event.stopPropagation();
-                    showAlert( "error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
+                    showAlert("error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
                 }
                 form.classList.add('was-validated');
             }, false);
@@ -363,7 +278,7 @@
                     } else {
                         input.classList.remove('is-valid');
                         input.classList.add('is-invalid');
-                        showAlert("error","Dữ liệu không hợp lệ trong " + input.placeholder);
+                        showAlert("error", "Dữ liệu không hợp lệ trong " + input.placeholder);
                     }
                 });
             });
@@ -372,7 +287,6 @@
         //thông báo
         function showAlert(type, message) {
             let alertElement;
-
             if (type === 'success') {
                 alertElement = document.getElementById('successAlert');
                 alertElement.querySelector('span').textContent = message; // Thiết lập nội dung thông báo thành công
@@ -382,7 +296,6 @@
                 alertElement.querySelector('#alertBody').textContent = message; // Thiết lập nội dung thông báo lỗi
                 alertElement.style.display = 'block'; // Hiển thị thông báo lỗi
             }
-
             // Tự động ẩn thông báo sau 5 giây
             setTimeout(() => {
                 if (alertElement) {
@@ -391,8 +304,7 @@
                 }
             }, 5000);
         }
-
-        document.addEventListener('DOMContentLoaded', function (){
+        document.addEventListener('DOMContentLoaded', function () {
             // Kiểm tra và ẩn thông báo thành công nếu có
             var successAlert = document.getElementById('successAlert');
             if (successAlert && successAlert.style.display !== 'none') {
@@ -402,13 +314,8 @@
                 }, 5000);
             }
         });
-    })();
-    function toggleSubmenu(id) {
-        const submenu = document.getElementById(id);
-        // Toggle between 'none' and 'block' to show/hide submenu
-        submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
-    }
 
+    })();
 
     function toggleSubmenu(id) {
         const submenu = document.getElementById(id);
