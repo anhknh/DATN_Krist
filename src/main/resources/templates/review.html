@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krist | home</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
+  <link rel="stylesheet" href="/css/StyleHomePage.css">
+  <style>
+    .step {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: #f1f1f1;
+      color: #6c757d;
+      font-size: 1.5rem;
+    }
+    .step.active {
+      background-color: #000; /* Màu tối cho bước đang hoạt động */
+      color: #fff;
+    }
+    .line {
+      flex-grow: 1;
+      height: 2px;
+      border-top: 2px dashed #ddd;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%); /* Căn giữa theo trục dọc */
+      border-top: 2px dashed #ddd; /* Đường nét đứt */
+    }
+    .line-active {
+      border-top: 2px dashed #1a1a1a; /* Màu đậm cho đường nét đứt đầu tiên */
+    }
+  </style>
+</head>
+<body>
+<div class="main">
+  <!-- Notification Bar -->
+  <!-- Header -->
+  <div class="header">
+    <div style="display: flex;">
+      <div style="flex: 1;">
+        <div class="d-flex align-items-center">
+          <img style="height: 36px; margin-right: 8px;" src="/img/logo.png" alt="logo">
+          <p class="title d-inline p-0 m-0">Krist</p>
+        </div>
+      </div>
+      <div style="flex: 2;">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav" style="width: 100%; justify-content: space-between;">
+                <div>
+                  <li class="nav-item">
+                    <a class="nav-link cl-black s-18" href="#">Trang chủ</a>
+                  </li>
+                </div>
+                <div>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link cl-black s-18 dropdown-toggle" href="#" id="navbarDropdown"
+                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Danh mục
+                    </a>
+                    <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;" aria-labelledby="navbarDropdown">
+                      <div class="d-flex">
+                        <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
+                          <p class="font-blod">Men</p>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                        </div>
+                        <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
+                          <p class="font-blod">Men</p>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                        </div>
+                        <div class="text-center"  style="flex: 1; border-right: 1px solid #000;">
+                          <p class="font-blod">Men</p>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                        </div>
+                        <div class="text-center" style="flex: 1;">
+                          <p class="font-blod">Men</p>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                          <div class="p-2">hoanganh</div>
+                        </div>
+                      </div>
+                    </ul>
+                  </li>
+                </div>
+                <div>
+                  <li class="nav-item">
+                    <a class="nav-link cl-black s-18" href="#">Về chúng tôi</a>
+                  </li>
+                </div>
+                <div>
+                  <li class="nav-item">
+                    <a class="nav-link cl-black s-18" href="#">Hoạt động</a>
+                  </li>
+                </div>
+                <div>
+                  <li class="nav-item">
+                    <a class="nav-link cl-black s-18" href="#">Liên hệ</a>
+                  </li>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div style="flex: 1;">
+        <div class="header_right d-flex align-items-center justify-content-end" style="height: 100%;">
+          <div >
+            <a class="cl-black" href="#"data-bs-toggle="modal" data-bs-target="#modal_cart"><i class="fa-regular s-18 fa-magnifying-glass"></i></a>
+          </div>
+          <div style="margin: 0px 46px;">
+            <a class="cl-black" href="#"data-bs-toggle="modal" data-bs-target="#modal_cart"><i class="fa-sharp s-18 fa-regular fa-heart"></i></a>
+          </div>
+          <div class="me-4">
+            <a class="cl-black" href="./profileOrder.html"><i class="fa-regular s-18 fa-cart-minus"></i></a>
+          </div>
+          <div>
+            <button type="button" class="btn btn-dark">Đăng nhập</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid d-flex align-items-center" style="padding: 8px; ">
+    <div class="container" style="padding: 0;">
+
+      <ol class="breadcrumb" style="height: 40px; margin: 0px;">
+        <h2 class="breadcrumb-item ">Xem lại đơn hàng của bạn </h2>
+      </ol>
+
+    </div>
+  </div>
+
+
+  <!-- content -->
+  <div class="container-fluid">
+    <div class="container" style="padding: 54px 0px; margin-bottom: 120px;">
+      <div class="row">
+        <div class="col-7">
+          <div class="container">
+            <div class="d-flex align-items-center">
+              <div class="step active">
+                <i class="fa-light fa-house"></i>
+              </div>
+              <div class="line line-active"></div>
+              <div class="step active">
+                <i class="fa-light fa-credit-card"></i>
+              </div>
+              <div class="line line-active"></div>
+              <div class="step active">
+                <i class="fa-light fa-file-lines"></i>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+              <div class="text-center">Địa Chỉ</div>
+              <div class="text-center">Phương Thức Thanh Toán</div>
+              <div class="text-center">Xem Lại</div>
+            </div>
+          </div>
+          <!--                    -->
+          <div class="mt-4">
+            <h5>Dự kiến giao hàng: **/**/****</h5>
+          </div>
+          <div class="mt-4">
+            <div class="d-flex py-3" style="border-bottom: 1px solid #f1f1f1;">
+              <div style="flex: 0 0 80px; margin-right: 1rem;">
+                <img src="img/monochrome_tees.png" alt="" style="width: 75%; border-radius: 5px;">
+              </div>
+              <div style="flex: 1;">
+                <div style="font-weight: 600; font-size: 1rem; color: #000;">Áo phông Tây Sơn</div>
+                <div style="font-size: 1rem; color: #000; margin-top: 0.25rem;">$8.00</div>
+                <div style="font-size: 0.9rem; color: #666; margin-top: 0.25rem;">Size: S</div>
+              </div>
+            </div>
+
+            <div class="d-flex py-3" style="border-bottom: 1px solid #f1f1f1;">
+              <div style="flex: 0 0 80px; margin-right: 1rem;">
+                <img src="img/img1.jpg" alt="" style="width: 75%; border-radius: 5px;">
+              </div>
+              <div style="flex: 1;">
+                <div style="font-weight: 600; font-size: 1rem; color: #000;">Sơ mi kẻ</div>
+                <div style="font-size: 1rem; color: #000; margin-top: 0.25rem;">$10.00</div>
+                <div style="font-size: 0.9rem; color: #666; margin-top: 0.25rem;">Size: L</div>
+              </div>
+            </div>
+
+            <div class="d-flex py-3">
+              <div style="flex: 0 0 80px; margin-right: 1rem;">
+                <img src="img/img2.jpg" alt="" style="width: 75%; border-radius: 5px;">
+              </div>
+              <div style="flex: 1;">
+                <div style="font-weight: 600; font-size: 1rem; color: #000;">Áo Blayer</div>
+                <div style="font-size: 1rem; color: #000; margin-top: 0.25rem;">$40.00</div>
+                <div style="font-size: 0.9rem; color: #666; margin-top: 0.25rem;">Size: M</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <h5 class="mt-3">Địa chỉ giao hàng</h5>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <p class="mt-4" style="font-weight: bold; margin-bottom: 1rem;">Đoàn Hiếu</p>
+                <p>Cầu Giấy, Hà Nội</p>
+              </div>
+              <div class="btn btn" style="background-color: #f5f5f5; border-radius: 5px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                <i class="fa-light fa-pen-to-square"></i>
+              </div>
+            </div>
+          </div>
+          <div><hr style="background-color: #5b5c64"></div>
+          <div class="mt-4">
+            <h5 class="mt-3">Phương thức thanh toán</h5>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <p class="mt-4" style="font-weight: bold; margin-bottom: 1rem;">Thẻ tín dụng (.... .... .... ..99)</p>
+              </div>
+              <div class="btn btn" style="background-color: #f5f5f5; border-radius: 5px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                <i class="fa-light fa-pen-to-square"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-1"></div>
+        <div class="col-4">
+          <div style="border: 1px solid #E6E7E8; border-radius: 4px; padding: 38px 18px;">
+            <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
+              <div style="font-size: 16px; font-weight: 500; ">Tổng cộng:</div>
+              <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>30.00</div>
+            </div>
+            <hr style="color: #3d3d42; border-width: 1px; margin-bottom: 18px;">
+            <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Nhập mã giảm giá" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="background-color: black; color: #F0F0F0">Apply</button>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
+              <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
+              <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>3.00</div>
+            </div>
+            <hr style="color: #E6E7E8; border-width: 3px; margin-bottom: 18px;">
+            <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
+              <div style="font-size: 16px; font-weight: 500; font-weight: bold;">Tổng thanh toán:</div>
+              <div style="font-size: 16px; font-weight: 500; font-weight: bold;"><i class="fa-regular fa-dollar-sign"></i>33.00</div>
+            </div>
+            <div id="btn btn_checkout" class="text-center"
+                 style="background-color: #000; border-radius: 4px; color: #fff; width: 100%; padding: 12px ; cursor: pointer;">
+              Đặt hàng
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="container-fluid d-flex align-items-center justify-content-evenly" style="padding: 40px 0 120px 0; margin-top: 80px; background-color: #000;">
+    <div style="width: 272px; margin-right: 142px;">
+      <div class="d-flex align-items-center" style="margin-bottom: 12px;">
+        <div style="padding: 8px 14px; margin-right: 8px; border-radius: 5px; border: 1px solid #E6E7E8; background-color: #fff;">
+          <img src="/img/logo.png" alt="logo">
+        </div>
+        <div>
+          <div class="cl-white" style="font-size: 20px; font-weight: 600;">Krist</div>
+        </div>
+      </div>
+      <p class="cl-white " style="font-size: 14px; margin-bottom: 28px;">Connect with us on social networking</p>
+      <div class="d-flex justify-content-between" style="padding-right: 60px;">
+        <div>
+          <i class="fa-brands fa-instagram cl-white " style="font-size: 20px;"></i>
+        </div>
+        <div>
+          <i class="fa-brands fa-facebook cl-white " style="font-size: 20px;"></i>
+        </div>
+        <div>
+          <i class="fa-brands fa-youtube cl-white " style="font-size: 20px;"></i>
+        </div>
+        <div>
+          <i class="fa-brands fa-tiktok cl-white " style="font-size: 20px;"></i>
+        </div>
+        <div>
+          <i class="fa-brands fa-twitter cl-white " style="font-size: 20px;"></i>
+        </div>
+      </div>
+    </div>
+    <div style="width: 484px; margin-right: 100px;">
+      <div style=" margin-right: 72px; display: inline-block;">
+        <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;">SUPPORT</p>
+        <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">FAQ</a></p>
+        <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Terms of use</a></p>
+        <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Privacy Policy</a></p>
+
+      </div>
+      <div style=" margin-right: 72px; display: inline-block;">
+        <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;">COMPANY</p>
+        <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">About us</a></p>
+        <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Contact</a></p>
+        <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Careers</a></p>
+
+      </div>
+      <div style=" margin-right: 72px; display: inline-block;">
+        <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;">SHOP</p>
+        <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">My Account</a></p>
+        <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Checkout</a></p>
+        <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Cart</a></p>
+
+      </div>
+    </div>
+    <div style="width: 272px;">
+      <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 22px;">ACCEPTED PAYMENTS</p>
+      <div class="d-flex justify-content-between" style="padding-right: 60px;">
+        <div>
+          <i class="fa-brands fa-cc-mastercard cl-white" style="font-size: 20px;"></i>
+        </div>
+        <div>
+          <i class="fa-brands fa-cc-visa cl-white" style="font-size: 20px;"></i>
+        </div>
+        <div>
+          <i class="fa-brands fa-cc-amex cl-white" style="font-size: 20px;"></i>
+        </div>
+        <div>
+          <i class="fa-brands fa-cc-paypal cl-white" style="font-size: 20px;"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  function updateQuantity(productDetailId, action) {
+    $.ajax({
+      url: '/ecommerce/' + action,
+      type: 'POST',
+      data: { productDetailId: productDetailId },
+      success: function(response) {
+        let quantityElement = $('#quantity-' + productDetailId);
+        let currentQuantity = parseInt(quantityElement.text());
+        if (action === 'increase') {
+          quantityElement.text(currentQuantity + 1);
+        } else if (action === 'decrease' && currentQuantity > 1) {
+          quantityElement.text(currentQuantity - 1);
+        }
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    });
+  }
+</script>
+<script>
+  const btn_checkout = document.getElementById("btn_checkout");
+  const form_checkout = document.getElementById("form_checkout");
+
+  btn_checkout.addEventListener("click", ()=>{
+    form_checkout.submit();
+  })
+</script>
+</body>
+</html>
