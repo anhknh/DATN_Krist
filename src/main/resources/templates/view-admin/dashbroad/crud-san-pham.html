@@ -164,7 +164,7 @@
                                     <i class="fa-regular"
                                        th:classappend="${sanPham.trangThai == sanPham.trangThai.ACTIVE ? 'fa-check' : 'fa-x'}"></i>
                                 </td>
-
+        
                                 </td>
                                 <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">
                                     <div class="d-flex justify-content-center">
@@ -172,7 +172,9 @@
                                            class="btn btn-outline-secondary me-2"
                                            onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Delete</a>
                                         <div class="btn btn-outline-secondary" style="display: inline-block;" data-bs-toggle="modal"
-                                             data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('${sanPham.id}','${stat.index}' , '${sanPham.trangThai}' )|" >Update
+                                             data-bs-target="#modalCategories"
+                                             th:attr="onclick=|saveIdOrder('${sanPham.id}','${stat.index}', '${sanPham.trangThai}')|">
+                                            Update
                                         </div>
                                     </div>
                                 </td>
@@ -227,49 +229,47 @@
             </div>
             <div class="modal-body"  style="padding:30px">
                 <div>
-                    <form method="post"  action="/quan-ly-san-pham/add-san-pham" id="form_submit" novalidate th:object="${sanPhamCre}" class="needs-validation">
-                        <div class="display_none">
-                            <input type="text" class="form-control" id="idSanPham" name="idSanPham" value="" th:field="*{id}">
-                        </div>
+                    <form method="post" action="/quan-ly-san-pham/add-san-pham" id="form_submit" novalidate th:object="${sanPhamCre}" class="needs-validation">
+                        <input type="hidden" id="idSanPham" name="idSanPham" th:field="*{id}" /> <!-- Input ẩn cho ID sản phẩm -->
+
                         <div class="mb-4">
                             <label for="idDanhMuc" class="form-label">Tên Danh Mục</label>
                             <select class="form-select" id="idDanhMuc" name="idDanhMuc" required>
                                 <option value="" disabled selected>Chọn danh mục</option>
-                                <option th:each="danhMuc : ${danhMucList}"
-                                        th:value="${danhMuc.id}"
-                                        th:text="${danhMuc.tenDanhMuc}"></option>
+                                <option th:each="danhMuc : ${danhMucList}" th:value="${danhMuc.id}" th:text="${danhMuc.tenDanhMuc}"></option>
                             </select>
                             <div class="invalid-feedback">Vui lòng chọn danh mục.</div>
                         </div>
+
                         <div class="mb-4">
                             <label for="idChatLieu" class="form-label">Chất liệu</label>
                             <select class="form-select" id="idChatLieu" name="idChatLieu" required>
                                 <option value="" disabled selected>Chọn chất liệu</option>
-                                <option th:each="chatLieu : ${chatLieuList}"
-                                        th:value="${chatLieu.id}"
-                                        th:text="${chatLieu.tenChatLieu}"></option>
+                                <option th:each="chatLieu : ${chatLieuList}" th:value="${chatLieu.id}" th:text="${chatLieu.tenChatLieu}"></option>
                             </select>
                             <div class="invalid-feedback">Vui lòng chọn chất liệu.</div>
-
                         </div>
 
                         <div class="mb-4">
                             <label for="tenSanPham" class="form-label">Tên Sản Phẩm</label>
                             <input type="text" class="form-control" id="tenSanPham" placeholder="Nhập tên sản phẩm" name="tenSanPham" th:field="*{tenSanPham}" required>
-                            <div class="invalid-feedback">Tên sản pham không hợp lệ .</div>
+                            <div class="invalid-feedback">Tên sản phẩm không hợp lệ.</div>
                         </div>
+
                         <div class="mb-4">
                             <label for="desCate" class="form-label">Mô tả sản phẩm</label>
                             <textarea class="form-control" name="describe" id="desCate" placeholder="Nhập mô tả" th:field="*{moTa}" required style="font-size: 1.2rem; width: 100%; height: 100px;"></textarea>
-                            <div class="invalid-feedback">Mô tả không hợp lệ không hợp lệ .</div>
+                            <div class="invalid-feedback">Mô tả không hợp lệ.</div>
                         </div>
-                        <div class="mb-4 display_none" id="statusSection">
+
+                        <div class="mb-4" id="statusSection" style="display: none;">
                             <label class="form-label">Status</label><br>
                             <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">
                             <label for="active">Active</label><br>
                             <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">
                             <label for="inactive">Inactive</label>
                         </div>
+
                         <div>
                             <button type="submit" class="btn btn-outline-secondary">Save</button>
                         </div>
@@ -280,6 +280,7 @@
     </div>
 </div>
 
+//cập nhật
 
 
 
@@ -295,38 +296,23 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    function saveIdOrder(id, index, status) {
+        document.getElementById("idSanPham").value = id; // đặt id sản phẩm trong modal
+        document.getElementById("tenSanPham").value = document.querySelectorAll('.valueName')[index].innerText;
+        document.getElementById("desCate").value = document.querySelectorAll('.valueDes')[index * 3].innerText;
 
-    const idCustomer = document.getElementById("idCustomer");
-    const valueName = document.querySelectorAll(".valueName");
-    const valueDes = document.querySelectorAll(".valueDes");
-    // Lấy về thuộc tính có id và điều chỉnh theo mong muốn trong hàm saveIdOrder
-    const nameCate = document.getElementById('nameCate');
-    const desCate = document.getElementById('desCate');
-    const statusSection = document.getElementById('statusSection');
-
-    function saveIdOrder(id , index , hanhDong){
-        idCustomer.value = id;
-        if(index != null) {
-            nameCate.value = valueName[index].textContent.trim();
-            desCate.value = valueDes[index].textContent.trim();
-            statusSection.classList.remove('display_none');
-            document.getElementById('exampleModalLabel').innerText = 'Update material';
-            // Kiểm tra class của icon
-            if (hanhDong == "ACTIVE") {
-                // Nếu class là 'fa-check', chọn radio button active
-                document.getElementById('active').checked = true;
-            } else {
-                // Ngược lại nếu class là 'fa-x', chọn radio button inactive
-                document.getElementById('inactive').checked = true;
-            }
-            document.getElementById("form_submit").action = '/quan-ly-san-pham/update-san-pham' ;
+        // Cập nhật trạng thái
+        if (status === 'ACTIVE') {
+            document.getElementById("active").checked = true;
         } else {
-            statusSection.classList.add('display_none');
-            document.getElementById('exampleModalLabel').innerText = 'Add material';
-            nameCate.value = "";
-            desCate.value = "";
-            document.getElementById("form_submit").action = '/quan-ly-san-pham/add-san-pham' ;
+            document.getElementById("inactive").checked = true;
         }
+
+        // Hiển thị phần chọn trạng thái
+        document.getElementById("statusSection").style.display = 'block';
+
+        // Cập nhật action của form để gửi về API cập nhật
+        document.getElementById("form_submit").action = "/quan-ly-san-pham/update-san-pham";
     }
 
     (function () {
