@@ -10,9 +10,11 @@
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="/css/StyleHomePage.css">
     <link rel="stylesheet" href="/css/thongke.css">
     <script src="/js/thongke.js"></script>
+
     <style>
         html, body {
             height: 100%;
@@ -164,26 +166,26 @@
                  </div> -->
                     <div class="card">
                         <i class="fas fa-shopping-cart"> </i>
-                        <h2 th:text="${totalorder}"></h2>
+                        <h2 id="totalorder"></h2>
                         <p>Total Order</p>
                     </div>
                     <div class="card">
                         <i class="fas fa-comments"> </i>
-                        <h2 th:text="${comments}"></h2>
+                        <h2 id="comments"></h2>
                         <p>Comments</p>
                     </div>
                     <div class="card">
                         <i class="fas fa-money-bill-wave"> </i>
-                        <h2 th:text="${totalrevenue}"></h2>
+                        <h2 id="totalrevenue"></h2>
                         <p>Total revenue</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="ml">
                         <label for="year" class="form-label">Hiển thị theo :</label>
-                        <select id="year" class="form-select" onchange="fetchChartData()">
-                            <option value="Theo tháng">Theo tháng</option>
-                            <option value="Theo năm">Theo năm</option>
+                        <select id="year" class="form-select" onchange="fetchChartData(this.value)">
+                            <option value="1" selected>Theo tháng</option>
+                            <option value="2">Theo năm</option>
                             <!-- Thêm các năm khác nếu cần -->
                         </select>
                     </div>
@@ -192,11 +194,15 @@
                 <div class="charts">
                     <div class="chart">
                         <h3>Biểu đồ doanh thu theo ngày</h3>
-                        <canvas id="myChart"></canvas>
+                        <div>
+                            <canvas id="myChart" width="400" height="200"></canvas>
+                        </div>
                     </div>
                     <div class="chart">
                         <h3>Biểu đồ doanh thu theo tháng/năm</h3>
-                        <canvas id="myChart1"></canvas>
+                        <div style="width: 500px">
+                            <canvas id="myChart1" width="400" height="400"></canvas>
+                        </div>
                     </div>
                 </div>
            </div>
@@ -331,6 +337,101 @@
         })
         link.classList.add('bg_profile_btn');
     }
+
+    async function fetchChartData(c) {
+        let d = 1 ;
+        try {
+            d = parseInt(c);
+        }catch (e) {
+            d = 1 ;
+        }
+        try {
+            // Gọi API để lấy dữ liệu biểu đồ
+            const response = await fetch('/api/chart-data'+'?a='+d);
+            const data = await response.json();
+            document.getElementById("totalorder").innerText = data.totalorder;
+            document.getElementById("comments").innerText = data.comments;
+            document.getElementById("totalrevenue").innerText = data.totalrevenue;
+            // Lưu các dữ liệu vào các biến
+            const labelsArray = data.labels;
+            const dataArray = data.dataValues;
+            const backgroundColorsArray = data.backgroundColors;
+            const borderColorsArray = data.borderColors;
+            const labelsArrayTron = data.labelsTron;
+            const dataArrayTron = data.dataValuesTron;
+            const backgroundColorsArrayTron = data.backgroundColorsTron;
+            // Gọi hàm initializeChart để khởi tạo biểu đồ với dữ liệu từ API
+
+            initializeChart(labelsArray, dataArray, backgroundColorsArray, borderColorsArray);
+            initializeChart1(labelsArrayTron , dataArrayTron , backgroundColorsArrayTron);
+        } catch (error) {
+            console.error("Lỗi khi gọi API:", error);
+        }
+    }
+    let myChart = null ;
+    let myChart1 = null ;
+    function initializeChart(labelsArray, dataArray, backgroundColorsArray, borderColorsArray) {
+
+        const data = {
+            labels: labelsArray,
+            datasets: [{
+                label: 'Biểu đồ doanh số',
+                data: dataArray,
+                backgroundColor: backgroundColorsArray,
+                borderColor: borderColorsArray,
+                borderWidth: 1
+            }]
+        };
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+        if (myChart) {
+            myChart.destroy();
+        }
+        // Render biểu đồ
+        myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    }
+
+    function initializeChart1(labelsArray, dataArray, backgroundColorsArray) {
+        const data = {
+            labels: labelsArray,
+            datasets: [{
+                label: 'Áo',
+                data: dataArray,
+                backgroundColor:
+                backgroundColorsArray,
+                hoverOffset: 4
+            }]
+        };
+
+        const config = {
+            type: 'pie', // Specify the chart type here, like 'bar', 'line', etc.
+            data: data,
+            options: {}
+        };
+        if (myChart1) {
+            myChart1.destroy();
+        }
+        // Render biểu đồ
+
+        myChart1 = new Chart(
+            document.getElementById('myChart1'),
+            config
+        );
+    }
+    // Gọi hàm fetchChartData để tải và hiển thị dữ liệu khi trang load
+    window.onload = fetchChartData;
 </script>
 </body>
 </html>
