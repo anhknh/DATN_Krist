@@ -15,7 +15,6 @@ public class DatHangController {
     }
     @GetMapping("/review")
     public String helloReview() {
-
         System.out.println(Authen.khachHang.getTenKhachHang());
         return "review";
     }
