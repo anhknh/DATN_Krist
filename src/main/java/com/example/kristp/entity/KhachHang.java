@@ -32,4 +32,6 @@ public class KhachHang extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "id_tai_khoan")
     private TaiKhoan taiKhoan;
+
+
 }

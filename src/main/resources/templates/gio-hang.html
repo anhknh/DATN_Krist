@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +40,8 @@
                                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Danh mục
                                         </a>
-                                        <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;" aria-labelledby="navbarDropdown">
+                                        <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;"
+                                            aria-labelledby="navbarDropdown">
                                             <div class="d-flex">
                                                 <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
                                                     <p class="font-blod">Men</p>
@@ -59,7 +59,7 @@
                                                     <div class="p-2">hoanganh</div>
                                                     <div class="p-2">hoanganh</div>
                                                 </div>
-                                                <div class="text-center"  style="flex: 1; border-right: 1px solid #000;">
+                                                <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
                                                     <p class="font-blod">Men</p>
                                                     <div class="p-2">hoanganh</div>
                                                     <div class="p-2">hoanganh</div>
@@ -101,11 +101,13 @@
             </div>
             <div style="flex: 1;">
                 <div class="header_right d-flex align-items-center justify-content-end" style="height: 100%;">
-                    <div >
-                        <a class="cl-black" href="#"data-bs-toggle="modal" data-bs-target="#modal_cart"><i class="fa-regular s-18 fa-magnifying-glass"></i></a>
+                    <div>
+                        <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
+                                class="fa-regular s-18 fa-magnifying-glass"></i></a>
                     </div>
                     <div style="margin: 0px 46px;">
-                        <a class="cl-black" href="#"data-bs-toggle="modal" data-bs-target="#modal_cart"><i class="fa-sharp s-18 fa-regular fa-heart"></i></a>
+                        <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
+                                class="fa-sharp s-18 fa-regular fa-heart"></i></a>
                     </div>
                     <div class="me-4">
                         <a class="cl-black" href="./profileOrder.html"><i class="fa-regular s-18 fa-cart-minus"></i></a>
@@ -120,84 +122,59 @@
     <div class="container-fluid d-flex align-items-center" style="padding: 8px; ">
         <div class="container" style="padding: 0;">
 
-                <ol class="breadcrumb" style="height: 40px; margin: 0px;">
-                    <h2 class="breadcrumb-item ">Giỏ hàng <i class="fa-light fa-basket-shopping"></i></h2>
-                </ol>
+            <ol class="breadcrumb" style="height: 40px; margin: 0px;">
+                <h2 class="breadcrumb-item ">Giỏ hàng <i class="fa-light fa-basket-shopping"></i></h2>
+            </ol>
 
         </div>
     </div>
-
+    <div class="container-fluid d-flex align-items-center" style="padding: 8px; " th:if="${#lists.isEmpty(gioHangChiTietList)}">
+        <p>Chưa có sản phẩm nào trong giỏ hàng.</p>
+    </div>
 
     <!-- content -->
     <div class="container-fluid">
         <div class="container" style="padding: 54px 0px; margin-bottom: 120px;">
             <div class="row">
-                <div class="col-7">
+                <div class="col-7" th:unless="${#lists.isEmpty(gioHangChiTietList)}">
                     <!--    table-->
                     <table class="table">
                         <thead>
                         <tr>
                             <th scope="col">Sản phẩm</th>
+                            <th scope="col">Số lượng</th>
                             <th scope="col">Giá</th>
-                            <th scope="col" >Số lượng</th>
-                            <th scope="col">Tổng cộng</th>
+                            <th scope="col">Tổng tiền</th>
+                            <th scope="col">Hành động</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr th:each="item : ${gioHangChiTietList}">
+                            <td th:text="${item.chiTietSanPham.sanPham.tenSanPham}">Tên Sản Phẩm</td>
                             <td>
-                                <div class="d-flex align-items-center">
-                                    <!-- Hình ảnh sản phẩm -->
-                                    <div class="text-center" style="width: 80px; height: 80px; background-color: #F6F6F6;">
-                                        <img style="width: 75%;" src="/img/monochrome_tees.png" alt="">
-                                    </div>
-                                    <!-- Tên sản phẩm và chi tiết -->
-                                    <div style="margin-left: 12px; width: 200px;">
-                                        <p style="font-size: 16px; font-weight: 500;">Áo phông cộc tay</p>
-                                        <!-- Màu sắc và kích thước -->
-                                        <div class="d-flex justify-content-between align-items-center" style="width: 154px; height: 24px;">
-                                            <div>Color:</div>
-                                            <div style="padding: 8px; border-radius: 50%; background-color:#21bbc9;"></div>
-                                            <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
-                                            <div>Size: M</div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <form th:action="@{/gio-hang/tangsoluong}" method="post">
+                                    <input type="hidden" name="idChiTietSanPham" th:value="${item.chiTietSanPham.id}"/>
+                                    <button type="submit" class="btn btn-success btn-sm">+</button>
+                                </form>
+                                <span th:text="${item.soLuong}">Số lượng</span>
+                                <form th:action="@{/gio-hang/giamsoluong}" method="post" style="display:inline;">
+                                    <input type="hidden" name="idChiTietSanPham" th:value="${item.chiTietSanPham.id}"/>
+                                    <button type="submit" class="btn btn-danger btn-sm">-</button>
+                                </form>
                             </td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
-                                    style="display: inline-block;"></p></div></td>
-                            <td><div class="product_cart" style="padding-top: 20px">
-                                <div class="d-flex justify-content-between align-items-center"
-                                     style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height:  40px;">
-                                    <div class="btn_Subtrac" style="cursor: pointer;">
-                                        <button type="button" style="background-color: #fff; border: none; ">
-                                            &#8722;
-                                        </button>
-                                    </div>
-                                    <div  class="quantity_number">1
-
-                                    </div>
-                                    <div class="btn_plus" style="cursor: pointer;">
-                                        <button  type="button" style="background-color: #fff; border: none;" >
-                                            &#43;
-                                        </button>
-                                    </div>
-                                </div>
-                            </div></td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
-                                    style="display: inline-block;"></p></div></td>
-                            <td style="padding-top: 30px">
-                                <a class="btn" >
-                                <div class="prevent_select" style=" background-color: #F6F6F6; border-radius: 6px; display: inline-block; ">
-                                    <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
-                                </div>
-                                </a>
+                            <td th:text="${item.chiTietSanPham.donGia}">Đơn giá</td>
+                            <td th:text="${item.chiTietSanPham.donGia * item.soLuong}">Tổng tiền</td>
+                            <td>
+                                <form th:action="@{/gio-hang/delete}" method="post">
+                                    <input type="hidden" name="idGioHangChiTiet" th:value="${item.id}"/>
+                                    <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                                </form>
                             </td>
                         </tr>
-
                         </tbody>
                     </table>
-<!--                    table-->
+
+                    <!--                    table-->
                 </div>
                 <div class="col-1"></div>
                 <div class="col-4">
@@ -205,23 +182,32 @@
 
                         <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                             <div style="font-size: 16px; font-weight: 500; ">Tổng cộng:</div>
-                            <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>30.00</div>
+                            <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>
+                                <span th:text="${tongTien}">VNĐ</span>
+                            </div>
                         </div>
                         <hr style="color: #5b5c64; border-width: 1px; margin-bottom: 18px;">
                         <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Nhập mã giảm giá" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="background-color: black; color: #F0F0F0">Apply</button>
+                                <input type="text" class="form-control" placeholder="Nhập mã giảm giá"
+                                       aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                                        style="background-color: black; color: #F0F0F0">Apply
+                                </button>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                             <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
-                            <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>3.00</div>
+                            <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>30000
+                            </div>
                         </div>
                         <hr style="color: #E6E7E8; border-width: 3px; margin-bottom: 18px;">
                         <div class="d-flex justify-content-between" style="margin-bottom: 36px;">
                             <div style="font-size: 16px; font-weight: 500; font-weight: bold;">Tổng thanh toán:</div>
-                            <div style="font-size: 16px; font-weight: 500; font-weight: bold;"><i class="fa-regular fa-dollar-sign"></i>33.00</div>
+                            <div style="font-size: 16px; font-weight: 500; font-weight: bold;"><i
+                                    class="fa-regular fa-dollar-sign"></i>
+                                <span th:text="${tongTien + 30000}">VNĐ</span>
+                            </div>
                         </div>
                         <div id="btn_checkout" class="text-center"
                              style="background-color: #000; border-radius: 4px; color: #fff; width: 100%; padding: 12px 24px; margin-bottom: 36px; cursor: pointer;">
@@ -234,7 +220,8 @@
     </div>
 
     <!-- footer -->
-    <div class="container-fluid d-flex align-items-center justify-content-evenly" style="padding: 40px 0 120px 0; margin-top: 80px; background-color: #000;">
+    <div class="container-fluid d-flex align-items-center justify-content-evenly"
+         style="padding: 40px 0 120px 0; margin-top: 80px; background-color: #000;">
         <div style="width: 272px; margin-right: 142px;">
             <div class="d-flex align-items-center" style="margin-bottom: 12px;">
                 <div style="padding: 8px 14px; margin-right: 8px; border-radius: 5px; border: 1px solid #E6E7E8; background-color: #fff;">
@@ -266,23 +253,40 @@
         <div style="width: 484px; margin-right: 100px;">
             <div style=" margin-right: 72px; display: inline-block;">
                 <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;">SUPPORT</p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">FAQ</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Terms of use</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Privacy Policy</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">FAQ</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Terms of
+                    use</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Privacy
+                    Policy</a></p>
 
             </div>
             <div style=" margin-right: 72px; display: inline-block;">
                 <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;">COMPANY</p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">About us</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Contact</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Careers</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">About
+                    us</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Contact</a>
+                </p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Careers</a>
+                </p>
 
             </div>
             <div style=" margin-right: 72px; display: inline-block;">
                 <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;">SHOP</p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">My Account</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Checkout</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Cart</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">My
+                    Account</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Checkout</a>
+                </p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Cart</a>
+                </p>
 
             </div>
         </div>
@@ -313,8 +317,8 @@
         $.ajax({
             url: '/ecommerce/' + action,
             type: 'POST',
-            data: { productDetailId: productDetailId },
-            success: function(response) {
+            data: {productDetailId: productDetailId},
+            success: function (response) {
                 let quantityElement = $('#quantity-' + productDetailId);
                 let currentQuantity = parseInt(quantityElement.text());
                 if (action === 'increase') {
@@ -323,7 +327,7 @@
                     quantityElement.text(currentQuantity - 1);
                 }
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
             }
         });
@@ -333,7 +337,7 @@
     const btn_checkout = document.getElementById("btn_checkout");
     const form_checkout = document.getElementById("form_checkout");
 
-    btn_checkout.addEventListener("click", ()=>{
+    btn_checkout.addEventListener("click", () => {
         form_checkout.submit();
     })
 </script>
