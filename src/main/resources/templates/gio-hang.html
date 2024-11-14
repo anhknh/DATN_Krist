@@ -137,6 +137,7 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th></th>
                             <th scope="col">Sản phẩm</th>
                             <th scope="col">Giá</th>
                             <th scope="col" >Số lượng</th>
@@ -144,54 +145,58 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr th:each="item : ${gioHangChiTietList}">
+                            <td style="padding-top: 35px">
+                                <!-- Checkbox để chọn sản phẩm -->
+                                <input type="checkbox" class="form-check-input product-checkbox" aria-label="Select product">
+                            </td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <!-- Hình ảnh sản phẩm -->
                                     <div class="text-center" style="width: 80px; height: 80px; background-color: #F6F6F6;">
-                                        <img style="width: 75%;" src="/img/monochrome_tees.png" alt="">
+                                        <img th:src="@{${item.getIdChiTietSanPham().anhSanPham}}" style="width: 75%;"  alt="Product Image">
                                     </div>
                                     <!-- Tên sản phẩm và chi tiết -->
                                     <div style="margin-left: 12px; width: 200px;">
-                                        <p style="font-size: 16px; font-weight: 500;">Áo phông cộc tay</p>
+                                        <p style="font-size: 16px; font-weight: 500;" th:text="${item.getIdChiTietSanPham().sanPham.tenSanPham}">Áo phông cộc tay</p>
                                         <!-- Màu sắc và kích thước -->
                                         <div class="d-flex justify-content-between align-items-center" style="width: 154px; height: 24px;">
                                             <div>Color:</div>
-                                            <div style="padding: 8px; border-radius: 50%; background-color:#21bbc9;"></div>
+                                            <div th:style="'padding: 8px; border-radius: 50%; background-color: ' + ${item.getIdChiTietSanPham().mau.maMauSac}"></div>
                                             <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
-                                            <div>Size: M</div>
+                                            <div >Size: <span th:text="${item.getIdChiTietSanPham().size.tenSize}">M</span></div>
                                         </div>
                                     </div>
                                 </div>
                             </td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
-                                    style="display: inline-block;"></p></div></td>
+                            <td ><div style="font-size: 14px; font-weight: 500; padding-top: 30px" ><i class="fa-regular fa-dollar-sign"></i><span th:text="${item.getIdChiTietSanPham().donGia}"  class="product-price">30.00</span><p style="display: inline-block;" ></p></div></td>
                             <td><div class="product_cart" style="padding-top: 20px">
                                 <div class="d-flex justify-content-between align-items-center"
                                      style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height:  40px;">
                                     <div class="btn_Subtrac" style="cursor: pointer;">
-                                        <button type="button" style="background-color: #fff; border: none; ">
+                                        <button type="button" style="background-color: #fff; border: none; " th:onclick="|capNhatSoLuong(${item.id}, -1)|">
                                             &#8722;
                                         </button>
                                     </div>
-                                    <div  class="quantity_number">1
+                                    <div  class="quantity_number"><span id="soLuong-${item.id}" th:text="${item.soLuong}" class="product-quantity">1</span>
 
                                     </div>
                                     <div class="btn_plus" style="cursor: pointer;">
-                                        <button  type="button" style="background-color: #fff; border: none;" >
+                                        <button  type="button" style="background-color: #fff; border: none;" th:onclick="|capNhatSoLuong(${item.id}, 1  )|">
                                             &#43;
                                         </button>
                                     </div>
                                 </div>
                             </div></td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
+                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i><span th:text="${item.getIdChiTietSanPham().donGia * item.soLuong}" class="product-total">30.00</span><p
                                     style="display: inline-block;"></p></div></td>
-                            <td style="padding-top: 30px">
-                                <a class="btn" >
-                                <div class="prevent_select" style=" background-color: #F6F6F6; border-radius: 6px; display: inline-block; ">
-                                    <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
+                            <td style="padding-top: 35px">
+                                <div class="d-inline-block me-3" data-bs-toggle="tooltip"
+                                     data-bs-placement="top" title="Xóa">
+                                    <a style="color: #e10a0a; text-decoration: none"
+                                       th:href="@{/gio-hang-chi-tiet/xoa-gio-hang-chi-tiet/{id}(id=${item.id})}">
+                                        <i class="fa-regular fa-trash-can"></i></a>
                                 </div>
-                                </a>
                             </td>
                         </tr>
 
@@ -205,27 +210,31 @@
 
                         <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                             <div style="font-size: 16px; font-weight: 500; ">Tổng cộng:</div>
-                            <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>30.00</div>
+                            <div style="font-size: 16px; font-weight: 500;"><span id="grand-total"><i class="fa-regular fa-dollar-sign"></i>0.00</span></div>
                         </div>
                         <hr style="color: #5b5c64; border-width: 1px; margin-bottom: 18px;">
-                        <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Nhập mã giảm giá" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="background-color: black; color: #F0F0F0">Apply</button>
-                            </div>
-                        </div>
+
+                        <!-- Nút mở modal danh sách khuyến mại -->
+                        <button class="btn btn-sm btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#promoListModal">Chọn từ danh sách khuyến mại</button>
+
+                        <div th:if="${hoaDonSelected.khuyenMai != null}" th:text="'Tên khuyến mại: ' + ${hoaDonSelected.khuyenMai.tenKhuyenMai}">Tên khuyến mại</div>
+                        <div th:if="${hoaDonSelected.khuyenMai == null}">Tên khuyến mại: Không có khuyến mại</div>
+
+                        <div th:if="${hoaDonSelected.khuyenMai != null}" th:text="'Mức giảm: $' + ${hoaDonSelected.khuyenMai.giaTri}">Mức giảm</div>
+                        <div th:if="${hoaDonSelected.khuyenMai == null}">Mức giảm: $0</div>
+
                         <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                             <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
-                            <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>3.00</div>
+                            <div style="font-size: 16px; font-weight: 500;"><span id="shipping-fee"><i class="fa-regular fa-dollar-sign"></i>3.00</span></div>
                         </div>
                         <hr style="color: #E6E7E8; border-width: 3px; margin-bottom: 18px;">
                         <div class="d-flex justify-content-between" style="margin-bottom: 36px;">
                             <div style="font-size: 16px; font-weight: 500; font-weight: bold;">Tổng thanh toán:</div>
-                            <div style="font-size: 16px; font-weight: 500; font-weight: bold;"><i class="fa-regular fa-dollar-sign"></i>33.00</div>
+                            <div style="font-size: 16px; font-weight: 500; font-weight: bold;"><span id="final-total"><i class="fa-regular fa-dollar-sign"></i>0.00</span></div>
                         </div>
                         <div id="btn_checkout" class="text-center"
-                             style="background-color: #000; border-radius: 4px; color: #fff; width: 100%; padding: 12px 24px; margin-bottom: 36px; cursor: pointer;">
-                            Tiến hành thanh toán
+                             style="background-color: #000; border-radius: 4px; color: #fff; width: 100%; padding: 12px 24px;  cursor: pointer;">
+                            Tiến hành đặt hàng
                         </div>
                     </div>
                 </div>
@@ -305,9 +314,102 @@
         </div>
     </div>
 </div>
+<!--moda khuyễn mãi-->
+<div class="modal fade" id="promoListModal" tabindex="-1" aria-labelledby="promoListModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="width: 500px">
+            <div class="modal-header">
+                <h5 class="modal-title" id="promoListModalLabel">Danh sách khuyến mại</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Thẻ chứa khuyến mại -->
+                <div th:each="khuyenMai, iterStat : ${listKM}" style="width: 100%">
+                    <div class="d-flex" style="border: 1px dashed #000; border-radius: 8px; padding: 6px; margin-bottom: 10px; width: 100%">
+                        <div style="border-right: 1px dashed #000; flex: 1; padding: 18px 0;">
+                            <i class="fa-solid fa-tickets-perforated" style="font-size: 36px; padding: 0px 12px;"></i>
+                        </div>
+                        <div style="flex: 3; padding: 4px; font-size: 14px;">
+                            <div th:text="'Khuyến mại: ' + ${khuyenMai.tenKhuyenMai}">Khuyến mại</div>
+                            <div th:text="'Giá trị: ' + ${khuyenMai.giaTri} ">Giá trị - Số lượng</div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div th:text="'Ngày hết hạn: ' + ${#dates.format(khuyenMai.ngayKetThuc, 'dd-MM-yyyy')}">Ngày hết hạn</div>
+                                <a class="btn btn-dark btn-sm"
+                                   th:href="@{/gio-hang-chi-tiet/add-khuyen-mai(idKhuyenMai=${khuyenMai.id})}"
+                                >Áp dụng</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Thêm các khuyến mại khác tương tự -->
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--tính tổng tiền-->
+<script>
+    const checkboxes = document.querySelectorAll('.product-checkbox');
+    const grandTotalElement = document.getElementById('grand-total');
+    const finalTotalElement = document.getElementById('final-total');
+    const shippingFee = 3.00;  // Phí giao hàng cố định là $3.00
+
+    function calculateTotal() {
+        let grandTotal = 0;
+        checkboxes.forEach((checkbox) => {
+            if (checkbox.checked) {
+                const row = checkbox.closest('tr');
+                const price = parseFloat(row.querySelector('.product-price').textContent);
+                const quantity = parseInt(row.querySelector('.product-quantity').textContent);
+                const productTotal = price * quantity;
+                grandTotal += productTotal;
+            }
+        });
+        grandTotalElement.textContent = `$${grandTotal.toFixed(2)}`;
+
+        // Tính tổng thanh toán cuối cùng (tổng tiền - phí giao hàng)
+        const finalTotal = grandTotal - shippingFee;
+        finalTotalElement.textContent = `$${finalTotal.toFixed(2)}`;
+    }
+
+    checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener('change', calculateTotal);
+    });
+
+    document.querySelectorAll('.product-quantity').forEach((quantity) => {
+        quantity.addEventListener('DOMSubtreeModified', calculateTotal);
+    });
+</script>
+<!--////-->
+<script>
+    function capNhatSoLuong(id, thayDoi) {
+        const soLuongSpan = document.getElementById(`soLuong-${id}`);
+        let soLuong = parseInt(soLuongSpan.innerText) + thayDoi;
+
+        // Đảm bảo số lượng không giảm xuống dưới 1
+        if (soLuong < 1) return;
+
+        // Gửi yêu cầu POST để cập nhật số lượng
+        fetch(`/gio-hang/${id}/update-quantity`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: id, soLuong: soLuong })
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Cập nhật số lượng hiển thị nếu yêu cầu thành công
+                    soLuongSpan.innerText = soLuong;
+                } else {
+                    alert("Không thể cập nhật số lượng. Vui lòng thử lại.");
+                }
+            })
+            .catch(error => console.error('Lỗi:', error));
+    }
+</script>
 <script>
     function updateQuantity(productDetailId, action) {
         $.ajax({
@@ -329,6 +431,7 @@
         });
     }
 </script>
+
 <script>
     const btn_checkout = document.getElementById("btn_checkout");
     const form_checkout = document.getElementById("form_checkout");
