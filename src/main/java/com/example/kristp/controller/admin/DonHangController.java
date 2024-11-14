@@ -11,4 +11,9 @@ public class DonHangController {
         return "view-admin/dashbroad/don-hang";
     }
 
+    @GetMapping("/view-chi-tiet-don-hang")
+    public String chiTietDonHang() {
+        return "view-admin/dashbroad/chi-tiet-don-hang";
+    }
+
 }

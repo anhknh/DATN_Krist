@@ -232,46 +232,93 @@
                             <thead>
                             <tr>
                                 <th scope="col">STT</th>
-                                <th scope="col">Ảnh</th>
-                                <th scope="col">Tên sản phẩm</th>
-                                <th scope="col">Màu sắc</th>
-                                <th scope="col">Size</th>
-                                <th scope="col">Số lượng</th>
-                                <th scope="col">Giá bán</th>
+                                <th scope="col">Mã đơn hàng</th>
+                                <th scope="col">Ngày đặt hàng</th>
+                                <th scope="col">Hình thức thanh toán</th>
+                                <th scope="col">Trạng thái thanh toán</th>
+                                <th scope="col">Tổng tiền</th>
+                                <th scope="col">Trạng thái</th>
                                 <th scope="col" class="text-center">Thao tác</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="hoaDonChiTiet, iterStat : ${listHoaDonChiTiet}">
-                                <th class="text-center align-middle" scope="row" th:text="${iterStat.count}">1
-                                </th>
-                                <td>
-                                    <div class="d-flex justify-content-center align-items-center"
-                                         style="background-color: #f6f6f6; border-radius: 4px;">
-                                        <div>
-                                            <div th:style="|width: 46px; height: 46px; background: url('/img/${hoaDonChiTiet.getChiTietSanPham().anhSanPham}') no-repeat center center / cover; border: none;|">
-                                            </div>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                                <td>@mdo</td>
+                                <td>@mdo</td>
+                                <td>@mdo</td>
+                                <td class="text-center">
+                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
+                                        <a  class="d-block" style="color: #000; text-decoration: none" href="/view-chi-tiet-don-hang">
+                                            <i class="fa-sharp fa-light fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                                <td>@fat</td>
+                                <td>@fat</td>
+                                <td>@fat</td>
+                                <td class="text-center">
+                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
+                                        <div >
+                                            <i class="fa-sharp fa-light fa-eye"></i>
                                         </div>
                                     </div>
                                 </td>
-                                <td th:text="${hoaDonChiTiet.getChiTietSanPham().sanPham.tenSanPham}"></td>
-                                <td th:text="${hoaDonChiTiet.getChiTietSanPham().mau.maMauSac}"></td>
-                                <td th:text="${hoaDonChiTiet.getChiTietSanPham().size.tenSize}"></td>
-                                <td th:text="${hoaDonChiTiet.soLuong}"></td>
-                                <td th:text="${hoaDonChiTiet.giaTien}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                                <td>@fat</td>
+                                <td>@fat</td>
+                                <td>@fat</td>
                                 <td class="text-center">
-                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip"
-                                         data-bs-placement="top" title="Cập nhật">
-                                        <div data-bs-toggle="modal" data-bs-target="#modalUpdateCart" th:data-id="${hoaDonChiTiet.id}"
-                                             th:data-quantity="${hoaDonChiTiet.soLuong}">
-                                            <i class="fa-sharp fa-regular fa-pen-to-square"></i>
+                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
+                                        <div >
+                                            <i class="fa-sharp fa-light fa-eye"></i>
                                         </div>
                                     </div>
-                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip"
-                                         data-bs-placement="top" title="Xóa">
-                                        <a style="color: #000; text-decoration: none"
-                                           th:href="@{/quan-ly/xoa-gio-hang(inHoaDonChiTiet=${hoaDonChiTiet.id})}"
-                                        ><i class="fa-regular fa-trash-can"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                                <td>@fat</td>
+                                <td>@fat</td>
+                                <td>@fat</td>
+                                <td class="text-center">
+                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
+                                        <div >
+                                            <i class="fa-sharp fa-light fa-eye"></i>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">5</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                                <td>@fat</td>
+                                <td>@fat</td>
+                                <td>@fat</td>
+                                <td class="text-center">
+                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
+                                        <div >
+                                            <i class="fa-sharp fa-light fa-eye"></i>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -279,8 +326,6 @@
                         </table>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -297,6 +342,23 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    // Function to toggle submenu visibility
+    function toggleSubmenu(submenuId) {
+        const submenu = document.getElementById(submenuId);
+        if (submenu.style.display === "none" || submenu.style.display === "") {
+            submenu.style.display = "block";
+        } else {
+            submenu.style.display = "none";
+        }
+    }
+</script>
+
 <script>
 
     const idCustomer = document.getElementById("idCustomer");
