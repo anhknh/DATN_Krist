@@ -91,7 +91,7 @@
                         <a class="cl-black" href="#"data-bs-toggle="modal" data-bs-target="#modal_cart"><i class="fa-sharp s-18 fa-regular fa-heart"></i></a>
                     </div>
                     <div class="me-4">
-                        <a class="cl-black" href="./profileOrder.html"><i class="fa-regular s-18 fa-cart-minus"></i></a>
+                        <a class="cl-black" href="/gio-hang"><i class="fa-regular s-18 fa-cart-minus"></i></a>
                     </div>
                     <div>
                         <button type="button" class="btn btn-dark">Đăng nhập</button>
@@ -216,22 +216,21 @@
         </div>
         <div>
             <div class="d-flex flex-wrap">
-                <div class="cart">
-                    <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                        <img src="/img/monochrome_tees.png" alt="Product Image">
-                    </div>
-                    <button class="wishlist-btn">
-                        <i class="fa-sharp fa-regular fa-heart"></i>
-                    </button>
-                    <button class="btn-add__cart">
-                        thêm vào gỏ hàng
-                    </button>
-                    <div class="cart-content">
-                        <div class="category-name">Áo phông trơn</div>
-                        <div class="product-name">Áo phông cộc tay </div>
-                        <div class="price">500,000₫</div>
-                    </div>
-                </div>
+                <tbody>
+                <tr th:each="ctsp : ${chiTietSanPhamList}">
+                    <td th:text="${ctsp.sanPham.tenSanPham}">Tên sản phẩm</td>
+                    <td th:text="${ctsp.sanPham.danhMuc.tenDanhMuc}">Danh mục</td>
+                    <td th:text="${ctsp.sanPham.chatLieu.tenChatLieu}">Chất liệu</td>
+                    <td th:text="${ctsp.donGia}">Đơn giá</td>
+                    <td>
+                        <!-- Form thêm vào giỏ hàng -->
+                        <form th:action="@{/gio-hang/add}" method="post">
+                            <input type="hidden" name="idChiTietSanPham" th:value="${ctsp.id}" />
+                            <button type="submit">Thêm vào giỏ hàng</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
                 <div class="cart">
                     <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
                         <img src="/img/monochrome_tees.png" alt="Product Image">

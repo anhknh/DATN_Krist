@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
@@ -21,7 +22,8 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
     @Override
     public ChiTietSanPham getCTSPById(int id) {
-        return chiTietSanPhamRepository.findById(id).get();
+        return chiTietSanPhamRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Không tìm thấy chi tiết sản phẩm với id: " + id));
     }
 
     @Override

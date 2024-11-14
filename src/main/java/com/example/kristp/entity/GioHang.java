@@ -8,6 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -27,5 +31,11 @@ public class GioHang extends BaseEntity {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "trang_thai")
     private Status trangThai;
+    @Column(name = "tong_tien")
+    private BigDecimal tongTien;
+
+    private Date ngayTao;
+    private Date ngaySua;
+
 
 }
