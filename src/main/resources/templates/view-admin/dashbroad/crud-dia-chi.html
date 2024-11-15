@@ -213,10 +213,10 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="btn btn-block" style="background-color: #070707; width: 100%;">
-                                <a href=""
+                                <a href="#"
                                    style="color: #ffffff; padding: 10px; text-decoration: none; width: 100%; display: block; text-align: center;"
                                    data-bs-toggle="modal" data-bs-target="#modalCategories"
-                                   onclick="saveIdOrder('', null)">
+                                   onclick="saveIdDiaChi('', null, null)">
                                     <i class="fa-light fa-plus" style="margin-right: 15px;"></i> Thêm địa chỉ mới
                                 </a>
                             </div>
@@ -238,9 +238,10 @@
                                        style="background-color: #F6F6F6; border-radius: 6px; padding: 10px 15px; text-decoration: none;"
                                        data-bs-toggle="modal"
                                        data-bs-target="#editDiaChiModal"
-                                       th:attr="onclick=|saveIdDiaChi('${diaChi.id}', '${diaChi.sdt}', '${diaChi.diaChi}')|">
+                                       th:attr="onclick=|saveIdDiaChi('${diaChi.id}', '${diaChi.sdt}', '${diaChi.diaChi}', '${diaChi.trangThai}')|">
                                         <i class="fa-regular fa-pen-to-square" style="font-size: 16px; color: #000;"></i> Edit
                                     </a>
+
                                     <a th:href="@{/user-dia-chi/delete-dia-chi/{id}(id=${diaChi.id})}" class="btn"
                                        style="background-color: #FFF6F6; border-radius: 6px; padding: 10px 15px; text-decoration: none;">
                                         <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
@@ -419,7 +420,7 @@
             <div class="modal-body" style="padding:30px;">
                 <form  th:action="@{/user-dia-chi/update-dia-chi}"  method="post"  novalidate th:object="${diaChiCre}" class="needs-validation">
                     <div class="display_none">
-                        <input type="text" class="form-control" id="idDiaChi" name="id" value="" th:field="*{id}">
+                        <input type="text" class="form-control" id="editDiaChiId" name="id" th:field="*{id}">
                     </div>
                     <div class="mb-4">
                         <label for="editSdt" class="form-label">Số điện thoại</label>
@@ -456,11 +457,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Khi mở modal cập nhật, điền dữ liệu vào form
-    function saveIdDiaChi(id, sdt, diaChi) {
+    function saveIdDiaChi(id, sdt, diaChi, trangThai) {
         // Gán giá trị vào modal
         $('#editDiaChiId').val(id);
         $('#editSdt').val(sdt);
         $('#editDiaChi').val(diaChi);
+
+        // Cập nhật trạng thái trong modal
+        if (trangThai === 'ACTIVE') {
+            $('#active').prop('checked', true);
+        } else {
+            $('#inactive').prop('checked', true);
+        }
     }
 </script>
 
