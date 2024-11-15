@@ -153,23 +153,27 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <!-- Hình ảnh sản phẩm -->
-                                    <div class="text-center" style="width: 80px; height: 80px; background-color: #F6F6F6;">
-                                        <img th:src="@{${item.getIdChiTietSanPham().anhSanPham}}" style="width: 75%;"  alt="Product Image">
+                                    <div class="d-flex justify-content-center align-items-center"
+                                         style="background-color: #f6f6f6; border-radius: 4px;">
+                                        <div>
+                                            <div th:style="|width: 46px; height: 46px; background: url('/img/${item.chiTietSanPham.anhSanPham}') no-repeat center center / cover; border: none;|">
+                                            </div>
+                                        </div>
                                     </div>
                                     <!-- Tên sản phẩm và chi tiết -->
                                     <div style="margin-left: 12px; width: 200px;">
-                                        <p style="font-size: 16px; font-weight: 500;" th:text="${item.getIdChiTietSanPham().sanPham.tenSanPham}">Áo phông cộc tay</p>
+                                        <p style="font-size: 16px; font-weight: 500;" th:text="${item.getChiTietSanPham().sanPham.tenSanPham}">Áo phông cộc tay</p>
                                         <!-- Màu sắc và kích thước -->
                                         <div class="d-flex justify-content-between align-items-center" style="width: 154px; height: 24px;">
                                             <div>Color:</div>
-                                            <div th:style="'padding: 8px; border-radius: 50%; background-color: ' + ${item.getIdChiTietSanPham().mau.maMauSac}"></div>
+                                            <div th:style="'padding: 8px; border-radius: 50%; background-color: ' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
                                             <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
-                                            <div >Size: <span th:text="${item.getIdChiTietSanPham().size.tenSize}">M</span></div>
+                                            <div >Size: <span th:text="${item.getChiTietSanPham().size.tenSize}">M</span></div>
                                         </div>
                                     </div>
                                 </div>
                             </td>
-                            <td ><div style="font-size: 14px; font-weight: 500; padding-top: 30px" ><i class="fa-regular fa-dollar-sign"></i><span th:text="${item.getIdChiTietSanPham().donGia}"  class="product-price">30.00</span><p style="display: inline-block;" ></p></div></td>
+                            <td ><div style="font-size: 14px; font-weight: 500; padding-top: 30px" ><i class="fa-regular fa-dollar-sign"></i><span th:text="${item.getChiTietSanPham().donGia}"  class="product-price">30.00</span><p style="display: inline-block;" ></p></div></td>
                             <td><div class="product_cart" style="padding-top: 20px">
                                 <div class="d-flex justify-content-between align-items-center"
                                      style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height:  40px;">
@@ -188,7 +192,7 @@
                                     </div>
                                 </div>
                             </div></td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i><span th:text="${item.getIdChiTietSanPham().donGia * item.soLuong}" class="product-total">30.00</span><p
+                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i><span th:text="${item.getChiTietSanPham().donGia * item.soLuong}" class="product-total">30.00</span><p
                                     style="display: inline-block;"></p></div></td>
                             <td style="padding-top: 35px">
                                 <div class="d-inline-block me-3" data-bs-toggle="tooltip"
