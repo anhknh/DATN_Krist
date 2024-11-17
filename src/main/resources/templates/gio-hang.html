@@ -373,8 +373,8 @@
         });
         grandTotalElement.textContent = `$${grandTotal.toFixed(2)}`;
 
-        // Tính tổng thanh toán cuối cùng (tổng tiền - phí giao hàng)
-        const finalTotal = grandTotal - shippingFee;
+        // Tính tổng thanh toán cuối cùng (tổng tiền + phí giao hàng)
+        const finalTotal = grandTotal + shippingFee;
         finalTotalElement.textContent = `$${finalTotal.toFixed(2)}`;
     }
 
