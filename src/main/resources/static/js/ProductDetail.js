@@ -11,8 +11,6 @@ const btn_review = document.getElementById("btn_review")
 const view_review = document.getElementById("view_review")
 const view_detail = document.getElementById("view_detail")
 
-
-
 //radio
 for (let i = 0; i < lable_radio_color.length; i++) {
     lable_radio_color[i].addEventListener("click", function() {

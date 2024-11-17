@@ -1,0 +1,174 @@
+.container {
+    display: flex;
+    padding: 20px;
+}
+.sidebar {
+    width: 250px;
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+}
+.sidebar .profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.sidebar .profile img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+.sidebar .profile .name {
+    font-weight: 700;
+}
+.sidebar .menu {
+    list-style: none;
+    padding: 0;
+}
+.sidebar .menu li {
+    margin: 10px 0;
+    justify-content: start;
+
+}
+.sidebar .menu li a {
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+.sidebar .menu li.active a {
+    background-color: #000;
+    color: #fff;
+}
+.sidebar .menu li a i {
+    margin-right: 10px;
+}
+.content {
+    flex: 1;
+    padding: 0 20px 20px 20px;
+}
+.order-container {
+    width: 100%;
+    /* margin: 20px auto; */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 0 20px 20px 20px;
+}
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 20px 0;
+}
+.order-item:last-child {
+    border-bottom: none;
+}
+.order-details {
+    display: flex;
+    align-items: center;
+}
+.order-details img {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+}
+.order-info {
+    max-width: 500px;
+}
+.order-info h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+.order-info p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+.order-status {
+    display: flex;
+    align-items: center;
+}
+.order-status span {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-right: 10px;
+}
+.delivered {
+    background-color: #d4edda;
+    color: #155724;
+}
+.in-process {
+    background-color: #fff3cd;
+    color: #856404;
+}
+.order-price {
+    font-size: 18px;
+    font-weight: bold;
+}
+.order-actions {
+    display: flex;
+    flex-direction: column;
+}
+.order-actions button {
+    padding: 10px 20px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.view-order {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000 !important;
+}
+.write-review {
+    background-color: #000;
+    color: #fff;
+}
+.cancel-order {
+    background-color: white;
+    color: #721c24;
+    border: 1px solid #000 !important;
+}
+.pagination {
+    margin-top: 20px;
+}
+/* Code phần nút nhấn chuyển trang thái hiển thị */
+.status-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+.status-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 20px;
+}
+.status-item {
+    position: relative;
+    text-align: center;
+}
+.status-item .badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.status-item span {
+    display: block;
+    margin-top: 10px;
+}
+/* Kết thúc phần nút nhấn chuyển trang thái*/

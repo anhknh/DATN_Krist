@@ -39,4 +39,20 @@ public class HoaDon extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "id_khuyen_mai")
     private KhuyenMai khuyenMai;
+
+    @Override
+    public String toString() {
+        return "HoaDon{" +
+                "id=" + id +
+                ", diaChi=" + diaChi +
+                ", ngayDatHang=" + ngayDatHang +
+                ", tongTien=" + tongTien +
+                ", trangThai=" + trangThai +
+                ", trangThaiThanhToan='" + trangThaiThanhToan + '\'' +
+                ", phiVanChuyen=" + phiVanChuyen +
+                ", hinhThucThanhToan='" + hinhThucThanhToan + '\'' +
+                ", nhanVien=" + nhanVien +
+                ", khuyenMai=" + khuyenMai +
+                '}';
+    }
 }
