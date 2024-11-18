@@ -1,15 +1,12 @@
 package com.example.kristp.controller.admin;
 
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.*;
 
 @RestController
 public class ApiThongKe {
-
     @GetMapping("/api/chart-data")
     public Map<String, Object> getChartData(@RequestParam("a")Integer a) {
         System.out.println("Đã vào đây");
@@ -48,7 +45,6 @@ public class ApiThongKe {
             }
             response.put("backgroundColorsTron", List.of(backgroundTron.toArray()
             ));
-
             response.put("totalorder", "1");
             response.put("comments", "3");
             response.put("totalrevenue", "6");
@@ -87,14 +83,10 @@ public class ApiThongKe {
             }
             response.put("backgroundColorsTron", List.of(backgroundTron.toArray()
             ));
-
             response.put("totalorder", "1");
             response.put("comments", "3");
             response.put("totalrevenue", "6");
         }
-
-
         return response;
     }
-
 }

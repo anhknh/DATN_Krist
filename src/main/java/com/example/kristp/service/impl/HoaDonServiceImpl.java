@@ -7,6 +7,9 @@ import com.example.kristp.repository.NhanVienRepository;
 import com.example.kristp.service.HoaDonService;
 import com.example.kristp.utils.Authen;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -97,4 +100,10 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
 
+
+    @Override
+    public Page<HoaDon> getPaginationHoaDon(Integer pageNo,HoaDonStatus trangThai) {
+        Pageable pageable = PageRequest.of(pageNo , 3);
+        return hoaDonRepository.getPaginationTrangThai(pageable , trangThai);
+    }
 }
