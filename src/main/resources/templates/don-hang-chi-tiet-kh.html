@@ -226,9 +226,9 @@
                         </td>
                         <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px" th:text="${dhct.getChiTietSanPham().getDonGia()}"><i class="fa-regular fa-dollar-sign"></i><p
                                 style="display: inline-block;"></p></div></td>
-                        <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px" th:text="${dhct.getChiTietSanPham().getSoLuong()}"><p
+                        <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px" th:text="${dhct.getSoLuong()}"><p
                                 style="display: inline-block;"></p></div></td>
-                        <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px" th:text="${dhct.getChiTietSanPham().getDonGia() * dhct.getChiTietSanPham().getSoLuong()}"><i class="fa-regular fa-dollar-sign"></i><p
+                        <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px" th:text="${dhct.getChiTietSanPham().getDonGia() * dhct.getSoLuong()}"><i class="fa-regular fa-dollar-sign"></i><p
                                 style="display: inline-block;"></p></div></td>
                     </tr>
 
@@ -276,12 +276,12 @@
                 <div style="border: 1px solid #E6E7E8; border-radius: 4px; padding: 38px 18px;">
                     <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                         <div style="font-size: 16px; font-weight: 500; ">Tổng cộng:</div>
-                        <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign" th:text="${hoaDon.getTongTien()}"></i></div>
+                        <div style="font-size: 16px; font-weight: 500;font-weight: bold;" th:text="${hoaDon.getTongTien()}"><i class="fa-regular fa-dollar-sign" ></i></div>
                     </div>
                     <hr style="color: #5b5c64; border-width: 1px; margin-bottom: 18px;">
                     <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                         <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
-                        <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>3.00</div>
+                        <div style="font-size: 16px; font-weight: 500;font-weight: bold;" th:text="${hoaDon.getPhiVanChuyen()}"><i class="fa-regular fa-dollar-sign"></i></div>
                     </div>
                     <hr style="color: #E6E7E8; border-width: 3px; margin-bottom: 18px;">
                     <div class="d-flex justify-content-between" style="margin-bottom: 36px;">

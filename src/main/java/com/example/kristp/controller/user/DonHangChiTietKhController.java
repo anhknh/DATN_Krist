@@ -26,7 +26,8 @@ public class DonHangChiTietKhController {
     public String getPagination(@RequestParam(name = "id" , defaultValue = "0")Integer id , @RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model){        Pageable pageable = PageRequest.of(pageNo , 3);
         HoaDon hoaDon = hoaDonService.findHoaDonById(id);
         Page<HoaDonChiTiet> hoaDons = hoaDonChiTietService.getHoaDonChiTietByHoaDon(hoaDon , pageable);
-        model.addAttribute("tongThanhToan" , hoaDon.getTongTien());
+        Float tongThanhToan = Float.parseFloat(String.valueOf(hoaDon.getTongTien())) + hoaDon.getPhiVanChuyen();
+        model.addAttribute("tongThanhToan" , tongThanhToan);
         model.addAttribute("hoaDon" , hoaDon);
         model.addAttribute("donHangChiTiet" , hoaDons.getContent());
         model.addAttribute("currentPage" , pageNo);
