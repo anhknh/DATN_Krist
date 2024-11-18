@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Size</title>
+    <title> Quản lý đơn hàng </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
@@ -178,55 +178,79 @@
                 </div>
 <!--                content-->
                 <div class="box">
+<!--                    tìm kiếm đơn hàng-->
                     <div class="order-filter-box">
-                        <div class="filter-item">
-                            <label for="orderCode">Mã đơn hàng</label>
-                            <input type="text" id="orderCode" placeholder="Nhập mã đơn hàng">
-                        </div>
-                        <div class="filter-item">
-                            <label for="startDate">Từ ngày</label>
-                            <input type="date" id="startDate">
-                        </div>
-                        <div class="filter-item">
-                            <label for="endDate">Đến ngày</label>
-                            <input type="date" id="endDate">
-                        </div>
-                        <button class="filter-button">Lọc</button>
+                        <form th:action="@{/quan-ly-don-hang/tim-kiem-don-hang}" method="get">
+                            <div class="filter-container">
+                                <div class="filter-item">
+                                    <label for="id">Mã đơn hàng</label>
+                                    <input type="number" id="id" name="id" placeholder="Nhập mã đơn hàng">
+                                </div>
+                                <div class="filter-item">
+                                    <label for="ngayBatDau">Ngày Bắt Đầu:</label>
+                                    <input type="datetime-local" id="ngayBatDau" name="ngayBatDau">
+                                </div>
+                                <div class="filter-item">
+                                    <label for="ngayKetThuc">Ngày Kết Thúc:</label>
+                                    <input type="datetime-local" id="ngayKetThuc" name="ngayKetThuc">
+                                </div>
+                            </div>
+                            <div class="filter-item">
+                                <button class="filter-button" type="submit">Lọc</button>
+                            </div>
+                        </form>
                     </div>
 
                     <div class="order-status-box">
                         <div style="font-size: 18px; font-weight: 700">Trạng thái đơn hàng</div>
                         <div class="status-options">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status" id="status1" value="waiting" checked>
-                                <label class="form-check-label status-label selected" for="status1">
-                                    Chờ xác nhận
-                                    <span class="status-count">12</span>
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status" id="status2" value="processing">
-                                <label class="form-check-label status-label" for="status2">
-                                    Đang xử lý
-                                    <span class="status-count">34</span>
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status" id="status3" value="shipping">
-                                <label class="form-check-label status-label" for="status3">
-                                    Đang giao hàng
-                                    <span class="status-count">8</span>
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status" id="status4" value="completed">
-                                <label class="form-check-label status-label" for="status4">
-                                    Hoàn thành
-                                    <span class="status-count">112</span>
-                                </label>
-                            </div>
+                            <form action="/quan-ly-don-hang/view-don-hang" method="get">
+                                <!-- Tất cả -->
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="trangThai" id="status1" value="on"
+                                           th:checked="${currentTrangThai == 'on'}" onchange="this.form.submit()">
+                                    <label class="form-check-label status-label" for="status1">
+                                        Tất cả
+                                        <span class="status-count" id="totalCount"></span>
+                                    </label>
+                                </div>
+                                <!-- Chờ xác nhận -->
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="trangThai" id="status2" value="0" onchange="this.form.submit()">
+                                    <label class="form-check-label status-label" for="status2">
+                                        Chờ xác nhận
+                                        <span class="status-count"id="CHO_XAC_NHAN"></span>
+                                    </label>
+                                </div>
+                                <!-- Đang xử lý -->
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="trangThai" id="status3" value="1" onchange="this.form.submit()">
+                                    <label class="form-check-label status-label" for="status3">
+                                        Đang xử lý
+                                        <span class="status-count" id="DANG_XU_LY"></span>
+                                    </label>
+                                </div>
+                                <!-- Đang giao hàng -->
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="trangThai" id="status4" value="2" onchange="this.form.submit()">
+                                    <label class="form-check-label status-label" for="status4">
+                                        Đang giao hàng
+                                        <span class="status-count" id="DANG_GIAO_HANG"></span>
+                                    </label>
+                                </div>
+                                <!-- Hoàn thành -->
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="trangThai" id="status5" value="3" onchange="this.form.submit()">
+                                    <label class="form-check-label status-label" for="status5">
+                                        Hoàn thành
+                                        <span class="status-count" id="HOAN_TAT"></span>
+                                    </label>
+                                </div>
+                            </form>
                         </div>
                     </div>
+
+
                     <div class="mt-3">
                         <table class="table table-hover table-bordered table-sm">
                             <thead>
@@ -242,14 +266,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
+                            <tr th:each="hoaDon, stat : ${hoaDons}">
+                                <td th:text="${stat.index + 1}"></td>
+                                <td th:text="${hoaDon.id}"></td>
+                                <td th:text="${hoaDon.ngayDatHang}"></td>
+                                <td th:text="${hoaDon.hinhThucThanhToan}"></td>
+                                <td th:text="${hoaDon.trangThaiThanhToan}"></td>
+                                <td th:text="${hoaDon.tongTien}"></td>
+                                <td th:text="${hoaDon.trangThai}"></td>
                                 <td class="text-center">
                                     <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
                                         <a  class="d-block" style="color: #000; text-decoration: none" href="/view-chi-tiet-don-hang">
@@ -258,70 +282,70 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td class="text-center">
-                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
-                                        <div >
-                                            <i class="fa-sharp fa-light fa-eye"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td class="text-center">
-                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
-                                        <div >
-                                            <i class="fa-sharp fa-light fa-eye"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td class="text-center">
-                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
-                                        <div >
-                                            <i class="fa-sharp fa-light fa-eye"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td class="text-center">
-                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
-                                        <div >
-                                            <i class="fa-sharp fa-light fa-eye"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+<!--                            <tr>-->
+<!--                                <th scope="row">2</th>-->
+<!--                                <td>Jacob</td>-->
+<!--                                <td>Thornton</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td class="text-center">-->
+<!--                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">-->
+<!--                                        <div >-->
+<!--                                            <i class="fa-sharp fa-light fa-eye"></i>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th scope="row">3</th>-->
+<!--                                <td>Jacob</td>-->
+<!--                                <td>Thornton</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td class="text-center">-->
+<!--                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">-->
+<!--                                        <div >-->
+<!--                                            <i class="fa-sharp fa-light fa-eye"></i>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th scope="row">4</th>-->
+<!--                                <td>Jacob</td>-->
+<!--                                <td>Thornton</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td class="text-center">-->
+<!--                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">-->
+<!--                                        <div >-->
+<!--                                            <i class="fa-sharp fa-light fa-eye"></i>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th scope="row">5</th>-->
+<!--                                <td>Jacob</td>-->
+<!--                                <td>Thornton</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td>@fat</td>-->
+<!--                                <td class="text-center">-->
+<!--                                    <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">-->
+<!--                                        <div >-->
+<!--                                            <i class="fa-sharp fa-light fa-eye"></i>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </td>-->
+<!--                            </tr>-->
                             </tbody>
                         </table>
                     </div>
@@ -475,6 +499,37 @@
         })
         link.classList.add('bg_profile_btn');
     }
+// đây là hàm để đếm số lượng trạng thái
+    // Lấy dữ liệu JSON từ model và lưu vào biến countData
+    var countData = /*[[${countJson}]]*/ 'null';  // Chuyển giá trị countJson từ controller vào JavaScript
+
+    if (countData !== 'null') {
+        // In dữ liệu JSON để kiểm tra
+        console.log("Raw JSON Data: ", countData);
+
+        // Chuyển chuỗi JSON thành đối tượng JavaScript
+        var countByTrangThai = JSON.parse(countData);
+
+        // Tính tổng số trạng thái và gán vào 'Tất cả'
+        var totalCount = 0;
+        for (var key in countByTrangThai) {
+            if (countByTrangThai.hasOwnProperty(key)) {
+                totalCount += countByTrangThai[key];
+            }
+        }
+
+        // Hiển thị tổng số trạng thái trong phần tử 'totalCount'
+        document.getElementById("totalCount").textContent = totalCount;
+
+        // Hiển thị số lượng cho từng trạng thái
+        document.getElementById("CHO_XAC_NHAN").textContent = countByTrangThai["0"] || 0;
+        document.getElementById("DANG_XU_LY").textContent = countByTrangThai["1"] || 0;
+        document.getElementById("DANG_GIAO_HANG").textContent = countByTrangThai["2"] || 0;
+        document.getElementById("HOAN_TAT").textContent = countByTrangThai["3"] || 0;
+    } else {
+        console.log("Dữ liệu JSON không hợp lệ hoặc không có dữ liệu");
+    }
+
 </script>
 </body>
 </html>

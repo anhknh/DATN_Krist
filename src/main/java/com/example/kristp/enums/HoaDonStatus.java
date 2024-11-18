@@ -18,6 +18,10 @@ public enum HoaDonStatus {
     HoaDonStatus(int value) {
         this.value = value;
     }
+    @Override
+    public String toString() {
+        return this.name(); // Sử dụng tên của enum
+    }
 
     public int getValue() {
         return value;

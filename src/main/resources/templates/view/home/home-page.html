@@ -91,7 +91,7 @@
                         <a class="cl-black" href="#"data-bs-toggle="modal" data-bs-target="#modal_cart"><i class="fa-sharp s-18 fa-regular fa-heart"></i></a>
                     </div>
                     <div class="me-4">
-                        <a class="cl-black" href="/gio-hang"><i class="fa-regular s-18 fa-cart-minus"></i></a>
+                        <a class="cl-black" href="/gio-hang-chi-tiet"><i class="fa-regular s-18 fa-cart-minus"></i></a>
                     </div>
                     <div>
                         <button type="button" class="btn btn-dark">Đăng nhập</button>
@@ -226,7 +226,7 @@
                         <!-- Form thêm vào giỏ hàng -->
                         <form th:action="@{/gio-hang/add}" method="post">
                             <input type="hidden" name="idChiTietSanPham" th:value="${ctsp.id}" />
-                            <button type="submit">Thêm vào giỏ hàng</button>
+                            <button  type="button" data-bs-toggle="modal" data-bs-target="#modal_popup" >Thêm vào giỏ hàng</button>
                         </form>
                     </td>
                 </tr>
@@ -350,6 +350,79 @@
                 </div>
                 <div>
                     <i class="fa-brands fa-cc-paypal cl-white" style="font-size: 20px;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal popup-->
+<div class="modal fade" id="modal_popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 370px; margin-left: auto; margin-right: 250px;">
+        <div class="modal-content" style="margin-top: 70px;">
+            <div class="modal-header">
+                <p class="modal-title" id="exampleModalLabel">you have 2 items in your cart</p>
+            </div>
+            <div class="modal-body" style="margin-top: 5px;">
+                <!-- cart_product -->
+                <div class="cart_product_row" style="border-bottom: 2px solid #F6F6F6; padding: 12px 4px;">
+                    <div class="d-flex">
+                        <tbody th:each="item : ${gioHangChiTietList}">
+                        <!-- img_product_cart -->
+                        <div class="text-center img_product_cart" style="width: 80px; height: 80px; background-color: #F6F6F6;">
+                            <img th:src="@{${item.getChiTietSanPham().anhSanPham}}" style="width: 75%;"  alt="Product Image">
+                        </div>
+
+                        <!-- product_cart_detail -->
+                        <div class="product_cart" style="margin-left: 10px;">
+                            <p style="font-size: 16px; font-weight: 500;" th:text="${item.getChiTietSanPham().sanPham.tenSanPham}">Áo phông cộc tay</p>
+                            <div class="d-flex justify-content-between align-items-center" style="width: 62px; height: 22px;">
+                                <div th:style="'padding: 8px; border-radius: 50%; background-color: ' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
+                                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
+                                <div >Size: <span th:text="${item.getChiTietSanPham().size.tenSize}">M</span></div>
+                            </div>
+                            <td ><div style="font-size: 14px; font-weight: 500; padding-top: 30px" ><i class="fa-regular fa-dollar-sign"></i><span th:text="${item.getChiTietSanPham().donGia}"  class="product-price">30.00</span><p style="display: inline-block;" ></p></div></td>
+                            <td><div class="product_cart" style="padding-top: 20px">
+                                <div class="d-flex justify-content-between align-items-center"
+                                     style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height:  40px;">
+                                    <div class="btn_Subtrac" style="cursor: pointer;">
+                                        <button type="button" style="background-color: #fff; border: none; " th:onclick="|capNhatSoLuong(${item.id}, -1)|">
+                                            &#8722;
+                                        </button>
+                                    </div>
+                                    <div  class="quantity_number"><span id="soLuong-${item.id}" th:text="${item.soLuong}" class="product-quantity">1</span>
+
+                                    </div>
+                                    <div class="btn_plus" style="cursor: pointer;">
+                                        <button  type="button" style="background-color: #fff; border: none;" th:onclick="|capNhatSoLuong(${item.id}, 1  )|">
+                                            &#43;
+                                        </button>
+                                    </div>
+                                </div>
+                            </div></td>
+                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i><span th:text="${item.getChiTietSanPham().donGia * item.soLuong}" class="product-total">30.00</span><p
+                                    style="display: inline-block;"></p></div></td>
+                            <td style="padding-top: 35px">
+                                <div class="d-inline-block me-3" data-bs-toggle="tooltip"
+                                     data-bs-placement="top" title="Xóa">
+                                    <a style="color: #e10a0a; text-decoration: none"
+                                       th:href="@{/gio-hang/delete/{id}(id=${item.id})}">
+                                        <i class="fa-regular fa-trash-can"></i></a>
+                                </div>
+                            </td>
+                        </div>
+                        </tbody>
+                    </div>
+                </div>
+                <!--        2-->
+                <div class="modal-footer" style="border: none; align-items: normal; justify-content: unset;">
+                    <div class="d-flex justify-content-between" style="border-top: 2px solid #F6F6F6; width: 100%; padding: 12px; margin-bottom: 12px;">
+                        <div style="font-size: 14px; font-weight: 500;">Subtotal</div>
+                        <div style="font-size: 14px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>60.00</div>
+                    </div>
+                    <button class="btn bg-black" style="font-size: 14px; font-weight: 500; width: 100%; height: 40px;">
+                        <a href="/gio-hang-chi-tiet" style="text-decoration: none; color: #fff;">Thanh toán</a>
+                    </button>
                 </div>
             </div>
         </div>
