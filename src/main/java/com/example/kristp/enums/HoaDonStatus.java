@@ -5,13 +5,22 @@ import lombok.Getter;
 
 @Getter
 public enum HoaDonStatus {
-    HOA_DON_CHO(0),
-    DA_THANH_TOAN(1);
+    CHO_XAC_NHAN(0) ,
+    DANG_XU_LY(1),
+    DANG_GIAO_HANG(2),
+    HOAN_TAT(3),
+    HOA_DON_CHO(4),
+    DA_THANH_TOAN(5);
+
 
     private final int value;
 
     HoaDonStatus(int value) {
         this.value = value;
+    }
+    @Override
+    public String toString() {
+        return this.name(); // Sử dụng tên của enum
     }
 
     public int getValue() {
@@ -26,4 +35,5 @@ public enum HoaDonStatus {
         }
         throw new IllegalArgumentException("Invalid status value: " + value);
     }
+
 }

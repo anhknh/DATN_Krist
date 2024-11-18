@@ -39,4 +39,6 @@ public class HoaDon extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "id_khuyen_mai")
     private KhuyenMai khuyenMai;
+
+
 }

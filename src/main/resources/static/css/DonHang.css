@@ -100,3 +100,32 @@
     font-size: 10px;
     font-weight: bold;
 }
+
+.filter-container {
+    display: flex;
+    gap: 20px;                       /* Khoảng cách giữa các phần tử */
+    align-items: center;             /* Căn giữa các phần tử theo chiều dọc */
+    flex-wrap: nowrap;               /* Đảm bảo không xuống dòng */
+}
+
+.filter-item {
+    flex: 0 1 auto;                  /* Điều chỉnh chiều rộng phần tử */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.filter-button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;/* Thêm một chút khoảng cách giữa nút và ngày kết thúc */
+}
+
+.filter-button:hover {
+    background-color: #0056b3;
+}
+
+
