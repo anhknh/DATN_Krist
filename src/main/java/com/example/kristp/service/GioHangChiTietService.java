@@ -16,8 +16,8 @@ public interface GioHangChiTietService {
     GioHangChiTiet getByCartAndProductDetail(GioHang gioHang, ChiTietSanPham chiTietSanPham);
     ArrayList<GioHangChiTiet> getAllGHCT();
 
-    void increaseQuantity(ChiTietSanPham chiTietSanPham, KhachHang khachHang);
-    void decreaseQuantity(ChiTietSanPham chiTietSanPham, KhachHang khachHang);
+    GioHangChiTiet findByGioHangAndChiTietSanPham(GioHang gioHang, ChiTietSanPham chiTietSanPham);
+
     // Lấy tất cả chi tiết giỏ hàng theo ID giỏ hàng
     List<GioHangChiTiet> getGioHangChiTietByGioHangId(Integer gioHangId);
 

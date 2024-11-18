@@ -137,7 +137,7 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public Page<SanPham> getPaginationSanPham(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo , 6);
+        Pageable pageable = PageRequest.of(pageNo , 12);
         return sanPhamRepository.findAllSanPham(pageable);
     }
 

@@ -5,10 +5,7 @@ import com.example.kristp.entity.GioHang;
 import com.example.kristp.entity.GioHangChiTiet;
 import com.example.kristp.entity.KhachHang;
 import com.example.kristp.enums.Status;
-import com.example.kristp.repository.ChiTietSanPhamRepository;
-import com.example.kristp.repository.GioHangChiTietRepo;
-import com.example.kristp.repository.GioHangRepository;
-import com.example.kristp.repository.KhachHangRepository;
+import com.example.kristp.repository.*;
 import com.example.kristp.service.ChiTietSanPhamService;
 import com.example.kristp.service.GioHangChiTietService;
 import com.example.kristp.service.GioHangService;
@@ -19,12 +16,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class GioHangServiceImpl implements GioHangService {
     @Autowired
     private GioHangRepository gioHangRepository;
+    @Autowired
+    ChiTietSanPhamService chiTietSanPhamService;
+    @Autowired
+    GioHangChiTietService gioHangChiTietService;
+    @Autowired
+    GioHangChiTietRepository gioHangChiTietRepository;
 
 
     @Override
@@ -33,17 +37,49 @@ public class GioHangServiceImpl implements GioHangService {
     }
 
     @Override
-    public void addSanPhamToGioHang(GioHang gioHang) {
-        // Kiểm tra nếu giỏ hàng đã có, nếu chưa thì lưu giỏ hàng mới
-        if (gioHang.getId() == null) {
-            gioHangRepository.save(gioHang);
-        } else {
-            gioHangRepository.save(gioHang); // Cập nhật giỏ hàng nếu đã tồn tại
+    public boolean addSanPhamToGioHang(Integer idCTSP, Integer soLuong) {
+        // Lấy giỏ hàng của khách hàng
+        GioHang gioHang = gioHangRepository.findByKhachHangId(Authen.khachHang.getId());
+
+        // Lấy chi tiết sản phẩm
+        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getCTSPById(idCTSP);
+        // Kiểm tra số lượng sản phẩm tồn kho
+        int soLuongTonKho = chiTietSanPham.getSoLuong();
+        soLuong = Objects.requireNonNullElse(soLuong, 1);
+        if (soLuongTonKho < soLuong) {
+            return false; // Không đủ hàng để thêm vào giỏ
         }
+        // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+        GioHangChiTiet gioHangChiTiet = gioHangChiTietService.findByGioHangAndChiTietSanPham(gioHang, chiTietSanPham);
+        if (gioHangChiTiet != null) {
+            // Sản phẩm đã có trong giỏ hàng -> tăng số lượng
+            int soLuongMoi = gioHangChiTiet.getSoLuong() + soLuong;
+            if (soLuongTonKho < soLuongMoi) {
+                return false; // Không đủ hàng để tăng số lượng
+            }
+            gioHangChiTiet.setSoLuong(soLuongMoi);
+            gioHangChiTietService.updateGioHangChiTiet(gioHangChiTiet);
+        } else {
+            // Sản phẩm chưa có trong giỏ hàng -> thêm mới
+            GioHangChiTiet gioHangChiTietMoi = new GioHangChiTiet();
+            gioHangChiTietMoi.setChiTietSanPham(chiTietSanPham);
+            gioHangChiTietMoi.setSoLuong(soLuong);
+            gioHangChiTietMoi.setGioHang(gioHang);
+            gioHangChiTietService.addGioHangChiTiet(gioHangChiTietMoi);
+        }
+
+        return true; // Thêm sản phẩm thành công
     }
+
 
     @Override
     public void deleteGioHangById(List<Integer> id) {
-        gioHangRepository.deleteAllById(id);
+        deleteGioHangById(id);
     }
+
+    @Override
+    public Integer countCartItem() {
+        return gioHangChiTietRepository.countGioHangChiTietByGioHang(gioHangRepository.findByKhachHangId(Authen.khachHang.getId()));
+    }
+
 }

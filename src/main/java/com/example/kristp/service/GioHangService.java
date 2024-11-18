@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface GioHangService {
     GioHang findGioHangByKhachHangId(KhachHang khachHang);
-    void addSanPhamToGioHang(GioHang gioHang);
+    boolean addSanPhamToGioHang(Integer idCTSP, Integer soLuong);
     void deleteGioHangById(List<Integer> id);
+
+    Integer countCartItem();
 }
