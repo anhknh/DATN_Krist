@@ -1,4 +1,4 @@
-package com.example.kristp.controller.admin;
+package com.example.kristp.controller.user;
 
 import com.example.kristp.entity.HoaDon;
 import com.example.kristp.enums.HoaDonStatus;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/quan-ly")
-public class DonHangController {
+public class DonHangKhController {
 
     @Autowired
     private HoaDonService hoaDonService ;
@@ -25,7 +25,7 @@ public class DonHangController {
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
         model.addAttribute("check" , "choXacNhan");
-        return "view-admin/dashbroad/don-hang";
+        return "don-hang";
     }
 
     @GetMapping("/dang-xu-ly")
@@ -35,7 +35,7 @@ public class DonHangController {
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
         model.addAttribute("check" , "dangXuLy");
-        return "view-admin/dashbroad/don-hang";
+        return "don-hang";
     }
 
     @GetMapping("/dang-giao-hang")
@@ -45,7 +45,7 @@ public class DonHangController {
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
         model.addAttribute("check" , "dangGiaoHang");
-        return "view-admin/dashbroad/don-hang";
+        return "don-hang";
     }
 
     @GetMapping("/hoan-thanh")
@@ -56,7 +56,7 @@ public class DonHangController {
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
         model.addAttribute("check" , "hoanThanh");
 
-        return "view-admin/dashbroad/don-hang";
+        return "don-hang";
     }
 
 

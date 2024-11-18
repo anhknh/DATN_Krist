@@ -1,8 +1,7 @@
-package com.example.kristp.controller.admin;
+package com.example.kristp.controller.user;
 
 import com.example.kristp.entity.HoaDon;
 import com.example.kristp.entity.HoaDonChiTiet;
-import com.example.kristp.enums.HoaDonStatus;
 import com.example.kristp.service.HoaDonChiTietService;
 import com.example.kristp.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +32,6 @@ public class DonHangChiTietKhController {
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
         System.out.println(hoaDons.getContent().get(0).getChiTietSanPham().getMau().getMaMauSac());
-        return "view-admin/dashbroad/don-hang-chi-tiet-kh";
+        return "don-hang-chi-tiet-kh";
     }
 }
