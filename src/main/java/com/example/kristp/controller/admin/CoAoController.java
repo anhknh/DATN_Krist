@@ -85,7 +85,7 @@ public class CoAoController {
     @GetMapping("/delete-co-ao/{id}")
     private String deleteTayAo(@PathVariable("id")Integer idCoAo ,  RedirectAttributes attributes){
         coAoService.deleteCoAo(idCoAo);
-        attributes.addFlashAttribute("message" , "Xóa cổ áo thành công .");
+        attributes.addFlashAttribute("message" , "Thay đổi trạng thái cổ áo thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-co-ao/pagination-co-ao";

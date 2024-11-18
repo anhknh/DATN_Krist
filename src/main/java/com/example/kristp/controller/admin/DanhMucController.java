@@ -2,10 +2,12 @@ package com.example.kristp.controller.admin;
 
 import com.example.kristp.entity.ChatLieu;
 import com.example.kristp.entity.DanhMuc;
+import com.example.kristp.enums.Status;
 import com.example.kristp.service.DanhMucService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/quan-ly-danh-muc/")
@@ -85,7 +88,7 @@ public class DanhMucController {
     private String deleteDanhMuc(@PathVariable("id")Integer idDanhMuc, RedirectAttributes attributes){
 
             danhMucService.deleteDanhMuc(idDanhMuc);
-            attributes.addFlashAttribute("message" , "Xóa danh mục thành công .");
+            attributes.addFlashAttribute("message" , "Thay đổi trạng thái danh mục thành công .");
             attributes.addFlashAttribute("messageType" , "alert-success");
             attributes.addFlashAttribute("titleMsg" , "Thành công");
             return "redirect:/quan-ly-danh-muc/pagination-danh-muc";
@@ -102,4 +105,14 @@ public class DanhMucController {
         model.addAttribute("categoryCre" , new DanhMuc() );
         return "view-admin/dashbroad/danh-muc-dashroad";
     }
+//    @PostMapping("/quan-ly-danh-muc/update-trang-thai/{id}")
+//    public ResponseEntity<Void> updateTrangThai(@PathVariable Integer id, @RequestBody Map<String, String> payload) {
+//        String trangThai = payload.get("trangThai");
+//        if ("ACTIVE".equals(trangThai) || "INACTIVE".equals(trangThai)) {
+//            // Cập nhật trạng thái trong database
+//            danhMucService.updateTrangThai(id, Status.valueOf(trangThai));
+//            return ResponseEntity.ok().build();
+//        }
+//        return ResponseEntity.badRequest().build();
+//    }
 }

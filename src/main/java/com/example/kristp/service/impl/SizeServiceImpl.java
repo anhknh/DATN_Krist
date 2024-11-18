@@ -56,14 +56,18 @@ public class SizeServiceImpl implements SizeService {
         Size size1 = getSizeById(idSize);
         size1.setTenSize(size.getTenSize());
         size1.setMoTa(size.getMoTa());
-        size1.setTrangThai(size.getTrangThai());
         return sizeRepository.save(size1);
     }
 
     @Override
     public void deleteSize(Integer idSize) {
         Size size = getSizeById(idSize);
-        size.setTrangThai(Status.INACTIVE);
+        // Chuyển trạng thái giữa ACTIVE và INACTIVE
+        if (size.getTrangThai() == Status.INACTIVE) {
+            size.setTrangThai(Status.ACTIVE);
+        } else {
+            size.setTrangThai(Status.INACTIVE);
+        }
         sizeRepository.save(size);
     }
 
