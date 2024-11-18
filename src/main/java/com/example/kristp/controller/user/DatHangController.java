@@ -1,10 +1,14 @@
 package com.example.kristp.controller.user;
 
 import com.example.kristp.entity.DiaChi;
-import com.example.kristp.service.DiaChiService;
-import com.example.kristp.service.KhachHangService;
-import com.example.kristp.service.TaiKhoanService;
+import com.example.kristp.entity.GioHangChiTiet;
+import com.example.kristp.entity.KhuyenMai;
+import com.example.kristp.payment.VNPayRequest;
+import com.example.kristp.service.*;
 import com.example.kristp.utils.Authen;
+import com.example.kristp.utils.DataUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +18,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/dat-hang/")
@@ -26,67 +35,255 @@ public class DatHangController {
 
     @Autowired
     private TaiKhoanService taiKhoanService;
+    @Autowired
+    private GioHangChiTietService gioHangChiTietService;
+    @Autowired
+    KhuyenMaiService khuyenMaiService;
+    @Autowired
+    DataUtils dataUtils;
+    @Autowired
+    DatHangService datHangService;
+    @Autowired
+    VNpayService vnpayService;
+
+    //khai báo biến toàn cục
+    List<String> listProductDetailSelectedInCart = null;
+    Float totalPrice = 0f;
+    Integer idDiaChiSelected = null;
+    String thanhToanSelected = null;
+    KhuyenMai khuyenMaiSelected = null;
 
     @GetMapping("/dia-chi-giao-hang")
-    public String helloDiachigiaohang(Model model, @RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        Page<DiaChi> diachis = diaChiService.getAllActiveDiaChi(PageRequest.of(pageNo, 1)); // Giả sử mỗi trang có 5 địa chỉ
-        model.addAttribute("diaChiList", diachis.getContent());
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPage", diachis.getTotalPages());
+    public String helloDiachigiaohang(Model model, @RequestParam(name = "productCheck", required = false) List<String> productCheck) {
+        //lưu biến toàn cục những sản phẩm đã chọn
+        listProductDetailSelectedInCart = productCheck;
+        ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
+        for (int i = 0; i < productCheck.size(); i++) {
+            Integer idCartDetailItem = Integer.parseInt(productCheck.get(i));
+            listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
+        }
+        //lưu biến toàn cục tổng tiền sản phẩm đã chọn
+        for (GioHangChiTiet gioHangChiTiet : listCartDetailItem) {
+            totalPrice = totalPrice + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+        }
+
+        //danh sách sản phẩm đã chọn
+        model.addAttribute("listSpSelected", listCartDetailItem);
+        //tổng tiền
+        model.addAttribute("totalPrice", totalPrice);
+
+        //hiển thị địa chỉ
+        List<DiaChi> diachis = diaChiService.getAllActiveDiaChiByUser(Authen.khachHang);
+        model.addAttribute("diaChiList", diachis);
         model.addAttribute("diaChiCre", new DiaChi());
+
+        //Hiển thị khuyến mại
+        model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
+        //hàm format
+        model.addAttribute("convertMoney", dataUtils);
         return "dia-chi-giao-hang";
     }
 
     @PostMapping("/add-dia-chi-dat-hang")
     public String addDiaChi(@Valid @ModelAttribute("diaChiCre") DiaChi diaChi, BindingResult result,
-                            RedirectAttributes attributes) {
+                            RedirectAttributes attributes, HttpServletRequest request) {
         if (result.hasErrors()) {
             attributes.addFlashAttribute("message", "Thêm mới địa chỉ không thành công.");
             attributes.addFlashAttribute("messageType", "alert-danger");
-            return "redirect:/dat-hang/dia-chi-giao-hang";
+            //get url request
+            String referer = request.getHeader("referer");
+            //reload page
+            return "redirect:" + referer;
         }
 
         // Gọi phương thức từ service để thêm địa chỉ
         diaChiService.addDiaChi(diaChi);
         attributes.addFlashAttribute("message", "Thêm mới địa chỉ thành công.");
         attributes.addFlashAttribute("messageType", "alert-success");
-        return "redirect:/dat-hang/dia-chi-giao-hang";
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" + referer;
     }
 
     @PostMapping("/update-dia-chi-dat-hang")
-    private String updateDiaChi(@Valid @ModelAttribute("diaChiCre") DiaChi diaChi, BindingResult result, RedirectAttributes attributes) {
+    private String updateDiaChi(@Valid @ModelAttribute("diaChiCre") DiaChi diaChi, BindingResult result,
+                                RedirectAttributes attributes, HttpServletRequest request) {
         if (result.hasErrors()) {
             attributes.addFlashAttribute("diaChi", diaChi);
             attributes.addFlashAttribute("message", "Cập nhật địa chỉ không thành công.");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
-            return "redirect:/dat-hang/dia-chi-giao-hang";
+            //get url request
+            String referer = request.getHeader("referer");
+            //reload page
+            return "redirect:" + referer;
         }
 
         diaChiService.updateDiaChi(diaChi, diaChi.getId());
         attributes.addFlashAttribute("message", "Cập nhật địa chỉ thành công.");
         attributes.addFlashAttribute("messageType", "alert-success");
         attributes.addFlashAttribute("titleMsg", "Thành công");
-        return "redirect:/dat-hang/dia-chi-giao-hang";
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" + referer;
     }
 
     // Xóa địa chỉ
     @GetMapping("/delete-dia-chi-dat-hang/{id}")
-    public String deleteDiaChi(@PathVariable("id") Integer idDiaChi, RedirectAttributes attributes) {
+    public String deleteDiaChi(@PathVariable("id") Integer idDiaChi, RedirectAttributes attributes,
+                               HttpServletRequest request) {
         diaChiService.deleteDiaChi(idDiaChi);
         attributes.addFlashAttribute("message", "Xóa địa chỉ thành công.");
         attributes.addFlashAttribute("messageType", "alert-success");
-        return "redirect:/dat-hang/dia-chi-giao-hang";
+        attributes.addFlashAttribute("titleMsg", "Thành công");
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" + referer;
+    }
+
+
+    @PostMapping("/chon-di-chi")
+    public String chonDiaChi(@RequestParam(value = "diaChiSelected", required = false) Integer diaChiSelected, RedirectAttributes attributes,
+                             HttpServletRequest request) {
+        idDiaChiSelected = diaChiSelected;
+        return "redirect:/dat-hang/phuong-thuc-thanh-toan";
     }
 
 
     @GetMapping("/phuong-thuc-thanh-toan")
-    public String helloPhuongthucthanhtoan() {
+    public String helloPhuongthucthanhtoan(Model model) {
+        ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
+        for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
+            Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
+            listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
+        }
+
+        //danh sách sản phẩm đã chọn
+        model.addAttribute("listSpSelected", listCartDetailItem);
+        //tổng tiền
+        model.addAttribute("totalPrice", totalPrice);
+
+
+        //Hiển thị khuyến mại
+        model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
+        //khuyến mại đã chọn
+        model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
+        //hàm format
+        model.addAttribute("convertMoney", dataUtils);
         return "phuong-thuc-thanh-toan";
     }
+
+    @PostMapping("/chon-thanh-toan")
+    public String chonThanhToan(@RequestParam(value = "paymentMethod", required = false) String paymentMethod, RedirectAttributes attributes,
+                                HttpServletRequest request) {
+        thanhToanSelected = paymentMethod;
+        return "redirect:/dat-hang/review";
+    }
+
+    @GetMapping("/add-khuyen-mai")
+    public String addKhuyenMai(HttpServletRequest request,
+                               @RequestParam Integer idKhuyenMai,
+                               Model model, RedirectAttributes redirectAttributes) {
+
+        khuyenMaiSelected = khuyenMaiService.getKhuyenMaiById(idKhuyenMai);
+
+        //khuyến mại đã chọn
+        model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
+
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" + referer;
+    }
+
     @GetMapping("/review")
-    public String helloReview() {
-        System.out.println(Authen.khachHang.getTenKhachHang());
+    public String helloReview(Model model) {
+        ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
+        for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
+            Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
+            listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
+        }
+
+        //danh sách sản phẩm đã chọn
+        model.addAttribute("listSpSelected", listCartDetailItem);
+        //tổng tiền
+        model.addAttribute("totalPrice", totalPrice);
+
+        //hiển thị địa chỉ đã chọn
+        DiaChi diaChiselected = diaChiService.getDiaChiById(idDiaChiSelected);
+        model.addAttribute("diaChi", diaChiselected);
+        //khuyến mại đã chọn
+        model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
+        //hàm format
+        model.addAttribute("convertMoney", dataUtils);
+        //phương thức thanh toán đã chọn
+        model.addAttribute("payMethod", thanhToanSelected);
         return "review";
     }
+
+    @GetMapping("/dat-hang-online")
+    public String datHangOnline(Model model, HttpServletRequest reqs,
+                                HttpServletResponse response, RedirectAttributes attributes) throws Exception {
+        ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
+        for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
+            Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
+            listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
+        }
+        if (thanhToanSelected.equals("offline")) {
+            boolean check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, khuyenMaiSelected.getId(), thanhToanSelected, totalPrice);
+            if (check) {
+                return "SuscessOrder";
+            } else {
+                attributes.addFlashAttribute("message", "Vui lòng kiểm tra lại số lượng.");
+                attributes.addFlashAttribute("messageType", "alert-danger");
+                attributes.addFlashAttribute("titleMsg", "Thất bại");
+                return "FailOrder";
+            }
+        } else {
+            VNPayRequest request = new VNPayRequest();
+            float amount = (float) DataUtils.calculatorTotal2(totalPrice, khuyenMaiSelected);
+            DecimalFormat df = new DecimalFormat("#.##"); // Định dạng số thập phân với tối đa hai chữ số sau dấu chấm
+            String formattedTotalAmount = df.format(amount);
+            request.setAmount(formattedTotalAmount);
+            //request.setBankCode("NCB");
+//            request.setOrderIdSuccess(String.valueOf(idOrder));
+            // Gán các giá trị khác cho request
+            String paymentUrl = vnpayService.createPayment(request, reqs);
+            response.sendRedirect(paymentUrl);
+        }
+        return "FailOrder";
+    }
+
+    @GetMapping("/payment-info")
+    public String paymentInfo(Model model, RedirectAttributes attributes,
+                              @RequestParam("vnp_ResponseCode") String status,
+                              @RequestParam("vnp_BankCode") String bankCode,
+                              @RequestParam("vnp_Amount") String amount,
+                              @RequestParam("vnp_OrderInfo") String vnp_OrderInfo
+
+    ) {
+        if (status.equals("00")) {
+            ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
+            for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
+                Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
+                listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
+            }
+            boolean check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, khuyenMaiSelected.getId(), thanhToanSelected, totalPrice);
+            if(check) {
+                totalPrice = 0f;
+                return "SuscessOrder";
+            } else {
+                attributes.addFlashAttribute("message", "Vui lòng kiểm tra lại số lượng.");
+                attributes.addFlashAttribute("messageType", "alert-danger");
+                attributes.addFlashAttribute("titleMsg", "Thất bại");
+                return "FailOrder";
+            }
+        }
+        totalPrice = 0f;
+        return "FailOrder";
+    }
+
 }

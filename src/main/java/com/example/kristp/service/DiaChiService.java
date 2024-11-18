@@ -14,6 +14,7 @@ import java.util.List;
 
 public interface DiaChiService {
     Page<DiaChi> getAllActiveDiaChi(Pageable pageable);
+    List<DiaChi> getAllActiveDiaChiByUser(KhachHang khachHang);
     DiaChi getDiaChiById(Integer id);
     DiaChi addDiaChi(DiaChi diaChi);
     DiaChi updateDiaChi(DiaChi diaChi, Integer idDiaChi);

@@ -24,6 +24,8 @@ public class DiaChi extends BaseEntity {
 
     private String diaChi;
 
+    private String tenKhachHang;
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "trang_thai")
     private Status trangThai;

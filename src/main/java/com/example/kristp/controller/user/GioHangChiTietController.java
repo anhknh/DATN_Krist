@@ -1,12 +1,12 @@
 package com.example.kristp.controller.user;
 
+import com.example.kristp.entity.GioHang;
 import com.example.kristp.entity.GioHangChiTiet;
 import com.example.kristp.entity.HoaDon;
 import com.example.kristp.repository.GioHangChiTietRepository;
-import com.example.kristp.service.BanHangService;
-import com.example.kristp.service.GioHangChiTietService;
-import com.example.kristp.service.HoaDonService;
-import com.example.kristp.service.KhuyenMaiService;
+import com.example.kristp.service.*;
+import com.example.kristp.utils.Authen;
+import com.example.kristp.utils.DataUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,6 @@ import java.util.Map;
 
 
 @Controller
-@RequestMapping("/gio-hang-chi-tiet")
 public class GioHangChiTietController {
     @Autowired
     private GioHangChiTietService gioHangChiTietService;
@@ -32,18 +31,24 @@ public class GioHangChiTietController {
     BanHangService banHangService;
     @Autowired
     KhuyenMaiService khuyenMaiService;
+    @Autowired
+    GioHangService gioHangService;
+    @Autowired
+    DataUtils dataUtils;
 
     HoaDon hoaDonSelected = null;
+
     // Hiển thị giỏ hàng chi tiết
-    @GetMapping("/{gioHangId}")
-    public String showGioHangChiTiet(@PathVariable Integer gioHangId, Model model, @RequestParam(value = "idHoaDon", required = false) Integer idHoaDon) {
-        List<GioHangChiTiet> gioHangChiTietList = gioHangChiTietService.getGioHangChiTietByGioHangId(gioHangId);
+    @GetMapping("/gio-hang-chi-tiet")
+    public String showGioHangChiTiet(Model model, @RequestParam(value = "idHoaDon", required = false) Integer idHoaDon) {
+        GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+        List<GioHangChiTiet> gioHangChiTietList = gioHangChiTietService.getGioHangChiTietByGioHangId(gioHang.getId());
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
         List<HoaDon> hoaDons = hoaDonService.findAllHoaDonCho();
         if (hoaDonSelected == null) {
             hoaDonSelected = hoaDons.get(0);
         } else {
-            if(idHoaDon != null) {
+            if (idHoaDon != null) {
                 hoaDonSelected = hoaDonService.findHoaDonById(idHoaDon);
             }
         }
@@ -51,54 +56,50 @@ public class GioHangChiTietController {
 
         //khuyến mại
         model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
+        //hàm format
+        model.addAttribute("convertMoney", dataUtils);
         return "gio-hang";
     }
 
-    // Thêm giỏ hàng chi tiết mới
-//    @PostMapping
-//    public String addGioHangChiTiet(@ModelAttribute GioHangChiTiet gioHangChiTiet, Model model) {
-//        GioHangChiTiet addedItem = gioHangChiTietService.addGioHangChiTiet(gioHangChiTiet);
-//        model.addAttribute("gioHangChiTiet", addedItem);
-//        return "redirect:/gio-hang/" + addedItem.getGioHang().getId();  // Chuyển hướng về trang giỏ hàng
-//    }
+    @PostMapping("/cap-nhat-so-luong")
+    @ResponseBody
+    public ResponseEntity<?> capNhatSoLuong(@RequestBody Map<String, Object> payload) {
+        Integer id = Integer.valueOf(payload.get("id").toString());
+        Integer increment = Integer.valueOf(payload.get("increment").toString());
 
-    // Cập nhật giỏ hàng chi tiết
-    @PostMapping("/{id}/update-quantity")
-    public ResponseEntity<?> updateQuantity(@PathVariable Integer id, @RequestBody Map<String, Integer> payload) {
-        Integer soLuong = payload.get("soLuong");
-        GioHangChiTiet gioHangChiTiet = (GioHangChiTiet) gioHangChiTietRepository.findByGioHang_Id(id);
+        // Cập nhật số lượng
+        int newQuantity = gioHangChiTietService.capNhatSoLuong(id, increment);
 
-        if (gioHangChiTiet != null && soLuong > 0) {
-            gioHangChiTiet.setSoLuong(soLuong);
-            gioHangChiTietService.updateGioHangChiTiet(gioHangChiTiet);
-            return ResponseEntity.ok().body("Cập nhật số lượng thành công");
-        } else {
-            return ResponseEntity.badRequest().body("Không thể cập nhật số lượng");
-        }
+        return ResponseEntity.ok(Map.of("newQuantity", newQuantity));
     }
 
     // Xóa giỏ hàng chi tiết
     @GetMapping("/xoa-gio-hang-chi-tiet/{id}")
-    public String deleteGioHangChiTiet(@PathVariable Integer id, Model model) {
+    public String deleteGioHangChiTiet(@PathVariable Integer id,
+                                       HttpServletRequest request,
+                                       Model model) {
         gioHangChiTietService.deleteGioHangChiTiet(id);
-        return "redirect:/gio-hang-chi-tiet/1" ; // Chuyển hướng về trang giỏ hàng
-    }
-    @GetMapping("/add-khuyen-mai")
-    public String addKhuyenMai(HttpServletRequest request,
-                               @RequestParam Integer idKhuyenMai,
-                               Model model, RedirectAttributes redirectAttributes) {
-        if (banHangService.addKhuyenMai(idKhuyenMai, hoaDonSelected)) {
-            redirectAttributes.addFlashAttribute("message", "Áp dụng khuyến mại thành công!");
-            redirectAttributes.addFlashAttribute("messageType", "alert-success");
-            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
-        } else {
-            redirectAttributes.addFlashAttribute("message", "Áp dụng khuyến mại thất bại!");
-            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
-            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
-        }
         //get url request
         String referer = request.getHeader("referer");
         //reload page
-        return "redirect:" +referer;
+        return "redirect:" + referer;
+    }
+
+    @PostMapping("/dat-hang")
+    public String datHang(@RequestParam(value = "selectedIds", required = false) List<String> selectedIds, RedirectAttributes attributes,
+                                     HttpServletRequest request) {
+        if (selectedIds == null || selectedIds.isEmpty()) {
+            attributes.addFlashAttribute("message", "Chưa chọn sản phẩm thao tác");
+            attributes.addFlashAttribute("messageType", "alert-danger");
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
+            //get url request
+            String referer = request.getHeader("referer");
+            //reload page
+            return "redirect:" + referer;
+        }
+
+        // chuyền danh sách id đã chọn sang trang đặt hàng
+        String productCheckParam = String.join(",", selectedIds);
+        return "redirect:/dat-hang/dia-chi-giao-hang?productCheck=" + productCheckParam;
     }
 }

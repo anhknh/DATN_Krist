@@ -129,6 +129,26 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         return gioHangChiTietRepository.save(gioHangChiTiet);
     }
 
+    @Override
+    public Integer capNhatSoLuong(Integer id, int increment) {
+        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findById(id).orElse(null);
+
+        if (gioHangChiTiet != null) {
+            // Cập nhật số lượng
+            int newQuantity = gioHangChiTiet.getSoLuong() + increment;
+            if (newQuantity <= 0) {
+                throw new IllegalArgumentException("Số lượng không thể nhỏ hơn hoặc bằng 0!");
+            }
+
+            gioHangChiTiet.setSoLuong(newQuantity);
+            gioHangChiTietRepository.save(gioHangChiTiet);
+
+            return newQuantity;
+        }
+        return null;
+    }
+
+
 
     @Override
     public void deleteGioHangChiTiet(Integer id) {

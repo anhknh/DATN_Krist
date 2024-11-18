@@ -30,7 +30,8 @@ public class HoaDon extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "trang_thai")
     private HoaDonStatus trangThai;
-    private String trangThaiThanhToan;
+    @Enumerated(EnumType.STRING)
+    private HoaDonStatus trangThaiThanhToan;
     private float phiVanChuyen;
     private String hinhThucThanhToan;
     @ManyToOne

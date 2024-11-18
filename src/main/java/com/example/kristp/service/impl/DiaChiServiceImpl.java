@@ -31,6 +31,15 @@ public class DiaChiServiceImpl implements DiaChiService {
     }
 
     @Override
+    public List<DiaChi> getAllActiveDiaChiByUser(KhachHang khachHang) {
+        if(khachHang != null) {
+            return diaChiRepository.findAllByTrangThaiAndKhachHang(Status.ACTIVE, khachHang);
+        }
+
+        return null;
+    }
+
+    @Override
     public DiaChi getDiaChiById(Integer id) {
         return diaChiRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Không tìm thấy địa chỉ"));
     }

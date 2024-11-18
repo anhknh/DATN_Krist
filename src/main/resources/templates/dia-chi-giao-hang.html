@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,10 +23,12 @@
             color: #6c757d;
             font-size: 1.5rem;
         }
+
         .step.active {
             background-color: #000; /* Màu tối cho bước đang hoạt động */
             color: #fff;
         }
+
         .line {
             flex-grow: 1;
             height: 2px;
@@ -36,19 +37,6 @@
             top: 50%;
             transform: translateY(-50%); /* Căn giữa theo trục dọc */
             border-top: 2px dashed #ddd; /* Đường nét đứt */
-        }
-        .checkbox {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            background-color: #f1f1f1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
         }
     </style>
 </head>
@@ -80,7 +68,8 @@
                                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Danh mục
                                         </a>
-                                        <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;" aria-labelledby="navbarDropdown">
+                                        <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;"
+                                            aria-labelledby="navbarDropdown">
                                             <div class="d-flex">
                                                 <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
                                                     <p class="font-blod">Men</p>
@@ -98,7 +87,7 @@
                                                     <div class="p-2">hoanganh</div>
                                                     <div class="p-2">hoanganh</div>
                                                 </div>
-                                                <div class="text-center"  style="flex: 1; border-right: 1px solid #000;">
+                                                <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
                                                     <p class="font-blod">Men</p>
                                                     <div class="p-2">hoanganh</div>
                                                     <div class="p-2">hoanganh</div>
@@ -140,11 +129,13 @@
             </div>
             <div style="flex: 1;">
                 <div class="header_right d-flex align-items-center justify-content-end" style="height: 100%;">
-                    <div >
-                        <a class="cl-black" href="#"data-bs-toggle="modal" data-bs-target="#modal_cart"><i class="fa-regular s-18 fa-magnifying-glass"></i></a>
+                    <div>
+                        <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
+                                class="fa-regular s-18 fa-magnifying-glass"></i></a>
                     </div>
                     <div style="margin: 0px 46px;">
-                        <a class="cl-black" href="#"data-bs-toggle="modal" data-bs-target="#modal_cart"><i class="fa-sharp s-18 fa-regular fa-heart"></i></a>
+                        <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
+                                class="fa-sharp s-18 fa-regular fa-heart"></i></a>
                     </div>
                     <div class="me-4">
                         <a class="cl-black" href="./profileOrder.html"><i class="fa-regular s-18 fa-cart-minus"></i></a>
@@ -168,11 +159,11 @@
 
 
     <!-- content -->
+
     <div class="container-fluid">
         <div class="container" style="padding: 54px 0px; margin-bottom: 120px;">
             <div class="row">
                 <div class="col-7">
-
                     <div class="container">
                         <div class="d-flex align-items-center">
                             <div class="step active">
@@ -190,156 +181,230 @@
                         <div class="d-flex justify-content-between mt-2">
                             <div class="text-center">Địa Chỉ</div>
                             <div class="text-center">Phương Thức Thanh Toán</div>
-                            <div class="text-center">Xem Lại</div>
+                            <div class="text-center">Xác nhận</div>
                         </div>
                     </div>
                     <!--                    -->
                     <div class="mt-4">
                         <h5>Chọn địa chỉ giao hàng</h5>
-                        <p>Địa chỉ bạn muốn sử dụng có hiện bên dới không? Nếu có, hãy nhấn vào nút "Giao hàng đến địa chỉ này" tương ứng. Hoặc bạn có thể nhập địa chỉ giao hàng mới</p>
+                        <p>Địa chỉ bạn muốn sử dụng có hiện bên dưới không? Nếu có, hãy nhấn vào nút "Giao hàng tại đây"
+                            tương ứng. Hoặc bạn có thể nhập địa chỉ giao hàng mới</p>
                     </div>
                     <div class="mt-3">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="card p-3" style="border: none;border-radius: 12px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                                    <div class="card-body" style=" position: relative;">
-                                        <h5 class="card-title" style="font-weight: bold; margin-bottom: 0;">Đoàn Hiếu</h5>
-                                        <div class="checkbox checked"  >
-                                            <input type="checkbox" checked>
-                                        </div>
-                                        <div th:each="diaChi : ${diaChiList}" style="padding-top: 30px;">
-                                            <div style="border: 1px solid #E6E7E8; border-radius: 4px; padding: 15px; margin-bottom: 20px;">
-                                                <!--              <p style="font-size: 20px; font-weight: 700;" th:text="${diaChi.tenKhachHang}">Tên khách hàng</p>-->
-                                                <p style="font-size: 16px;" th:text="${diaChi.diaChi}">Địa chỉ chi tiết</p>
-                                                <p>
-                                                    <i class="fa-light fa-phone-volume"></i>
-                                                    <span th:text="${diaChi.sdt}">Số điện thoại</span>
-                                                </p>
-                                                <div style="display: flex; justify-content: space-between;">
-                                                    <!-- Nút chỉnh sửa và xóa -->
-                                                    <div>
-                                                        <a class="btn"
-                                                           style="background-color: #F6F6F6; border-radius: 6px; padding: 10px 15px; text-decoration: none;"
-                                                           data-bs-toggle="modal"
-                                                           data-bs-target="#editDiaChiModal"
-                                                           th:attr="onclick=|saveIdDiaChi('${diaChi.id}', '${diaChi.sdt}', '${diaChi.diaChi}', '${diaChi.trangThai}')|">
-                                                            <i class="fa-regular fa-pen-to-square" style="font-size: 16px; color: #000;"></i> Edit
-                                                        </a>
+                        <form id="formDatHang" method="POST" action="/dat-hang/chon-di-chi">
+                            <div class="row g-3">
+                                <div class="container mt-3">
+                                    <div class="row" style="max-height: 480px; overflow-y: auto;">
+                                        <div class="col-md-6 d-flex flex-wrap" th:each="diaChi,iterStat : ${diaChiList}"
+                                             style="padding: 0 10px;">
+                                            <div class="card p-3"
+                                                 style="border: none; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-bottom: 15px; flex: 1;">
+                                                <div class="card-body" style="position: relative;">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <h5 class="card-title "
+                                                                style="font-weight: bold; margin-bottom: 0;"
+                                                                th:text="${diaChi.tenKhachHang}">Đoàn Hiếu</h5>
+                                                        </div>
+                                                        <div>
+                                                            <!-- Radio button -->
+                                                            <div class="radio ">
+                                                                <input type="radio" name="diaChiSelected"
+                                                                       th:checked="${iterStat.index == 0}"
+                                                                       th:value="${diaChi.id}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <p class="card-text"
+                                                       style="margin-top: 0.5rem; display: flex; align-items: center;">
+                                                        <i class="fa-light fa-location-dot"
+                                                           style="margin-right: 8px;"></i>
+                                                        <span th:text="${diaChi.diaChi}">Lê Đức Thọ, Hà Nội</span>
+                                                    </p>
 
-                                                        <a th:href="@{/dat-hang/delete-dia-chi-dat-hang/{id}(id=${diaChi.id})}" class="btn"
-                                                           style="background-color: #FFF6F6; border-radius: 6px; padding: 10px 15px; text-decoration: none;">
-                                                            <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
-                                                            Delete
-                                                        </a>
+                                                    <p class="card-text"
+                                                       style="margin-top: 0.5rem; display: flex; align-items: center;">
+                                                        <i class="fa-sharp fa-light fa-phone"
+                                                           style="margin-right: 8px;"></i>
+                                                        <span th:text="${diaChi.sdt}">0987654321</span>
+                                                    </p>
+
+                                                    <div style="display: flex; justify-content: space-between;"
+                                                         class="mt-3">
+                                                        <!-- Nút chỉnh sửa và xóa -->
+                                                        <div>
+                                                            <a class="btn"
+                                                               style="width: 140px;background-color: #F6F6F6; border-radius: 6px; padding: 10px 15px; text-decoration: none;"
+                                                               data-bs-toggle="modal"
+                                                               data-bs-target="#editDiaChiModal"
+                                                               th:attr="onclick=|saveIdDiaChi('${diaChi.id}', '${diaChi.tenKhachHang}', '${diaChi.sdt}', '${diaChi.diaChi}', '${diaChi.trangThai}')|">
+                                                                <i class="fa-regular fa-pen-to-square"
+                                                                   style="font-size: 16px; color: #000;"></i> Cập nhật
+                                                            </a>
+
+                                                            <a th:href="@{/dat-hang/delete-dia-chi-dat-hang/{id}(id=${diaChi.id})}"
+                                                               class="btn"
+                                                               style=" width: 140px;background-color: #FFF6F6; border-radius: 6px; padding: 10px 15px; text-decoration: none;">
+                                                                <i class="fa-regular fa-trash-can"
+                                                                   style="font-size: 16px; color: #f40606;"></i>
+                                                                Xóa
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination justify-content-end">
-                                                <!-- Nút Previous -->
-                                                <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
-                                                    <a class="page-link" style="color: #5C5F6A"
-                                                       th:href="@{/dat-hang/dia-chi-giao-hang(pageNo=0)}"
-                                                       aria-label="Previous">
-                                                        <span aria-hidden="true">&laquo;</span>
-                                                    </a>
-                                                </li>
-                                                <!-- Vòng lặp phân trang -->
-                                                <li th:each="i : ${#numbers.sequence(1, totalPage)}"
-                                                    th:classappend="${currentPage == i - 1 ? 'active' : ''}"
-                                                    class="page-item">
-                                                    <a class="page-link"
-                                                       th:href="@{/dat-hang/dia-chi-giao-hang(pageNo=${i - 1})}"
-                                                       th:text="${i}" style="color: #5C5F6A"></a>
-                                                </li>
-                                                <!-- Nút Next -->
-                                                <li class="page-item"
-                                                    th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}">
-                                                    <a class="page-link" style="color: #5C5F6A"
-                                                       th:href="@{/dat-hang/dia-chi-giao-hang(pageNo=${totalPage - 1})}"
-                                                       aria-label="Next">
-                                                        <span aria-hidden="true">&raquo;</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </nav>
                                     </div>
                                 </div>
+
+                                <div class="mt-4">
+                                    <button class="btn btn-deliver" type="submit"
+                                            style="background-color: #1a1a1a; color: #fff; width: 250px; padding: 10px 0; ">
+                                        Giao
+                                        hàng tại đây
+                                    </button>
+                                </div>
                             </div>
-<!--                            <div class="col-md-6">-->
-<!--                                <div class="card p-3" style="border: none;border-radius: 12px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">-->
-<!--                                    <div class="card-body" style=" position: relative;">-->
-<!--                                        <h5 class="card-title" style="font-weight: bold; margin-bottom: 0;">Đoàn Hiếu</h5>-->
-<!--                                        <div class="checkbox" >-->
-<!--                                            <input type="checkbox">-->
-<!--                                        </div>-->
-<!--                                        <p class="card-text" style=" margin-top: 0.5rem;">Cầu Giấy, Hà Nội</p>-->
-<!--                                        <div class="d-flex gap-2 mt-3">-->
-<!--                                            <button class="btn btn-edit" style="font-size: 0.85rem; padding: 5px 10px; border-radius: 8px; flex-grow: 1; background-color: #f1f1f1; color: #6c757d;"><i class="fa-light fa-pen-to-square"></i> Edit</button>-->
-<!--                                            <button class="btn btn-delete" style="font-size: 0.85rem; padding: 5px 10px; border-radius: 8px; flex-grow: 1; background-color: #ffe6e6; color: #dc3545;"><i class="fa-light fa-trash-can"></i> Delete</button>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-                            <div class="mt-4">
-                                <a class="btn btn-deliver" href="/phuong-thuc-thanh-toan" style="background-color: #1a1a1a; color: #fff; width: 250px; padding: 10px 0; ">Giao hàng tại đây</a>
-                            </div>
-                        </div>
+
+                        </form>
                     </div>
-                    <div><hr style="background-color: #5b5c64"></div>
+                    <div>
+                        <hr style="background-color: #5b5c64">
+                    </div>
                     <div class="mt-4">
                         <h5>Thêm một địa chỉ mới</h5>
                     </div>
-                    <div class="mt-4" >
-                        <form th:action="@{/dat-hang/add-dia-chi-dat-hang}" method="post">
-                            <div class="mb-4">
-                                <label for="sdt" class="form-label">Số điện thoại di động</label>
-                                <input type="text" class="form-control" id="sdt" name="sdt" placeholder="Nhập số điện thoại">
+                    <div class="mt-4">
+                        <form class="needs-validation" novalidate th:action="@{/dat-hang/add-dia-chi-dat-hang}"
+                              method="post">
+                            <div class="mb-2">
+                                <label for="tenKhachHang" class="form-label">Tên khách hàng</label>
+                                <input style="border: 1px solid #000" type="text" class="form-control custom-input"
+                                       id="tenKhachHang" placeholder="Nguyen Van A" th:name="tenKhachHang" minlength="5"
+                                       maxlength="100" required>
+                                <div class="invalid-feedback">Họ tên không hợp lệ.</div>
                             </div>
-
-                            <!-- Địa chỉ -->
-                            <div class="mb-4">
+                            <div class="mb-3">
                                 <label for="diaChi" class="form-label">Địa chỉ chi tiết</label>
-                                <input type="text" class="form-control" id="diaChi" name="diaChi" placeholder="Nhập địa chỉ">
+                                <input type="text" class="form-control" id="diaChi" th:name="diaChi" minlength="5"
+                                       maxlength="255" required>
+                                <div class="invalid-feedback">Địa chỉ không hợp lệ</div>
                             </div>
-                            <!-- Checkbox for Default Address -->
-                            <div class="form-check mb-4">
-                                <input class="form-check-input" type="checkbox" id="defaultAddress" name="defaultAddress">
-                                <label class="form-check-label" for="defaultAddress">Sử dụng làm địa ch mặc định</label>
+                            <div class="mb-3">
+                                <label for="sdt" class="form-label">Số điện thoại</label>
+                                <input type="text" class="form-control" id="sdt" name="sdt" th:name="sdt" minlength="10"
+                                       maxlength="10" required>
+                                <div class="invalid-feedback">Số điện thoại không hợp lệ</div>
                             </div>
-
-                            <!-- Submit and Cancel  -->
-                            <div class="d-flex justify-content-between">
-                                <button type="submit" class="btn btn-dark">Thêm địa chỉ mới</button>
-                            </div>
+                            <button type="submit" class="btn btn-dark btn-sm">Thêm địa chỉ</button>
                         </form>
                     </div>
                 </div>
-                <div class="col-1"></div>
-                <div class="col-4">
+                <div class="col-5">
                     <div style="border: 1px solid #E6E7E8; border-radius: 4px; padding: 38px 18px;">
+
                         <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                             <div style="font-size: 16px; font-weight: 500; ">Tổng cộng:</div>
-                            <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>30.00</div>
-                        </div>
-                        <hr style="color: #3d3d42; border-width: 1px; margin-bottom: 18px;">
-                        <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Nhập mã giảm giá" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="background-color: black; color: #F0F0F0">Apply</button>
+                            <div style="font-size: 16px; font-weight: 500;"><span id="grand-total"
+                                                                                  th:text="${convertMoney.formatCurrency(totalPrice)}">0.00</span>
                             </div>
                         </div>
+                        <hr style="color: #5b5c64; border-width: 1px; margin-bottom: 18px;">
+
+                        <!-- Nút mở modal danh sách khuyến mại -->
+                        <div style="max-height: 300px; overflow-y: hidden;">
+                            <!-- Thẻ chứa khuyến mại -->
+                            <div th:each="khuyenMai, iterStat : ${listKM}" style="width: 100%">
+                                <div class="d-flex"
+                                     style="border: 1px dashed #000; border-radius: 8px; padding: 6px; margin-bottom: 10px; width: 100%">
+                                    <div style="border-right: 1px dashed #000; flex: 1; padding: 18px 0;">
+                                        <i class="fa-solid fa-tickets-perforated"
+                                           style="font-size: 36px; padding: 0px 12px;"></i>
+                                    </div>
+                                    <div style="flex: 3; padding: 4px; font-size: 14px;">
+                                        <div th:text="'Khuyến mại: ' + ${khuyenMai.tenKhuyenMai}">Khuyến mại</div>
+                                        <div th:text="'Giá trị: ' + ${convertMoney.formatCurrency(khuyenMai.giaTri)} +' '
+                                         +  ${khuyenMai.kieuKhuyenMai} ">Giá trị - Số lượng
+                                        </div>
+                                        <div class="d-flex justify-content-start align-items-center">
+                                            <div th:text="'Ngày hết hạn: ' + ${#dates.format(khuyenMai.ngayKetThuc, 'dd-MM-yyyy')}">
+                                                Ngày hết hạn
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Thêm các khuyến mại khác tương tự -->
+                        </div>
+
                         <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                             <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
-                            <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>3.00</div>
+                            <div style="font-size: 16px; font-weight: 500;"><span id="shipping-fee">30.000</span>
+                            </div>
                         </div>
                         <hr style="color: #E6E7E8; border-width: 3px; margin-bottom: 18px;">
-                        <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
-                            <div style="font-size: 16px; font-weight: 500; font-weight: bold;">Tổng thanh toán:</div>
-                            <div style="font-size: 16px; font-weight: 500; font-weight: bold;"><i class="fa-regular fa-dollar-sign"></i>33.00</div>
+                        <div class="d-flex justify-content-between">
+                            <div style="font-size: 16px; font-weight: bold;">Tổng thanh toán:</div>
+                            <div style="font-size: 16px; font-weight: bold;"><span id="final-total"
+                                                                                   th:text="${convertMoney.formatCurrency(totalPrice + 30000)}">0.00</span>
+                            </div>
                         </div>
+                    </div>
+
+                    <!--                    danh sách sản phẩm đã chọn-->
+                    <div>
+                        <div class="container-fluid">
+                            <div class="container" style="padding: 54px 0px; margin-bottom: 120px;">
+                                <h5>Danh sách sản phẩm</h5>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <!-- Danh sách sản phẩm -->
+                                        <div class="product-list">
+                                            <div class="product-item d-flex align-items-start"
+                                                 th:each="item : ${listSpSelected}"
+                                                 style="border: 1px solid #e6e7e8; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                                                <!-- Hình ảnh sản phẩm -->
+                                                <div style="flex: 1; max-width: 80px;">
+                                                    <div style="width: 80px; height: 80px; border-radius: 8px; background-color: #f6f6f6;">
+                                                        <div th:style="|width: 100%; height: 100%; background: url('/img/${item.chiTietSanPham.anhSanPham}') no-repeat center center / cover;|">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Thông tin sản phẩm -->
+                                                <div style="flex: 3; margin-left: 16px;">
+                                                    <!-- Tên sản phẩm -->
+                                                    <p style="font-size: 16px; font-weight: 500;"
+                                                       th:text="${item.getChiTietSanPham().sanPham.tenSanPham}"></p>
+                                                    <!-- Màu sắc và kích thước -->
+                                                    <div class="d-flex align-items-center" style="margin-top: 8px;">
+                                                        <span style="margin-right: 8px;">Color:</span>
+                                                        <div th:style="'width: 20px; height: 20px; border-radius: 50%; background-color: ' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
+                                                        <span style="margin-left: 16px;">Size:
+                                                            <span th:text="${item.getChiTietSanPham().size.tenSize}"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Giá và số lượng -->
+                                                <div style="flex: 2; margin-left: auto; text-align: right;">
+                                                    <!-- Giá -->
+                                                    <p style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">
+                                                        Giá: <span
+                                                            th:text="${convertMoney.formatCurrency(item.getChiTietSanPham().donGia)}"></span>
+                                                    </p>
+                                                    <!-- Số lượng -->
+                                                    <p style="font-size: 16px;">
+                                                        Số lượng: <span th:text="${item.soLuong}"></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -347,7 +412,8 @@
     </div>
 
     <!-- footer -->
-    <div class="container-fluid d-flex align-items-center justify-content-evenly" style="padding: 40px 0 120px 0; margin-top: 80px; background-color: #000;">
+    <div class="container-fluid d-flex align-items-center justify-content-evenly"
+         style="padding: 40px 0 120px 0; margin-top: 80px; background-color: #000;">
         <div style="width: 272px; margin-right: 142px;">
             <div class="d-flex align-items-center" style="margin-bottom: 12px;">
                 <div style="padding: 8px 14px; margin-right: 8px; border-radius: 5px; border: 1px solid #E6E7E8; background-color: #fff;">
@@ -379,23 +445,40 @@
         <div style="width: 484px; margin-right: 100px;">
             <div style=" margin-right: 72px; display: inline-block;">
                 <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;">SUPPORT</p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">FAQ</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Terms of use</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Privacy Policy</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">FAQ</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Terms of
+                    use</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Privacy
+                    Policy</a></p>
 
             </div>
             <div style=" margin-right: 72px; display: inline-block;">
                 <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;">COMPANY</p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">About us</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Contact</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Careers</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">About
+                    us</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Contact</a>
+                </p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Careers</a>
+                </p>
 
             </div>
             <div style=" margin-right: 72px; display: inline-block;">
                 <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;">SHOP</p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">My Account</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Checkout</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Cart</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">My
+                    Account</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Checkout</a>
+                </p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Cart</a>
+                </p>
 
             </div>
         </div>
@@ -419,6 +502,7 @@
     </div>
 </div>
 
+
 <!-- Modal cập nhật địa chỉ -->
 <div class="modal fade" id="editDiaChiModal" tabindex="-1" aria-labelledby="editDiaChiModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -428,29 +512,42 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="padding:30px;">
-                <form  th:action="@{/dat-hang/update-dia-chi-dat-hang}"  method="post"  novalidate th:object="${diaChiCre}" class="needs-validation">
+                <form th:action="@{/dat-hang/update-dia-chi-dat-hang}" method="post" th:object="${diaChiCre}"
+                      class="needs-validation" novalidate>
                     <div class="display_none">
                         <input type="text" class="form-control" id="editDiaChiId" name="id" th:field="*{id}">
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-2">
+                        <label for="tenKhachHangEdit" class="form-label">Tên khách hàng</label>
+                        <input type="text" class="form-control"
+                               id="tenKhachHangEdit" placeholder="Nguyen Van A" th:name="tenKhachHang"
+                               th:field="*{tenKhachHang}" minlength="5" maxlength="100" required>
+                        <div class="invalid-feedback">Họ tên không hợp lệ.</div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="editDiaChi" class="form-label">Đia chỉ</label>
+                        <input type="text" class="form-control" th:name="diaChi" id="editDiaChi"
+                               placeholder="Nhập địa chỉ" th:field="*{diaChi}" minlength="5" maxlength="255" required>
+                        <div class="invalid-feedback">Địa chỉ không hợp lệ</div>
+                    </div>
+                    <div class="mb-2">
                         <label for="editSdt" class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control" id="editSdt" placeholder="Nhập số điện thoại" name="sdt" th:field="*{sdt}" required>
+                        <input type="text" class="form-control" id="editSdt" placeholder="Nhập số điện thoại"
+                               th:name="sdt" th:field="*{sdt}" minlength="10" maxlength="10" required>
                         <div class="invalid-feedback">Số điện thoại không hợp lệ .</div>
                     </div>
-                    <div class="mb-4">
-                        <label for="editDiaChi" class="form-label">Đia chỉ</label>
-                        <input type="text" class="form-control" name="diaChi" id="editDiaChi" placeholder="Nhập địa chỉ" th:field="*{diaChi}" required >
-                        <div class="invalid-feedback">Mô tả không hợp lệ không hợp lệ .</div>
-                    </div>
+
                     <div class="mb-4 display_none" id="statusSection">
                         <label class="form-label">Status</label><br>
-                        <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">
+                        <input type="radio" th:field="*{trangThai}" id="active"
+                               th:value="${T(com.example.kristp.enums.Status).ACTIVE}">
                         <label for="active">Active</label><br>
-                        <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">
+                        <input type="radio" th:field="*{trangThai}" id="inactive"
+                               th:value="${T(com.example.kristp.enums.Status).INACTIVE}">
                         <label for="inactive">Inactive</label>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-outline-secondary">Cập nhật</button>
+                        <button type="submit" class="btn btn-dark btn-sm">Cập nhật</button>
                     </div>
                 </form>
             </div>
@@ -458,12 +555,21 @@
     </div>
 </div>
 <!-- Alert thông báo thất bại -->
-<div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage" style="display: none;">
+<div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert"
+     id="alertMessage"
+     style="display: none; z-index: 1060;">
     <strong>Thất bại!</strong> <span id="alertBody">Thông báo này sẽ hiển thị kết quả.</span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+<div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert"
+     id="alertMessage2"
+     style="display: none;  z-index: 1060;">
+    <strong>Thành công!</strong> <span id="alertBody2">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 <!-- Alert thông báo từ backend -->
-<div th:if="${message}" th:class="${messageType} + ' alert alert-dismissible fade show position-fixed top-0 end-0 m-3'" id="successAlert" role="alert">
+<div th:if="${message}" th:class="${messageType} + ' alert alert-dismissible fade show position-fixed top-0 end-0 m-3'"
+     id="successAlert" role="alert">
     <strong th:text="${titleMsg}">Tiêu đề</strong> <span th:text="${message}">Thông báo này sẽ hiển thị kết quả.</span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
@@ -473,9 +579,10 @@
 
 <script>
     // Khi mở modal cập nhật, điền dữ liệu vào form
-    function saveIdDiaChi(id, sdt, diaChi, trangThai) {
+    function saveIdDiaChi(id, tenKhachHang, sdt, diaChi, trangThai) {
         // Gán giá trị vào modal
         $('#editDiaChiId').val(id);
+        $('#tenKhachHangEdit').val(tenKhachHang);
         $('#editSdt').val(sdt);
         $('#editDiaChi').val(diaChi);
 
@@ -495,31 +602,81 @@
     }
 </script>
 <script>
-    function updateQuantity(productDetailId, action) {
-        $.ajax({
-            url: '/ecommerce/' + action,
-            type: 'POST',
-            data: { productDetailId: productDetailId },
-            success: function(response) {
-                let quantityElement = $('#quantity-' + productDetailId);
-                let currentQuantity = parseInt(quantityElement.text());
-                if (action === 'increase') {
-                    quantityElement.text(currentQuantity + 1);
-                } else if (action === 'decrease' && currentQuantity > 1) {
-                    quantityElement.text(currentQuantity - 1);
+    (function () {
+        'use strict';
+
+        // Fetch all forms with class 'needs-validation'
+        var forms = document.querySelectorAll('.needs-validation');
+
+        // Loop over forms and prevent submission if validation fails
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    showAlert("error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
                 }
-            },
-            error: function(error) {
-                console.log(error);
+                form.classList.add('was-validated');
+            }, false);
+
+            // Add 'change' event listener for all inputs to validate them dynamically
+            var inputs = form.querySelectorAll('input');
+            Array.prototype.slice.call(inputs).forEach(function (input) {
+                input.addEventListener('change', function () {
+                    if (input.checkValidity()) {
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+                    } else {
+                        input.classList.remove('is-valid');
+                        input.classList.add('is-invalid');
+                        showAlert("error", "Dữ liệu không hợp lệ trong " + input.placeholder);
+                    }
+                });
+            });
+        });
+
+        //thông báo
+        function showAlert(type, message) {
+            let alertElement;
+
+            if (type === 'success') {
+                alertElement = document.getElementById('successAlert');
+                alertElement.querySelector('span').textContent = message; // Thiết lập nội dung thông báo thành công
+                alertElement.style.display = 'block'; // Hiển thị thông báo thành công
+            } else if (type === 'error') {
+                alertElement = document.getElementById('alertMessage');
+                alertElement.querySelector('#alertBody').textContent = message; // Thiết lập nội dung thông báo lỗi
+                alertElement.style.display = 'block'; // Hiển thị thông báo lỗi
+            }
+
+            // Tự động ẩn thông báo sau 5 giây
+            setTimeout(() => {
+                if (alertElement) {
+                    var bootstrapAlert = new bootstrap.Alert(alertElement);
+                    bootstrapAlert.close();
+                }
+            }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Kiểm tra và ẩn thông báo thành công nếu có
+            var successAlert = document.getElementById('successAlert');
+            if (successAlert && successAlert.style.display !== 'none') {
+                setTimeout(function () {
+                    var bootstrapAlert = new bootstrap.Alert(successAlert);
+                    bootstrapAlert.close();
+                }, 5000);
             }
         });
-    }
+
+    })();
 </script>
+
 <script>
     const btn_checkout = document.getElementById("btn_checkout");
     const form_checkout = document.getElementById("form_checkout");
 
-    btn_checkout.addEventListener("click", ()=>{
+    btn_checkout.addEventListener("click", () => {
         form_checkout.submit();
     })
 </script>

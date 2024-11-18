@@ -214,7 +214,7 @@
                         <div class="col-4">
                             <div class="btn btn-block" style="background-color: #070707; width: 100%;">
                                 <a href="#"
-                                   style="color: #ffffff; padding: 10px; text-decoration: none; width: 100%; display: block; text-align: center;"
+                                   style="color: #ffffff; text-decoration: none; width: 100%; display: block; text-align: center;"
                                    data-bs-toggle="modal" data-bs-target="#modalCategories"
                                    onclick="saveIdDiaChi('', null, null)">
                                     <i class="fa-light fa-plus" style="margin-right: 15px;"></i> Thêm địa chỉ mới
@@ -223,65 +223,76 @@
                         </div>
                     </div>
                     <!--         CẦN SỬA TẠI ĐÂY KIÊN NHÉ-->
-                    <div th:each="diaChi : ${diaChiList}" style="padding-top: 30px;">
-                        <div style="border: 1px solid #E6E7E8; border-radius: 4px; padding: 15px; margin-bottom: 20px;">
-                            <!--              <p style="font-size: 20px; font-weight: 700;" th:text="${diaChi.tenKhachHang}">Tên khách hàng</p>-->
-                            <p style="font-size: 16px;" th:text="${diaChi.diaChi}">Địa chỉ chi tiết</p>
-                            <p>
-                                <i class="fa-light fa-phone-volume"></i>
-                                <span th:text="${diaChi.sdt}">Số điện thoại</span>
-                            </p>
-                            <div style="display: flex; justify-content: space-between;">
-                                <!-- Nút chỉnh sửa và xóa -->
+                    <div th:each="diaChi : ${diaChiList}" class="mt-2">
+                        <div style="border-bottom: 1px solid #E6E7E8; border-radius: 4px; padding: 15px; margin-bottom: 20px;">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <a class="btn"
-                                       style="background-color: #F6F6F6; border-radius: 6px; padding: 10px 15px; text-decoration: none;"
-                                       data-bs-toggle="modal"
-                                       data-bs-target="#editDiaChiModal"
-                                       th:attr="onclick=|saveIdDiaChi('${diaChi.id}', '${diaChi.sdt}', '${diaChi.diaChi}', '${diaChi.trangThai}')|">
-                                        <i class="fa-regular fa-pen-to-square" style="font-size: 16px; color: #000;"></i> Edit
-                                    </a>
-
-                                    <a th:href="@{/user-dia-chi/delete-dia-chi/{id}(id=${diaChi.id})}" class="btn"
-                                       style="background-color: #FFF6F6; border-radius: 6px; padding: 10px 15px; text-decoration: none;">
-                                        <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
-                                        Delete
-                                    </a>
+                                    <p style="font-size: 20px; font-weight: 700;" th:text="${diaChi.tenKhachHang}">Tên khách hàng</p>
+                                    <p style="font-size: 16px;" th:text="${diaChi.diaChi}">Địa chỉ chi tiết</p>
+                                    <p>
+                                        <i class="fa-light fa-phone-volume"></i>
+                                        <span th:text="${diaChi.getSdt()}">Số điện thoại</span>
+                                    </p>
                                 </div>
+                                <div>
+                                    <!-- Nút chỉnh sửa và xóa -->
+                                    <div>
+                                        <a class="btn mb-2"
+                                           style="background-color: #F6F6F6; text-align: left; border-radius: 6px; text-decoration: none; display: block; width: 100%"
+                                           data-bs-toggle="modal"
+                                           data-bs-target="#editDiaChiModal"
+                                           th:attr="onclick=|saveIdDiaChi('${diaChi.id}', '${diaChi.tenKhachHang}', '${diaChi.sdt}', '${diaChi.diaChi}', '${diaChi.trangThai}')|">
+                                            <i class="fa-regular fa-pen-to-square" style="font-size: 16px; color: #000;"></i> Cập nhật
+                                        </a>
+
+                                        <a th:href="@{/user-dia-chi/delete-dia-chi/{id}(id=${diaChi.id})}" class="btn"
+                                           style="background-color: #FFF6F6; text-align: left; border-radius: 6px; text-decoration: none; width: 100%">
+                                            <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
+                                            Xóa
+                                        </a>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
                     </div>
                     <!-- Phân trang -->
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-end">
-                            <!-- Nút Previous -->
-                            <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
-                                <a class="page-link" style="color: #5C5F6A"
-                                   th:href="@{/user-dia-chi/pagination-dia-chi(pageNo=0)}"
-                                   aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <!-- Vòng lặp phân trang -->
-                            <li th:each="i : ${#numbers.sequence(1, totalPage)}"
-                                th:classappend="${currentPage == i - 1 ? 'active' : ''}"
-                                class="page-item">
-                                <a class="page-link"
-                                   th:href="@{/user-dia-chi/pagination-dia-chi(pageNo=${i - 1})}"
-                                   th:text="${i}" style="color: #5C5F6A"></a>
-                            </li>
-                            <!-- Nút Next -->
-                            <li class="page-item"
-                                th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}">
-                                <a class="page-link" style="color: #5C5F6A"
-                                   th:href="@{/user-dia-chi/pagination-dia-chi(pageNo=${totalPage - 1})}"
-                                   aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <div class="d-flex justify-content-end">
+                        <div>
+                            <!-- Pagination for SanPham -->
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-end">
+                                    <!-- Link to the first page -->
+                                    <li class="page-item">
+                                        <a class="page-link" th:style="'color: #5C5F6A'"
+                                           th:href="@{/user-dia-chi/pagination-dia-chi(page=0)}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <!-- Loop through each page number in the pagination -->
+                                    <li th:each="p : ${pagination}"
+                                        th:classappend="${page.number == p} ? 'active' : ''">
+                                        <a class="page-link"
+                                           th:style="${page.number == p} ? 'color: #ffffff; background-color: #5C5F6A' : 'color: #5C5F6A'"
+                                           th:href="@{/user-dia-chi/pagination-dia-chi(page=${p})}">
+                                            <span th:text="${p + 1}">1</span>
+                                        </a>
+                                    </li>
+
+                                    <!-- Link to the last page -->
+                                    <li class="page-item">
+                                        <a class="page-link" th:style="'color: #5C5F6A'"
+                                           th:href="@{/user-dia-chi/pagination-dia-chi(page=${totalPage})}"
+                                           aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -388,20 +399,24 @@
             </div>
             <!-- Modal Body -->
             <div class="modal-body" style="padding:30px;">
-                <form th:action="@{/user-dia-chi/add-dia-chi}" method="post">
-                    <!--          <div class="mb-3">-->
-                    <!--            <label for="tenKhachHang" class="form-label">Tên khách hàng</label>-->
-                    <!--            <input type="text" class="form-control" id="tenKhachHang" name="tenKhachHang" required>-->
-                    <!--          </div>-->
+                    <form class="needs-validation" novalidate th:action="@{/user-dia-chi/add-dia-chi}" method="post">
+                    <div class="mb-2">
+                        <label for="tenKhachHang" class="form-label">Tên khách hàng</label>
+                        <input style="border: 1px solid #000" type="text" class="form-control custom-input"
+                               id="tenKhachHang" placeholder="Nguyen Van A" th:name="tenKhachHang" minlength="5" maxlength="100" required>
+                        <div class="invalid-feedback">Họ tên không hợp lệ.</div>
+                    </div>
                     <div class="mb-3">
                         <label for="diaChi" class="form-label">Địa chỉ chi tiết</label>
-                        <input type="text" class="form-control" id="diaChi" name="diaChi" required>
+                        <input type="text" class="form-control" id="diaChi" th:name="diaChi" minlength="5" maxlength="255" required>
+                        <div class="invalid-feedback">Địa chỉ không hợp lệ</div>
                     </div>
                     <div class="mb-3">
                         <label for="sdt" class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control" id="sdt" name="sdt" required>
+                        <input type="text" class="form-control" id="sdt" name="sdt" th:name="sdt" minlength="10" maxlength="10" required>
+                        <div class="invalid-feedback">Số điện thoại không hợp lệ</div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Thêm địa chỉ</button>
+                    <button type="submit" class="btn btn-dark btn-sm">Thêm địa chỉ</button>
                 </form>
             </div>
         </div>
@@ -418,20 +433,27 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="padding:30px;">
-                <form  th:action="@{/user-dia-chi/update-dia-chi}"  method="post"  novalidate th:object="${diaChiCre}" class="needs-validation">
+                <form  th:action="@{/user-dia-chi/update-dia-chi}"  method="post"  th:object="${diaChiCre}" class="needs-validation" novalidate >
                     <div class="display_none">
                         <input type="text" class="form-control" id="editDiaChiId" name="id" th:field="*{id}">
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-2">
+                        <label for="tenKhachHangEdit" class="form-label">Tên khách hàng</label>
+                        <input style="border: 1px solid #000" type="text" class="form-control custom-input"
+                               id="tenKhachHangEdit" placeholder="Nguyen Van A" th:name="tenKhachHang" th:field="*{tenKhachHang}" minlength="5" maxlength="100" required>
+                        <div class="invalid-feedback">Họ tên không hợp lệ.</div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="editDiaChi" class="form-label">Đia chỉ</label>
+                        <input type="text" class="form-control" th:name="diaChi" id="editDiaChi" placeholder="Nhập địa chỉ" th:field="*{diaChi}" minlength="5" maxlength="255" required>
+                        <div class="invalid-feedback">Địa chỉ không hợp lệ</div>
+                    </div>
+                    <div class="mb-2">
                         <label for="editSdt" class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control" id="editSdt" placeholder="Nhập số điện thoại" name="sdt" th:field="*{sdt}" required>
+                        <input type="text" class="form-control" id="editSdt" placeholder="Nhập số điện thoại" th:name="sdt" th:field="*{sdt}"  minlength="10" maxlength="10" required>
                         <div class="invalid-feedback">Số điện thoại không hợp lệ .</div>
                     </div>
-                    <div class="mb-4">
-                        <label for="editDiaChi" class="form-label">Đia chỉ</label>
-                        <input type="text" class="form-control" name="diaChi" id="editDiaChi" placeholder="Nhập địa chỉ" th:field="*{diaChi}" required >
-                        <div class="invalid-feedback">Mô tả không hợp lệ không hợp lệ .</div>
-                    </div>
+
                     <div class="mb-4 display_none" id="statusSection">
                         <label class="form-label">Status</label><br>
                         <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">
@@ -440,12 +462,29 @@
                         <label for="inactive">Inactive</label>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-outline-secondary">Cập nhật</button>
+                        <button type="submit" class="btn btn-dark btn-sm">Cập nhật</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Alert thông báo thất bại -->
+<div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage"
+     style="display: none; z-index: 1060;">
+    <strong>Thất bại!</strong> <span id="alertBody">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage2"
+     style="display: none;  z-index: 1060;">
+    <strong>Thành công!</strong> <span id="alertBody2">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<!-- Alert thông báo từ backend -->
+<div th:if="${message}" th:class="${messageType} + ' alert alert-dismissible fade show position-fixed top-0 end-0 m-3'" id="successAlert" role="alert">
+    <strong th:text="${titleMsg}">Tiêu đề</strong> <span th:text="${message}">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
 
@@ -457,9 +496,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Khi mở modal cập nhật, điền dữ liệu vào form
-    function saveIdDiaChi(id, sdt, diaChi, trangThai) {
+    function saveIdDiaChi(id, tenKhachHang, sdt, diaChi, trangThai) {
         // Gán giá trị vào modal
         $('#editDiaChiId').val(id);
+        $('#tenKhachHangEdit').val(tenKhachHang);
         $('#editSdt').val(sdt);
         $('#editDiaChi').val(diaChi);
 
@@ -470,6 +510,77 @@
             $('#inactive').prop('checked', true);
         }
     }
+</script>
+
+<script>
+    (function () {
+        'use strict';
+
+        // Fetch all forms with class 'needs-validation'
+        var forms = document.querySelectorAll('.needs-validation');
+
+        // Loop over forms and prevent submission if validation fails
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    showAlert( "error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
+                }
+                form.classList.add('was-validated');
+            }, false);
+
+            // Add 'change' event listener for all inputs to validate them dynamically
+            var inputs = form.querySelectorAll('input');
+            Array.prototype.slice.call(inputs).forEach(function (input) {
+                input.addEventListener('change', function () {
+                    if (input.checkValidity()) {
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+                    } else {
+                        input.classList.remove('is-valid');
+                        input.classList.add('is-invalid');
+                        showAlert("error","Dữ liệu không hợp lệ trong " + input.placeholder);
+                    }
+                });
+            });
+        });
+
+        //thông báo
+        function showAlert(type, message) {
+            let alertElement;
+
+            if (type === 'success') {
+                alertElement = document.getElementById('successAlert');
+                alertElement.querySelector('span').textContent = message; // Thiết lập nội dung thông báo thành công
+                alertElement.style.display = 'block'; // Hiển thị thông báo thành công
+            } else if (type === 'error') {
+                alertElement = document.getElementById('alertMessage');
+                alertElement.querySelector('#alertBody').textContent = message; // Thiết lập nội dung thông báo lỗi
+                alertElement.style.display = 'block'; // Hiển thị thông báo lỗi
+            }
+
+            // Tự động ẩn thông báo sau 5 giây
+            setTimeout(() => {
+                if (alertElement) {
+                    var bootstrapAlert = new bootstrap.Alert(alertElement);
+                    bootstrapAlert.close();
+                }
+            }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Kiểm tra và ẩn thông báo thành công nếu có
+            var successAlert = document.getElementById('successAlert');
+            if (successAlert && successAlert.style.display !== 'none') {
+                setTimeout(function () {
+                    var bootstrapAlert = new bootstrap.Alert(successAlert);
+                    bootstrapAlert.close();
+                }, 5000);
+            }
+        });
+
+    })();
 </script>
 
 

@@ -10,10 +10,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface DiaChiRepository  extends JpaRepository<DiaChi, Integer> {
 
     Page<DiaChi> findAllByTrangThai(Status trangThai, Pageable pageable);
+    List<DiaChi> findAllByTrangThaiAndKhachHang(Status trangThai, KhachHang khachHang);
 }
 

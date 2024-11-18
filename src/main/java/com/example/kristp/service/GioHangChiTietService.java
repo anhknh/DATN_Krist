@@ -27,6 +27,8 @@ public interface GioHangChiTietService {
     // Cập nhật chi tiết giỏ hàng
     GioHangChiTiet updateGioHangChiTiet(GioHangChiTiet gioHangChiTiet);
 
+    Integer capNhatSoLuong(Integer id, int increment);
+
 
     // Xoá chi tiết giỏ hàng theo ID
     void deleteGioHangChiTiet(Integer id);
