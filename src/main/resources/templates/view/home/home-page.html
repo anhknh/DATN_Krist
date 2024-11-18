@@ -216,21 +216,6 @@
         </div>
         <div>
             <div class="d-flex flex-wrap">
-                <tbody>
-                <tr th:each="ctsp : ${chiTietSanPhamList}">
-                    <td th:text="${ctsp.sanPham.tenSanPham}">Tên sản phẩm</td>
-                    <td th:text="${ctsp.sanPham.danhMuc.tenDanhMuc}">Danh mục</td>
-                    <td th:text="${ctsp.sanPham.chatLieu.tenChatLieu}">Chất liệu</td>
-                    <td th:text="${ctsp.donGia}">Đơn giá</td>
-                    <td>
-                        <!-- Form thêm vào giỏ hàng -->
-                        <form th:action="@{/gio-hang/add}" method="post">
-                            <input type="hidden" name="idChiTietSanPham" th:value="${ctsp.id}" />
-                            <button  type="button" data-bs-toggle="modal" data-bs-target="#modal_popup" >Thêm vào giỏ hàng</button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
                 <div class="cart">
                     <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
                         <img src="/img/monochrome_tees.png" alt="Product Image">
