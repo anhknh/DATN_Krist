@@ -208,8 +208,12 @@
                         <td>
                             <div class="d-flex align-items-center">
                                 <!-- Hình ảnh sản phẩm -->
-                                <div class="text-center" style="width: 80px; height: 80px; background-color: #F6F6F6;">
-                                    <img style="width: 75%;" src="/img/monochrome_tees.png" alt="">
+                                <div>
+                                    <div class="d-flex justify-content-center align-items-center"
+                                         style="background-color: #f6f6f6; border-radius: 4px; width: 46px; height: 46px;">
+                                        <div th:style="|width: 46px; height: 46px; background: url('/img/${dhct.chiTietSanPham.anhSanPham}') no-repeat center center / cover;|">
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- Tên sản phẩm và chi tiết -->
                                 <div style="margin-left: 12px; width: 200px;">
@@ -269,24 +273,35 @@
             <div class="col-4">
                 <div class="card p-3" style="border: none;border-radius: 12px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     <div class="card-body" style=" position: relative;">
-                        <h5 class="card-title" style="font-weight: bold; margin-bottom: 0;" th:text="${donHangChiTiet.get(0).getHoaDon().getDiaChi().getKhachHang().getTenKhachHang()}"></h5>
+                        <h5 class="card-title" style="font-weight: bold; margin-bottom: 0;" th:text="${donHangChiTiet.get(0).getHoaDon().getDiaChi().tenKhachHang}"></h5>
                         <p class="card-text" style=" margin-top: 0.5rem;" th:text="${donHangChiTiet.get(0).getHoaDon().getDiaChi().getDiaChi()}"></p>
                     </div>
                 </div>
-                <div style="border: 1px solid #E6E7E8; border-radius: 4px; padding: 38px 18px;">
+                <div style="border: 1px solid #E6E7E8; border-radius: 4px; padding: 38px 18px; position: relative;">
                     <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
-                        <div style="font-size: 16px; font-weight: 500; ">Tổng cộng:</div>
-                        <div style="font-size: 16px; font-weight: 500;font-weight: bold;" th:text="${hoaDon.getTongTien()}"><i class="fa-regular fa-dollar-sign" ></i></div>
+                        <div style="font-size: 16px; font-weight: 500;">Tổng cộng:</div>
+                        <div style="font-size: 16px; font-weight: 500;"><span id="grand-total" th:text="${convertMoney.formatCurrency(hoaDon.tongTien)}">0.00</span></div>
                     </div>
                     <hr style="color: #5b5c64; border-width: 1px; margin-bottom: 18px;">
+
+                    <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between" style="margin-bottom: 18px;">
+                        <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Tên khuyến mại:</div>
+                        <div style="font-size: 16px; font-weight: 500;"><span th:text="${hoaDon.khuyenMai.tenKhuyenMai}"></span></div>
+                    </div>
+
+                    <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between" style="margin-bottom: 18px;">
+                        <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Mức giảm:</div>
+                        <div style="font-size: 16px; font-weight: 500;"><span th:text="${convertMoney.formatCurrency(hoaDon.khuyenMai.giaTri)} + ' ' + ${hoaDon.khuyenMai.kieuKhuyenMai}"></span></div>
+                    </div>
+
                     <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                         <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
-                        <div style="font-size: 16px; font-weight: 500;font-weight: bold;" th:text="${hoaDon.getPhiVanChuyen()}"><i class="fa-regular fa-dollar-sign"></i></div>
+                        <div style="font-size: 16px; font-weight: 500;"><span id="shipping-fee">30.000</span></div>
                     </div>
                     <hr style="color: #E6E7E8; border-width: 3px; margin-bottom: 18px;">
-                    <div class="d-flex justify-content-between" style="margin-bottom: 36px;">
-                        <div style="font-size: 16px; font-weight: 500; font-weight: bold;">Tổng thanh toán:</div>
-                        <div style="font-size: 16px; font-weight: 500; font-weight: bold;" th:text="${tongThanhToan}"><i class="fa-regular fa-dollar-sign"></i></div>
+                    <div class="d-flex justify-content-between">
+                        <div style="font-size: 16px; font-weight: bold;">Tổng thanh toán:</div>
+                        <div style="font-size: 16px; font-weight: bold;"><span id="final-total" th:text="${convertMoney.calculatorTotal(hoaDon.tongTien, hoaDon.khuyenMai)}">0.00</span></div>
                     </div>
                 </div>
             </div>
