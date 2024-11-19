@@ -91,7 +91,7 @@ public class ChatLieuController {
     @GetMapping("/delete-chat-lieu/{id}")
     private String deleteChatLieu(@PathVariable("id")Integer idChatLieu ,  RedirectAttributes attributes){
             chatLieuService.deleteChatLieu(idChatLieu);
-            attributes.addFlashAttribute("message" , "Xóa chất liệu thành công .");
+            attributes.addFlashAttribute("message" , "Thay đổi trạng thái chất liệu thành công .");
             attributes.addFlashAttribute("messageType" , "alert-success");
             attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-chat-lieu/pagination-chat-lieu";

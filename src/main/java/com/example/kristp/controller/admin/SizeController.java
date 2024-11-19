@@ -84,7 +84,7 @@ public class SizeController {
     @GetMapping("/delete-size/{id}")
     private String deleteSize(@PathVariable("id")Integer idSize ,  RedirectAttributes attributes){
         sizeService.deleteSize(idSize);
-        attributes.addFlashAttribute("message" , "Xóa size thành công .");
+        attributes.addFlashAttribute("message" , "Thay đổi trạng thái size thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-size/pagination-size";

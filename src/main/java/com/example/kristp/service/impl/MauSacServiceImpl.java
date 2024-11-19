@@ -57,14 +57,18 @@ public class MauSacServiceImpl implements MauSacService {
         MauSac mauSac1 = getMauSacById(idMauSac);
         mauSac1.setMaMauSac(mauSac.getMaMauSac());
         mauSac1.setMoTa(mauSac.getMoTa());
-        mauSac1.setTrangThai(mauSac.getTrangThai());
         return mauSacRepository.save(mauSac1);
     }
 
     @Override
     public void deleteMauSac(Integer idMauSac) {
         MauSac mauSac = getMauSacById(idMauSac);
-        mauSac.setTrangThai(Status.INACTIVE);
+        // Chuyển trạng thái giữa ACTIVE và INACTIVE
+        if (mauSac.getTrangThai() == Status.INACTIVE) {
+            mauSac.setTrangThai(Status.ACTIVE);
+        } else {
+            mauSac.setTrangThai(Status.INACTIVE);
+        }
         mauSacRepository.save(mauSac);
     }
 

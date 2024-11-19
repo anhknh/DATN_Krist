@@ -53,7 +53,6 @@ public class CoAoServiceImpl implements CoAoService {
         CoAo tayao1 = getCoAoById(idCoAo);
         tayao1.setKieuCoAo(coAo.getKieuCoAo());
         tayao1.setMoTa(coAo.getMoTa());
-        tayao1.setTrangThai(coAo.getTrangThai());
         return coAoRepository.save(tayao1);
     }
 
@@ -62,7 +61,12 @@ public class CoAoServiceImpl implements CoAoService {
     @Override
     public void deleteCoAo(Integer idCoAo) {
         CoAo coAo = getCoAoById(idCoAo);
-        coAo.setTrangThai(Status.INACTIVE);
+        // Chuyển trạng thái giữa ACTIVE và INACTIVE
+        if (coAo.getTrangThai() == Status.INACTIVE) {
+            coAo.setTrangThai(Status.ACTIVE);
+        } else {
+            coAo.setTrangThai(Status.INACTIVE);
+        }
         coAoRepository.save(coAo);
     }
 

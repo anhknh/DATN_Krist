@@ -198,17 +198,22 @@
                                 </td>
                                 <td style="padding: 12px 6px; line-height: 305%;" th:text="${tayAo.moTa}" th:class="valueDes">
                                 </td>
-                                <td class="text-center" style="padding: 12px 6px; line-height: 305%;">
-                                    <i class="fa-regular"
-                                       th:classappend="${tayAo.trangThai == tayAo.trangThai.ACTIVE ? 'fa-check' : 'fa-x'}"></i>
+                                <td >
+                                    <div class="form-check form-switch text-center" style="display: flex; justify-content: center; align-items: center; height: 100%; padding-top: 10px">
+                                        <input class="form-check-input" type="checkbox"  id="flexSwitchCheckChecked-[[${tayAo.id}]]" checked disabled  th:checked="${tayAo.trangThai == tayAo.trangThai.ACTIVE}" >
+                                    </div>
                                 </td>
+<!--                                <td class="text-center" style="padding: 12px 6px; line-height: 305%;">-->
+<!--                                    <i class="fa-regular"-->
+<!--                                       th:classappend="${tayAo.trangThai == tayAo.trangThai.ACTIVE ? 'fa-check' : 'fa-x'}"></i>-->
+<!--                                </td>-->
 
                                 </td>
                                 <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">
                                     <div class="d-flex justify-content-center">
-                                        <a th:href="@{/quan-ly-tay-ao/delete-tay-ao/{id}(id=${tayAo.id})}" class="btn btn-outline-secondary me-2" title="xóa"><i class="fa-light fa-trash-can"></i></a>
-                                        <div class="btn btn-outline-secondary" title="cập nhật" style="display: inline-block;" data-bs-toggle="modal"
-                                             data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('${tayAo.id}','${stat.index}' , '${tayAo.trangThai}' )|" ><i class="fa-light fa-pen-to-square"></i>
+                                        <a th:href="@{/quan-ly-tay-ao/delete-tay-ao/{id}(id=${tayAo.id})}" class="btn btn-outline-secondary me-2" title="cập nhật trạng thái"><i class="fa-light fa-pen-nib"></i></a>
+                                        <div class="btn btn-outline-secondary" title="chi tiết tay áo" style="display: inline-block;" data-bs-toggle="modal"
+                                             data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('${tayAo.id}','${stat.index}' )|" ><i class="fa-light fa-pen-to-square"></i>
                                         </div>
                                     </div>
                                 </td>
@@ -277,13 +282,13 @@
                             <input type="text" class="form-control" name="describe" id="desCate" placeholder="Nhập mô tả" th:field="*{moTa}" required >
                             <div class="invalid-feedback">Mô tả không hợp lệ không hợp lệ .</div>
                         </div>
-                        <div class="mb-4 display_none" id="statusSection">
-                            <label class="form-label">Trang thái</label><br>
-                            <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">
-                            <label for="active">Hoạt động</label><br>
-                            <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">
-                            <label for="inactive">Ngừng hoạt động</label>
-                        </div>
+<!--                        <div class="mb-4 display_none" id="statusSection">-->
+<!--                            <label class="form-label">Trang thái</label><br>-->
+<!--                            <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">-->
+<!--                            <label for="active">Hoạt động</label><br>-->
+<!--                            <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">-->
+<!--                            <label for="inactive">Ngừng hoạt động</label>-->
+<!--                        </div>-->
                         <div>
                             <button type="submit" class="btn btn-outline-secondary">Lưu</button>
                         </div>
@@ -319,20 +324,20 @@
         if(index != null) {
             nameCate.value = valueName[index].textContent.trim();
             desCate.value = valueDes[index].textContent.trim();
-            statusSection.classList.remove('display_none');
-            document.getElementById('exampleModalLabel').innerText = 'Update material';
+            // statusSection.classList.remove('display_none');
+            document.getElementById('exampleModalLabel').innerText = 'Chi tiết tay áo';
             // Kiểm tra class của icon
-            if (hanhDong == "ACTIVE") {
-                // Nếu class là 'fa-check', chọn radio button active
-                document.getElementById('active').checked = true;
-            } else {
-                // Ngược lại nếu class là 'fa-x', chọn radio button inactive
-                document.getElementById('inactive').checked = true;
-            }
+            // if (hanhDong == "ACTIVE") {
+            //     // Nếu class là 'fa-check', chọn radio button active
+            //     document.getElementById('active').checked = true;
+            // } else {
+            //     // Ngược lại nếu class là 'fa-x', chọn radio button inactive
+            //     document.getElementById('inactive').checked = true;
+            // }
             document.getElementById("form_submit").action = '/quan-ly-tay-ao/update-tay-ao' ;
         } else {
-            statusSection.classList.add('display_none');
-            document.getElementById('exampleModalLabel').innerText = 'Add material';
+            // statusSection.classList.add('display_none');
+            document.getElementById('exampleModalLabel').innerText = 'Thêm tay áo';
             nameCate.value = "";
             desCate.value = "";
             document.getElementById("form_submit").action = '/quan-ly-tay-ao/add-tay-ao' ;

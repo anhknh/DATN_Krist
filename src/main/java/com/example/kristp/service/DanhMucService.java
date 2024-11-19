@@ -2,6 +2,7 @@ package com.example.kristp.service;
 
 import com.example.kristp.entity.ChatLieu;
 import com.example.kristp.entity.DanhMuc;
+import com.example.kristp.enums.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -22,4 +23,5 @@ public interface DanhMucService {
 
     Page<DanhMuc> getPaginationDanhMuc(Integer pageNo);
     Page<DanhMuc> timTatCaTheoTen(Integer pageNo,String ten);
+//    void updateTrangThai(Integer id, Status trangThai);
 }
