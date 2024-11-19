@@ -8,6 +8,6 @@ public class testProfile {
 
     @GetMapping("/test-profile")
     public String profile(){
-        return "view-admin/dashbroad/profile-nhan-nhan";
+        return "profile-ca-nhan";
     }
 }

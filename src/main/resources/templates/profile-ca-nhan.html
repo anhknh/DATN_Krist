@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -125,7 +125,6 @@
 <div class="container">
   <div class="sidebar">
     <div class="profile">
-      <img alt="Profile picture of Robert Fox" src="https://storage.googleapis.com/a1aa/image/pozhxU0kYlqyBZhfiFpswTP1l923WeRjofDEuILy9RLFK6TnA.jpg" />
       <div>
         <div>Hello 👋</div>
         <div class="name">Robert Fox</div>
@@ -133,13 +132,13 @@
     </div>
     <ul class="menu">
       <li class="active" onclick="setActive(this)">
-        <a href="#">
+        <a href="/quan-ly/ca-nhan">
           <i class="fas fa-user"></i>
           Personal Information
         </a>
       </li>
       <li onclick="setActive(this)">
-        <a href="#">
+        <a href="/quan-ly/don-hang">
           <i class="fas fa-box"></i>
           My Orders
         </a>
@@ -180,40 +179,24 @@
   <div class="content">
     <h1>My Profile</h1>
     <div class="profile-pic d-flex align-items-center justify-content-between mb-3">
-      <div class="d-flex align-items-center">
-        <img alt="Profile picture of Robert Fox" class="rounded-circle" src="https://storage.googleapis.com/a1aa/image/pozhxU0kYlqyBZhfiFpswTP1l923WeRjofDEuILy9RLFK6TnA.jpg" style="width: 100px; height: 100px; margin-right: 10px;" />
-        <div class="edit-icon">
-          <i class="fas fa-edit"></i>
-        </div>
-      </div>
       <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modal_review">
         <i class="fas fa-edit"></i> Edit Profile
       </button>
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="first-name">First Name</label>
-        <input id="first-name" type="text" class="form-control" placeholder="Robert" />
+        <label for="first-name">Họ và Tên </label>
+        <input id="first-name" type="text" class="form-control" placeholder="Nguyễn Hùng Mạnh" th:value="${khachHang.getTenKhachHang()}" disabled/>
       </div>
       <div class="form-group col-md-6">
-        <label for="last-name">Last Name</label>
-        <input id="last-name" type="text" class="form-control" placeholder="Fox" />
+        <label for="phone-number">Tên đăng nhập</label>
+        <input id="phone-number" type="text" class="form-control" placeholder="0123456789" th:value="${khachHang.getTaiKhoan().getTenDangNhap()}" disabled/>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="phone-number">Phone Number</label>
-        <input id="phone-number" type="text" class="form-control" placeholder="0123456789" />
-      </div>
-      <div class="form-group col-md-6">
-        <label for="email-address">Email Address</label>
-        <input id="email-address" type="text" class="form-control" placeholder="robertfox@exmple.com" />
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <label for="address">Address</label>
-        <input id="address" type="text" class="form-control" placeholder="2464 Royal Ln. Mesa, New Jersey 45463" />
+        <label for="email-address">Địa chỉ email</label>
+        <input id="email-address" type="text" class="form-control" placeholder="robertfox@exmple.com" th:value="${khachHang.getTaiKhoan().getEmail()}" disabled/>
       </div>
     </div>
   </div>
@@ -316,166 +299,31 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content" style="padding: 20px; width: 494px; height: 578px;">
       <div class="modal-header">
-        <h5 class="modal-title" id="modal_reviewLabel">Write Review</h5>
+        <h5 class="modal-title" id="modal_reviewLabel">Chỉnh sửa thông tin</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form th:object="${khachHang}" th:action="@{/quan-ly/update-thong-tin-kh}" method="post">
+          <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.tenDangNhap}">
+          <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.matKhau}">
+          <input type="text" class="form-control display_none" th:field="${khachHang.trangThai}">
+          <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.trangThai}">
+          <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.chucVu}">
+          <input type="text" class="form-control display_none" th:field="${khachHang.id}">
           <div class="mb-3">
-            <label for="InputEmail" class="form-label">Email</label>
-            <input type="email" class="form-control" id="InputEmail">
+            <label for="nameKh" class="form-label">Tên khách hàng</label>
+            <input type="text" class="form-control" id="nameKh" th:field="${khachHang.tenKhachHang}">
           </div>
           <div class="mb-3">
-            <label for="InputFullName" class="form-label">Full name</label>
-            <input type="text" class="form-control" id="InputFullName">
-          </div>
-          <div class="mb-3">
-            <label for="reviewTextArea" class="form-label">Review</label>
-            <textarea class="form-control" id="reviewTextArea" style="height: 100px"></textarea>
-          </div>
-          <div class="mb-3">
-            <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-              <input class="form-check-input" type="radio" name="poinReview" id="poinReview1" value="1"
-                     style="display: none;" checked>
-              <label class="form-check-label" for="poinReview1">
-                <i class="fa-solid fa-star number_star_review"
-                   style="font-size: 16px; cursor: pointer; color: #5C5F6A;"></i>
-              </label>
-            </div>
-            <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-              <input class="form-check-input" type="radio" name="poinReview" id="poinReview2" value="2"
-                     style="display: none;">
-              <label class="form-check-label" for="poinReview2">
-                <i class="fa-regular fa-star number_star_review"
-                   style="font-size: 16px; cursor: pointer; color: #5C5F6A;"></i>
-              </label>
-            </div>
-            <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-              <input class="form-check-input" type="radio" name="poinReview" id="poinReview3" value="3"
-                     style="display: none;">
-              <label class="form-check-label" for="poinReview3">
-                <i class="fa-regular fa-star number_star_review"
-                   style="font-size: 16px; cursor: pointer; color: #5C5F6A;"></i>
-              </label>
-            </div>
-            <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-              <input class="form-check-input" type="radio" name="poinReview" id="poinReview4" value="4"
-                     style="display: none;">
-              <label class="form-check-label" for="poinReview4">
-                <i class="fa-regular fa-star number_star_review"
-                   style="font-size: 16px; cursor: pointer; color: #5C5F6A;"></i>
-              </label>
-            </div>
-            <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-              <input class="form-check-input" type="radio" name="poinReview" id="poinReview5" value="5"
-                     style="display: none;">
-              <label class="form-check-label" for="poinReview5">
-                <i class="fa-regular fa-star number_star_review"
-                   style="font-size: 16px; cursor: pointer; color: #5C5F6A;"></i>
-              </label>
-            </div>
+            <label for="emailKh" class="form-label">Email</label>
+            <input type="text" class="form-control" id="emailKh" th:field="${khachHang.taiKhoan.email}">
           </div>
           <div class="text-center" style="margin-top: 36px;">
             <button type="submit" class="btn bg-black"
-                    style="color: #fff; padding: 8px 68px; font-size: 14px;">Submit Your Review
+                    style="color: #fff; padding: 8px 68px; font-size: 14px;">Lưu
             </button>
           </div>
         </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!--modal popup-->
-<div class="modal fade" id="modal_popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="max-width: 370px; margin-left: auto; margin-right: 250px;">
-    <div class="modal-content" style="margin-top: 70px;">
-      <div class="modal-header">
-        <p class="modal-title" id="exampleModalLabel">you have 2 items in your cart</p>
-      </div>
-      <div class="modal-body" style="margin-top: 5px;">
-        <!-- cart_product -->
-        <div class="cart_product_row" style="border-bottom: 2px solid #F6F6F6; padding: 12px 4px;">
-          <div class="d-flex">
-            <!-- img_product_cart -->
-            <div class="text-center img_product_cart" style="width: 80px; height: 80px; background-color: #F6F6F6;">
-              <img src="/img/monochrome_tees.png" style="width: 74%;" alt="">
-            </div>
-
-            <!-- product_cart_detail -->
-            <div class="product_cart" style="margin-left: 10px;">
-              <p style="font-size: 14px; font-weight: 500;">Áo phông cộc tay</p>
-              <div class="d-flex justify-content-between align-items-center" style="width: 62px; height: 22px;">
-                <div style="padding: 8px; border-radius: 50%; border: 1px solid #5C5F6A; background-color: cadetblue;"></div>
-                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
-                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">M</div>
-              </div>
-              <div style="display: inline-block;">
-                <div class="d-flex justify-content-between align-items-center" style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height: 40px;">
-                  <div class="btn_Subtrac" style="cursor: pointer;">
-                    <button type="button" style="background-color: #fff; border: none;">&#8722;</button>
-                  </div>
-                  <div class="quantity_number">1</div>
-                  <div class="btn_plus" style="cursor: pointer;">
-                    <button type="button" style="background-color: #fff; border: none;">&#43;</button>
-                  </div>
-                </div>
-              </div>
-              <p style="font-size: 14px; font-weight: 500; display: inline-block; margin-left: 8px;"><i class="fa-regular fa-dollar-sign"></i>30.00</p>
-
-              <a class="btn">
-                <div class="prevent_select" style="padding: 1px 12px; background-color: #F6F6F6; border-radius: 6px; display: inline-block;">
-                  <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-        <!--        2-->
-        <div class="cart_product_row" style="border-bottom: 2px solid #F6F6F6; padding: 12px 4px;">
-          <div class="d-flex">
-            <!-- img_product_cart -->
-            <div class="text-center img_product_cart" style="width: 80px; height: 80px; background-color: #F6F6F6;">
-              <img src="/img/monochrome_tees.png" style="width: 74%;" alt="">
-            </div>
-
-            <!-- product_cart_detail -->
-            <div class="product_cart" style="margin-left: 10px;">
-              <p style="font-size: 14px; font-weight: 500;">Áo phông cộc tay</p>
-              <div class="d-flex justify-content-between align-items-center" style="width: 62px; height: 22px;">
-                <div style="padding: 8px; border-radius: 50%; border: 1px solid #5C5F6A; background-color: cadetblue;"></div>
-                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
-                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">M</div>
-              </div>
-              <div style="display: inline-block;">
-                <div class="d-flex justify-content-between align-items-center" style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height: 40px;">
-                  <div class="btn_Subtrac" style="cursor: pointer;">
-                    <button type="button" style="background-color: #fff; border: none;">&#8722;</button>
-                  </div>
-                  <div class="quantity_number">1</div>
-                  <div class="btn_plus" style="cursor: pointer;">
-                    <button type="button" style="background-color: #fff; border: none;">&#43;</button>
-                  </div>
-                </div>
-              </div>
-              <p style="font-size: 14px; font-weight: 500; display: inline-block; margin-left: 8px;"><i class="fa-regular fa-dollar-sign"></i>30.00</p>
-
-              <a class="btn">
-                <div class="prevent_select" style="padding: 1px 12px; background-color: #F6F6F6; border-radius: 6px; display: inline-block;">
-                  <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer" style="border: none; align-items: normal; justify-content: unset;">
-          <div class="d-flex justify-content-between" style="border-top: 2px solid #F6F6F6; width: 100%; padding: 12px; margin-bottom: 12px;">
-            <div style="font-size: 14px; font-weight: 500;">Subtotal</div>
-            <div style="font-size: 14px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>60.00</div>
-          </div>
-          <button class="btn bg-black" style="font-size: 14px; font-weight: 500; width: 100%; height: 40px;">
-            <a href="/gio-hang" style="text-decoration: none; color: #fff;">Thanh toán</a>
-          </button>
-        </div>
       </div>
     </div>
   </div>

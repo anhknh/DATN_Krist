@@ -29,7 +29,7 @@ public class KhachHang extends BaseEntity {
     @Column(name = "trang_thai")
     private Status trangThai;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL) // Thêm cascade
     @JoinColumn(name = "id_tai_khoan")
     private TaiKhoan taiKhoan;
 }
