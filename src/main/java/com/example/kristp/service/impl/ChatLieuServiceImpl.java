@@ -54,7 +54,6 @@ public class ChatLieuServiceImpl implements ChatLieuService {
         ChatLieu chatLieu1 = getChatlieuById(idChatLieu);
         chatLieu1.setTenChatLieu(chatLieu.getTenChatLieu());
         chatLieu1.setMoTa(chatLieu.getMoTa());
-        chatLieu1.setTrangThai(chatLieu.getTrangThai());
         return chatLieuRepository.save(chatLieu1);
 
     }
@@ -62,7 +61,12 @@ public class ChatLieuServiceImpl implements ChatLieuService {
     @Override
     public void deleteChatLieu(Integer idChatLieu) {
         ChatLieu chatLieu = getChatlieuById(idChatLieu);
-        chatLieu.setTrangThai(Status.INACTIVE);
+        // Chuyển trạng thái giữa ACTIVE và INACTIVE
+        if (chatLieu.getTrangThai() == Status.INACTIVE) {
+            chatLieu.setTrangThai(Status.ACTIVE);
+        } else {
+            chatLieu.setTrangThai(Status.INACTIVE);
+        }
         chatLieuRepository.save(chatLieu);
     }
 

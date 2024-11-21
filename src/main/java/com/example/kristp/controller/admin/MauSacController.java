@@ -86,7 +86,7 @@ public class MauSacController {
     @GetMapping("/delete-mau-sac/{id}")
     private String deleteMauSac(@PathVariable("id")Integer idMauSac ,  RedirectAttributes attributes){
         mauSacService.deleteMauSac(idMauSac);
-        attributes.addFlashAttribute("message" , "Xóa màu thành công .");
+        attributes.addFlashAttribute("message" , "Thay đổi trạng thái màu thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-mau-sac/pagination-mau-sac";

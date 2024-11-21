@@ -14,7 +14,7 @@ public interface KhuyenMaiService {
     ArrayList<KhuyenMai> getAllKhuyenMai();
     KhuyenMai getKhuyenMaiById(int id);
     KhuyenMai addKhuyenMai(KhuyenMai khuyenMai);
-
+    void updateKhuyenMaiStatus();
     KhuyenMai updateKhuyenMai(KhuyenMai khuyenMai , Integer idKhuyenMai);
 
     void deleteKhuyenMai(Integer idKhuyenMai);
@@ -23,6 +23,6 @@ public interface KhuyenMaiService {
 
     KhuyenMai timTheoMaKhuyenMai(String maKhuyenMai);
     Page<KhuyenMai> getPaginationKhuyenMai(Integer pageNo);
-    public Page<KhuyenMai> timKiemKhuyenMai(String maKhuyenMai, String tenKhuyenMai, String kieuKhuyenMai,
+    public Page<KhuyenMai> timKiemKhuyenMai(String maKhuyenMai, String tenKhuyenMai, Boolean kieuKhuyenMai,
                                             Float mucGiamToiDa,  String trangThai, Date ngayBatDau, Date ngayKetThuc, Pageable pageable);
 }

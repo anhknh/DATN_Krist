@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -108,8 +108,15 @@
                         <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
                                 class="fa-sharp s-18 fa-regular fa-heart"></i></a>
                     </div>
-                    <div class="me-4">
-                        <a class="cl-black" href="./profileOrder.html"><i class="fa-regular s-18 fa-cart-minus"></i></a>
+                    <div class="me-4 position-relative">
+                        <a class="cl-black" href="/gio-hang-chi-tiet">
+                            <i class="fa-regular s-18 fa-cart-minus"></i>
+                            <!-- Hiển thị tổng số lượng -->
+                            <span th:if="${totalCartItem > 0}"
+                                  th:text="${totalCartItem}" style="background-color: red"
+                                  class="badge badge-danger position-absolute top-0 start-100 translate-middle">
+                            </span>
+                        </a>
                     </div>
                     <div>
                         <button type="button" class="btn btn-dark">Đăng nhập</button>
@@ -128,12 +135,13 @@
             </ol>
         </nav>
     </div>
-<!--    content-->
+    <!--    content-->
     <div class="container-fluid" style="padding: 30px;">
         <div class="container">
             <form action="danh-sach-san-pham" method="get" class="d-flex flex-column" style="width: 100%;">
                 <div class="d-flex align-items-center mb-3">
-                    <input class="form-control me-2" name="tenSanPham" type="search" placeholder="Tên sản phẩm" aria-label="Search" style="width: 1030px">
+                    <input class="form-control me-2" name="tenSanPham" type="search" placeholder="Tên sản phẩm"
+                           aria-label="Search" style="width: 1030px">
                     <button type="submit" class="btn btn-dark me-2">Tìm Kiếm</button>
                     <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
                             data-bs-target=".multi-collapse" aria-expanded="false"
@@ -145,8 +153,9 @@
                     <div class="col-md-3">
                         <div class="collapse multi-collapse" id="multiCollapseExample1">
                             <div class="card p-2">
-                                <label  class="form-label">Kiểu cổ áo</label>
-                                <select class="form-select livesearch" name="coAo" multiple aria-label="Default select example">
+                                <label class="form-label">Kiểu cổ áo</label>
+                                <select class="form-select livesearch" name="coAo" multiple
+                                        aria-label="Default select example">
                                     <option value="1">Cổ tròn</option>
                                     <option value="2">Cổ trái tim</option>
                                 </select>
@@ -156,8 +165,9 @@
                     <div class="col-md-3">
                         <div class="collapse multi-collapse" id="multiCollapseExample2">
                             <div class="card p-2">
-                                <label  class="form-label">Giá</label>
-                                <select class="form-select livesearch" name="gia" multiple aria-label="Default select example">
+                                <label class="form-label">Giá</label>
+                                <select class="form-select livesearch" name="gia" multiple
+                                        aria-label="Default select example">
                                     <option value="1">100K - 300K</option>
                                     <option value="2">300K - 500K</option>
                                     <option value="3">> 500K</option>
@@ -168,8 +178,9 @@
                     <div class="col-md-3">
                         <div class="collapse multi-collapse" id="multiCollapseExample3">
                             <div class="card p-2">
-                                <label  class="form-label">Size</label>
-                                <select class="form-select livesearch" name="size" multiple aria-label="Default select example">
+                                <label class="form-label">Size</label>
+                                <select class="form-select livesearch" name="size" multiple
+                                        aria-label="Default select example">
                                     <option value="1">S</option>
                                     <option value="2">M</option>
                                     <option value="3">L</option>
@@ -182,8 +193,9 @@
                     <div class="col-md-3">
                         <div class="collapse multi-collapse" id="multiCollapseExample4">
                             <div class="card p-2">
-                                <label  class="form-label">Màu sắc</label>
-                                <select class="form-select livesearch" name="mauSac" multiple aria-label="Default select example">
+                                <label class="form-label">Màu sắc</label>
+                                <select class="form-select livesearch" name="mauSac" multiple
+                                        aria-label="Default select example">
                                     <option value="1">Đỏ</option>
                                     <option value="2">Đen</option>
                                     <option value="3">Trắng</option>
@@ -199,65 +211,69 @@
     </div>
 
     <div class="container">
-            <div >
-                <div class="container-fluid">
-                    <div class="row mt-5">
-<!--                        1 ô-->
-                        <div class="col-3 mb-4" th:each="product : ${productList}" th:if="${product.getChiTietSanPham().size() > 0}">
-                            <div class="cart">
-                                <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                                        <img th:src="${product.chiTietSanPham.size() > 0 ? '/img/' + product.chiTietSanPham[0].getAnhSanPham() : '/img/monochrome.png'}" alt="Product Image">
-                                </div>
-                                <button class="wishlist-btn">
-                                    <i class="fa-sharp fa-regular fa-heart"></i>
-                                </button>
-                                <button class="btn-add__cart">
-                                    Thêm vào gỏ hàng
-                                </button>
-                                <div class="cart-content">
-                                    <div class="category-name" th:text="${product.getDanhMuc().getTenDanhMuc()}"></div>
-                                    <div class="product-name" th:text="${product.getTenSanPham()}">Áo phông cộc tay</div>
-                                    <div class="price" th:text="${product.chiTietSanPham.size() > 0 ? product.chiTietSanPham[0].donGia : 'N/A'}"></div>
-                                </div>
+        <div>
+            <div class="container-fluid">
+                <div class="row mt-5">
+                    <!--                        1 ô-->
+                    <div class="col-3 mb-4" th:each="product : ${productList}"
+                         th:if="${product.getChiTietSanPham().size() > 0}">
+                        <div class="cart">
+                            <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
+                                <img th:src="${product.chiTietSanPham.size() > 0 ? '/img/' + product.chiTietSanPham[0].getAnhSanPham() : '/img/monochrome.png'}"
+                                     alt="Product Image">
+                            </div>
+                            <button class="wishlist-btn">
+                                <i class="fa-sharp fa-regular fa-heart"></i>
+                            </button>
+                            <a th:href="@{/gio-hang/add(idChiTietSanPham=${product.chiTietSanPham.get(0).id})}"
+                               class="btn-add__cart text-center" style="text-decoration: none; color: #fff">
+                                Thêm vào gỏ hàng
+                            </a>
+                            <div class="cart-content">
+                                <div class="category-name" th:text="${product.getDanhMuc().getTenDanhMuc()}"></div>
+                                <div class="product-name" th:text="${product.getTenSanPham()}">Áo phông cộc tay</div>
+                                <div class="price"
+                                     th:text="${product.chiTietSanPham.size() > 0 ? product.chiTietSanPham[0].donGia : 'N/A'}"></div>
                             </div>
                         </div>
+                    </div>
 
-                    </div>
-                    <div style="padding-left: 1000px">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-end">
-                                <!-- Nút Previous -->
-                                <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
-                                    <a class="page-link" style="color: #5C5F6A"
-                                       th:href="@{/danh-sach-san-pham(pageNo=0)}"
-                                       aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <!-- Vòng lặp phân trang -->
-                                <li th:if="${totalPage > 0}" th:each="i : ${#numbers.sequence(1, totalPage)}"
-                                    th:classappend="${currentPage == i - 1 ? 'active' : ''}"
-                                    class="page-item">
-                                    <a class="page-link"
-                                       th:href="@{/danh-sach-san-pham(pageNo=${i - 1})}"
-                                       th:text="${i}" style="color: #5C5F6A"></a>
-                                </li>
-                                <!-- Nút Next -->
-                                <li class="page-item"
-                                    th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}">
-                                    <a class="page-link" style="color: #5C5F6A"
-                                       th:href="@{/danh-sach-san-pham(pageNo=${totalPage - 1})}"
-                                       aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                </div>
+                <div style="padding-left: 1000px">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-end">
+                            <!-- Nút Previous -->
+                            <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+                                <a class="page-link" style="color: #5C5F6A"
+                                   th:href="@{/danh-sach-san-pham(pageNo=0)}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <!-- Vòng lặp phân trang -->
+                            <li th:if="${totalPage > 0}" th:each="i : ${#numbers.sequence(1, totalPage)}"
+                                th:classappend="${currentPage == i - 1 ? 'active' : ''}"
+                                class="page-item">
+                                <a class="page-link"
+                                   th:href="@{/danh-sach-san-pham(pageNo=${i - 1})}"
+                                   th:text="${i}" style="color: #5C5F6A"></a>
+                            </li>
+                            <!-- Nút Next -->
+                            <li class="page-item"
+                                th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}">
+                                <a class="page-link" style="color: #5C5F6A"
+                                   th:href="@{/danh-sach-san-pham(pageNo=${totalPage - 1})}"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 <!-- footer -->
 <div class="container-fluid d-flex align-items-center justify-content-evenly"
@@ -367,7 +383,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $(".livesearch").chosen({
             width: "100%", // Đảm bảo các select box có độ rộng đầy đủ
             disable_search_threshold: 10 // Chỉ hiện tìm kiếm khi có hơn 10 lựa chọn

@@ -5,6 +5,7 @@ import com.example.kristp.enums.Status;
 import com.example.kristp.repository.ChatLieuRepository;
 import com.example.kristp.repository.DanhMucRepository;
 import com.example.kristp.service.ChatLieuService;
+import com.example.kristp.service.ChiTietSanPhamService;
 import com.example.kristp.service.DanhMucService;
 import com.example.kristp.service.SanPhamService;
 import jakarta.validation.Valid;
@@ -31,6 +32,9 @@ public class SanPhamController {
     ChatLieuService chatLieuService;
 
     @Autowired
+    ChiTietSanPhamService chiTietSanPhamService;
+
+    @Autowired
     private DanhMucRepository danhMucRepository;
 
     @Autowired
@@ -38,8 +42,9 @@ public class SanPhamController {
 
 
     @GetMapping("/list-san-pham")
-    private String getAllCoAo(RedirectAttributes attributes){
-        attributes.addFlashAttribute("listSanPham" ,sanPhamService.findAllSanPham());
+    private String getAllCoAo(Model model){
+        List<SanPham> sanPhamList = sanPhamService.findAllSanPham();
+        model.addAttribute("sanPhamList", sanPhamList);
         return "view-admin/dashbroad/crud-san-pham";
     }
 
@@ -153,7 +158,7 @@ public class SanPhamController {
     @GetMapping("/delete-san-pham/{id}")
     private String deleteSanPham(@PathVariable("id")Integer idSanPham ,  RedirectAttributes attributes){
         sanPhamService.deleteSanPham(idSanPham);
-        attributes.addFlashAttribute("message" , "Xóa san pham thành công .");
+        attributes.addFlashAttribute("message" , "Đổi trạng thái sản phẩm thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-san-pham/pagination-san-pham";

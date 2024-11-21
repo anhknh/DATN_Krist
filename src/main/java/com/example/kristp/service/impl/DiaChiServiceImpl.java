@@ -31,6 +31,15 @@ public class DiaChiServiceImpl implements DiaChiService {
     }
 
     @Override
+    public List<DiaChi> getAllActiveDiaChiByUser(KhachHang khachHang) {
+        if(khachHang != null) {
+            return diaChiRepository.findAllByTrangThaiAndKhachHang(Status.ACTIVE, khachHang);
+        }
+
+        return null;
+    }
+
+    @Override
     public DiaChi getDiaChiById(Integer id) {
         return diaChiRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Không tìm thấy địa chỉ"));
     }
@@ -52,12 +61,12 @@ public class DiaChiServiceImpl implements DiaChiService {
 
     @Override
     public DiaChi updateDiaChi(DiaChi diaChi, Integer idDiaChi) {
-        DiaChi tayao1 = getDiaChiById(idDiaChi);
-        tayao1.setSdt(diaChi.getSdt());
-        tayao1.setDiaChi(diaChi.getDiaChi());
-        tayao1.setTrangThai(diaChi.getTrangThai());
-        tayao1.setNgaySua(new Date());
-        return diaChiRepository.save(tayao1);
+        DiaChi diaChi1 = getDiaChiById(idDiaChi);
+        diaChi1.setSdt(diaChi.getSdt());
+        diaChi1.setDiaChi(diaChi.getDiaChi());
+        diaChi1.setTrangThai(Status.ACTIVE);
+        diaChi1.setNgaySua(new Date());
+        return diaChiRepository.save(diaChi1);
     }
 
 //    @Override

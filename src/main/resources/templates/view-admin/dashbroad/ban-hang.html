@@ -66,15 +66,19 @@
                        onclick="highlightLink(this)">
                         <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
                     </a>
-                    <a href="#" class="mb-3 bg_profile_btn"
+                    <a href="/qian-ly/ban-hang" class="bg_profile_btn mb-3"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
                         <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
+                    </a>
+                    <a href="/quan-ly-san-pham/pagination-san-pham" class="mb-3"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
+                        <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
                     </a>
                     <!-- Product Management Tree Menu -->
                     <div class="menu-item mb-3">
                         <p style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center; cursor: pointer;"
                            onclick="toggleSubmenu('productSubMenu')">
-                            <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Sản phẩm
+                            <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Thuộc tính
                             <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
                         </p>
                         <ul id="productSubMenu" class="submenu"
@@ -92,21 +96,37 @@
                                 <a href="/quan-ly-mau-sac/pagination-mau-sac"
                                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Màu sắc</a>
                             </li>
-                            <li style="padding: 8px 0;">
-                                <a href="./adminMaterial.html" style="text-decoration: none; color: #000;">Manage
-                                    Materials</a>
+                            <li style="padding: 8px 12px;">
+                                <a href="/quan-ly-size/pagination-size"
+                                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Size</a>
+                            </li>
+                            <li style="padding: 8px 12px;">
+                                <a href="/quan-ly-tay-ao/pagination-tay-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Tay
+                                    áo</a>
+                            </li>
+                            <li style="padding: 8px 12px;">
+                                <a href="/quan-ly-co-ao/pagination-co-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Cổ
+                                    áo</a>
                             </li>
                         </ul>
                     </div>
                     <!--                    Chức năng chưa có đường dẫn là #-->
                     <a href="#" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
-                        <i class="fa-light fa-cart-shopping" style="margin-right: 10px;" ></i> Đơn hàng
+                        <i class="fa-light fa-cart-flatbed" style="margin-right: 10px;"></i> Đơn hàng
+                    </a>
+                    <a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class=" mb-3" onclick="highlightLink(this)"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                        <i class="fa-light fa-tickets-perforated" style="margin-right: 10px;"></i> Khuyến mại
                     </a>
                     <!--                    Chức năng chưa có đường dẫn là #-->
                     <a href="#" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
+                    </a>
+                    <a href="/quan-ly-nhan-vien/phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                        <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
                     </a>
                     <!--                    Chức năng chưa có đường dẫn là #-->
 
@@ -120,22 +140,6 @@
                         <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
                     </a>
                 </div>
-                <!-- Extra Menu -->
-                <div id="drop_right" style="padding: 0px 22px 28px; cursor: pointer;"
-                     onclick="toggleSubmenu('extrasSubMenu')">
-                    <p class="mb-3"
-                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center;">
-                        <!--                        tính năng chưa được xác định hiện tại để trống-->
-                        <i class="fa-regular fa-plus" style="margin-right: 10px;"></i> Bổ sung
-                        <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
-                    </p>
-                    <ul id="extrasSubMenu" class="submenu" style="list-style: none; padding-left: 20px; display: none;">
-                        <li style="padding: 8px;"><a href="./adminSize.html"
-                                                     style="text-decoration: none; color: #000;">Size</a></li>
-                        <li style="padding: 8px;"><a href="./adminColor.html"
-                                                     style="text-decoration: none; color: #000;">Color</a></li>
-                    </ul>
-                </div>
             </div>
             <!--            end sider bar-->
             <div class="col-10">
@@ -145,8 +149,8 @@
                     <div>
                         <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb">
                             <ol class="breadcrumb" style="height: 40px; margin: 0px;">
-                                <li class="breadcrumb-item "><a href="#" class="nav_link">Admin</a></li>
-                                <li class="breadcrumb-item "><a href="#" class="nav_link_active">Dashboard</a></li>
+                                <li class="breadcrumb-item "><a href="#" class="nav_link">Bán hàng</a></li>
+
                             </ol>
                         </nav>
                     </div>
@@ -707,11 +711,13 @@
 
 
     <!-- Alert thông báo thất bại -->
-    <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage" style="display: none;">
+    <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage"
+         style="display: none; z-index: 1060;">
         <strong>Thất bại!</strong> <span id="alertBody">Thông báo này sẽ hiển thị kết quả.</span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-<div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage2" style="display: none;">
+<div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage2"
+     style="display: none;  z-index: 1060;">
     <strong>Thành công!</strong> <span id="alertBody2">Thông báo này sẽ hiển thị kết quả.</span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>

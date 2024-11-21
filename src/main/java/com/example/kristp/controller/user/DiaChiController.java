@@ -4,15 +4,19 @@ import com.example.kristp.entity.*;
 import com.example.kristp.service.DiaChiService;
 import com.example.kristp.service.KhachHangService;
 import com.example.kristp.service.TaiKhoanService;
+import com.example.kristp.utils.Pagination;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user-dia-chi/")
@@ -30,14 +34,20 @@ public class DiaChiController {
 
     // Hiển thị danh sách địa chỉ của khách hàng với phân trang
     @GetMapping("/pagination-dia-chi")
-    public String getPagination(Model model, @RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo) {
-        Page<DiaChi> diachis = diaChiService.getAllActiveDiaChi(PageRequest.of(pageNo, 3)); // Giả sử mỗi trang có 5 địa chỉ
+    public String getPagination(Model model,@RequestParam("page") Optional<Integer> page) {
+        Pagination pagination = new Pagination();
+        Pageable pageable = PageRequest.of(page.orElse(0), 3);
+        Page<DiaChi> diachis = diaChiService.getAllActiveDiaChi(pageable); // Giả sử mỗi trang có 5 địa chỉ
         model.addAttribute("diaChiList", diachis.getContent());
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPage", diachis.getTotalPages());
+        //phân trang
+        model.addAttribute("totalPage", diachis.getTotalPages() - 1);
+        model.addAttribute("page", diachis);
+        model.addAttribute("pagination", pagination.getPage(diachis.getNumber(), diachis.getTotalPages()));
         model.addAttribute("diaChiCre", new DiaChi());
         return "view-admin/dashbroad/crud-dia-chi";
     }
+
+
 
 
 
@@ -85,21 +95,24 @@ public class DiaChiController {
 //        attributes.addFlashAttribute("messageType", "alert-success");
 //        return "redirect:/user-dia-chi/pagination-dia-chi";
 //    }
-    @PostMapping("/update-dia-chi")
-    private String updateCoAo(@Valid @ModelAttribute("diaChi")DiaChi diaChi , BindingResult result , RedirectAttributes attributes , @RequestParam("id")Integer idDiaChi){
-        if(result.hasErrors()){
-            attributes.addFlashAttribute("diaChi" , diaChi);
-            attributes.addFlashAttribute("message" , "Cập nhật địa chỉ không thành công .");
-            attributes.addFlashAttribute("messageType" , "alert-danger");
-            attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-dia-chi/pagination-dia-chi";
-        }
-        diaChiService.updateDiaChi(diaChi,idDiaChi) ;
-        attributes.addFlashAttribute("message" , "Cập nhật cổ áo thành công .");
-        attributes.addFlashAttribute("messageType" , "alert-success");
-        attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-dia-chi/pagination-dia-chi";
+@PostMapping("/update-dia-chi")
+private String updateDiaChi(@Valid @ModelAttribute("diaChiCre") DiaChi diaChi, BindingResult result, RedirectAttributes attributes) {
+
+
+    if (result.hasErrors()) {
+        attributes.addFlashAttribute("diaChi", diaChi);
+        attributes.addFlashAttribute("message", "Cập nhật địa chỉ không thành công.");
+        attributes.addFlashAttribute("messageType", "alert-danger");
+        attributes.addFlashAttribute("titleMsg", "Thất bại");
+        return "redirect:/user-dia-chi/pagination-dia-chi";
     }
+
+    diaChiService.updateDiaChi(diaChi, diaChi.getId());
+    attributes.addFlashAttribute("message", "Cập nhật địa chỉ thành công.");
+    attributes.addFlashAttribute("messageType", "alert-success");
+    attributes.addFlashAttribute("titleMsg", "Thành công");
+    return "redirect:/user-dia-chi/pagination-dia-chi";
+}
 
 
     // Xóa địa chỉ

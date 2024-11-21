@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,10 +23,12 @@
             color: #6c757d;
             font-size: 1.5rem;
         }
+
         .step.active {
             background-color: #000; /* Màu tối cho bước đang hoạt động */
             color: #fff;
         }
+
         .line {
             flex-grow: 1;
             height: 2px;
@@ -37,6 +38,7 @@
             transform: translateY(-50%); /* Căn giữa theo trục dọc */
             border-top: 2px dashed #ddd; /* Đường nét đứt */
         }
+
         .line-active {
             border-top: 2px dashed #1a1a1a; /* Màu đậm cho đường nét đứt đầu tiên */
         }
@@ -71,7 +73,8 @@
                                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Danh mục
                                         </a>
-                                        <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;" aria-labelledby="navbarDropdown">
+                                        <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;"
+                                            aria-labelledby="navbarDropdown">
                                             <div class="d-flex">
                                                 <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
                                                     <p class="font-blod">Men</p>
@@ -89,7 +92,7 @@
                                                     <div class="p-2">hoanganh</div>
                                                     <div class="p-2">hoanganh</div>
                                                 </div>
-                                                <div class="text-center"  style="flex: 1; border-right: 1px solid #000;">
+                                                <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
                                                     <p class="font-blod">Men</p>
                                                     <div class="p-2">hoanganh</div>
                                                     <div class="p-2">hoanganh</div>
@@ -131,11 +134,13 @@
             </div>
             <div style="flex: 1;">
                 <div class="header_right d-flex align-items-center justify-content-end" style="height: 100%;">
-                    <div >
-                        <a class="cl-black" href="#"data-bs-toggle="modal" data-bs-target="#modal_cart"><i class="fa-regular s-18 fa-magnifying-glass"></i></a>
+                    <div>
+                        <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
+                                class="fa-regular s-18 fa-magnifying-glass"></i></a>
                     </div>
                     <div style="margin: 0px 46px;">
-                        <a class="cl-black" href="#"data-bs-toggle="modal" data-bs-target="#modal_cart"><i class="fa-sharp s-18 fa-regular fa-heart"></i></a>
+                        <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
+                                class="fa-sharp s-18 fa-regular fa-heart"></i></a>
                     </div>
                     <div class="me-4">
                         <a class="cl-black" href="./profileOrder.html"><i class="fa-regular s-18 fa-cart-minus"></i></a>
@@ -181,7 +186,7 @@
                         <div class="d-flex justify-content-between mt-2">
                             <div class="text-center">Địa Chỉ</div>
                             <div class="text-center">Phương Thức Thanh Toán</div>
-                            <div class="text-center">Xem Lại</div>
+                            <div class="text-center">Xác nhận</div>
                         </div>
                     </div>
                     <!--                    -->
@@ -189,89 +194,159 @@
                         <h5>Chọn phương thức thanh toán</h5>
                     </div>
                     <div class="mt-4">
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" >
-                            <label class="form-check-label" for="creditCard" style="font-weight: 600; color: #000;">
-                                Thẻ ghi nợ/tín dụng
-                            </label>
-                        </div>
 
-                        <!-- Nhập số thẻ -->
-                        <div class="mb-3">
-                            <label for="cardNumber" style=" margin-bottom: 0.5rem;">Số thẻ</label>
-                            <input type="text" id="cardNumber" class="form-control" placeholder="**** 22XX **** ****" style="border-radius: 5px; padding: 0.75rem; border: 1px solid #ddd;">
-                        </div>
+                        <form id="formDatHang" method="POST" action="/dat-hang/chon-thanh-toan">
+                            <div class="mt-4">
+                                <div class="form-check"
+                                     style="padding: 0.75rem 0; border-top: 1px solid #f1f1f1; margin-left: 1.5rem;">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" value="online" id="paypal"
+                                           checked>
+                                    <label class="form-check-label" for="paypal" style="font-weight: 600; color: #000;">
+                                        Thanh toán online (VN Pay)
+                                    </label>
+                                </div>
+                                <div class="form-check"
+                                     style="padding: 0.75rem 0; border-top: 1px solid #f1f1f1; margin-left: 1.5rem;">
+                                    <input class="form-check-input" type="radio" value="offline" name="paymentMethod"
+                                           id="cashOnDelivery">
+                                    <label class="form-check-label" for="cashOnDelivery"
+                                           style="font-weight: 600; color: #000;">
+                                        Thanh toán khi nhận hàng
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <button class="btn btn-deliver" type="submit"
+                                   style="background-color: #1a1a1a; color: #fff; width: 250px; padding: 10px 0; ">Tiếp
+                                    tục</button>
+                            </div>
 
-                        <!-- Nhập tên trên thẻ -->
-                        <div class="mb-3">
-                            <label for="cardName" style=" margin-bottom: 0.5rem;">Tên thẻ</label>
-                            <input type="text" id="cardName" class="form-control" placeholder="Doan Hieu" style="border-radius: 5px; padding: 0.75rem; border: 1px solid #ddd;">
-                        </div>
-
-                        <!-- Ngày hết hạn và CVV -->
-                        <div class="d-flex">
-                            <div class="me-2" style="flex: 1;">
-                                <label for="expiryDate" style=" margin-bottom: 0.5rem;">Ngày hết hạn</label>
-                                <input type="text" id="expiryDate" class="form-control" placeholder="**/**" style="border-radius: 5px; padding: 0.75rem; border: 1px solid #ddd;">
-                            </div>
-                            <div style="flex: 1;">
-                                <label for="cvv" style=" margin-bottom: 0.5rem;">Mã CVV</label>
-                                <input type="password" id="cvv" class="form-control" placeholder="•••" style="border-radius: 5px; padding: 0.75rem; border: 1px solid #ddd;">
-                            </div>
-                        </div>
-
-                        <div class="mt-4">
-                            <button class="btn btn-deliver" type="submit" style="background-color: #1a1a1a; color: #fff; width: 250px; padding: 10px 0; ">Thêm thẻ</button>
-                        </div>
-
-                        <div class="mt-4">
-                            <div class="form-check" style="padding: 0.75rem 0; border-top: 1px solid #f1f1f1; margin-left: 1.5rem;">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="googlePay">
-                                <label class="form-check-label" for="googlePay" style="font-weight: 600; color: #000;">
-                                    Google Pay
-                                </label>
-                            </div>
-                            <div class="form-check" style="padding: 0.75rem 0; border-top: 1px solid #f1f1f1; margin-left: 1.5rem;">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="paypal">
-                                <label class="form-check-label" for="paypal" style="font-weight: 600; color: #000;">
-                                    VietQR
-                                </label>
-                            </div>
-                            <div class="form-check" style="padding: 0.75rem 0; border-top: 1px solid #f1f1f1; margin-left: 1.5rem;">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery">
-                                <label class="form-check-label" for="cashOnDelivery" style="font-weight: 600; color: #000;">
-                                    Thanh toán khi nhận hàng
-                                </label>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <a class="btn btn-deliver" href="/review" style="background-color: #1a1a1a; color: #fff; width: 250px; padding: 10px 0; ">Tiếp tục</a>
-                        </div>
+                        </form>
                     </div>
                 </div>
-                <div class="col-1"></div>
-                <div class="col-4">
+                <div class="col-5">
                     <div style="border: 1px solid #E6E7E8; border-radius: 4px; padding: 38px 18px;">
+
                         <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                             <div style="font-size: 16px; font-weight: 500; ">Tổng cộng:</div>
-                            <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>30.00</div>
-                        </div>
-                        <hr style="color: #3d3d42; border-width: 1px; margin-bottom: 18px;">
-                        <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Nhập mã giảm giá" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="background-color: black; color: #F0F0F0">Apply</button>
+                            <div style="font-size: 16px; font-weight: 500;"><span id="grand-total"
+                                                                                  th:text="${convertMoney.formatCurrency(totalPrice)}">0.00</span>
                             </div>
                         </div>
+                        <hr style="color: #5b5c64; border-width: 1px; margin-bottom: 18px;">
+
+                        <!-- Nút mở modal danh sách khuyến mại -->
+                        <div style="max-height: 300px; overflow-y: hidden;">
+                            <!-- Thẻ chứa khuyến mại -->
+                            <div th:each="khuyenMai, iterStat : ${listKM}" style="width: 100%">
+                                <div class="d-flex"
+                                     style="border: 1px dashed #000; border-radius: 8px; padding: 6px; margin-bottom: 10px; width: 100%">
+                                    <div style="border-right: 1px dashed #000; flex: 1; padding: 18px 0;">
+                                        <i class="fa-solid fa-tickets-perforated"
+                                           style="font-size: 36px; padding: 0px 12px;"></i>
+                                    </div>
+                                    <div style="flex: 3; padding: 4px; font-size: 14px;">
+                                        <div th:text="'Khuyến mại: ' + ${khuyenMai.tenKhuyenMai}">Khuyến mại</div>
+                                        <div th:text="'Giá trị: ' + ${convertMoney.formatCurrency(khuyenMai.giaTri)} +' '
+                                         +  ${khuyenMai.kieuKhuyenMai} ">Giá trị - Số lượng
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div th:text="'Ngày hết hạn: ' + ${#dates.format(khuyenMai.ngayKetThuc, 'dd-MM-yyyy')}">
+                                                Ngày hết hạn
+                                            </div>
+                                            <a class="btn btn-dark btn-sm"
+                                               th:href="@{/dat-hang/add-khuyen-mai(idKhuyenMai=${khuyenMai.id})}"
+                                            >Áp dụng</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Thêm các khuyến mại khác tương tự -->
+                        </div>
+                        <div th:if="${khuyenMaiSelected != null}" class="d-flex justify-content-between"
+                             style="margin-bottom: 18px;">
+                            <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Tên khuyến mại:</div>
+                            <div style="font-size: 16px; font-weight: 500;"><span
+                                    th:text="${khuyenMaiSelected.tenKhuyenMai}"></span>
+                            </div>
+                        </div>
+
+                        <div th:if="${khuyenMaiSelected != null}" class="d-flex justify-content-between"
+                             style="margin-bottom: 18px;">
+                            <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Mức giảm:</div>
+                            <div style="font-size: 16px; font-weight: 500;"><span
+                                    th:text="${convertMoney.formatCurrency(khuyenMaiSelected.giaTri)} + ' ' + ${khuyenMaiSelected.kieuKhuyenMai}"></span>
+                            </div>
+                        </div>
+
                         <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                             <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
-                            <div style="font-size: 16px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>3.00</div>
+                            <div style="font-size: 16px; font-weight: 500;"><span id="shipping-fee">30.000</span>
+                            </div>
                         </div>
                         <hr style="color: #E6E7E8; border-width: 3px; margin-bottom: 18px;">
-                        <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
-                            <div style="font-size: 16px; font-weight: 500; font-weight: bold;">Tổng thanh toán:</div>
-                            <div style="font-size: 16px; font-weight: 500; font-weight: bold;"><i class="fa-regular fa-dollar-sign"></i>33.00</div>
+                        <div class="d-flex justify-content-between">
+                            <div style="font-size: 16px; font-weight: bold;">Tổng thanh toán:</div>
+                            <div style="font-size: 16px; font-weight: bold;"><span id="final-total"
+                                                                                   th:text="${convertMoney.calculatorTotal(totalPrice, khuyenMaiSelected)}">0.00</span>
+                            </div>
                         </div>
+                    </div>
+
+                    <!--                    danh sách sản phẩm đã chọn-->
+                    <div>
+                        <div class="container-fluid">
+                            <div class="container" style="padding: 54px 0px; margin-bottom: 120px;">
+                                <h5>Danh sách sản phẩm</h5>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <!-- Danh sách sản phẩm -->
+                                        <div class="product-list">
+                                            <div class="product-item d-flex align-items-start"
+                                                 th:each="item : ${listSpSelected}"
+                                                 style="border: 1px solid #e6e7e8; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                                                <!-- Hình ảnh sản phẩm -->
+                                                <div style="flex: 1; max-width: 80px;">
+                                                    <div style="width: 80px; height: 80px; border-radius: 8px; background-color: #f6f6f6;">
+                                                        <div th:style="|width: 100%; height: 100%; background: url('/img/${item.chiTietSanPham.anhSanPham}') no-repeat center center / cover;|">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Thông tin sản phẩm -->
+                                                <div style="flex: 3; margin-left: 16px;">
+                                                    <!-- Tên sản phẩm -->
+                                                    <p style="font-size: 16px; font-weight: 500;"
+                                                       th:text="${item.getChiTietSanPham().sanPham.tenSanPham}"></p>
+                                                    <!-- Màu sắc và kích thước -->
+                                                    <div class="d-flex align-items-center" style="margin-top: 8px;">
+                                                        <span style="margin-right: 8px;">Color:</span>
+                                                        <div th:style="'width: 20px; height: 20px; border-radius: 50%; background-color: ' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
+                                                        <span style="margin-left: 16px;">Size:
+                                                            <span th:text="${item.getChiTietSanPham().size.tenSize}"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Giá và số lượng -->
+                                                <div style="flex: 2; margin-left: auto; text-align: right;">
+                                                    <!-- Giá -->
+                                                    <p style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">
+                                                        Giá: <span
+                                                            th:text="${convertMoney.formatCurrency(item.getChiTietSanPham().donGia)}"></span>
+                                                    </p>
+                                                    <!-- Số lượng -->
+                                                    <p style="font-size: 16px;">
+                                                        Số lượng: <span th:text="${item.soLuong}"></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -279,7 +354,8 @@
     </div>
 
     <!-- footer -->
-    <div class="container-fluid d-flex align-items-center justify-content-evenly" style="padding: 40px 0 120px 0; margin-top: 80px; background-color: #000;">
+    <div class="container-fluid d-flex align-items-center justify-content-evenly"
+         style="padding: 40px 0 120px 0; margin-top: 80px; background-color: #000;">
         <div style="width: 272px; margin-right: 142px;">
             <div class="d-flex align-items-center" style="margin-bottom: 12px;">
                 <div style="padding: 8px 14px; margin-right: 8px; border-radius: 5px; border: 1px solid #E6E7E8; background-color: #fff;">
@@ -311,23 +387,40 @@
         <div style="width: 484px; margin-right: 100px;">
             <div style=" margin-right: 72px; display: inline-block;">
                 <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;">SUPPORT</p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">FAQ</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Terms of use</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Privacy Policy</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">FAQ</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Terms of
+                    use</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Privacy
+                    Policy</a></p>
 
             </div>
             <div style=" margin-right: 72px; display: inline-block;">
                 <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;">COMPANY</p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">About us</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Contact</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Careers</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">About
+                    us</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Contact</a>
+                </p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Careers</a>
+                </p>
 
             </div>
             <div style=" margin-right: 72px; display: inline-block;">
                 <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;">SHOP</p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">My Account</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Checkout</a></p>
-                <p><a href="#" class="cl-white" style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Cart</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">My
+                    Account</a></p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Checkout</a>
+                </p>
+                <p><a href="#" class="cl-white"
+                      style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Cart</a>
+                </p>
 
             </div>
         </div>
@@ -358,8 +451,8 @@
         $.ajax({
             url: '/ecommerce/' + action,
             type: 'POST',
-            data: { productDetailId: productDetailId },
-            success: function(response) {
+            data: {productDetailId: productDetailId},
+            success: function (response) {
                 let quantityElement = $('#quantity-' + productDetailId);
                 let currentQuantity = parseInt(quantityElement.text());
                 if (action === 'increase') {
@@ -368,7 +461,7 @@
                     quantityElement.text(currentQuantity - 1);
                 }
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
             }
         });
@@ -378,7 +471,7 @@
     const btn_checkout = document.getElementById("btn_checkout");
     const form_checkout = document.getElementById("form_checkout");
 
-    btn_checkout.addEventListener("click", ()=>{
+    btn_checkout.addEventListener("click", () => {
         form_checkout.submit();
     })
 </script>

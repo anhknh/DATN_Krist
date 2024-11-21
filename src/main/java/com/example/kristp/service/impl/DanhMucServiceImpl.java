@@ -5,6 +5,7 @@ import com.example.kristp.entity.DanhMuc;
 import com.example.kristp.enums.Status;
 import com.example.kristp.repository.DanhMucRepository;
 import com.example.kristp.service.DanhMucService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -55,7 +56,7 @@ public class DanhMucServiceImpl implements DanhMucService {
         DanhMuc danhMuc1 = getDanhmucById(idDanhMuc);
         danhMuc1.setTenDanhMuc(danhMuc.getTenDanhMuc());
         danhMuc1.setMoTa(danhMuc.getMoTa());
-        danhMuc1.setTrangThai(danhMuc.getTrangThai());
+//        danhMuc1.setTrangThai(danhMuc.getTrangThai());
         return danhMucRepository.save(danhMuc1);
 
     }
@@ -63,7 +64,13 @@ public class DanhMucServiceImpl implements DanhMucService {
     @Override
     public void deleteDanhMuc(Integer idDanhMuc) {
         DanhMuc danhMuc = getDanhmucById(idDanhMuc);
-        danhMuc.setTrangThai(Status.INACTIVE);
+        // Chuyển trạng thái giữa ACTIVE và INACTIVE
+        if (danhMuc.getTrangThai() == Status.INACTIVE) {
+            danhMuc.setTrangThai(Status.ACTIVE);
+        } else {
+            danhMuc.setTrangThai(Status.INACTIVE);
+        }
+
         danhMucRepository.save(danhMuc);
     }
 
@@ -89,4 +96,16 @@ public class DanhMucServiceImpl implements DanhMucService {
         Pageable pageable = PageRequest.of(pageNo, 5);
         return danhMucRepository.findAllByTenLike(pageable,ten);
     }
+
+//    @Override
+//    @Transactional
+//    public void updateTrangThai(Integer id, Status trangThai) {
+//        // Lấy Category từ database dựa trên ID
+//        DanhMuc category = danhMucRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Category không tồn tại"));
+//
+//        // Cập nhật trạng thái của Category
+//        category.setTrangThai(trangThai);
+//        danhMucRepository.save(category);
+//    }
 }

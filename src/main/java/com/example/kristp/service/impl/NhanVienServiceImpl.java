@@ -61,17 +61,26 @@ public class NhanVienServiceImpl implements NhanVienService {
         nhanVien1.setMaNhanVien(nhanVien.getMaNhanVien());
         nhanVien1.setTenNhanVien(nhanVien.getTenNhanVien());
         nhanVien1.setSoDienThoai(nhanVien.getSoDienThoai());
-        nhanVien.setNgaySinh(nhanVien.getNgaySinh());
+        nhanVien1.setNgaySinh(nhanVien.getNgaySinh());
         nhanVien1.setDiaChi(nhanVien.getDiaChi());
-        nhanVien1.setTrangThai(nhanVien.getTrangThai());
+//        nhanVien1.setTrangThai(nhanVien.getTrangThai());
         return nhanVienRepository.save(nhanVien1);
     }
 
     @Override
     public void deleteNhanVien(Integer idNhanVien) {
         NhanVien nhanVien = getNhanVienById(idNhanVien);
-        nhanVien.setTrangThai(Status.INACTIVE);
-        nhanVienRepository.save(nhanVien);
+        if (nhanVien != null) {
+            // Kiểm tra trạng thái hiện tại và thay đổi theo yêu cầu
+            if (Status.ACTIVE.equals(nhanVien.getTrangThai())) {
+                nhanVien.setTrangThai(Status.INACTIVE);  // Nếu đang hoạt động, chuyển thành không hoạt động
+            } else if (Status.INACTIVE.equals(nhanVien.getTrangThai())) {
+                nhanVien.setTrangThai(Status.ACTIVE);  // Nếu không hoạt động, chuyển lại thành đang hoạt động
+            }
+
+            // Lưu lại trạng thái mới vào cơ sở dữ liệu
+            nhanVienRepository.save(nhanVien);
+        }
     }
 
     @Override

@@ -86,7 +86,7 @@ public class TayAoController {
     @GetMapping("/delete-tay-ao/{id}")
     private String deleteTayAo(@PathVariable("id")Integer idTayAo ,  RedirectAttributes attributes){
         tayAoService.deleteTayAo(idTayAo);
-        attributes.addFlashAttribute("message" , "Xóa ttay áo thành công .");
+        attributes.addFlashAttribute("message" , "Thay đổi trạng thái tay áo thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-tay-ao/pagination-tay-ao";

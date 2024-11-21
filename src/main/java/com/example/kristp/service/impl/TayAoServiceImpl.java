@@ -54,14 +54,18 @@ public class TayAoServiceImpl implements TayAoService {
         TayAo tayao1 = getTayAoById(idTayAo);
         tayao1.setKieuTayAo(tayAo.getKieuTayAo());
         tayao1.setMoTa(tayAo.getMoTa());
-        tayao1.setTrangThai(tayAo.getTrangThai());
         return tayAoRepository.save(tayao1);
     }
 
     @Override
     public void deleteTayAo(Integer idTayAo) {
        TayAo tayAo = getTayAoById(idTayAo);
-        tayAo.setTrangThai(Status.INACTIVE);
+        // Chuyển trạng thái giữa ACTIVE và INACTIVE
+        if (tayAo.getTrangThai() == Status.INACTIVE) {
+            tayAo.setTrangThai(Status.ACTIVE);
+        } else {
+            tayAo.setTrangThai(Status.INACTIVE);
+        }
         tayAoRepository.save(tayAo);
     }
 

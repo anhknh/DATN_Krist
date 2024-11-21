@@ -3,6 +3,7 @@ package com.example.kristp.controller.user;
 
 import com.example.kristp.entity.DanhMuc;
 import com.example.kristp.entity.SanPham;
+import com.example.kristp.service.GioHangService;
 import com.example.kristp.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,8 @@ import java.util.List;
 public class ListProductController {
     @Autowired
     private SanPhamService sanPhamService ;
+    @Autowired
+    GioHangService gioHangService;
 
 
     @GetMapping("/danh-sach-san-pham")
@@ -33,10 +36,11 @@ public class ListProductController {
         System.out.println(tenSanPham);
 
         Page<SanPham> sanPhams = sanPhamService.getPaginationSanPham(pageNo);
-        System.out.println(sanPhams.getContent());
+        System.out.println(gioHangService.countCartItem() + "===========================");
         model.addAttribute("productList" , sanPhams.getContent());
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , sanPhams.getTotalPages());
+        model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
         return "view/list-product/list-product-page";
     }
 }

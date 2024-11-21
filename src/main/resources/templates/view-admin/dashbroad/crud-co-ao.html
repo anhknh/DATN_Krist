@@ -52,15 +52,19 @@
              onclick="highlightLink(this)">
             <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
           </a>
-          <a href="#" class="mb-3"
+          <a href="/quan-ly/ban-hang" class="mb-3"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
             <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
+          </a>
+          <a href="/quan-ly-san-pham/pagination-san-pham" class="mb-3"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
+            <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
           </a>
           <!-- Product Management Tree Menu -->
           <div class="menu-item mb-3">
             <p style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center; cursor: pointer;"
                onclick="toggleSubmenu('productSubMenu')">
-              <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Sản phẩm
+              <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Thuộc tính
               <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
             </p>
             <ul id="productSubMenu" class="submenu"
@@ -95,12 +99,20 @@
           <!--                    Chức năng chưa có đường dẫn là #-->
           <a href="#" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
-            <i class="fa-light fa-cart-shopping" style="margin-right: 10px;" ></i> Đơn hàng
+            <i class="fa-light fa-cart-flatbed" style="margin-right: 10px;"></i> Đơn hàng
+          </a>
+          <a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="mb-3" onclick="highlightLink(this)"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-tickets-perforated" style="margin-right: 10px;"></i> Khuyến mại
           </a>
           <!--                    Chức năng chưa có đường dẫn là #-->
           <a href="#" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
+          </a>
+          <a href="/quan-ly-nhan-vien/phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
           </a>
           <!--                    Chức năng chưa có đường dẫn là #-->
 
@@ -115,21 +127,7 @@
           </a>
         </div>
         <!-- Extra Menu -->
-        <div id="drop_right" style="padding: 0px 22px 28px; cursor: pointer;"
-             onclick="toggleSubmenu('extrasSubMenu')">
-          <p class="mb-3"
-             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center;">
-            <!--                        tính năng chưa được xác định hiện tại để trống-->
-            <i class="fa-regular fa-plus" style="margin-right: 10px;"></i> Bổ sung
-            <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
-          </p>
-          <ul id="extrasSubMenu" class="submenu" style="list-style: none; padding-left: 20px; display: none;">
-            <li style="padding: 8px;"><a href="./adminSize.html"
-                                         style="text-decoration: none; color: #000;">Size</a></li>
-            <li style="padding: 8px;"><a href="./adminColor.html"
-                                         style="text-decoration: none; color: #000;">Color</a></li>
-          </ul>
-        </div>
+
       </div>
       <!--            end sider bar-->
       <div class="col-10">
@@ -138,8 +136,8 @@
           <div>
             <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb" >
               <ol class="breadcrumb" style="height: 40px; margin: 0px;">
-                <li class="breadcrumb-item "><a href="#" class="nav_link">Admin</a></li>
-                <li class="breadcrumb-item "><a href="#" class="nav_link_active">Dashboard</a></li>
+                <li class="breadcrumb-item "><a href="/quan-ly-san-pham/pagination-san-pham" class="nav_link">Sản pẩm</a></li>
+                <li class="breadcrumb-item "><a href="#" class="nav_link_active">Cổ áo</a></li>
               </ol>
             </nav>
           </div>
@@ -151,27 +149,29 @@
           <!-- headre_content -->
           <div class="d-flex justify-content-between" style="padding-bottom: 28px;">
             <div>
-              <h4>Cổ Áo Attribute</h4>
+              <h4>Cổ Áo</h4>
             </div>
-            <div style="width: 350px;">
+            <div style="width: 580px;">
 
               <div class="d-flex justify-content-between align-items-center">
                 <div>
                   <form action="/quan-ly-co-ao/tim-kiem-tat-ca-theo-ten" method="GET">
-                    <div class="input-group flex-nowrap" style="width: 240px;">
+                    <div class="input-group flex-nowrap" style="width: 400px;">
                                         <span class="input-group-text" id="addon-wrapping" style="background-color: #fff;">
                                             <i class="fa-solid fa-magnifying-glass" style="color: #5C5F6A;"></i>
                                         </span>
                       <input type="text" class="form-control" name="tenTimKiem"
                              placeholder="Search Category"
                              style="border-left: none; padding: 8px 10px 8px 0px;">
-                      <button type="submit" class="btn btn-outline-secondary">Search</button>
+                      <div class="input-group-append" style="padding-left: 20px">
+                      <button type="submit" class="btn btn-dark">Tìm kiếm</button>
+                      </div>
                     </div>
                   </form>
                 </div>
                 <div>
-                  <div class="btn btn-outline-secondary" style="display: inline-block;" data-bs-toggle="modal"
-                       data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('',null , '' )|">Add</div>
+                  <div class="btn btn-dark" style="display: inline-block;" data-bs-toggle="modal"
+                       data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('',null , '' )|">Thêm cổ áo</div>
                 </div>
               </div>
             </div>
@@ -181,35 +181,50 @@
             <table class="table" style="border-top: 1px solid #E9E9EB;">
               <thead>
               <tr>
-                <th scope="col" style="padding-left: 20px;">Id</th>
-                <th scope="col">Name</th>
-                <th scope="col">Describe</th>
-                <th scope="col" class="text-center">Is Active</th>
-                <th scope="col" class="text-center">Action</th>
+                <th scope="col">STT</th>
+                <th scope="col">Tên cổ áo</th>
+                <th scope="col">Mô tả</th>
+                <th scope="col" class="text-center">Trạng thái</th>
+                <th scope="col" class="text-center">Thao tác</th>
               </tr>
               </thead>
               <tbody>
               <tr th:each="coAo , stat : ${coAoList}">
-                <td style="padding: 12px 6px;" th:text="${coAo.id}">
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${coAo.id}">
                 </td>
                 <td style="padding: 12px 6px; line-height: 305%;" th:text="${coAo.kieuCoAo}" th:class="valueName">
                 </td>
                 <td style="padding: 12px 6px; line-height: 305%;" th:text="${coAo.moTa}" th:class="valueDes">
                 </td>
+
                 <td class="text-center" style="padding: 12px 6px; line-height: 305%;">
                   <i class="fa-regular"
                      th:classappend="${coAo.trangThai == coAo.trangThai.ACTIVE ? 'fa-check' : 'fa-x'}"></i>
                 </td>
-
-                </td>
                 <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">
                   <div class="d-flex justify-content-center">
-                    <a th:href="@{/quan-ly-co-ao/delete-co-ao/{id}(id=${coAo.id})}" class="btn btn-outline-secondary me-2">Delete</a>
-                    <div class="btn btn-outline-secondary" style="display: inline-block;" data-bs-toggle="modal"
-                         data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('${coAo.id}','${stat.index}' , '${coAo.trangThai}' )|" >Update
+                    <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top" title="chi tiết cổ áo">
+                      <div  style="display: inline-block;"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalCategories"
+                            th:attr="onclick=|saveIdOrder('${coAo.id}','${stat.index}'  )|">
+                        <i class="fa-solid fa-pen-to-square" ></i>
+                      </div>
+                    </div>
+                    <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top"  title="Thay đổi trạng thái">
+                      <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly-co-ao/delete-co-ao/{id}(id=${coAo.id})}"><i class="fa-solid fa-swap-arrows"></i></a>
                     </div>
                   </div>
                 </td>
+
+<!--                <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">-->
+<!--                  <div class="d-flex justify-content-center">-->
+<!--                    <a th:href="@{/quan-ly-co-ao/delete-co-ao/{id}(id=${coAo.id})}" class="btn btn-outline-secondary me-2" title="cập nhật trạng thái"><i class="fa-light fa-pen-nib"></i></a>-->
+<!--                    <div class="btn btn-outline-secondary" title="chi tiết cổ áo" style="display: inline-block;" data-bs-toggle="modal"-->
+<!--                         data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('${coAo.id}','${stat.index}'  )|" ><i class="fa-light fa-pen-to-square"></i>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </td>-->
               </tr>
               </tbody>
             </table>
@@ -231,7 +246,7 @@
                     class="page-item">
                   <a class="page-link"
                      th:href="@{/quan-ly-co-ao/pagination-co-ao(pageNo=${i - 1})}"
-                     th:text="${i}" style="color: #5C5F6A"></a>
+                     th:text="${i}" style="color: white; background-color: #5b5c64"></a>
                 </li>
                 <!-- Nút Next -->
                 <li class="page-item"
@@ -266,24 +281,24 @@
               <input type="text" class="form-control" id="idCustomer" name="idColor" value="" th:field="*{id}">
             </div>
             <div class="mb-4">
-              <label for="nameCate" class="form-label">Name Cổ Áo</label>
-              <input type="text" class="form-control" id="nameCate" placeholder="Enter category name" name="categoryName" th:field="*{kieuCoAo}" required>
-              <div class="invalid-feedback">Tên size không hợp lệ .</div>
+              <label for="nameCate" class="form-label">Tên cổ áo</label>
+              <input type="text" class="form-control" id="nameCate" placeholder="Nhập tên cổ áo" name="categoryName" th:field="*{kieuCoAo}" required>
+              <div class="invalid-feedback">Tên cổ áo không hợp lệ.</div>
             </div>
             <div class="mb-4">
-              <label for="desCate" class="form-label">Describe</label>
-              <input type="text" class="form-control" name="describe" id="desCate" placeholder="Enter describe" th:field="*{moTa}" required >
-              <div class="invalid-feedback">Mô tả không hợp lệ không hợp lệ .</div>
+              <label for="desCate" class="form-label">Mô tả</label>
+              <input type="text" class="form-control" name="describe" id="desCate" placeholder="Nhập mô tả" th:field="*{moTa}" required >
+              <div class="invalid-feedback">Mô tả không hợp lệ.</div>
             </div>
-            <div class="mb-4 display_none" id="statusSection">
-              <label class="form-label">Status</label><br>
-              <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">
-              <label for="active">Active</label><br>
-              <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">
-              <label for="inactive">Inactive</label>
-            </div>
+<!--            <div class="mb-4 display_none" id="statusSection">-->
+<!--              <label class="form-label">Trạng thái</label><br>-->
+<!--              <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">-->
+<!--              <label for="active">Hoạt động</label><br>-->
+<!--              <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">-->
+<!--              <label for="inactive">Ngừng hoạt động</label>-->
+<!--            </div>-->
             <div>
-              <button type="submit" class="btn btn-outline-secondary">Save</button>
+              <button type="submit" class="btn btn-dark">Lưu</button>
             </div>
           </form>
         </div>
@@ -303,6 +318,13 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+  // Khởi tạo Bootstrap tooltips
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+  });
+</script>
+<script>
 
   const idCustomer = document.getElementById("idCustomer");
   const valueName = document.querySelectorAll(".valueName");
@@ -317,20 +339,20 @@
     if(index != null) {
       nameCate.value = valueName[index].textContent.trim();
       desCate.value = valueDes[index].textContent.trim();
-      statusSection.classList.remove('display_none');
-      document.getElementById('exampleModalLabel').innerText = 'Update material';
+      // statusSection.classList.remove('display_none');
+      document.getElementById('exampleModalLabel').innerText = 'Chi tiết cổ áo';
       // Kiểm tra class của icon
-      if (hanhDong == "ACTIVE") {
-        // Nếu class là 'fa-check', chọn radio button active
-        document.getElementById('active').checked = true;
-      } else {
-        // Ngược lại nếu class là 'fa-x', chọn radio button inactive
-        document.getElementById('inactive').checked = true;
-      }
+      // if (hanhDong == "ACTIVE") {
+      //   // Nếu class là 'fa-check', chọn radio button active
+      //   document.getElementById('active').checked = true;
+      // } else {
+      //   // Ngược lại nếu class là 'fa-x', chọn radio button inactive
+      //   document.getElementById('inactive').checked = true;
+      // }
       document.getElementById("form_submit").action = '/quan-ly-co-ao/update-co-ao' ;
     } else {
-      statusSection.classList.add('display_none');
-      document.getElementById('exampleModalLabel').innerText = 'Add material';
+      // statusSection.classList.add('display_none');
+      document.getElementById('exampleModalLabel').innerText = 'Thêm cổ áo';
       nameCate.value = "";
       desCate.value = "";
       document.getElementById("form_submit").action = '/quan-ly-co-ao/add-co-ao' ;
@@ -343,7 +365,7 @@
     var forms = document.querySelectorAll('.needs-validation');
 
     // Loop over forms and prevent submission if validation fails
-    Array.prototype.sliace.call(forms).forEach(function (form) {
+    Array.prototype.slice.call(forms).forEach(function (form) {
       form.addEventListener('submit', function (event) {
         if (!form.checkValidity()) {
           event.preventDefault();

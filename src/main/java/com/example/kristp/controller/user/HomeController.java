@@ -1,19 +1,21 @@
 package com.example.kristp.controller.user;
 
-import com.example.kristp.entity.CoAo;
-import com.example.kristp.entity.DanhMuc;
-import com.example.kristp.entity.TayAo;
-import com.example.kristp.enums.Status;
-import com.example.kristp.service.CoAoService;
-import com.example.kristp.service.DanhMucService;
-import com.example.kristp.service.TayAoService;
+import com.example.kristp.entity.*;
+import com.example.kristp.service.*;
+import com.example.kristp.utils.Authen;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class HomeController {
@@ -25,11 +27,28 @@ public class HomeController {
     private TayAoService tayAoService ;
 
     @Autowired
+    private ChiTietSanPhamService chiTietSanPhamService;
+
+
+    @Autowired
     private CoAoService coAoService ;
+
+    @Autowired
+    private SanPhamService sanPhamService;
+
+    @Autowired
+    private GioHangService gioHangService;
+
+    @Autowired
+    private GioHangChiTietService gioHangChiTietService;
 
     @GetMapping("/trang-chu")
     public String hello(Model model) {
 //        Dữ liệu fake cần chỉnh sửa lại bằng các hàm lấy dữ liệu từ db
+
+
+        List<ChiTietSanPham> chiTietSanPhamList = chiTietSanPhamService.getAllCTSP();
+        model.addAttribute("chiTietSanPhamList", chiTietSanPhamList);
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMuc();
         List<CoAo> listCoAo = coAoService.getAllCoAo();
 
@@ -38,6 +57,7 @@ public class HomeController {
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
-        return "view/home/HomePage";
+        return "view/home/home-page";
     }
+
 }

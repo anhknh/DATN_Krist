@@ -10,12 +10,17 @@ public enum HoaDonStatus {
     DANG_GIAO_HANG(2),
     HOAN_TAT(3),
     HOA_DON_CHO(4),
-    DA_THANH_TOAN(5);
+    DA_THANH_TOAN(5),
+    CHUA_THANH_TOAN(6);
 
     private final int value;
 
     HoaDonStatus(int value) {
         this.value = value;
+    }
+    @Override
+    public String toString() {
+        return this.name(); // Sử dụng tên của enum
     }
 
     public int getValue() {

@@ -1,6 +1,7 @@
 package com.example.kristp.service;
 
 import com.example.kristp.entity.ChatLieu;
+import com.example.kristp.entity.KhuyenMai;
 import com.example.kristp.entity.SanPham;
 import com.example.kristp.entity.TayAo;
 import com.example.kristp.enums.Status;

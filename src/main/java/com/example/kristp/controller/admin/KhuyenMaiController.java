@@ -5,24 +5,31 @@ import com.example.kristp.entity.MauSac;
 import com.example.kristp.enums.Status;
 import com.example.kristp.service.KhuyenMaiService;
 import com.example.kristp.service.MauSacService;
+import com.example.kristp.utils.DataUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.DecimalFormat;
 import java.util.Date;
+
+import static org.thymeleaf.util.NumberUtils.formatCurrency;
 
 @Controller
 @RequestMapping("/quan-ly-khuyen-mai/")
 public class KhuyenMaiController {
     @Autowired
     private KhuyenMaiService khuyenMaiService ;
+@Autowired
+private DataUtils dataUtils;
 
     @GetMapping("/list-khuyen-mai")
     private String getAllKhuyenMai(RedirectAttributes attributes){
@@ -37,6 +44,7 @@ public class KhuyenMaiController {
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , khuyenMai.getTotalPages());
         model.addAttribute("khuyenMaiCre" , new KhuyenMai() );
+        model.addAttribute("DataUtils", new DataUtils());
         return "view-admin/dashbroad/khuyen-mai";
     }
 
@@ -58,6 +66,7 @@ public class KhuyenMaiController {
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPage", khuyenMaiPage.getTotalPages());
         model.addAttribute("khuyenMaiCre", khuyenMai);
+        model.addAttribute("DataUtils", new DataUtils());
 
         return "view-admin/dashbroad/form-edit-khuyen-mai";
     }
@@ -78,6 +87,7 @@ public class KhuyenMaiController {
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPage", khuyenMaiPage.getTotalPages());
         model.addAttribute("khuyenMaiCre", khuyenMai);
+        model.addAttribute("DataUtils", new DataUtils());
 
         return "view-admin/dashbroad/form-chi-tiet-khuyen-mai";
     }
@@ -89,22 +99,69 @@ public class KhuyenMaiController {
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , khuyenMai.getTotalPages());
         model.addAttribute("khuyenMaiCre" , new KhuyenMai() );
+        model.addAttribute("DataUtils", new DataUtils());
         return "view-admin/dashbroad/form-them-khuyen-mai";
     }
 
+//    @PostMapping("/add-khuyen-mai")
+//    private String addKhuyenMai(@Valid @ModelAttribute("khuyenMai") KhuyenMai khuyenMai , BindingResult result , RedirectAttributes attributes){
+//        if(result.hasErrors()){
+//            attributes.addFlashAttribute("khuyenMai" , khuyenMai);
+//            attributes.addFlashAttribute("message" , "Thêm mới khuyến mãi không thành công .");
+//            attributes.addFlashAttribute("messageType" , "alert-danger");
+//            attributes.addFlashAttribute("titleMsg" , "Thất bại");
+//            return "redirect:/quan-ly-khuyen-mai/pagination-add-khuyen-mai";
+//        }
+//        KhuyenMai existingKhuyenMai = khuyenMaiService.addKhuyenMai(khuyenMai);
+//        if (existingKhuyenMai == null) {
+//            attributes.addFlashAttribute("khuyenMai", khuyenMai);
+//            attributes.addFlashAttribute("message", "Tên hoặc mã khuyến mãi đã tồn tại.");
+//            attributes.addFlashAttribute("messageType", "alert-danger");
+//            attributes.addFlashAttribute("titleMsg", "Thất bại");
+//            return "redirect:/quan-ly-khuyen-mai/pagination-add-khuyen-mai";
+//        }
+//
+//        attributes.addFlashAttribute("message", "Thêm mới khuyến mãi thành công.");
+//        attributes.addFlashAttribute("messageType", "alert-success");
+//        attributes.addFlashAttribute("titleMsg", "Thành công");
+//        return "redirect:/quan-ly-khuyen-mai/pagination-add-khuyen-mai";
+//    }
+
     @PostMapping("/add-khuyen-mai")
-    private String addKhuyenMai(@Valid @ModelAttribute("khuyenMai") KhuyenMai khuyenMai , BindingResult result , RedirectAttributes attributes){
-        if(result.hasErrors()){
-            attributes.addFlashAttribute("khuyenMai" , khuyenMai);
-            attributes.addFlashAttribute("message" , "Thêm mới khuyến mãi không thành công .");
-            attributes.addFlashAttribute("messageType" , "alert-danger");
-            attributes.addFlashAttribute("titleMsg" , "Thất bại");
+    private String addKhuyenMai(@Valid @ModelAttribute("khuyenMai") KhuyenMai khuyenMai,
+                                BindingResult result,
+                                RedirectAttributes attributes) {
+        Date today = new Date();
+        today.setHours(0);
+        today.setMinutes(0);
+        today.setSeconds(0);
+        if (result.hasErrors()) {
+            // In ra lỗi trong log
+            result.getAllErrors().forEach(error -> System.out.println("Lỗi: " + error.getDefaultMessage()));
+
+            // Thêm lỗi vào attributes
+            attributes.addFlashAttribute("khuyenMai", khuyenMai);
+            attributes.addFlashAttribute("message", "Thêm mới khuyến mãi không thành công.");
+            attributes.addFlashAttribute("messageType", "alert-danger");
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
             return "redirect:/quan-ly-khuyen-mai/pagination-add-khuyen-mai";
         }
-        KhuyenMai existingKhuyenMai = khuyenMaiService.addKhuyenMai(khuyenMai);
-        if (existingKhuyenMai == null) {
+        try {
+            KhuyenMai existingKhuyenMai = khuyenMaiService.addKhuyenMai(khuyenMai);
+            if (existingKhuyenMai == null) {
+                attributes.addFlashAttribute("khuyenMai", khuyenMai);
+                attributes.addFlashAttribute("message", "Tên hoặc mã khuyến mãi đã tồn tại.");
+                attributes.addFlashAttribute("messageType", "alert-danger");
+                attributes.addFlashAttribute("titleMsg", "Thất bại");
+                return "redirect:/quan-ly-khuyen-mai/pagination-add-khuyen-mai";
+            }
+        } catch (Exception e) {
+            // Log lỗi nếu có exception
+            System.out.println("Lỗi khi thêm khuyến mãi: " + e.getMessage());
+            e.printStackTrace();
+
             attributes.addFlashAttribute("khuyenMai", khuyenMai);
-            attributes.addFlashAttribute("message", "Tên hoặc mã khuyến mãi đã tồn tại.");
+            attributes.addFlashAttribute("message", "Lỗi hệ thống. Không thể thêm khuyến mãi.");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
             return "redirect:/quan-ly-khuyen-mai/pagination-add-khuyen-mai";
@@ -116,14 +173,21 @@ public class KhuyenMaiController {
         return "redirect:/quan-ly-khuyen-mai/pagination-add-khuyen-mai";
     }
 
-
     @PostMapping("/update-khuyen-mai/{id}")
     private String updateKhuyenMai(@Valid @ModelAttribute("khuyenMai")KhuyenMai khuyenMai , BindingResult result , RedirectAttributes attributes , @RequestParam("id")Integer idKhuyenMai){
-        if(result.hasErrors()){
-            attributes.addFlashAttribute("khuyenMai" ,khuyenMai);
-            attributes.addFlashAttribute("message" , "Cập nhật khuyến mại không thành công .");
-            attributes.addFlashAttribute("messageType" , "alert-danger");
-            attributes.addFlashAttribute("titleMsg" , "Thất bại");
+        Date today = new Date();
+        today.setHours(0);
+        today.setMinutes(0);
+        today.setSeconds(0);
+        if (result.hasErrors()) {
+            // In ra lỗi trong log
+            result.getAllErrors().forEach(error -> System.out.println("Lỗi: " + error.getDefaultMessage()));
+
+            // Thêm lỗi vào attributes
+            attributes.addFlashAttribute("khuyenMai", khuyenMai);
+            attributes.addFlashAttribute("message", " Cập nhật khuyến mại không thành công");
+            attributes.addFlashAttribute("messageType", "alert-danger");
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
             return "redirect:/quan-ly-khuyen-mai/pagination-update-khuyen-mai/{id}";
         }
         KhuyenMai updatedKhuyenMai = khuyenMaiService.updateKhuyenMai(khuyenMai, idKhuyenMai);
@@ -144,7 +208,7 @@ public class KhuyenMaiController {
     @GetMapping("/delete-khuyen-mai/{id}")
     private String deleteKhuyenMai(@PathVariable("id")Integer idKhuyenMai ,  RedirectAttributes attributes){
         khuyenMaiService.deleteKhuyenMai(idKhuyenMai);
-        attributes.addFlashAttribute("message" , "Xóa khuyến mại thành công .");
+        attributes.addFlashAttribute("message" , "Đổi trạng thái khuyến mại thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-khuyen-mai/pagination-khuyen-mai";
@@ -156,22 +220,44 @@ public class KhuyenMaiController {
     public String timKiemKhuyenMai(
             @RequestParam(required = false) String maKhuyenMai,
             @RequestParam(required = false) String tenKhuyenMai,
-            @RequestParam(required = false) String kieuKhuyenMai,
+            @RequestParam(value = "kieuKhuyenMai", required = false) String kieuKhuyenMai,
             @RequestParam(required = false) Float mucGiamToiDa,
             @RequestParam(required = false) String trangThai,
-            @RequestParam(required = false) Date ngayBatDau,
-            @RequestParam(required = false) Date ngayKetThuc,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayBatDau,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayKetThuc,
             @PageableDefault(size = 5) Pageable pageable, // Số lượng item trên mỗi trang
-            Model model) {
+            Model model
+    ) {
+        System.out.println("Tìm kiếm theo mã: " + maKhuyenMai);
 
-        Page<KhuyenMai> khuyenMais = khuyenMaiService.timKiemKhuyenMai(maKhuyenMai, tenKhuyenMai, kieuKhuyenMai,
-                mucGiamToiDa, trangThai, ngayBatDau, ngayKetThuc, pageable);
+        // Chuyển đổi kieuKhuyenMai từ String sang Boolean
+        Boolean isVND = null;
+        if ("VND".equals(kieuKhuyenMai)) {
+            isVND = true;
+        } else if ("%".equals(kieuKhuyenMai)) {
+            isVND = false;
+        }
 
-        model.addAttribute("khuyenMaiList", khuyenMais.getContent());
-        model.addAttribute("currentPage", pageable.getPageNumber());
-        model.addAttribute("totalPage", khuyenMais.getTotalPages());
-        model.addAttribute("khuyenMaiCre", new KhuyenMai()); // Tạo đối tượng KhuyenMai mới cho form thêm
+        // Gọi service tìm kiếm
+        Page<KhuyenMai> khuyenMais = khuyenMaiService.timKiemKhuyenMai(
+                maKhuyenMai,
+                tenKhuyenMai,
+                isVND, // Sử dụng isVND đã chuyển đổi
+                mucGiamToiDa,
+                trangThai,
+                ngayBatDau,
+                ngayKetThuc,
+                pageable
+        );
 
-        return "view-admin/dashbroad/khuyen-mai"; // Đường dẫn đến view tương ứng với khuyến mãi
+        // Thêm dữ liệu vào model để hiển thị trên giao diện
+        model.addAttribute("khuyenMaiList", khuyenMais.getContent()); // Danh sách khuyến mãi
+        model.addAttribute("currentPage", pageable.getPageNumber()); // Trang hiện tại
+        model.addAttribute("totalPage", khuyenMais.getTotalPages()); // Tổng số trang
+        model.addAttribute("khuyenMaiCre", new KhuyenMai()); // Đối tượng mới cho form thêm mới
+        model.addAttribute("DataUtils", new DataUtils());
+
+        return "view-admin/dashbroad/khuyen-mai"; // Trả về view danh sách khuyến mãi
     }
+
 }

@@ -1,0 +1,131 @@
+.order-filter-box {
+    display: flex;
+    align-items: end;
+    gap: 16px;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-item label {
+    font-size: 12px;
+    margin-bottom: 4px;
+    font-weight: 600;
+    color: #333;
+}
+
+.filter-item input[type="text"],
+.filter-item input[type="date"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 150px;
+}
+
+.filter-button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.filter-button:hover {
+    background-color: #0056b3;
+}
+
+
+
+.order-status-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.status-label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.status-options {
+    display: flex;
+    gap: 12px;
+}
+
+.form-check {
+    position: relative;
+}
+
+.form-check-input {
+    display: none;
+}
+
+.status-label {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    position: relative;
+    background-color: #f1f1f1;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.status-label.selected,
+.form-check-input:checked + .status-label {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.status-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.filter-container {
+    display: flex;
+    gap: 20px;                       /* Khoảng cách giữa các phần tử */
+    align-items: center;             /* Căn giữa các phần tử theo chiều dọc */
+    flex-wrap: nowrap;               /* Đảm bảo không xuống dòng */
+}
+
+.filter-item {
+    flex: 0 1 auto;                  /* Điều chỉnh chiều rộng phần tử */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.filter-button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;/* Thêm một chút khoảng cách giữa nút và ngày kết thúc */
+}
+
+.filter-button:hover {
+    background-color: #0056b3;
+}
+
+
