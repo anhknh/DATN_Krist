@@ -33,6 +33,7 @@ public class DanhMucController {
         model.addAttribute("CategoryList" , danhMucs.getContent());
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , danhMucs.getTotalPages());
+        System.out.println(danhMucs.getTotalPages());
         System.out.println("Đã vào đây " +danhMucs.getTotalPages());
         model.addAttribute("categoryCre" , new DanhMuc() );
         return "view-admin/dashbroad/danh-muc-dashroad";

@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class Authen {
 
-
-
     public static NhanVien nhanVien = null;
     public  static KhachHang khachHang = null;
 
