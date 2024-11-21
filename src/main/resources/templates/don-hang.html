@@ -126,19 +126,19 @@
     <div class="sidebar">
         <div class="profile">
             <div>
-                <div>Hello 👋</div>
-                <div class="name">Robert Fox</div>
+                <div>Hello</div>
+                <div class="name"></div>
             </div>
         </div>
         <ul class="menu">
             <li class="active" onclick="setActive(this)">
-                <a href="#">
+                <a href="/quan-ly/ca-nhan">
                     <i class="fas fa-user"></i>
                     Personal Information
                 </a>
             </li>
             <li onclick="setActive(this)">
-                <a href="#">
+                <a href="/quan-ly/don-hang">
                     <i class="fas fa-box"></i>
                     My Orders
                 </a>
@@ -180,23 +180,22 @@
         <div class="status-container">
             <div class="status-title">Trạng thái đơn hàng</div>
             <div class="status-item">
-                <button th:onclick="choXacNhan()" class="btn" th:classappend="${check == 'choXacNhan'} ? 'btn-primary' : 'btn-outline-secondary'">Chờ xác nhận</button>
+                <button th:onclick="choXacNhan()" class="btn" th:classappend="${check == 'choXacNhan'} ? 'btn-dark' : 'btn-outline-secondary'">Chờ xác nhận</button>
             </div>
             <div class="status-item">
-                <button th:onclick="dangXuLy()" class="btn" th:classappend="${check == 'dangXuLy'} ? 'btn-primary' : 'btn-outline-secondary'">Đang xử lý</button>
+                <button th:onclick="dangXuLy()" class="btn" th:classappend="${check == 'dangXuLy'} ? 'btn-dark' : 'btn-outline-secondary'">Đang xử lý</button>
             </div>
             <div class="status-item">
-                <button th:onclick="dangGiaoHang()" class="btn" th:classappend="${check == 'dangGiaoHang'} ? 'btn-primary' : 'btn-outline-secondary'">Đang giao hàng</button>
+                <button th:onclick="dangGiaoHang()" class="btn" th:classappend="${check == 'dangGiaoHang'} ? 'btn-dark' : 'btn-outline-secondary'">Đang giao hàng</button>
             </div>
             <div class="status-item">
-                <button th:onclick="hoanThanh()" class="btn" th:classappend="${check == 'hoanThanh'} ? 'btn-primary' : 'btn-outline-secondary'">Hoàn thành</button>
+                <button th:onclick="hoanThanh()" class="btn" th:classappend="${check == 'hoanThanh'} ? 'btn-dark' : 'btn-outline-secondary'">Hoàn thành</button>
             </div>
         </div>
         <div class="order-container">
 <!--            list danh sách bắt đấu-->
             <div class="order-item" th:each="order : ${HoaDonList}">
                 <div class="order-details">
-                    <img alt="Girls Pink Moana Printed Dress" height="50" src="https://storage.googleapis.com/a1aa/image/pozhxU0kYlqyBZhfiFpswTP1l923WeRjofDEuILy9RLFK6TnA.jpg" width="50"/>
                     <div class="order-info">
                         <h3>
                             Girls Pink Moana Printed Dress
@@ -352,11 +351,26 @@
     </div>
 </div>
 </div>
+
+<!-- Alert thông báo thất bại -->
+<div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert"
+     id="alertMessage" style="display: none;">
+    <strong>Thất bại!</strong> <span id="alertBody">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<!-- Alert thông báo từ backend -->
+<div th:if="${message}" th:class="${messageType} + ' alert alert-dismissible fade show position-fixed top-0 end-0 m-3'"
+     id="successAlert" role="alert">
+    <strong th:text="${titleMsg}">Tiêu đề</strong> <span th:text="${message}">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 <script src="/js/donhang.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/ProductDetail.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.11/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </body>
 </html>

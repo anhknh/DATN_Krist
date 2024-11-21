@@ -1,333 +1,352 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Krist | detail</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css">
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
-  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css"><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="/css/StyleHomePage.css">
-<!--  <link rel="stylesheet" href="/css/ProductDetail.css">-->
-  <link rel="stylesheet" href="/css/profile.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krist | detail</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/StyleHomePage.css">
+    <!--  <link rel="stylesheet" href="/css/ProductDetail.css">-->
+    <link rel="stylesheet" href="/css/profile.css">
 </head>
 <body>
 <!--header
 -->
 <div class="header">
-  <div style="display: flex;">
-    <div style="flex: 1;">
-      <div class="d-flex align-items-center">
-        <img style="height: 36px; margin-right: 8px;" src="/img/logo.png" alt="logo">
-        <p class="title d-inline p-0 m-0">Krist</p>
-      </div>
-    </div>
-    <div style="flex: 2;">
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container-fluid">
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav" style="width: 100%; justify-content: space-between;">
-              <div>
-                <li class="nav-item">
-                  <a class="nav-link cl-black s-18" href="#">Trang chủ</a>
-                </li>
-              </div>
-              <div>
-                <li class="nav-item dropdown">
-                  <a class="nav-link cl-black s-18 dropdown-toggle" href="#" id="navbarDropdown"
-                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Danh mục
-                  </a>
-                  <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;"
-                      aria-labelledby="navbarDropdown">
-                    <div class="d-flex">
-                      <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
-                        <p class="font-blod">Men</p>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                      </div>
-                      <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
-                        <p class="font-blod">Men</p>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                      </div>
-                      <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
-                        <p class="font-blod">Men</p>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                      </div>
-                      <div class="text-center" style="flex: 1;">
-                        <p class="font-blod">Men</p>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                        <div class="p-2">hoanganh</div>
-                      </div>
-                    </div>
-                  </ul>
-                </li>
-              </div>
-              <div>
-                <li class="nav-item">
-                  <a class="nav-link cl-black s-18" href="#">Về chúng tôi</a>
-                </li>
-              </div>
-              <div>
-                <li class="nav-item">
-                  <a class="nav-link cl-black s-18" href="#">Hoạt động</a>
-                </li>
-              </div>
-              <div>
-                <li class="nav-item">
-                  <a class="nav-link cl-black s-18" href="#">Liên hệ</a>
-                </li>
-              </div>
+    <div style="display: flex;">
+        <div style="flex: 1;">
+            <div class="d-flex align-items-center">
+                <img style="height: 36px; margin-right: 8px;" src="/img/logo.png" alt="logo">
+                <p class="title d-inline p-0 m-0">Krist</p>
             </div>
-          </div>
         </div>
-      </nav>
+        <div style="flex: 2;">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav" style="width: 100%; justify-content: space-between;">
+                            <div>
+                                <li class="nav-item">
+                                    <a class="nav-link cl-black s-18" href="#">Trang chủ</a>
+                                </li>
+                            </div>
+                            <div>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link cl-black s-18 dropdown-toggle" href="#" id="navbarDropdown"
+                                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Danh mục
+                                    </a>
+                                    <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;"
+                                        aria-labelledby="navbarDropdown">
+                                        <div class="d-flex">
+                                            <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
+                                                <p class="font-blod">Men</p>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                            </div>
+                                            <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
+                                                <p class="font-blod">Men</p>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                            </div>
+                                            <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
+                                                <p class="font-blod">Men</p>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                            </div>
+                                            <div class="text-center" style="flex: 1;">
+                                                <p class="font-blod">Men</p>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                                <div class="p-2">hoanganh</div>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </li>
+                            </div>
+                            <div>
+                                <li class="nav-item">
+                                    <a class="nav-link cl-black s-18" href="#">Về chúng tôi</a>
+                                </li>
+                            </div>
+                            <div>
+                                <li class="nav-item">
+                                    <a class="nav-link cl-black s-18" href="#">Hoạt động</a>
+                                </li>
+                            </div>
+                            <div>
+                                <li class="nav-item">
+                                    <a class="nav-link cl-black s-18" href="#">Liên hệ</a>
+                                </li>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div style="flex: 1;">
+            <div class="header_right d-flex align-items-center justify-content-end" style="height: 100%;">
+                <div>
+                    <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
+                            class="fa-regular s-18 fa-magnifying-glass"></i></a>
+                </div>
+                <div style="margin: 0px 46px;">
+                    <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
+                            class="fa-sharp s-18 fa-regular fa-heart"></i></a>
+                </div>
+                <div class="me-4">
+                    <a class="cl-black" href="./profileOrder.html"><i class="fa-regular s-18 fa-cart-minus"></i></a>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-dark">Đăng nhập</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div style="flex: 1;">
-      <div class="header_right d-flex align-items-center justify-content-end" style="height: 100%;">
-        <div>
-          <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
-                  class="fa-regular s-18 fa-magnifying-glass"></i></a>
-        </div>
-        <div style="margin: 0px 46px;">
-          <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
-                  class="fa-sharp s-18 fa-regular fa-heart"></i></a>
-        </div>
-        <div class="me-4">
-          <a class="cl-black" href="./profileOrder.html"><i class="fa-regular s-18 fa-cart-minus"></i></a>
-        </div>
-        <div>
-          <button type="button" class="btn btn-dark">Đăng nhập</button>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 <div class="container">
-  <div class="sidebar">
-    <div class="profile">
-      <div>
-        <div>Hello 👋</div>
-        <div class="name">Robert Fox</div>
-      </div>
+    <div class="sidebar">
+        <div class="profile">
+            <div>
+                <div>Hello</div>
+                <div class="name" th:text="${khachHang.tenKhachHang}"></div>
+            </div>
+        </div>
+        <ul class="menu">
+            <li class="active" onclick="setActive(this)">
+                <a href="/quan-ly/ca-nhan">
+                    <i class="fas fa-user"></i>
+                    Personal Information
+                </a>
+            </li>
+            <li onclick="setActive(this)">
+                <a href="/quan-ly/don-hang">
+                    <i class="fas fa-box"></i>
+                    My Orders
+                </a>
+            </li>
+            <li onclick="setActive(this)">
+                <a href="#">
+                    <i class="fas fa-heart"></i>
+                    My Wishlists
+                </a>
+            </li>
+            <li onclick="setActive(this)">
+                <a href="#">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Manage Addresses
+                </a>
+            </li>
+            <li onclick="setActive(this)">
+                <a href="#">
+                    <i class="fas fa-credit-card"></i>
+                    Saved Cards
+                </a>
+            </li>
+            <li onclick="setActive(this)">
+                <a href="#">
+                    <i class="fas fa-bell"></i>
+                    Notifications
+                </a>
+            </li>
+            <li onclick="setActive(this)">
+                <a href="#">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </li>
+        </ul>
     </div>
-    <ul class="menu">
-      <li class="active" onclick="setActive(this)">
-        <a href="/quan-ly/ca-nhan">
-          <i class="fas fa-user"></i>
-          Personal Information
-        </a>
-      </li>
-      <li onclick="setActive(this)">
-        <a href="/quan-ly/don-hang">
-          <i class="fas fa-box"></i>
-          My Orders
-        </a>
-      </li>
-      <li onclick="setActive(this)">
-        <a href="#">
-          <i class="fas fa-heart"></i>
-          My Wishlists
-        </a>
-      </li>
-      <li onclick="setActive(this)">
-        <a href="#">
-          <i class="fas fa-map-marker-alt"></i>
-          Manage Addresses
-        </a>
-      </li>
-      <li onclick="setActive(this)">
-        <a href="#">
-          <i class="fas fa-credit-card"></i>
-          Saved Cards
-        </a>
-      </li>
-      <li onclick="setActive(this)">
-        <a href="#">
-          <i class="fas fa-bell"></i>
-          Notifications
-        </a>
-      </li>
-      <li onclick="setActive(this)">
-        <a href="#">
-          <i class="fas fa-cog"></i>
-          Settings
-        </a>
-      </li>
-    </ul>
-  </div>
-<!--  Start content-->
-  <div class="content">
-    <h1>My Profile</h1>
-    <div class="profile-pic d-flex align-items-center justify-content-between mb-3">
-      <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modal_review">
-        <i class="fas fa-edit"></i> Edit Profile
-      </button>
+    <!--  Start content-->
+    <div class="content">
+        <h1>My Profile</h1>
+        <div class="profile-pic d-flex align-items-center justify-content-between mb-3">
+            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modal_review">
+                <i class="fas fa-edit"></i> Edit Profile
+            </button>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="first-name">Họ và Tên </label>
+                <input id="first-name" type="text" class="form-control" placeholder="Nguyễn Hùng Mạnh"
+                       th:value="${khachHang.getTenKhachHang()}" disabled/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="phone-number">Tên đăng nhập</label>
+                <input id="phone-number" type="text" class="form-control" placeholder="0123456789"
+                       th:value="${khachHang.getTaiKhoan().getTenDangNhap()}" disabled/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="email-address">Địa chỉ email</label>
+                <input id="email-address" type="text" class="form-control" placeholder="robertfox@exmple.com"
+                       th:value="${khachHang.getTaiKhoan().getEmail()}" disabled/>
+            </div>
+        </div>
     </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="first-name">Họ và Tên </label>
-        <input id="first-name" type="text" class="form-control" placeholder="Nguyễn Hùng Mạnh" th:value="${khachHang.getTenKhachHang()}" disabled/>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="phone-number">Tên đăng nhập</label>
-        <input id="phone-number" type="text" class="form-control" placeholder="0123456789" th:value="${khachHang.getTaiKhoan().getTenDangNhap()}" disabled/>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="email-address">Địa chỉ email</label>
-        <input id="email-address" type="text" class="form-control" placeholder="robertfox@exmple.com" th:value="${khachHang.getTaiKhoan().getEmail()}" disabled/>
-      </div>
-    </div>
-  </div>
-<!--  End content-->
+    <!--  End content-->
 </div>
 <!--footer-->
 <div class="container-fluid d-flex align-items-center justify-content-evenly"
      style="padding: 40px 0 120px 0; margin-top: 80px; background-color: #000;">
-  <div style="width: 272px; margin-right: 142px;">
-    <div class="d-flex align-items-center" style="margin-bottom: 12px;">
-      <div style="padding: 8px 14px; margin-right: 8px; border-radius: 5px; border: 1px solid #E6E7E8; background-color: #fff;">
-        <img src="/img/logo.png" alt="logo">
-      </div>
-      <div>
-        <div class="cl-white" style="font-size: 20px; font-weight: 600;">Krist</div>
-      </div>
+    <div style="width: 272px; margin-right: 142px;">
+        <div class="d-flex align-items-center" style="margin-bottom: 12px;">
+            <div style="padding: 8px 14px; margin-right: 8px; border-radius: 5px; border: 1px solid #E6E7E8; background-color: #fff;">
+                <img src="/img/logo.png" alt="logo">
+            </div>
+            <div>
+                <div class="cl-white" style="font-size: 20px; font-weight: 600;">Krist</div>
+            </div>
+        </div>
+        <p class="cl-white " style="font-size: 14px; margin-bottom: 28px;">Kết nối với chúng tôi qua các mạng xã hội</p>
+        <div class="d-flex justify-content-between" style="padding-right: 60px;">
+            <div>
+                <i class="fa-brands fa-instagram cl-white " style="font-size: 20px;"></i>
+            </div>
+            <div>
+                <i class="fa-brands fa-facebook cl-white " style="font-size: 20px;"></i>
+            </div>
+            <div>
+                <i class="fa-brands fa-youtube cl-white " style="font-size: 20px;"></i>
+            </div>
+            <div>
+                <i class="fa-brands fa-tiktok cl-white " style="font-size: 20px;"></i>
+            </div>
+            <div>
+                <i class="fa-brands fa-twitter cl-white " style="font-size: 20px;"></i>
+            </div>
+        </div>
     </div>
-    <p class="cl-white " style="font-size: 14px; margin-bottom: 28px;">Kết nối với chúng tôi qua các mạng xã hội</p>
-    <div class="d-flex justify-content-between" style="padding-right: 60px;">
-      <div>
-        <i class="fa-brands fa-instagram cl-white " style="font-size: 20px;"></i>
-      </div>
-      <div>
-        <i class="fa-brands fa-facebook cl-white " style="font-size: 20px;"></i>
-      </div>
-      <div>
-        <i class="fa-brands fa-youtube cl-white " style="font-size: 20px;"></i>
-      </div>
-      <div>
-        <i class="fa-brands fa-tiktok cl-white " style="font-size: 20px;"></i>
-      </div>
-      <div>
-        <i class="fa-brands fa-twitter cl-white " style="font-size: 20px;"></i>
-      </div>
-    </div>
-  </div>
-  <div style="width: 484px; margin-right: 100px;">
-    <div style=" margin-right: 48px; display: inline-block;">
-      <p class="cl-white" style="font-size: 14px; font-weight: 700; margin-bottom: 40px;">Hỗ trợ</p>
-      <p><a href="#" class="cl-white"
-            style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Câu hỏi thường
-        gặp</a></p>
-      <p><a href="#" class="cl-white"
-            style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Điều khoản sử
-        dụng</a></p>
-      <p><a href="#" class="cl-white"
-            style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Chính sách bảo
-        mật</a></p>
+    <div style="width: 484px; margin-right: 100px;">
+        <div style=" margin-right: 48px; display: inline-block;">
+            <p class="cl-white" style="font-size: 14px; font-weight: 700; margin-bottom: 40px;">Hỗ trợ</p>
+            <p><a href="#" class="cl-white"
+                  style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Câu hỏi thường
+                gặp</a></p>
+            <p><a href="#" class="cl-white"
+                  style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Điều khoản sử
+                dụng</a></p>
+            <p><a href="#" class="cl-white"
+                  style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Chính sách bảo
+                mật</a></p>
+        </div>
+        <div style=" margin-right: 48px; display: inline-block;">
+            <p class="cl-white" style="font-size: 14px; font-weight: 700; margin-bottom: 40px;">Công ty</p>
+            <p><a href="#" class="cl-white"
+                  style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Về chúng
+                tôi</a></p>
+            <p><a href="#" class="cl-white"
+                  style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Kết nối</a></p>
+            <p><a href="#" class="cl-white"
+                  style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Chăm sóc khách
+                hàng</a></p>
 
-    </div>
-    <div style=" margin-right: 48px; display: inline-block;">
-      <p class="cl-white" style="font-size: 14px; font-weight: 700; margin-bottom: 40px;">Công ty</p>
-      <p><a href="#" class="cl-white"
-            style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Về chúng
-        tôi</a></p>
-      <p><a href="#" class="cl-white"
-            style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Kết nối</a></p>
-      <p><a href="#" class="cl-white"
-            style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Chăm sóc khách
-        hàng</a></p>
+        </div>
+        <div style=" margin-right: 48px; display: inline-block;">
+            <p class="cl-white" style="font-size: 14px; font-weight: 700; margin-bottom: 40px;">Của hàng</p>
+            <p><a href="#" class="cl-white"
+                  style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Tài khoản</a>
+            </p>
+            <p><a href="#" class="cl-white"
+                  style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Đặt hàng</a>
+            </p>
+            <p><a href="#" class="cl-white"
+                  style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Giỏ hàng</a>
+            </p>
 
+        </div>
     </div>
-    <div style=" margin-right: 48px; display: inline-block;">
-      <p class="cl-white" style="font-size: 14px; font-weight: 700; margin-bottom: 40px;">Của hàng</p>
-      <p><a href="#" class="cl-white"
-            style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Tài khoản</a>
-      </p>
-      <p><a href="#" class="cl-white"
-            style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Đặt hàng</a>
-      </p>
-      <p><a href="#" class="cl-white"
-            style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Giỏ hàng</a>
-      </p>
-
+    <div style="width: 272px;">
+        <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 22px;">Các phương thức thanh
+            toán</p>
+        <div class="d-flex justify-content-between" style="padding-right: 60px;">
+            <div>
+                <i class="fa-brands fa-cc-mastercard cl-white" style="font-size: 20px;"></i>
+            </div>
+            <div>
+                <i class="fa-brands fa-cc-visa cl-white" style="font-size: 20px;"></i>
+            </div>
+            <div>
+                <i class="fa-brands fa-cc-amex cl-white" style="font-size: 20px;"></i>
+            </div>
+            <div>
+                <i class="fa-brands fa-cc-paypal cl-white" style="font-size: 20px;"></i>
+            </div>
+        </div>
     </div>
-  </div>
-  <div style="width: 272px;">
-    <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 22px;">Các phương thức thanh
-      toán</p>
-    <div class="d-flex justify-content-between" style="padding-right: 60px;">
-      <div>
-        <i class="fa-brands fa-cc-mastercard cl-white" style="font-size: 20px;"></i>
-      </div>
-      <div>
-        <i class="fa-brands fa-cc-visa cl-white" style="font-size: 20px;"></i>
-      </div>
-      <div>
-        <i class="fa-brands fa-cc-amex cl-white" style="font-size: 20px;"></i>
-      </div>
-      <div>
-        <i class="fa-brands fa-cc-paypal cl-white" style="font-size: 20px;"></i>
-      </div>
-    </div>
-  </div>
 </div>
 </div>
 
 <!-- modal_review -->
 <div class="modal fade" id="modal_review" tabindex="-1" aria-labelledby="modal_reviewLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content" style="padding: 20px; width: 494px; height: 578px;">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modal_reviewLabel">Chỉnh sửa thông tin</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form th:object="${khachHang}" th:action="@{/quan-ly/update-thong-tin-kh}" method="post">
-          <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.tenDangNhap}">
-          <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.matKhau}">
-          <input type="text" class="form-control display_none" th:field="${khachHang.trangThai}">
-          <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.trangThai}">
-          <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.chucVu}">
-          <input type="text" class="form-control display_none" th:field="${khachHang.id}">
-          <div class="mb-3">
-            <label for="nameKh" class="form-label">Tên khách hàng</label>
-            <input type="text" class="form-control" id="nameKh" th:field="${khachHang.tenKhachHang}">
-          </div>
-          <div class="mb-3">
-            <label for="emailKh" class="form-label">Email</label>
-            <input type="text" class="form-control" id="emailKh" th:field="${khachHang.taiKhoan.email}">
-          </div>
-          <div class="text-center" style="margin-top: 36px;">
-            <button type="submit" class="btn bg-black"
-                    style="color: #fff; padding: 8px 68px; font-size: 14px;">Lưu
-            </button>
-          </div>
-        </form>
-      </div>
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="padding: 20px; width: 494px; height: 578px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_reviewLabel">Chỉnh sửa thông tin</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:object="${khachHang}" th:action="@{/quan-ly/update-thong-tin-kh}" method="post">
+                    <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.tenDangNhap}">
+                    <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.matKhau}">
+                    <input type="text" class="form-control display_none" th:field="${khachHang.trangThai}">
+                    <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.trangThai}">
+                    <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.chucVu}">
+                    <input type="text" class="form-control display_none" th:field="${khachHang.id}">
+                    <div class="mb-3">
+                        <label for="nameKh" class="form-label">Tên khách hàng</label>
+                        <input type="text" class="form-control" id="nameKh" th:field="${khachHang.tenKhachHang}">
+                        <div class="invalid-feedback" id="nameKhError">Tên khách hàng không hợp lệ.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="emailKh" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="emailKh" th:field="${khachHang.taiKhoan.email}">
+                        <div class="invalid-feedback" id="emailKhError">Email không hợp lệ.</div>
+                    </div>
+                    <div class="text-center" style="margin-top: 36px;">
+                        <button type="submit" class="btn bg-black"
+                                style="color: #fff; padding: 8px 68px; font-size: 14px;"
+                                onclick="return validateForm(event)">Lưu
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+
+<div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert"
+     id="alertMessage" style="display: none;">
+    <strong>Thất bại!</strong> <span id="alertBody">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<!-- Alert thông báo từ backend -->
+<div th:if="${message}" th:class="${messageType} + ' alert alert-dismissible fade show position-fixed top-0 end-0 m-3'"
+     id="successAlert" role="alert">
+    <strong th:text="${titleMsg}">Tiêu đề</strong> <span th:text="${message}">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/ProductDetail.js"></script>
@@ -335,13 +354,84 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.11/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-  function setActive(menuItem) {
-    const menuItems = document.querySelectorAll('.sidebar .menu li');
-    menuItems.forEach(item => {
-      item.classList.remove('active'); // Remove active class from all items
-    });
-    menuItem.classList.add('active'); // Add active class to clicked item
-  }
+    function setActive(menuItem) {
+        const menuItems = document.querySelectorAll('.sidebar .menu li');
+        menuItems.forEach(item => {
+            item.classList.remove('active'); // Remove active class from all items
+        });
+        menuItem.classList.add('active'); // Add active class to clicked item
+    }
+
+    // function validateForm(event) {
+    //     const tenKhachHang = document.getElementById("nameKh").value.trim();
+    //     const emailKhachHang = document.getElementById("emailKh").value.trim();
+    //
+    //     if (!tenKhachHang || !emailKhachHang) {
+    //         // Hiển thị thông báo lỗi
+    //         const alertMessage = document.getElementById("alertMessage");
+    //         const alertBody = document.getElementById("alertBody");
+    //
+    //         if (!tenKhachHang) {
+    //             alertBody.innerText = "Tên khách hàng không được để trống!";
+    //         } else if (!emailKhachHang) {
+    //             alertBody.innerText = "Email không được để trống!";
+    //         }
+    //
+    //         alertMessage.style.display = "block"; // Hiển thị alert
+    //         event.preventDefault(); // Ngăn không cho gửi form
+    //
+    //         // Tự động đóng thông báo sau 5 giây
+    //         setTimeout(() => {
+    //             alertMessage.style.display = "none";
+    //         }, 5000);
+    //
+    //         return false;
+    //     }
+    //     return true; // Nếu hợp lệ, cho phép gửi form
+    // }
+
+    function validateForm(event) {
+        const tenKhachHang = document.getElementById("nameKh").value.trim();
+        const emailKhachHang = document.getElementById("emailKh").value.trim();
+
+        let isValid = true;
+
+        const alertMessage = document.getElementById("alertMessage");
+        const alertBody = document.getElementById("alertBody");
+
+        // Kiểm tra Tên khách hàng
+        const nameKhError = document.getElementById("nameKhError");
+        if (!tenKhachHang) {
+            alertBody.innerText = "Vui lòng điền đầy đủ thông tin";
+            nameKhError.innerText = "Tên khách hàng không được để trống!";
+            document.getElementById("nameKh").classList.add("is-invalid");
+            isValid = false;
+        } else {
+            document.getElementById("nameKh").classList.remove("is-invalid");
+        }
+
+        // Kiểm tra Email
+        const emailKhError = document.getElementById("emailKhError");
+        if (!emailKhachHang) {
+            alertBody.innerText = "Vui lòng điền đầy đủ thông tin";
+            emailKhError.innerText = "Email không được để trống!";
+            document.getElementById("emailKh").classList.add("is-invalid");
+            isValid = false;
+        } else {
+            document.getElementById("emailKh").classList.remove("is-invalid");
+        }
+
+        // Nếu không hợp lệ, ngăn form gửi
+        if (!isValid) {
+            event.preventDefault();
+        }
+        alertMessage.style.display = "block";
+        setTimeout(() => {
+            alertMessage.style.display = "none";
+        }, 5000);
+        return isValid;
+    }
+
 </script>
 </body>
 </html>

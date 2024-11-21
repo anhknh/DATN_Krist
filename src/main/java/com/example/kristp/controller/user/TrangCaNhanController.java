@@ -45,8 +45,6 @@ public class TrangCaNhanController {
 
     @PostMapping("/update-thong-tin-kh")
     public String updateThongTin(@ModelAttribute("khachHang")KhachHang khachHang){
-        System.out.println(khachHang.getTaiKhoan().getMatKhau() + "Mat khâu " + khachHang.getTaiKhoan().getTenDangNhap());
-        System.out.println(khachHang.getTenKhachHang() + "Id " + khachHang.getId());
         khachHangService.updateKhachHang(khachHang);
         return "redirect:/quan-ly/ca-nhan";
     }
