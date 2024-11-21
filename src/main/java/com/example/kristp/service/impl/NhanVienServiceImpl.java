@@ -63,14 +63,18 @@ public class NhanVienServiceImpl implements NhanVienService {
         nhanVien1.setSoDienThoai(nhanVien.getSoDienThoai());
         nhanVien.setNgaySinh(nhanVien.getNgaySinh());
         nhanVien1.setDiaChi(nhanVien.getDiaChi());
-        nhanVien1.setTrangThai(nhanVien.getTrangThai());
         return nhanVienRepository.save(nhanVien1);
     }
 
     @Override
     public void deleteNhanVien(Integer idNhanVien) {
         NhanVien nhanVien = getNhanVienById(idNhanVien);
-        nhanVien.setTrangThai(Status.INACTIVE);
+        // Chuyển trạng thái giữa ACTIVE và INACTIVE
+        if (nhanVien.getTrangThai() == Status.INACTIVE) {
+            nhanVien.setTrangThai(Status.ACTIVE);
+        } else {
+            nhanVien.setTrangThai(Status.INACTIVE);
+        }
         nhanVienRepository.save(nhanVien);
     }
 
