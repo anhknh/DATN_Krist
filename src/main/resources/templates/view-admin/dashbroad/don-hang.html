@@ -276,7 +276,7 @@
                                 <td th:text="${hoaDon.trangThai}"></td>
                                 <td class="text-center">
                                     <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
-                                        <a  class="d-block" style="color: #000; text-decoration: none" href="/view-chi-tiet-don-hang">
+                                        <a  class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly-don-hang/view-chi-tiet-don-hang(idHoaDon=${hoaDon.id})}">
                                             <i class="fa-sharp fa-light fa-eye"></i>
                                         </a>
                                     </div>

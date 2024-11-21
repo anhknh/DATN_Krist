@@ -224,15 +224,27 @@
                     <div class="box" style="margin-right: 12px; flex: 1">
                         <div style="font-size: 18px; font-weight: 700; margin: 12px">Thông tin đơn hàng</div>
                         <div>
-                            <div>Mã đơn hàng: abcdef</div>
-                            <div>Trạng thái đơn hàng: Chờ xác nhận</div>
-                            <div>Thông tin thanh toán: VN Pay | Đã thanh toán</div>
-                            <div>Tên khuyến mại: Khuyến mại siêu to</div>
-                            <div>Giá trị khuyến mại: 500.000 VNĐ</div>
-                            <div>Tổng tiền: 12.000.000 VNĐ</div>
-                            <div>Tổng tiền sau giảm: 11.500.000 VNĐ</div>
-                            <div>Phí giao hàng: 30.000 VNĐ</div>
-                            <div>Tổng thanh toán: 11.530.000 VNĐ</div>
+                            <div th:text="'Mã đơn hàng: ' + ${hoaDon.id} ">Mã đơn hàng: </div>
+                            <div th:text="'Trạng thái đơn hàng: ' + ${hoaDon.trangThai}">Trạng thái đơn hàng: Chờ xác nhận</div>
+                            <div th:text="'Thông tin thanh toán: ' + ${hoaDon.trangThaiThanhToan}">Thông tin thanh toán: VN Pay | Đã thanh toán</div>
+                            <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between" style="margin-bottom: 18px;">
+                            <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Tên khuyến mại:</div>
+                            <div style="font-size: 16px; font-weight: 500;"><span th:text="${hoaDon.khuyenMai.tenKhuyenMai}"></span></div>
+                        </div>
+
+                            <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between" style="margin-bottom: 18px;">
+                                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Mức giảm:</div>
+                                <div style="font-size: 16px; font-weight: 500;"><span th:text="${convertMoney.formatCurrency(hoaDon.khuyenMai.giaTri)} + ' ' + ${hoaDon.khuyenMai.kieuKhuyenMai}"></span></div>
+                            </div>
+                            <div th:text="'Tổng tiền: ' + ${convertMoney.formatCurrency(hoaDon.tongTien)}">Tổng tiền: 12.000.000 VNĐ</div>
+                            <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
+                                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
+                                <div style="font-size: 16px; font-weight: 500;"><span id="shipping-fee">30.000</span></div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div style="font-size: 16px; font-weight: bold;">Tổng tiền sau giảm:</div>
+                                <div style="font-size: 16px; font-weight: bold;"><span id="final-total" th:text="${convertMoney.calculatorTotal(hoaDon.tongTien, hoaDon.khuyenMai)}">0.00</span></div>
+                            </div>
                         </div>
                     </div>
                     <div class="box" style="flex: 2">
@@ -277,6 +289,33 @@
                             </div>
 
                         </div>
+                        <div>
+                            <div>
+                                <h5 class="card-title "
+                                    style="font-weight: bold; margin-bottom: 0;"
+                                   >Địa chỉ giao hàng</h5>
+                            </div>
+                            <div>
+                                <div>
+                                    <h5 class="card-title "
+                                        style="font-weight: bold; margin-bottom: 0;"
+                                        th:text="${hoaDon.diaChi.tenKhachHang}">Đoàn Hiếu</h5>
+                                </div>
+                            </div>
+                            <p class="card-text"
+                               style="margin-top: 0.5rem; display: flex; align-items: center;">
+                                <i class="fa-light fa-location-dot"
+                                   style="margin-right: 8px;"></i>
+                                <span th:text="${hoaDon.diaChi.diaChi}">Lê Đức Thọ, Hà Nội</span>
+                            </p>
+
+                            <p class="card-text"
+                               style="margin-top: 0.5rem; display: flex; align-items: center;">
+                                <i class="fa-sharp fa-light fa-phone"
+                                   style="margin-right: 8px;"></i>
+                                <span th:text="${hoaDon.diaChi.sdt}">0987654321</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
 
@@ -291,262 +330,76 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">Sản phẩm</th>
-                            <th scope="col">Giá</th>
-                            <th scope="col" >Số lượng</th>
-                            <th scope="col">Tổng cộng</th>
+                            <th style="width: 10%; text-align: center;">Ảnh</th>
+                            <th style="width: 20%;">Thông tin</th>
+                            <th style="width: 15%; text-align: center;">Giá</th>
+                            <th style="width: 15%; text-align: center;">Số lượng</th>
+                            <th style="width: 15%; text-align: center;">Tổng cộng</th>
+                            <th style="width: 20%; text-align: center;">Hành động</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <!-- Hình ảnh sản phẩm -->
-                                    <div class="text-center" style="width: 80px; height: 80px; background-color: #F6F6F6;">
-                                        <img style="width: 75%;" src="/img/monochrome_tees.png" alt="">
-                                    </div>
-                                    <!-- Tên sản phẩm và chi tiết -->
-                                    <div style="margin-left: 12px; width: 200px;">
-                                        <p style="font-size: 16px; font-weight: 500;">Áo phông cộc tay</p>
-                                        <!-- Màu sắc và kích thước -->
-                                        <div class="d-flex justify-content-between align-items-center" style="width: 154px; height: 24px;">
-                                            <div>Color:</div>
-                                            <div style="padding: 8px; border-radius: 50%; background-color:#21bbc9;"></div>
-                                            <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
-                                            <div>Size: M</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
-                                    style="display: inline-block;"></p></div></td>
-                            <td><div class="product_cart" style="padding-top: 20px">
-                                <div class="d-flex justify-content-between align-items-center"
-                                     style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height:  40px;">
-                                    <div class="btn_Subtrac" style="cursor: pointer;">
-                                        <button type="button" style="background-color: #fff; border: none; ">
-                                            &#8722;
-                                        </button>
-                                    </div>
-                                    <div  class="quantity_number">1
+                        <tr th:each="item : ${hoaDonChiTiet}">
 
-                                    </div>
-                                    <div class="btn_plus" style="cursor: pointer;">
-                                        <button  type="button" style="background-color: #fff; border: none;" >
-                                            &#43;
-                                        </button>
-                                    </div>
+                        <!-- Cột Hình ảnh -->
+                        <td style="text-align: center; vertical-align: middle;">
+                            <div class="d-flex justify-content-center align-items-center"
+                                 style="background-color: #f6f6f6; border-radius: 4px; width: 46px; height: 46px;">
+                                <div th:style="|width: 46px; height: 46px; background: url('/img/${item.chiTietSanPham.anhSanPham}') no-repeat center center / cover;|">
                                 </div>
-                            </div></td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
-                                    style="display: inline-block;"></p></div></td>
-                            <td style="padding-top: 30px">
-                                <a class="btn" >
-                                    <div class="prevent_select" style=" background-color: #F6F6F6; border-radius: 6px; display: inline-block; ">
-                                        <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
-                                    </div>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <!-- Hình ảnh sản phẩm -->
-                                    <div class="text-center" style="width: 80px; height: 80px; background-color: #F6F6F6;">
-                                        <img style="width: 75%;" src="/img/monochrome_tees.png" alt="">
-                                    </div>
-                                    <!-- Tên sản phẩm và chi tiết -->
-                                    <div style="margin-left: 12px; width: 200px;">
-                                        <p style="font-size: 16px; font-weight: 500;">Áo phông cộc tay</p>
-                                        <!-- Màu sắc và kích thước -->
-                                        <div class="d-flex justify-content-between align-items-center" style="width: 154px; height: 24px;">
-                                            <div>Color:</div>
-                                            <div style="padding: 8px; border-radius: 50%; background-color:#21bbc9;"></div>
-                                            <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
-                                            <div>Size: M</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
-                                    style="display: inline-block;"></p></div></td>
-                            <td><div class="product_cart" style="padding-top: 20px">
-                                <div class="d-flex justify-content-between align-items-center"
-                                     style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height:  40px;">
-                                    <div class="btn_Subtrac" style="cursor: pointer;">
-                                        <button type="button" style="background-color: #fff; border: none; ">
-                                            &#8722;
-                                        </button>
-                                    </div>
-                                    <div  class="quantity_number">1
+                            </div>
+                        </td>
 
-                                    </div>
-                                    <div class="btn_plus" style="cursor: pointer;">
-                                        <button  type="button" style="background-color: #fff; border: none;" >
-                                            &#43;
-                                        </button>
-                                    </div>
-                                </div>
-                            </div></td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
-                                    style="display: inline-block;"></p></div></td>
-                            <td style="padding-top: 30px">
-                                <a class="btn" >
-                                    <div class="prevent_select" style=" background-color: #F6F6F6; border-radius: 6px; display: inline-block; ">
-                                        <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
-                                    </div>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <!-- Hình ảnh sản phẩm -->
-                                    <div class="text-center" style="width: 80px; height: 80px; background-color: #F6F6F6;">
-                                        <img style="width: 75%;" src="/img/monochrome_tees.png" alt="">
-                                    </div>
-                                    <!-- Tên sản phẩm và chi tiết -->
-                                    <div style="margin-left: 12px; width: 200px;">
-                                        <p style="font-size: 16px; font-weight: 500;">Áo phông cộc tay</p>
-                                        <!-- Màu sắc và kích thước -->
-                                        <div class="d-flex justify-content-between align-items-center" style="width: 154px; height: 24px;">
-                                            <div>Color:</div>
-                                            <div style="padding: 8px; border-radius: 50%; background-color:#21bbc9;"></div>
-                                            <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
-                                            <div>Size: M</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
-                                    style="display: inline-block;"></p></div></td>
-                            <td><div class="product_cart" style="padding-top: 20px">
-                                <div class="d-flex justify-content-between align-items-center"
-                                     style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height:  40px;">
-                                    <div class="btn_Subtrac" style="cursor: pointer;">
-                                        <button type="button" style="background-color: #fff; border: none; ">
-                                            &#8722;
-                                        </button>
-                                    </div>
-                                    <div  class="quantity_number">1
+                        <!-- Cột Thông tin -->
+                        <td>
+                            <!-- Tên sản phẩm -->
+                            <p style="font-size: 16px; font-weight: 500;"
+                               th:text="${item.getChiTietSanPham().sanPham.tenSanPham}"></p>
+                            <!-- Màu sắc và kích thước -->
+                            <div class="d-flex align-items-center" style="margin-top: 8px;">
+                                <span style="margin-right: 8px;">Color:</span>
+                                <div th:style="'padding: 8px; border-radius: 50%; background-color: ' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
+                                <span style="margin-left: 16px;">Size: <span
+                                        th:text="${item.getChiTietSanPham().size.tenSize}"></span></span>
+                            </div>
+                        </td>
 
-                                    </div>
-                                    <div class="btn_plus" style="cursor: pointer;">
-                                        <button  type="button" style="background-color: #fff; border: none;" >
-                                            &#43;
-                                        </button>
-                                    </div>
-                                </div>
-                            </div></td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
-                                    style="display: inline-block;"></p></div></td>
-                            <td style="padding-top: 30px">
-                                <a class="btn" >
-                                    <div class="prevent_select" style=" background-color: #F6F6F6; border-radius: 6px; display: inline-block; ">
-                                        <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
-                                    </div>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <!-- Hình ảnh sản phẩm -->
-                                    <div class="text-center" style="width: 80px; height: 80px; background-color: #F6F6F6;">
-                                        <img style="width: 75%;" src="/img/monochrome_tees.png" alt="">
-                                    </div>
-                                    <!-- Tên sản phẩm và chi tiết -->
-                                    <div style="margin-left: 12px; width: 200px;">
-                                        <p style="font-size: 16px; font-weight: 500;">Áo phông cộc tay</p>
-                                        <!-- Màu sắc và kích thước -->
-                                        <div class="d-flex justify-content-between align-items-center" style="width: 154px; height: 24px;">
-                                            <div>Color:</div>
-                                            <div style="padding: 8px; border-radius: 50%; background-color:#21bbc9;"></div>
-                                            <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
-                                            <div>Size: M</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
-                                    style="display: inline-block;"></p></div></td>
-                            <td><div class="product_cart" style="padding-top: 20px">
-                                <div class="d-flex justify-content-between align-items-center"
-                                     style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height:  40px;">
-                                    <div class="btn_Subtrac" style="cursor: pointer;">
-                                        <button type="button" style="background-color: #fff; border: none; ">
-                                            &#8722;
-                                        </button>
-                                    </div>
-                                    <div  class="quantity_number">1
+                        <!-- Cột Giá -->
+                        <td style="text-align: center; vertical-align: middle;">
+                                <span th:text="${convertMoney.formatCurrency(item.getChiTietSanPham().donGia)}"
+                                      class="product-price" th:id="'gia-' + ${item.id}"></span>
+                        </td>
 
-                                    </div>
-                                    <div class="btn_plus" style="cursor: pointer;">
-                                        <button  type="button" style="background-color: #fff; border: none;" >
-                                            &#43;
-                                        </button>
-                                    </div>
-                                </div>
-                            </div></td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
-                                    style="display: inline-block;"></p></div></td>
-                            <td style="padding-top: 30px">
-                                <a class="btn" >
-                                    <div class="prevent_select" style=" background-color: #F6F6F6; border-radius: 6px; display: inline-block; ">
-                                        <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
-                                    </div>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <!-- Hình ảnh sản phẩm -->
-                                    <div class="text-center" style="width: 80px; height: 80px; background-color: #F6F6F6;">
-                                        <img style="width: 75%;" src="/img/monochrome_tees.png" alt="">
-                                    </div>
-                                    <!-- Tên sản phẩm và chi tiết -->
-                                    <div style="margin-left: 12px; width: 200px;">
-                                        <p style="font-size: 16px; font-weight: 500;">Áo phông cộc tay</p>
-                                        <!-- Màu sắc và kích thước -->
-                                        <div class="d-flex justify-content-between align-items-center" style="width: 154px; height: 24px;">
-                                            <div>Color:</div>
-                                            <div style="padding: 8px; border-radius: 50%; background-color:#21bbc9;"></div>
-                                            <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
-                                            <div>Size: M</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
-                                    style="display: inline-block;"></p></div></td>
-                            <td><div class="product_cart" style="padding-top: 20px">
-                                <div class="d-flex justify-content-between align-items-center"
-                                     style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height:  40px;">
-                                    <div class="btn_Subtrac" style="cursor: pointer;">
-                                        <button type="button" style="background-color: #fff; border: none; ">
-                                            &#8722;
-                                        </button>
-                                    </div>
-                                    <div  class="quantity_number">1
+                        <!-- Cột Số lượng -->
+                        <td style="text-align: center; vertical-align: middle;">
+                            <div class="d-flex justify-content-between align-items-center"
+                                 style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height: 40px;">
+                                <button type="button" style="background-color: #fff; border: none;"
+                                        onclick="capNhatSoLuong(this, -1)" th:data-id="${item.id}">&#8722;
+                                </button>
+                                <span th:id="'soLuong-' + ${item.id}" th:text="${item.soLuong}"
+                                      class="product-quantity"></span>
+                                <button type="button" style="background-color: #fff; border: none;"
+                                        onclick="capNhatSoLuong(this, 1)" th:data-id="${item.id}">&#43;
+                                </button>
+                            </div>
+                        </td>
 
-                                    </div>
-                                    <div class="btn_plus" style="cursor: pointer;">
-                                        <button  type="button" style="background-color: #fff; border: none;" >
-                                            &#43;
-                                        </button>
-                                    </div>
-                                </div>
-                            </div></td>
-                            <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px"><i class="fa-regular fa-dollar-sign"></i>30.00<p
-                                    style="display: inline-block;"></p></div></td>
-                            <td style="padding-top: 30px">
-                                <a class="btn" >
-                                    <div class="prevent_select" style=" background-color: #F6F6F6; border-radius: 6px; display: inline-block; ">
-                                        <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
-                                    </div>
-                                </a>
-                            </td>
+                        <!-- Cột Tổng cộng -->
+                        <td style="text-align: center; vertical-align: middle;">
+                                <span th:text="${convertMoney.formatCurrency(item.getChiTietSanPham().donGia * item.soLuong)}"
+                                      th:id="'tong-' + ${item.id}"
+                                      class="product-total"></span>
+                        </td>
+
+                        <!-- Cột Hành động -->
+                        <td style="text-align: center; vertical-align: middle;">
+                            <a style="color: #e10a0a; text-decoration: none;" data-bs-toggle="tooltip"
+                               data-bs-placement="top" title="Xóa"
+                               th:href="@{/xoa-gio-hang-chi-tiet/{id}(id=${item.id})}">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </a>
+                        </td>
                         </tr>
 
                         </tbody>

@@ -1,6 +1,7 @@
 package com.example.kristp.service.impl;
 
 import com.example.kristp.entity.*;
+import com.example.kristp.entity.dto.LocationRequest;
 import com.example.kristp.enums.Status;
 import com.example.kristp.repository.DiaChiRepository;
 import com.example.kristp.repository.KhachHangRepository;
@@ -89,6 +90,24 @@ public class DiaChiServiceImpl implements DiaChiService {
         DiaChi diaChi = getDiaChiById(id);
         diaChi.setTrangThai(Status.INACTIVE);
         diaChiRepository.save(diaChi);
+    }
+
+    @Override
+    public boolean saveDiaChi(LocationRequest request) {
+        if (request == null ||
+                request.getProvinceName() == null || request.getProvinceCode() == null ||
+                request.getDistrictName() == null || request.getDistrictCode() == null ||
+                request.getWardName() == null || request.getWardCode() == null) {
+            // Nếu thiếu thông tin, trả về false
+            return false;
+        }
+
+            DiaChi diaChi = new DiaChi();
+
+            // Lưu xuống database
+
+            return true; // Lưu thành
+
     }
 
     // Phương thức kiểm tra hợp lệ
