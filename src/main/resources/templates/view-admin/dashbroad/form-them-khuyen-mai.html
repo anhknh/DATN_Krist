@@ -47,60 +47,85 @@
         </div>
         <!-- Main Menu Items -->
         <div style="padding: 0px 22px 28px; border-bottom: 1px solid #E9E9EB;" class="mb-4">
-          <a href="./adminDashBroad.html" class="bg_profile_btn mb-3"
-             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+          <!--                    Hiện tại vẫn chưa có tính năng doanh thu đường dẫn là #-->
+          <a href="#" class=" mb-3"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;"
+             onclick="highlightLink(this)">
             <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
+          </a>
+          <a href="/quan-ly/ban-hang" class="mb-3"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
+            <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
+          </a>
+          <a href="/quan-ly-san-pham/pagination-san-pham" class="mb-3"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
+            <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
           </a>
           <!-- Product Management Tree Menu -->
           <div class="menu-item mb-3">
             <p style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center; cursor: pointer;"
                onclick="toggleSubmenu('productSubMenu')">
-              <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Sản phẩm
+              <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Thuộc tính
               <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
             </p>
             <ul id="productSubMenu" class="submenu"
                 style="list-style: none; padding-left: 20px; display: none;">
               <li style="padding: 8px 12px;">
-                <a href="./adminCategories.html" style="text-decoration: none; color: #000;">Danh
+                <a href="/quan-ly-danh-muc/pagination-danh-muc"
+                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Danh
                   mục</a>
               </li>
               <li style="padding: 8px 12px;">
-                <a href="./adminMaterial.html" style="text-decoration: none; color: #000;">Chất liệu</a>
+                <a href="/quan-ly-chat-lieu/pagination-chat-lieu"
+                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Chất liệu</a>
+              </li>
+              <li style="padding: 8px 12px;">
+                <a href="/quan-ly-mau-sac/pagination-mau-sac"
+                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Màu sắc</a>
+              </li>
+              <li style="padding: 8px 12px;">
+                <a href="/quan-ly-size/pagination-size"
+                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Size</a>
+              </li>
+              <li style="padding: 8px 12px;">
+                <a href="/quan-ly-tay-ao/pagination-tay-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Tay
+                  áo</a>
+              </li>
+              <li style="padding: 8px 12px;">
+                <a href="/quan-ly-co-ao/pagination-co-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Cổ
+                  áo</a>
               </li>
             </ul>
           </div>
-          <a href="./adminOrder.html" class="mb-3"
+          <!--                    Chức năng chưa có đường dẫn là #-->
+          <a href="#" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
-            <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Đơn hàng
+            <i class="fa-light fa-cart-flatbed" style="margin-right: 10px;"></i> Đơn hàng
           </a>
-          <a href="./adminCustomer.html" class="mb-3"
+          <a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="bg_profile_btn mb-3" onclick="highlightLink(this)"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-tickets-perforated" style="margin-right: 10px;"></i> Khuyến mại
+          </a>
+          <!--                    Chức năng chưa có đường dẫn là #-->
+          <a href="#" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
           </a>
-          <a href="./adminReviews.html" class="mb-3"
+          <a href="/quan-ly-nhan-vien/phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
+          </a>
+          <!--                    Chức năng chưa có đường dẫn là #-->
+
+          <a href="#" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-star" style="margin-right: 10px;"></i> Đánh giá
           </a>
-          <a href="./adminSetting.html" class="mb-3"
+          <!--                    Chức năng chưa có đường dẫn là #-->
+          <a href="#" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
-            <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Settings
+            <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
           </a>
-        </div>
-
-        <!-- Extra Menu -->
-        <div id="drop_right" style="padding: 0px 22px 28px; cursor: pointer;"
-             onclick="toggleSubmenu('extrasSubMenu')">
-          <p class="mb-3"
-             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center;">
-            <i class="fa-regular fa-plus" style="margin-right: 10px;"></i> Extras
-            <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
-          </p>
-          <ul id="extrasSubMenu" class="submenu" style="list-style: none; padding-left: 20px; display: none;">
-            <li style="padding: 8px;"><a href="./adminSize.html"
-                                         style="text-decoration: none; color: #000;">Size</a></li>
-            <li style="padding: 8px;"><a href="./adminColor.html"
-                                         style="text-decoration: none; color: #000;">Color</a></li>
-          </ul>
         </div>
       </div>
       <div class="col-10">
@@ -110,8 +135,8 @@
           <div>
             <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb">
               <ol class="breadcrumb" style="height: 40px; margin: 0px;">
-                <li class="breadcrumb-item "><a href="#" class="nav_link">Admin</a></li>
-                <li class="breadcrumb-item "><a href="#" class="nav_link_active">Dashboard</a></li>
+                <li class="breadcrumb-item "><a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="nav_link">Khuyến mại</a></li>
+                <li class="breadcrumb-item "><a href="#" class="nav_link_active">Thêm khuyến mại</a></li>
               </ol>
             </nav>
           </div>
@@ -121,83 +146,98 @@
           </div>
         </div>
         <div style="background-color: #fff; border-radius: 6px; padding: 24px 40px; border: 1px solid #f6f7f8;">
-            <!-- headre_content -->
+          <!-- headre_content -->
           <div class="mb-4">
             <div class="w-100">
-              <h4>Thêm khuyến mãi</h4>
+              <h4>Thêm Khuyến Mại</h4>
 
             </div>
             <div class="w-100">
               <div class="modal-body" style="padding:30px">
                 <div>
                   <form action="/quan-ly-khuyen-mai/add-khuyen-mai" method="post" novalidate th:object="${khuyenMaiCre}" class="needs-validation">
-                    <div class="display_none">
-                      <input type="text" class="form-control" id="idKhuyenMai" name="idKhuyenMai" th:field="*{id}">
+                    <div class="row">
+                      <!-- Cột bên trái -->
+                      <div class="col-md-6">
+                        <div class="display_none">
+                          <input type="text" class="form-control" id="idKhuyenMai" name="idKhuyenMai" th:field="*{id}">
+                        </div>
+                        <div class="mb-4">
+                          <label for="maKhuyenMai" class="form-label">Mã khuyến mại</label>
+                          <input type="text" class="form-control" id="maKhuyenMai" placeholder="Nhập mã khuyến mại"
+                                 th:field="*{maKhuyenMai}" required>
+                          <div class="invalid-feedback">Mã khuyến mại không hợp lệ.</div>
+                        </div>
+                        <div class="mb-4">
+                          <label for="tenKhuyenMai" class="form-label">Tên khuyến mại</label>
+                          <input type="text" class="form-control" id="tenKhuyenMai" placeholder="Nhập tên khuyến mại"
+                                 th:field="*{tenKhuyenMai}" required>
+                          <div class="invalid-feedback">Tên khuyến mại không hợp lệ.</div>
+                        </div>
+                        <div class="mb-4">
+                          <label for="kieuKhuyenMai" class="form-label">Kiểu khuyến mại</label>
+                          <input type="text" class="form-control" id="kieuKhuyenMai" placeholder="Nhập kiểu khuyến mại"
+                                 th:field="*{kieuKhuyenMai}" required>
+                          <div class="invalid-feedback">Kiểu khuyến mại không hợp lệ.</div>
+                        </div>
+                      </div>
+
+                      <!-- Cột bên phải -->
+                      <div class="col-md-6">
+                        <div class="mb-4">
+                          <label for="mucGiam" class="form-label">Mức giảm tối đa</label>
+                          <input type="text" class="form-control" id="mucGiam" placeholder="Nhập mức giảm tối đa"
+                                 th:field="*{mucGiamToiDa}" required>
+                          <div class="invalid-feedback">Mức giảm không hợp lệ.</div>
+                        </div>
+                        <div class="mb-4">
+                          <label for="giaTri" class="form-label">Giá trị</label>
+                          <input type="text" class="form-control" id="giaTri" placeholder="Nhập giá trị"
+                                 th:field="*{giaTri}" required>
+                          <div class="invalid-feedback">Giá trị không hợp lệ.</div>
+                        </div>
+                        <div class="mb-4">
+                          <label for="ngayBD" class="form-label">Ngày bắt đầu</label>
+                          <input type="date" class="form-control" id="ngayBD"
+                                 th:field="*{ngayBatDau}">
+                          <div class="invalid-feedback">Ngày bắt đầu không hợp lệ.</div>
+                        </div>
+                        <div class="mb-4">
+                          <label for="ngayKT" class="form-label">Ngày kết thúc</label>
+                          <input type="date" class="form-control" id="ngayKT"
+                                 th:field="*{ngayKetThuc}">
+                          <div class="invalid-feedback">Ngày kết thúc không hợp lệ.</div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="mb-4">
-                      <label for="maKhuyenMai" class="form-label">Mã khuyến mại</label>
-                      <input type="text" class="form-control" id="maKhuyenMai" placeholder="Nhập mã khuyến mại"
-                             th:field="*{maKhuyenMai}" required>
-                      <div class="invalid-feedback">Mã khuyến mại không hợp lệ.</div>
+
+                    <!-- Trường "Trạng thái" và nút "Save" ở giữa -->
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        <div class="mb-4 display_none" id="statusSection">
+                          <label class="form-label">Trạng thái</label><br>
+                          <input type="radio" th:field="*{trangThai}" id="active" th:value="'Dang hoat dong'">
+                          <label for="active">Active</label><br>
+                          <input type="radio" th:field="*{trangThai}" id="inactive" th:value="'Ngung hoat dong'">
+                          <label for="inactive">Inactive</label><br>
+                          <input type="radio" th:field="*{trangThai}" id="hethan" th:value="'Het han'">
+                          <label for="hethan">Hết hạn</label>
+                        </div>
+                        <button type="submit" class="btn btn-dark">Lưu</button>
+                      </div>
                     </div>
-                    <div class="mb-4">
-                      <label for="tenKhuyenMai" class="form-label">Tên khuyến mại</label>
-                      <input type="text" class="form-control" id="tenKhuyenMai" placeholder="Nhập tên khuyến mại"
-                             th:field="*{tenKhuyenMai}" required>
-                      <div class="invalid-feedback">Tên khuyến mại không hợp lệ.</div>
-                    </div>
-                    <div class="mb-4">
-                      <label for="kieuKhuyenMai" class="form-label">Kiểu khuyến mại</label>
-                      <input type="text" class="form-control" id="kieuKhuyenMai" placeholder="Nhập kiểu khuyến mại"
-                             th:field="*{kieuKhuyenMai}" required>
-                      <div class="invalid-feedback">Kiểu khuyến mại không hợp lệ.</div>
-                    </div>
-                    <div class="mb-4">
-                      <label for="mucGiam" class="form-label">Mức giảm tối đa</label>
-                      <input type="text" class="form-control" id="mucGiam" placeholder="Nhập mức giảm tối đa"
-                             th:field="*{mucGiamToiDa}" required>
-                      <div class="invalid-feedback">Mức giảm không hợp lệ.</div>
-                    </div>
-                    <div class="mb-4">
-                      <label for="giaTri" class="form-label">Giá trị</label>
-                      <input type="text" class="form-control" id="giaTri" placeholder="Nhập giá trị"
-                             th:field="*{giaTri}" required>
-                      <div class="invalid-feedback">Giá trị không hợp lệ.</div>
-                    </div>
-                    <div class="mb-4">
-                      <label for="giaTri" class="form-label">Ngày bắt đầu</label>
-                      <input type="date" class="form-control" id="ngayBD"
-                             th:field="*{ngayBatDau}" >
-                      <div class="invalid-feedback">Ngày bắt đầu không hợp lệ.</div>
-                    </div>
-                    <div class="mb-4">
-                      <label for="giaTri" class="form-label">Ngày kết thúc</label>
-                      <input type="date" class="form-control" id="ngayKT"
-                             th:field="*{ngayKetThuc}" >
-                      <div class="invalid-feedback">Ngày kết thúc không hợp lệ.</div>
-                    </div>
-                    <div class="mb-4 display_none" id="statusSection">
-                      <label class="form-label">Trạng thái</label><br>
-                      <input type="radio" th:field="*{trangThai}" id="active" th:value="'Dang hoat dong'">
-                      <label for="active">Active</label><br>
-                      <input type="radio" th:field="*{trangThai}" id="inactive" th:value="'Ngung hoat dong'">
-                      <label for="inactive">Inactive</label><br>
-                      <input type="radio" th:field="*{trangThai}" id="hethan" th:value="'Het han'">
-                      <label for="hethan">Hết hạn</label>
-                    </div>
-                    <div>
-                      <button type="submit" class="btn btn-dark">Save</button>
-                    </div>
-                  </form>
                 </div>
+                </form>
               </div>
             </div>
           </div>
-          </div>
+
         </div>
       </div>
     </div>
   </div>
+</div>
+</div>
 </div>
 
 

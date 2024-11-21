@@ -50,5 +50,75 @@ function hoanThanh(){
 }
 
 function donHangChiTiet(id){
+
     window.location.href = "/quan-ly/don-hang-chi-tiet-kh?id="+id ;
 }
+
+
+(function () {
+    'use strict';
+    // Fetch all forms with class 'needs-validation'
+    var forms = document.querySelectorAll('.needs-validation');
+
+    // Loop over forms and prevent submission if validation fails
+    Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                showAlert("error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
+            }
+            form.classList.add('was-validated');
+        }, false);
+
+        // Add 'change' event listener for all inputs to validate them dynamically
+        var inputs = form.querySelectorAll('input');
+        Array.prototype.slice.call(inputs).forEach(function (input) {
+            input.addEventListener('change', function () {
+                if (input.checkValidity()) {
+                    input.classList.remove('is-invalid');
+                    input.classList.add('is-valid');
+                } else {
+                    input.classList.remove('is-valid');
+                    input.classList.add('is-invalid');
+                    showAlert("error", "Dữ liệu không hợp lệ trong " + input.placeholder);
+                }
+            });
+        });
+    });
+
+    //thông báo
+    function showAlert(type, message) {
+        let alertElement;
+
+        if (type === 'success') {
+            alertElement = document.getElementById('successAlert');
+            alertElement.querySelector('span').textContent = message; // Thiết lập nội dung thông báo thành công
+            alertElement.style.display = 'block'; // Hiển thị thông báo thành công
+        } else if (type === 'error') {
+            alertElement = document.getElementById('alertMessage');
+            alertElement.querySelector('#alertBody').textContent = message; // Thiết lập nội dung thông báo lỗi
+            alertElement.style.display = 'block'; // Hiển thị thông báo lỗi
+        }
+
+        // Tự động ẩn thông báo sau 5 giây
+        setTimeout(() => {
+            if (alertElement) {
+                var bootstrapAlert = new bootstrap.Alert(alertElement);
+                bootstrapAlert.close();
+            }
+        }, 5000);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Kiểm tra và ẩn thông báo thành công nếu có
+        var successAlert = document.getElementById('successAlert');
+        if (successAlert && successAlert.style.display !== 'none') {
+            setTimeout(function () {
+                var bootstrapAlert = new bootstrap.Alert(successAlert);
+                bootstrapAlert.close();
+            }, 5000);
+        }
+    });
+
+})();

@@ -15,7 +15,6 @@ function initializeChart(labels, dataValues, backgroundColors, borderColors) {
             borderWidth: 1
         }]
     };
-
     const config = {
         type: 'bar',
         data: data,

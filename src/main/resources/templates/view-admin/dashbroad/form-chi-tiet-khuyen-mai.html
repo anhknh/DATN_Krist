@@ -47,60 +47,85 @@
         </div>
         <!-- Main Menu Items -->
         <div style="padding: 0px 22px 28px; border-bottom: 1px solid #E9E9EB;" class="mb-4">
-          <a href="./adminDashBroad.html" class="bg_profile_btn mb-3"
-             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+          <!--                    Hiện tại vẫn chưa có tính năng doanh thu đường dẫn là #-->
+          <a href="#" class=" mb-3"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;"
+             onclick="highlightLink(this)">
             <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
+          </a>
+          <a href="/quan-ly/ban-hang" class="mb-3"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
+            <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
+          </a>
+          <a href="/quan-ly-san-pham/pagination-san-pham" class="mb-3"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
+            <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
           </a>
           <!-- Product Management Tree Menu -->
           <div class="menu-item mb-3">
             <p style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center; cursor: pointer;"
                onclick="toggleSubmenu('productSubMenu')">
-              <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Sản phẩm
+              <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Thuộc tính
               <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
             </p>
             <ul id="productSubMenu" class="submenu"
                 style="list-style: none; padding-left: 20px; display: none;">
               <li style="padding: 8px 12px;">
-                <a href="./adminCategories.html" style="text-decoration: none; color: #000;">Danh
+                <a href="/quan-ly-danh-muc/pagination-danh-muc"
+                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Danh
                   mục</a>
               </li>
               <li style="padding: 8px 12px;">
-                <a href="./adminMaterial.html" style="text-decoration: none; color: #000;">Chất liệu</a>
+                <a href="/quan-ly-chat-lieu/pagination-chat-lieu"
+                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Chất liệu</a>
+              </li>
+              <li style="padding: 8px 12px;">
+                <a href="/quan-ly-mau-sac/pagination-mau-sac"
+                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Màu sắc</a>
+              </li>
+              <li style="padding: 8px 12px;">
+                <a href="/quan-ly-size/pagination-size"
+                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Size</a>
+              </li>
+              <li style="padding: 8px 12px;">
+                <a href="/quan-ly-tay-ao/pagination-tay-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Tay
+                  áo</a>
+              </li>
+              <li style="padding: 8px 12px;">
+                <a href="/quan-ly-co-ao/pagination-co-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Cổ
+                  áo</a>
               </li>
             </ul>
           </div>
-          <a href="./adminOrder.html" class="mb-3"
+          <!--                    Chức năng chưa có đường dẫn là #-->
+          <a href="#" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
-            <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Đơn hàng
+            <i class="fa-light fa-cart-flatbed" style="margin-right: 10px;"></i> Đơn hàng
           </a>
-          <a href="./adminCustomer.html" class="mb-3"
+          <a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="bg_profile_btn mb-3" onclick="highlightLink(this)"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-tickets-perforated" style="margin-right: 10px;"></i> Khuyến mại
+          </a>
+          <!--                    Chức năng chưa có đường dẫn là #-->
+          <a href="#" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
           </a>
-          <a href="./adminReviews.html" class="mb-3"
+          <a href="/quan-ly-nhan-vien/phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
+             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+            <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
+          </a>
+          <!--                    Chức năng chưa có đường dẫn là #-->
+
+          <a href="#" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-star" style="margin-right: 10px;"></i> Đánh giá
           </a>
-          <a href="./adminSetting.html" class="mb-3"
+          <!--                    Chức năng chưa có đường dẫn là #-->
+          <a href="#" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
-            <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Settings
+            <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
           </a>
-        </div>
-
-        <!-- Extra Menu -->
-        <div id="drop_right" style="padding: 0px 22px 28px; cursor: pointer;"
-             onclick="toggleSubmenu('extrasSubMenu')">
-          <p class="mb-3"
-             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center;">
-            <i class="fa-regular fa-plus" style="margin-right: 10px;"></i> Extras
-            <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
-          </p>
-          <ul id="extrasSubMenu" class="submenu" style="list-style: none; padding-left: 20px; display: none;">
-            <li style="padding: 8px;"><a href="./adminSize.html"
-                                         style="text-decoration: none; color: #000;">Size</a></li>
-            <li style="padding: 8px;"><a href="./adminColor.html"
-                                         style="text-decoration: none; color: #000;">Color</a></li>
-          </ul>
         </div>
       </div>
       <div class="col-10">
@@ -110,8 +135,8 @@
           <div>
             <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb">
               <ol class="breadcrumb" style="height: 40px; margin: 0px;">
-                <li class="breadcrumb-item "><a href="#" class="nav_link">Admin</a></li>
-                <li class="breadcrumb-item "><a href="#" class="nav_link_active">Dashboard</a></li>
+                <li class="breadcrumb-item "><a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="nav_link">Khuyến mại</a></li>
+                <li class="breadcrumb-item "><a href="#" class="nav_link_active">Chi tiết khuyến mại</a></li>
               </ol>
             </nav>
           </div>
@@ -124,7 +149,7 @@
           <!-- headre_content -->
           <div class="mb-4">
             <div class="w-100">
-              <h4>Detail Khuyến Mại</h4>
+              <h4>Chi Tiết Khuyến Mại</h4>
 
             </div>
             <!-- Hiển thị thông báo nếu có -->
@@ -134,44 +159,58 @@
 
             <!-- Form cập nhật khuyến mãi -->
             <form th:action="@{/update-khuyen-mai/{id}(id=${khuyenMaiCre.id})}" th:object="${khuyenMaiCre}" method="post">
-              <div class="form-group">
-                <label for="maKhuyenMai">Mã khuyến mãi:</label>
-                <input type="text" class="form-control" id="maKhuyenMai" th:field="*{maKhuyenMai}" readonly />
+              <div class="row">
+                <!-- Cột trái -->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="maKhuyenMai">Mã khuyến mại:</label>
+                    <input type="text" class="form-control" id="maKhuyenMai" th:field="*{maKhuyenMai}" readonly />
+                  </div>
+                  <div class="form-group">
+                    <label for="tenKhuyenMai">Tên khuyến mại:</label>
+                    <input type="text" class="form-control" id="tenKhuyenMai" th:field="*{tenKhuyenMai}" readonly />
+                  </div>
+                  <div class="form-group">
+                    <label for="kieuKhuyenMai">Kiểu khuyến mại:</label>
+                    <input type="text" class="form-control" id="kieuKhuyenMai" th:field="*{kieuKhuyenMai}" readonly />
+                  </div>
+                  <div class="form-group">
+                    <label for="giaTri">Giá trị:</label>
+                    <input type="number" class="form-control" id="giaTri" th:field="*{giaTri}" readonly />
+                  </div>
+                </div>
+
+                <!-- Cột phải -->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="mucGiamToiDa">Mức giảm tối đa:</label>
+                    <input type="number" class="form-control" id="mucGiamToiDa" th:field="*{mucGiamToiDa}" readonly />
+                  </div>
+                  <div class="form-group">
+                    <label for="ngayBatDau">Ngày bắt đầu:</label>
+                    <input type="text" class="form-control" id="ngayBatDau" th:field="*{ngayBatDau}" readonly />
+                  </div>
+                  <div class="form-group">
+                    <label for="ngayKetThuc">Ngày kết thúc:</label>
+                    <input type="text" class="form-control" id="ngayKetThuc" th:field="*{ngayKetThuc}" readonly />
+                  </div>
+                  <div class="form-group">
+                    <label for="trangThai">Trạng thái:</label>
+                    <select class="form-control" id="trangThai" th:field="*{trangThai}" disabled>
+                      <option value="Hoat dong">Đang hoạt động</option>
+                      <option value="Ngung hoat dong">Ngừng hoạt động</option>
+                      <option value="Het han">Hết hạn</option>
+                    </select>
+                  </div>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="tenKhuyenMai">Tên khuyến mãi:</label>
-                <input type="text" class="form-control" id="tenKhuyenMai" th:field="*{tenKhuyenMai}" readonly />
+
+              <!-- Nút trở về dưới cùng form -->
+              <div class="d-flex justify-content-end mt-3">
+                <a th:href="@{/quan-ly-khuyen-mai/pagination-khuyen-mai}" class="btn btn-dark">Trở về</a>
               </div>
-              <div class="form-group">
-                <label for="kieuKhuyenMai">Kiểu khuyến mãi:</label>
-                <input type="text" class="form-control" id="kieuKhuyenMai" th:field="*{kieuKhuyenMai}" readonly />
-              </div>
-              <div class="form-group">
-                <label for="giaTri">Giá trị:</label>
-                <input type="number" class="form-control" id="giaTri" th:field="*{giaTri}" readonly />
-              </div>
-              <div class="form-group">
-                <label for="mucGiamToiDa">Mức giảm tối đa:</label>
-                <input type="number" class="form-control" id="mucGiamToiDa" th:field="*{mucGiamToiDa}" readonly />
-              </div>
-              <div class="form-group">
-                <label for="ngayBatDau">Ngày bắt đầu:</label>
-                <input type="text" class="form-control" id="ngayBatDau" th:field="*{ngayBatDau}" readonly />
-              </div>
-              <div class="form-group">
-                <label for="ngayKetThuc">Ngày kết thúc:</label>
-                <input type="text" class="form-control" id="ngayKetThuc" th:field="*{ngayKetThuc}" readonly />
-              </div>
-              <div class="form-group">
-                <label for="trangThai">Trạng thái:</label>
-                <select class="form-control" id="trangThai" th:field="*{trangThai}" disabled>
-                  <option value="Hoat dong">Đang hoạt động</option>
-                  <option value="Ngung hoat dong">Ngừng hoạt động</option>
-                  <option value="Het han">Hết Hạn</option>
-                </select>
-              </div>
-              <a th:href="@{/quan-ly-khuyen-mai/pagination-khuyen-mai}" class="btn btn-secondary">Trở về</a>
             </form>
+
 
           </div>
         </div>

@@ -1,10 +1,4 @@
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
-}
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -18,7 +12,7 @@ body {
     margin: 10px;
     padding: 20px;
     text-align: center;
-    width: 200px;
+    width: 365px;
 }
 .card i {
     font-size: 24px;
@@ -53,11 +47,30 @@ body {
     font-weight: bold;
     margin-bottom: 10px;
 }
-.ml {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin: 10px 0 0 49px;
-    padding: 20px;
-    width: 44.4%;
+/*.ml {*/
+/*    background-color: white;*/
+/*    border-radius: 10px;*/
+/*    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+/*    margin: 10px 0 0 39px;*/
+/*    padding: 20px;*/
+/*    !*width: 44.4%;*!*/
+/*    width: 93%;*/
+/*}*/
+
+
+.status-container {
+    display: flex;
+    justify-content: space-between; /* Phân phối đều các phần tử */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 10px; /* Khoảng cách giữa các phần tử */
+    padding: 10px;
+    background-color: #f9f9f9; /* Màu nền tùy chọn */
+    border-radius: 5px; /* Bo tròn góc */
+    margin-right: 450px;
+}
+
+.status-title {
+    font-weight: bold;
+    white-space: nowrap; /* Giữ tiêu đề trên một dòng */
+    margin-left: 20px;
 }
