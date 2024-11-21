@@ -1,8 +1,6 @@
 package com.example.kristp.service.impl;
 
-import com.example.kristp.entity.ChatLieu;
-import com.example.kristp.entity.DanhMuc;
-import com.example.kristp.entity.SanPham;
+import com.example.kristp.entity.*;
 import com.example.kristp.enums.Status;
 import com.example.kristp.repository.ChatLieuRepository;
 import com.example.kristp.repository.DanhMucRepository;
@@ -49,27 +47,41 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public SanPham addSanPham(SanPham sanPham) {
-        sanPham.setNgayTao(new Date());
-        sanPham.setNgaySua(new Date());
-
-        // Kiểm tra id_chat_lieu và id_danh_muc
-//        if (sanPham.getChatLieu() == null || sanPham.getDanhMuc() == null) {
-//            throw new IllegalArgumentException("Chất liệu và danh mục không được để trống.");
-//        }
+        if(timTheoTenSanPham(sanPham.getTenSanPham()) != null){
+            return null ;
+        }
+        sanPham.setTrangThai(Status.ACTIVE);
         return sanPhamRepository.save(sanPham);
     }
 
     @Override
     public SanPham updateSanPham(SanPham sanPham, Integer idSanPham) {
-        sanPham.setNgaySua(new Date());  // Cập nhật ngày sửa
-        return sanPhamRepository.save(sanPham);
+        SanPham timtheoten = timTheoTenSanPham(sanPham.getTenSanPham());
+        if(timtheoten != null && !timtheoten.getId().equals(idSanPham)) {
+            return null;
+        }
+
+        SanPham tayao1 = findSanphamById(idSanPham);
+        tayao1.setChatLieu(sanPham.getChatLieu());
+        tayao1.setDanhMuc(sanPham.getDanhMuc());
+        tayao1.setTenSanPham(sanPham.getTenSanPham());
+        tayao1.setMoTa(sanPham.getMoTa());
+        tayao1.setTrangThai(sanPham.getTrangThai());
+        return sanPhamRepository.save(tayao1);
     }
 
     @Override
     public void deleteSanPham(Integer idSanPham) {
         SanPham sanPham = sanPhamRepository.findById(idSanPham).orElse(null);
         if (sanPham != null) {
-            sanPham.setTrangThai(Status.INACTIVE);  // Đặt trạng thái thành không hoạt động
+            // Kiểm tra trạng thái hiện tại và thay đổi theo yêu cầu
+            if (Status.ACTIVE.equals(sanPham.getTrangThai())) {
+                sanPham.setTrangThai(Status.INACTIVE);  // Nếu đang hoạt động, chuyển thành không hoạt động
+            } else if (Status.INACTIVE.equals(sanPham.getTrangThai())) {
+                sanPham.setTrangThai(Status.ACTIVE);  // Nếu không hoạt động, chuyển lại thành đang hoạt động
+            }
+
+            // Lưu lại trạng thái mới vào cơ sở dữ liệu
             sanPhamRepository.save(sanPham);
         }
     }

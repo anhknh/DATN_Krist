@@ -158,7 +158,7 @@ public class SanPhamController {
     @GetMapping("/delete-san-pham/{id}")
     private String deleteSanPham(@PathVariable("id")Integer idSanPham ,  RedirectAttributes attributes){
         sanPhamService.deleteSanPham(idSanPham);
-        attributes.addFlashAttribute("message" , "Xóa san pham thành công .");
+        attributes.addFlashAttribute("message" , "Đổi trạng thái sản phẩm thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-san-pham/pagination-san-pham";

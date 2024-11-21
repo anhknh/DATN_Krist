@@ -35,6 +35,12 @@ public class NhanVienController {
 
     @PostMapping("/add-nhan-vien")
     private String addNhanVien(@Valid @ModelAttribute("nhanvien") NhanVien nhanVien, BindingResult result, RedirectAttributes attributes){
+        System.out.println("Thông tin nhân viên: ");
+        System.out.println("Mã nhân viên: " + nhanVien.getMaNhanVien());
+        System.out.println("Tên nhân viên: " + nhanVien.getTenNhanVien());
+        System.out.println("Số điện thoại: " + nhanVien.getSoDienThoai());
+        System.out.println("Ngày sinh: " + nhanVien.getNgaySinh());
+        System.out.println("Địa chỉ: " + nhanVien.getDiaChi());
         if (nhanVienService.addNhanVien(nhanVien) == null){
             attributes.addFlashAttribute("nhanvien", nhanVien);
             attributes.addFlashAttribute("message", "Mã nhân viên đã tồn tại");
@@ -51,6 +57,8 @@ public class NhanVienController {
 
     @PostMapping("/update-nhan-vien")
     private String updateNV(@Valid @ModelAttribute("nhanvien") NhanVien nhanVien, BindingResult result, RedirectAttributes attributes, @RequestParam("id") Integer idNV){
+
+        System.out.println("Ngày sinh: " + nhanVien.getNgaySinh());
         if (nhanVienService.updateNhanVien(nhanVien, idNV) == null){
             attributes.addFlashAttribute("nhanvien", nhanVien);
             attributes.addFlashAttribute("message", "Mã nhân viên đã tồn tại");
@@ -68,7 +76,7 @@ public class NhanVienController {
     @GetMapping("/delete-nhan-vien/{id}")
     private String deleteNV(@PathVariable("id")Integer idNV, RedirectAttributes attributes){
         nhanVienService.deleteNhanVien(idNV);
-        attributes.addFlashAttribute("message" , "Xóa nhân viên thành công");
+        attributes.addFlashAttribute("message" , "Đổi trạng thái nhân viên thành công");
         attributes.addFlashAttribute("messageType" , "alert-danger");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-nhan-vien/phan-trang-nhan-vien";

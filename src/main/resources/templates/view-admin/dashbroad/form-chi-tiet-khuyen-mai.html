@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -124,7 +125,7 @@
           <!-- headre_content -->
           <div class="mb-4">
             <div class="w-100">
-              <h4>Detail Khuyến Mại</h4>
+              <h4>Chi tiết khuyến mại</h4>
 
             </div>
             <!-- Hiển thị thông báo nếu có -->
@@ -133,44 +134,83 @@
             </div>
 
             <!-- Form cập nhật khuyến mãi -->
-            <form th:action="@{/update-khuyen-mai/{id}(id=${khuyenMaiCre.id})}" th:object="${khuyenMaiCre}" method="post">
-              <div class="form-group">
-                <label for="maKhuyenMai">Mã khuyến mãi:</label>
-                <input type="text" class="form-control" id="maKhuyenMai" th:field="*{maKhuyenMai}" readonly />
+            <div class="w-100">
+              <div class="modal-body" style="padding:30px">
+                <div>
+                  <form th:action="@{/quan-ly-khuyen-mai/update-khuyen-mai/{id}(id=${khuyenMaiCre.id})}" th:object="${khuyenMaiCre}" method="post" class="needs-validation">
+                    <div class="row">
+                      <!-- Cột bên trái -->
+                      <div class="col-md-6">
+                        <div class="display_none">
+                          <input type="text" class="form-control" id="idKhuyenMai" name="idKhuyenMai" th:field="*{id}">
+                        </div>
+                        <div class="mb-4">
+                          <label for="maKhuyenMai" class="form-label">Mã khuyến mại</label>
+                          <input type="text" class="form-control" id="maKhuyenMai" placeholder="Nhập mã khuyến mại"
+                                 th:field="*{maKhuyenMai}" readonly >
+                          <div class="invalid-feedback">Mã khuyến mại không hợp lệ.</div>
+                        </div>
+                        <div class="mb-4">
+                          <label for="tenKhuyenMai" class="form-label">Tên khuyến mại</label>
+                          <input type="text" class="form-control" id="tenKhuyenMai" placeholder="Nhập tên khuyến mại"
+                                 th:field="*{tenKhuyenMai}" readonly >
+                          <div class="invalid-feedback">Tên khuyến mại không hợp lệ.</div>
+                        </div>
+                        <div class="mb-4">
+                          <label for="kieuKhuyenMai" class="form-label">Kiểu khuyến mại</label>
+                          <input type="text" class="form-control" id="kieuKhuyenMai" placeholder="Nhập kiểu khuyến mại"
+                                 th:field="*{kieuKhuyenMai}" readonly
+                                 th:value="${khuyenMaiCre.kieuKhuyenMai == true ? 'Giảm theo VND' : 'Giảm theo %'}">
+                          <div class="invalid-feedback">Mã khuyến mại không hợp lệ.</div>
+                        </div>
+                        <div class="mb-4">
+                          <label for="maKhuyenMai" class="form-label">Trạng thái</label>
+                          <input type="text" class="form-control" id="trangThai" placeholder="Nhập mã khuyến mại"
+                                 th:field="*{trangThai}" readonly >
+                          <div class="invalid-feedback">Mã khuyến mại không hợp lệ.</div>
+                        </div>
+                      </div>
+
+
+                      <!-- Cột bên phải -->
+                      <div class="col-md-6">
+                        <div class="mb-4">
+                          <label for="mucGiam" class="form-label">Mức giảm tối đa</label>
+                          <input type="text" class="form-control" id="mucGiam" placeholder="Nhập mức giảm tối đa"
+                                 th:field="*{mucGiamToiDa}" readonly >
+                          <div class="invalid-feedback">Mức giảm không hợp lệ.</div>
+                        </div>
+                        <div class="mb-4">
+                          <label for="giaTri" class="form-label">Giá trị</label>
+                          <input type="text" class="form-control" id="giaTri" placeholder="Nhập giá trị"
+                                 th:field="*{giaTri}" readonly >
+                          <div class="invalid-feedback">Giá trị không hợp lệ.</div>
+                        </div>
+                        <div class="mb-4">
+                          <label for="ngayBD" class="form-label">Ngày bắt đầu</label>
+                          <input type="text" class="form-control" id="ngayBD"
+                                 th:field="*{ngayBatDau}" readonly >
+                          <div class="invalid-feedback">Ngày bắt đầu không hợp lệ.</div>
+                        </div>
+                        <div class="mb-4">
+                          <label for="ngayKT" class="form-label">Ngày kết thúc</label>
+                          <input type="text" class="form-control" id="ngayKT"
+                                 th:field="*{ngayKetThuc}" readonly >
+                          <div class="invalid-feedback">Ngày kết thúc không hợp lệ.</div>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-end mt-3">
+                        <a th:href="@{/quan-ly-khuyen-mai/pagination-khuyen-mai}"
+                           class="btn btn-dark me-2">Trở về</a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="tenKhuyenMai">Tên khuyến mãi:</label>
-                <input type="text" class="form-control" id="tenKhuyenMai" th:field="*{tenKhuyenMai}" readonly />
-              </div>
-              <div class="form-group">
-                <label for="kieuKhuyenMai">Kiểu khuyến mãi:</label>
-                <input type="text" class="form-control" id="kieuKhuyenMai" th:field="*{kieuKhuyenMai}" readonly />
-              </div>
-              <div class="form-group">
-                <label for="giaTri">Giá trị:</label>
-                <input type="number" class="form-control" id="giaTri" th:field="*{giaTri}" readonly />
-              </div>
-              <div class="form-group">
-                <label for="mucGiamToiDa">Mức giảm tối đa:</label>
-                <input type="number" class="form-control" id="mucGiamToiDa" th:field="*{mucGiamToiDa}" readonly />
-              </div>
-              <div class="form-group">
-                <label for="ngayBatDau">Ngày bắt đầu:</label>
-                <input type="text" class="form-control" id="ngayBatDau" th:field="*{ngayBatDau}" readonly />
-              </div>
-              <div class="form-group">
-                <label for="ngayKetThuc">Ngày kết thúc:</label>
-                <input type="text" class="form-control" id="ngayKetThuc" th:field="*{ngayKetThuc}" readonly />
-              </div>
-              <div class="form-group">
-                <label for="trangThai">Trạng thái:</label>
-                <select class="form-control" id="trangThai" th:field="*{trangThai}" disabled>
-                  <option value="Hoat dong">Đang hoạt động</option>
-                  <option value="Ngung hoat dong">Ngừng hoạt động</option>
-                  <option value="Het han">Hết Hạn</option>
-                </select>
-              </div>
-              <a th:href="@{/quan-ly-khuyen-mai/pagination-khuyen-mai}" class="btn btn-secondary">Trở về</a>
+            </div>
+
+            <!-- Nút hành động dưới cùng form -->
+
             </form>
 
           </div>
@@ -232,6 +272,7 @@
       document.getElementById("form_submit").action = '/quan-ly-khuyen-mai/add-khuyen-mai';
     }
   }
+
 
   (function () {
     'use strict';

@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -29,18 +30,21 @@ public class KhuyenMai {
     private String maKhuyenMai;
     @NotBlank
     private String tenKhuyenMai;
-    @NotBlank
-    private String kieuKhuyenMai;
+    @NotNull
+    private Boolean kieuKhuyenMai;
     @NotNull
     private Float giaTri;
     @NotNull
     private Float mucGiamToiDa;
+
     @NotBlank
     private String trangThai;
 
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayBatDau;
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayKetThuc;
 
 
