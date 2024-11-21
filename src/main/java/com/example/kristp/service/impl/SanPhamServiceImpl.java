@@ -68,10 +68,13 @@ public class SanPhamServiceImpl implements SanPhamService {
     @Override
     public void deleteSanPham(Integer idSanPham) {
         SanPham sanPham = sanPhamRepository.findById(idSanPham).orElse(null);
-        if (sanPham != null) {
-            sanPham.setTrangThai(Status.INACTIVE);  // Đặt trạng thái thành không hoạt động
-            sanPhamRepository.save(sanPham);
+        // Chuyển trạng thái giữa ACTIVE và INACTIVE
+        if (sanPham.getTrangThai() == Status.INACTIVE) {
+            sanPham.setTrangThai(Status.ACTIVE);
+        } else {
+            sanPham.setTrangThai(Status.INACTIVE);
         }
+        sanPhamRepository.save(sanPham);
     }
 
 //    public Integer addSanpham(Integer danhMuc, Integer chatLieu, String tenSanPham, String moTa, Status trangThai) {
