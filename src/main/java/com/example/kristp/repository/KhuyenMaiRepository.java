@@ -27,7 +27,7 @@ public interface KhuyenMaiRepository  extends JpaRepository<KhuyenMai, Integer> 
     @Query("SELECT km FROM KhuyenMai km WHERE "
             + "(:maKhuyenMai IS NULL OR km.maKhuyenMai LIKE %:maKhuyenMai%) AND "
             + "(:tenKhuyenMai IS NULL OR km.tenKhuyenMai LIKE %:tenKhuyenMai%) AND "
-            + "(:kieuKhuyenMai IS NULL OR km.kieuKhuyenMai LIKE %:kieuKhuyenMai%) AND "
+            + "(:kieuKhuyenMai IS NULL OR km.kieuKhuyenMai = :kieuKhuyenMai) AND "
             + "(:mucGiamToiDa IS NULL OR km.mucGiamToiDa <= :mucGiamToiDa) AND "
             + "(:trangThai IS NULL OR km.trangThai LIKE %:trangThai%) AND "
             + "(:ngayBatDau IS NULL OR km.ngayBatDau >= :ngayBatDau) AND "
@@ -36,7 +36,7 @@ public interface KhuyenMaiRepository  extends JpaRepository<KhuyenMai, Integer> 
     Page<KhuyenMai> findKhuyenMaiByCriteria(
             @Param("maKhuyenMai") String maKhuyenMai,
             @Param("tenKhuyenMai") String tenKhuyenMai,
-            @Param("kieuKhuyenMai") String kieuKhuyenMai,
+            @Param("kieuKhuyenMai") Boolean kieuKhuyenMai,
             @Param("mucGiamToiDa") Float mucGiamToiDa,
             @Param("trangThai") String trangThai,
             @Param("ngayBatDau") Date ngayBatDau,

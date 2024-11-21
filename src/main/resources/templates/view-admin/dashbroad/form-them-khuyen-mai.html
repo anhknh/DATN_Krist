@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Danh mục</title>
+  <title>Khuyến mại</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
   <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
@@ -57,7 +57,7 @@
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
             <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
           </a>
-          <a href="/quan-ly-san-pham/pagination-san-pham" class="mb-3"
+          <a href="/quan-ly-san-pham/pagination-san-pham" class="bg_profile_btn mb-3"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
             <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
           </a>
@@ -102,7 +102,7 @@
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-cart-flatbed" style="margin-right: 10px;"></i> Đơn hàng
           </a>
-          <a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="bg_profile_btn mb-3" onclick="highlightLink(this)"
+          <a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-tickets-perforated" style="margin-right: 10px;"></i> Khuyến mại
           </a>
@@ -127,6 +127,22 @@
             <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
           </a>
         </div>
+
+<!--        &lt;!&ndash; Extra Menu &ndash;&gt;-->
+<!--        <div id="drop_right" style="padding: 0px 22px 28px; cursor: pointer;"-->
+<!--             onclick="toggleSubmenu('extrasSubMenu')">-->
+<!--          <p class="mb-3"-->
+<!--             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center;">-->
+<!--            <i class="fa-regular fa-plus" style="margin-right: 10px;"></i> Extras-->
+<!--            <i class="fa fa-chevron-down" style="margin-left:auto;"></i>-->
+<!--          </p>-->
+<!--          <ul id="extrasSubMenu" class="submenu" style="list-style: none; padding-left: 20px; display: none;">-->
+<!--            <li style="padding: 8px;"><a href="./adminSize.html"-->
+<!--                                         style="text-decoration: none; color: #000;">Size</a></li>-->
+<!--            <li style="padding: 8px;"><a href="./adminColor.html"-->
+<!--                                         style="text-decoration: none; color: #000;">Color</a></li>-->
+<!--          </ul>-->
+<!--        </div>-->
       </div>
       <div class="col-10">
         <!-- navigator_link -->
@@ -135,8 +151,10 @@
           <div>
             <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb">
               <ol class="breadcrumb" style="height: 40px; margin: 0px;">
-                <li class="breadcrumb-item "><a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="nav_link">Khuyến mại</a></li>
-                <li class="breadcrumb-item "><a href="#" class="nav_link_active">Thêm khuyến mại</a></li>
+                <li class="breadcrumb-item "><a href="#" class="nav_link">Admin</a></li>
+                <li class="breadcrumb-item "><a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="nav_link_active">Khuyến Mại</a></li>
+
+                <li class="breadcrumb-item "><a href="/quan-ly-khuyen-mai/pagination-add-khuyen-mai" class="nav_link_active">Thêm Khuyến Mại</a></li>
               </ol>
             </nav>
           </div>
@@ -149,7 +167,7 @@
           <!-- headre_content -->
           <div class="mb-4">
             <div class="w-100">
-              <h4>Thêm Khuyến Mại</h4>
+              <h4>Thêm khuyến mại</h4>
 
             </div>
             <div class="w-100">
@@ -174,11 +192,33 @@
                                  th:field="*{tenKhuyenMai}" required>
                           <div class="invalid-feedback">Tên khuyến mại không hợp lệ.</div>
                         </div>
-                        <div class="mb-4">
-                          <label for="kieuKhuyenMai" class="form-label">Kiểu khuyến mại</label>
-                          <input type="text" class="form-control" id="kieuKhuyenMai" placeholder="Nhập kiểu khuyến mại"
-                                 th:field="*{kieuKhuyenMai}" required>
+                        <div class="col-md-4">
+                          <label class="form-label">Kiểu khuyến mại</label>
+                          <div>
+                            <div class="form-check form-check-inline">
+                              <input type="radio" class="form-check-input" id="kieuKhuyenMaiTrue"
+                                     th:field="*{kieuKhuyenMai}" value="true" required>
+                              <label class="form-check-label" for="kieuKhuyenMaiTrue"> VNĐ</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input type="radio" class="form-check-input" id="kieuKhuyenMaiFalse"
+                                     th:field="*{kieuKhuyenMai}" value="false" required>
+                              <label class="form-check-label" for="kieuKhuyenMaiFalse">%</label>
+                            </div>
+                          </div>
                           <div class="invalid-feedback">Kiểu khuyến mại không hợp lệ.</div>
+                        </div>
+                        <div class="col-md-4" id="statusSection" >
+                          <div class="form-group">
+                          <label   for="trangThai" class="form-label" style="font-weight: normal;">Trạng thái:</label>
+                          <select class="form-select" aria-label="Default select example"  th:field="*{trangThai}" id="trangThai" required>
+                            <option value="">Chọn trạng thái</option> <!-- Đảm bảo có giá trị mặc định -->
+                            <option value="Chưa kích hoạt">Chưa kích hoạt</option>
+                            <option value="Đang hoạt động">Đang hoạt động</option>
+<!--                            <option value="Hết hạn">Hết hạn</option>-->
+                          </select>
+                          </div>
+                          <div class="invalid-feedback" >Trạng thái không hợp lệ</div>
                         </div>
                       </div>
 
@@ -199,34 +239,24 @@
                         <div class="mb-4">
                           <label for="ngayBD" class="form-label">Ngày bắt đầu</label>
                           <input type="date" class="form-control" id="ngayBD"
-                                 th:field="*{ngayBatDau}">
+                                 th:field="*{ngayBatDau}" required>
                           <div class="invalid-feedback">Ngày bắt đầu không hợp lệ.</div>
                         </div>
                         <div class="mb-4">
                           <label for="ngayKT" class="form-label">Ngày kết thúc</label>
                           <input type="date" class="form-control" id="ngayKT"
-                                 th:field="*{ngayKetThuc}">
+                                 th:field="*{ngayKetThuc}" required>
                           <div class="invalid-feedback">Ngày kết thúc không hợp lệ.</div>
                         </div>
                       </div>
                     </div>
 
                     <!-- Trường "Trạng thái" và nút "Save" ở giữa -->
-                    <div class="row">
-                      <div class="col-md-12 text-center">
-                        <div class="mb-4 display_none" id="statusSection">
-                          <label class="form-label">Trạng thái</label><br>
-                          <input type="radio" th:field="*{trangThai}" id="active" th:value="'Dang hoat dong'">
-                          <label for="active">Active</label><br>
-                          <input type="radio" th:field="*{trangThai}" id="inactive" th:value="'Ngung hoat dong'">
-                          <label for="inactive">Inactive</label><br>
-                          <input type="radio" th:field="*{trangThai}" id="hethan" th:value="'Het han'">
-                          <label for="hethan">Hết hạn</label>
-                        </div>
-                        <button type="submit" class="btn btn-dark">Lưu</button>
-                      </div>
+                    <div class="d-flex justify-content-end mt-3">
+                      <button type="submit" class="btn btn-dark me-2" > Lưu </button>
+                      <a th:href="@{/quan-ly-khuyen-mai/pagination-khuyen-mai}"
+                         class="btn" style="background-color: #808080; color: white;">Trở về</a>
                     </div>
-                </div>
                 </form>
               </div>
             </div>
@@ -261,52 +291,94 @@
   const idKhuyenMai = document.getElementById("idKhuyenMai");
   const maKhuyenMai = document.getElementById('maKhuyenMai');
   const tenKhuyenMai = document.getElementById('tenKhuyenMai');
-  const kieuKhuyenMai = document.getElementById('kieuKhuyenMai');
   const mucGiam = document.getElementById('mucGiam');
   const giaTri = document.getElementById('giaTri');
   const statusSection = document.getElementById('statusSection');
+  const trangThaiSelect = document.getElementById('trangThai'); // Lấy phần tử select
 
-  function saveIdOrder(id, index, hanhDong) {
+  function saveIdOrder(id, index, hanhDong, kieu) {
+    // Lưu id khuyến mại
     idKhuyenMai.value = id;
+
     if (index != null) {
-      maKhuyenMai.value = valueName[index].textContent.trim();  // Cập nhật mã khuyến mại
-      tenKhuyenMai.value = valueDes[index].textContent.trim();  // Cập nhật tên khuyến mại
-      statusSection.classList.remove('display_none');
+      maKhuyenMai.value = valueName[index].textContent.trim();
+      tenKhuyenMai.value = valueDes[index].textContent.trim();
+      statusSection.classList.remove('display_none'); // Hiển thị phần trạng thái
       document.getElementById('exampleModalLabel').innerText = 'Cập nhật khuyến mại';
-      // Kiểm tra trạng thái và chọn radio button tương ứng
-      if (hanhDong == "Dang hoat dong") {
-        document.getElementById('active').checked = true;
-      } else if (hanhDong == "Ngung hoat dong") {
-        document.getElementById('inactive').checked = true;
-      } else if (hanhDong == "Het han") {
-        document.getElementById('hethan').checked = true;
+
+      // Kiểm tra trạng thái và chọn giá trị trong select tương ứng
+      if (hanhDong === "Đang hoạt động") {
+        trangThaiSelect.value = "Đang hoạt động"; // Chọn "Đang hoạt động"
+      } else if (hanhDong === "Chưa kích hoạt") {
+        trangThaiSelect.value = "Chưa kích hoạt"; // Chọn "Chưa kích hoạt"
+       }
+      // else if (hanhDong === "Hết hạn") {
+      //   trangThaiSelect.value = "Hết hạn"; // Chọn "Hết hạn"
+      // }
+
+      // Cập nhật radio button cho kieuKhuyenMai
+      if (kieu === true) {
+        document.getElementById('kieuKhuyenMaiTrue').checked = true; // Chọn radio "True"
+      } else {
+        document.getElementById('kieuKhuyenMaiFalse').checked = true; // Chọn radio "False"
       }
+
       document.getElementById("form_submit").action = '/quan-ly-khuyen-mai/update-khuyen-mai';
     } else {
-      statusSection.classList.add('display_none');
+      // Nếu không có index (thêm mới)
+      statusSection.classList.add('display_none'); // Ẩn phần trạng thái khi thêm mới
       document.getElementById('exampleModalLabel').innerText = 'Thêm mới khuyến mại';
       maKhuyenMai.value = "";
       tenKhuyenMai.value = "";
+      document.getElementById('kieuKhuyenMaiTrue').checked = false; // Mặc định không chọn
+      document.getElementById('kieuKhuyenMaiFalse').checked = false;
+      trangThaiSelect.value = ""; // Đặt giá trị của trạng thái về rỗng khi thêm mới
       document.getElementById("form_submit").action = '/quan-ly-khuyen-mai/add-khuyen-mai';
     }
   }
 
+
+
   (function () {
     'use strict';
-    // Fetch all forms with class 'needs-validation'
+
     var forms = document.querySelectorAll('.needs-validation');
 
-    // Loop over forms and prevent submission if validation fails
     Array.prototype.slice.call(forms).forEach(function (form) {
       form.addEventListener('submit', function (event) {
+        var isValid = true;
+
+        // Kiểm tra tính hợp lệ của form
         if (!form.checkValidity()) {
           event.preventDefault();
-          event.stopPropagation();
-          showAlert("error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
+          isValid = false;
         }
+
+        // Lấy giá trị ngày kết thúc và trạng thái
+        var ngayKetThucInput = document.getElementById('ngayKT');
+        var trangThaiInput = document.getElementById('trangThai').value;
+        var ngayKetThuc = new Date(ngayKetThucInput.value);
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Điều kiện kiểm tra ngày kết thúc
+        if (!ngayKetThucInput.value || (trangThaiInput === 'Đang hoạt động' && ngayKetThuc < today)) {
+          ngayKetThucInput.classList.add('is-invalid');
+          ngayKetThucInput.classList.remove('is-valid');
+          isValid = false;
+        } else {
+          ngayKetThucInput.classList.remove('is-invalid');
+          ngayKetThucInput.classList.add('is-valid');
+        }
+
+        // Ngăn submit nếu form không hợp lệ
+        if (!isValid) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
         form.classList.add('was-validated');
       }, false);
-
       // Add 'change' event listener for all inputs to validate them dynamically
       var inputs = form.querySelectorAll('input');
       Array.prototype.slice.call(inputs).forEach(function (input) {
@@ -358,6 +430,21 @@
     });
 
   })();
+
+  function toggleSubmenu(id) {
+    const submenu = document.getElementById(id);
+    // Toggle between 'none' and 'block' to show/hide submenu
+    submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+  }
+
+  function highlightLink(link){
+    //     Remove the 'bg_profile_btn' class from all links
+    const links = document.querySelectorAll('.bg_profile_btn');
+    links.forEach(link => {
+      link.classList.remove('bg_profile_btn');
+    })
+    link.classList.add('bg_profile_btn');
+  }
 </script>
 </body>
 </html>

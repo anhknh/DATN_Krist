@@ -125,9 +125,6 @@
                         <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
                     </a>
                 </div>
-
-                <!-- Extra Menu -->
-
             </div>
             <div class="col-10">
                 <!-- navigator_link -->
@@ -162,14 +159,15 @@
                                                    placeholder="Tìm kiếm sản phẩm"
                                                    style="border-left: none; ">
                                             <div class="input-group-append" style="padding-left: 20px">
-                                            <button type="submit" class="btn btn-dark">Tìm kiếm</button>
+                                                <button type="submit" class="btn btn-dark">Tìm kiếm</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                                 <div>
                                     <div class="btn btn-dark" style="display: inline-block;" data-bs-toggle="modal"
-                                         data-bs-target="#modalCategories">Thêm sản phẩm</div>
+                                         data-bs-target="#modalCategories"
+                                         th:attr="onclick=|saveIdOrder(null, null, null, null, null)|">Thêm sản phẩm</div>
                                 </div>
                             </div>
                         </div>
@@ -190,7 +188,8 @@
                             </thead>
                             <tbody>
                             <tr th:each="sanPham , stat : ${sanPhamList}">
-                                <td style="padding: 12px 6px;  line-height: 305%;" th:text="${stat.index + 1}">
+                                <td style="padding: 12px 6px; line-height: 305%;" th:text="${stat.index + 1}"></td>
+
                                 </td>
                                 <td style="padding: 12px 6px; line-height: 305%;" th:text="${sanPham.tenSanPham}" th:class="valueName">
                                 </td>
@@ -204,34 +203,34 @@
                                     <i class="fa-regular"
                                        th:classappend="${sanPham.trangThai == sanPham.trangThai.ACTIVE ? 'fa-check' : 'fa-x'}"></i>
                                 </td>
+
                                 <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">
                                     <div class="d-flex justify-content-center">
-
                                         <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top" title="Chi tiết sản phẩm">
                                             <div  style="display: inline-block;"
                                                   data-bs-toggle="modal"
                                                   data-bs-target="#modalCategories"
-                                                  th:attr="onclick=|saveIdOrder('${sanPham.id}','${stat.index}')|">
+                                                  th:attr="onclick=|saveIdOrder('${sanPham.id}', '${stat.index}', '${sanPham.trangThai}', '${sanPham.danhMuc.id}', '${sanPham.chatLieu.id}')|">
                                                 <i class="fa-solid fa-pen-to-square" ></i>
                                             </div>
                                         </div>
                                         <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top"  title="Thay đổi trạng thái">
-                                            <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly-san-pham/delete-san-pham/{id}(id=${sanPham.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');"><i class="fa-solid fa-swap-arrows"></i></a>
+                                            <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly-san-pham/delete-san-pham/{id}(id=${sanPham.id})}" ><i class="fa-solid fa-swap-arrows"></i></a>
                                         </div>
                                     </div>
                                 </td>
-<!--                                <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">-->
-<!--                                    <div class="d-flex justify-content-center">-->
-<!--                                        <a th:href="@{/quan-ly-san-pham/delete-san-pham/{id}(id=${sanPham.id})}"-->
-<!--                                           class="btn btn-outline-secondary me-2"-->
-<!--                                           onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Delete</a>-->
-<!--                                        <div class="btn btn-outline-secondary" style="display: inline-block;" data-bs-toggle="modal"-->
-<!--                                             data-bs-target="#modalCategories"-->
-<!--                                             th:attr="onclick=|saveIdOrder('${sanPham.id}','${stat.index}', '${sanPham.trangThai}')|">-->
-<!--                                            Update-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </td>-->
+                                <!--                                <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">-->
+                                <!--                                    <div class="d-flex justify-content-center">-->
+                                <!--                                        <a th:href="@{/quan-ly-san-pham/delete-san-pham/{id}(id=${sanPham.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');"-->
+                                <!--                                           class="btn btn-outline-secondary me-2">Delete</a>-->
+                                <!--                                        <div class="btn btn-outline-secondary" style="display: inline-block;" data-bs-toggle="modal"-->
+                                <!--                                             data-bs-target="#modalCategories"-->
+                                <!--                                             th:attr="onclick=|saveIdOrder('${sanPham.id}', '${stat.index}', '${sanPham.trangThai}', '${sanPham.danhMuc.id}', '${sanPham.chatLieu.id}')|">-->
+                                <!--                                            Update-->
+                                <!--                                        </div>-->
+
+                                <!--                                    </div>-->
+                                <!--                                </td>-->
                             </tr>
                             </tbody>
                         </table>
@@ -283,14 +282,16 @@
             </div>
             <div class="modal-body"  style="padding:30px">
                 <div>
-                    <form method="post" action="/quan-ly-san-pham/add-san-pham" id="form_submit" novalidate th:object="${sanPhamCre}" class="needs-validation">
+                    <form method="post"  id="form_submit" novalidate th:object="${sanPhamCre}" class="needs-validation">
                         <input type="hidden" id="idSanPham" name="idSanPham" th:field="*{id}" /> <!-- Input ẩn cho ID sản phẩm -->
 
                         <div class="mb-4">
                             <label for="idDanhMuc" class="form-label">Tên Danh Mục</label>
                             <select class="form-select" id="idDanhMuc" name="idDanhMuc" required>
                                 <option value="" disabled selected>Chọn danh mục</option>
-                                <option th:each="danhMuc : ${danhMucList}" th:value="${danhMuc.id}" th:text="${danhMuc.tenDanhMuc}"></option>
+                                <option th:each="danhMuc : ${danhMucList}"
+                                        th:value="${danhMuc.id}"
+                                        th:text="${danhMuc.tenDanhMuc}"></option>
                             </select>
                             <div class="invalid-feedback">Vui lòng chọn danh mục.</div>
                         </div>
@@ -299,7 +300,10 @@
                             <label for="idChatLieu" class="form-label">Chất liệu</label>
                             <select class="form-select" id="idChatLieu" name="idChatLieu" required>
                                 <option value="" disabled selected>Chọn chất liệu</option>
-                                <option th:each="chatLieu : ${chatLieuList}" th:value="${chatLieu.id}" th:text="${chatLieu.tenChatLieu}"></option>
+                                <option th:each="chatLieu : ${chatLieuList}"
+                                        th:value="${chatLieu.id}"
+                                        th:text="${chatLieu.tenChatLieu}"></option>
+
                             </select>
                             <div class="invalid-feedback">Vui lòng chọn chất liệu.</div>
                         </div>
@@ -315,14 +319,15 @@
                             <textarea class="form-control" name="describe" id="desCate" placeholder="Nhập mô tả" th:field="*{moTa}" required style="font-size: 1.2rem; width: 100%; height: 100px;"></textarea>
                             <div class="invalid-feedback">Mô tả không hợp lệ.</div>
                         </div>
+                                                <div class="mb-4  display_none" id="statusSection" style="display: none;">
+                                                    <label class="form-label">Trạng thái</label><br>
+                                                    <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">
+                                                    <label for="active">Active</label><br>
+                                                    <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">
+                                                    <label for="inactive">Inactive</label>
+                                                    <div class="invalid-feedback" >Trạng thái không hợp lệ</div>
 
-<!--                        <div class="mb-4" id="statusSection" style="display: none;">-->
-<!--                            <label class="form-label">Status</label><br>-->
-<!--                            <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">-->
-<!--                            <label for="active">Active</label><br>-->
-<!--                            <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">-->
-<!--                            <label for="inactive">Inactive</label>-->
-<!--                        </div>-->
+                                                </div>
 
                         <div>
                             <button type="submit" class="btn btn-dark">Lưu</button>
@@ -357,37 +362,68 @@
     });
 </script>
 <script>
-    function saveIdOrder(id, index, status) {
-        document.getElementById("idSanPham").value = id; // đặt id sản phẩm trong modal
-        document.getElementById("tenSanPham").value = document.querySelectorAll('.valueName')[index].innerText;
-        document.getElementById("desCate").value = document.querySelectorAll('.valueDes')[index * 3].innerText;
+    function saveIdOrder(id, index, status, idDanhMuc, idChatLieu) {
+        // Gán giá trị ID sản phẩm vào input ẩn
+        document.getElementById("idSanPham").value = id;
 
-        // Cập nhật trạng thái
-        // if (status === 'ACTIVE') {
-        //     document.getElementById("active").checked = true;
-        // } else {
-        //     document.getElementById("inactive").checked = true;
-        // }
+        if (index !== null && index >= 0) {
+            // Cập nhật thông tin sản phẩm
+            document.getElementById("tenSanPham").value = document.querySelectorAll('.valueName')[index].textContent.trim();
+            document.getElementById("desCate").value = document.querySelectorAll('.valueDes')[index].textContent.trim();
 
-        // Hiển thị phần chọn trạng thái
-        // document.getElementById("statusSection").style.display = 'block';
+            // Cập nhật giá trị danh mục và chất liệu vào select
+            document.getElementById("idDanhMuc").value = idDanhMuc;
+            document.getElementById("idChatLieu").value = idChatLieu;
 
-        // Cập nhật action của form để gửi về API cập nhật
-        document.getElementById("form_submit").action = "/quan-ly-san-pham/update-san-pham";
+            // Hiển thị phần chọn trạng thái
+            document.getElementById("statusSection").classList.remove('display_none');
+            document.getElementById("statusSection").style.display = "block";
+
+            // Cập nhật trạng thái dựa trên `status`
+            if (status == 'ACTIVE') {
+                document.getElementById("active").checked = true;
+            } else {
+                document.getElementById("inactive").checked = true;
+            }
+
+            // Cập nhật action của form
+            document.getElementById("form_submit").action = "/quan-ly-san-pham/update-san-pham";
+            document.getElementById('exampleModalLabel').innerText = 'Cập nhật sản phẩm';
+        } else {
+            // Thêm sản phẩm mới
+            document.getElementById("tenSanPham").value = "";
+            document.getElementById("desCate").value = "";
+
+            // Ẩn phần chọn trạng thái
+            document.getElementById("statusSection").classList.add('display_none');
+            document.getElementById("statusSection").style.display = "none";
+
+            // Mặc định trạng thái là "ACTIVE"
+            document.getElementById("active").checked = true;
+
+            // Cập nhật action của form
+            document.getElementById("form_submit").action = "/quan-ly-san-pham/add-san-pham";
+            document.getElementById('exampleModalLabel').innerText = 'Thêm sản phẩm';
+        }
     }
+
+
+
 
     (function () {
         'use strict';
+
         // Fetch all forms with class 'needs-validation'
         var forms = document.querySelectorAll('.needs-validation');
 
         // Loop over forms and prevent submission if validation fails
-        Array.prototype.sliace.call(forms).forEach(function (form) {
+        Array.prototype.slice.call(forms).forEach(function (form) {
             form.addEventListener('submit', function (event) {
+                // Check form validity
                 if (!form.checkValidity()) {
                     event.preventDefault();
                     event.stopPropagation();
-                    showAlert( "error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
+                    showAlert("error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
                 }
                 form.classList.add('was-validated');
             }, false);
@@ -395,20 +431,22 @@
             // Add 'change' event listener for all inputs to validate them dynamically
             var inputs = form.querySelectorAll('input');
             Array.prototype.slice.call(inputs).forEach(function (input) {
-                input.addEventListener('change', function () {
+                input.addEventListener('input', function () {
+                    // Kiểm tra tính hợp lệ của trường input
                     if (input.checkValidity()) {
                         input.classList.remove('is-invalid');
                         input.classList.add('is-valid');
                     } else {
                         input.classList.remove('is-valid');
                         input.classList.add('is-invalid');
-                        showAlert("error","Dữ liệu không hợp lệ trong " + input.placeholder);
+                        // Hiển thị thông báo lỗi nếu input không hợp lệ
+                        showAlert("error", "Dữ liệu không hợp lệ trong " + input.placeholder);
                     }
                 });
             });
         });
 
-        //thông báo
+        // Hàm thông báo
         function showAlert(type, message) {
             let alertElement;
 
@@ -431,7 +469,7 @@
             }, 5000);
         }
 
-        document.addEventListener('DOMContentLoaded', function (){
+        document.addEventListener('DOMContentLoaded', function () {
             // Kiểm tra và ẩn thông báo thành công nếu có
             var successAlert = document.getElementById('successAlert');
             if (successAlert && successAlert.style.display !== 'none') {
@@ -443,6 +481,7 @@
         });
 
     })();
+
     function toggleSubmenu(id) {
         const submenu = document.getElementById(id);
         // Toggle between 'none' and 'block' to show/hide submenu

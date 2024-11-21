@@ -55,7 +55,7 @@
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
             <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
           </a>
-          <a href="/quan-ly-san-pham/pagination-san-pham" class="mb-3"
+          <a href="/quan-ly-san-pham/pagination-san-pham" class="bg_profile_btn mb-3"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
             <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
           </a>
@@ -109,7 +109,7 @@
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
           </a>
-          <a href="/quan-ly-nhan-vien/phan-trang-nhan-vien" class="bg_profile_btn mb-3" onclick="highlightLink(this)"
+          <a href="/quan-ly-nhan-vien/phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
           </a>
@@ -125,9 +125,6 @@
             <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
           </a>
         </div>
-
-        <!-- Extra Menu -->
-
       </div>
       <div class="col-10">
         <!-- navigator_link -->
@@ -135,7 +132,7 @@
           <div>
             <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb" >
               <ol class="breadcrumb" style="height: 40px; margin: 0px;">
-                <li class="breadcrumb-item "><a href="#" class="nav_link">Nhân viên</a></li>
+                <li class="breadcrumb-item "><a href="/quan-ly-nhan-vien/phan-trang-nhan-vien" class="nav_link">Nhân viên</a></li>
               </ol>
             </nav>
           </div>
@@ -147,7 +144,7 @@
           <!-- headre_content -->
           <div class="d-flex justify-content-between" style="padding-bottom: 28px;">
             <div>
-              <h4>Nhân viên</h4>
+              <h4>Nhân Viên</h4>
             </div>
             <div style="width: 580px;">
 
@@ -160,9 +157,9 @@
                                         </span>
                       <input type="text" class="form-control" name="timKiemMa"
                              placeholder="Tìm kiếm nhân viên"
-                             style="border-left: none;">
+                             style="border-left: none; ">
                       <div class="input-group-append" style="padding-left: 20px">
-                      <button type="submit" class="btn btn-dark">Tìm kiếm</button>
+                        <button type="submit" class="btn btn-dark">Tìm kiếm</button>
                       </div>
                     </div>
                   </form>
@@ -180,19 +177,19 @@
               <thead>
               <tr>
                 <th scope="col" >STT</th>
-                <th scope="col">Mã nhân viên</th>
+                <th scope="col">Ma nhân viên</th>
                 <th scope="col">Tên nhân viên</th>
                 <th scope="col">Số điện thoại</th>
                 <th scope="col">Ngày sinh</th>
                 <th scope="col">Địa chỉ</th>
-                <th scope="col" class="text-center">Trang thái</th>
-                <th scope="col" class="text-center">Thao tác</th>
+                <th scope="col" class="text-center">Trạng thái</th>
+                <th scope="col" class="text-center">Thao tác </th>
               </tr>
               </thead>
               <tbody>
               <tr th:each="nhanvien , stat : ${NVList}">
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${nhanvien.id}">
-                </td>
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${stat.index + 1}"></td>
+
                 <td style="padding: 12px 6px; line-height: 305%;" th:text="${nhanvien.maNhanVien}" th:class="valueMa"></td>
                 <td style="padding: 12px 6px; line-height: 305%;" th:text="${nhanvien.tenNhanVien}" th:class="valueName"></td>
                 <td style="padding: 12px 6px; line-height: 305%;" th:text="${nhanvien.soDienThoai}" th:class="valueSDT"></td>
@@ -202,30 +199,30 @@
                   <i class="fa-regular"
                      th:classappend="${nhanvien.trangThai == nhanvien.trangThai.ACTIVE ? 'fa-check' : 'fa-x'}"></i>
                 </td>
+
                 <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">
                   <div class="d-flex justify-content-center">
-
-                    <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top" title="chi tiết nhân viên">
+                    <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top"  title="Thay đổi trạng thái">
+                      <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly-nhan-vien/delete-nhan-vien/{id}(id=${nhanvien.id})}" ><i class="fa-solid fa-swap-arrows"></i></a>
+                    </div>
+                    <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top" title="Chi tiết nhân viên">
                       <div  style="display: inline-block;"
                             data-bs-toggle="modal"
                             data-bs-target="#modalCategories"
-                            th:attr="onclick=|saveIdOrder('${nhanvien.id}','${stat.index}' )|">
+                            th:attr="onclick=|saveIdOrder('${nhanvien.id}','${stat.index}'  )|">
                         <i class="fa-solid fa-pen-to-square" ></i>
                       </div>
                     </div>
-                    <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top"  title="Thay đổi trạng thái">
-                      <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly-nhan-vien/delete-nhan-vien/{id}(id=${nhanvien.id})}"><i class="fa-solid fa-swap-arrows"></i></a>
-                    </div>
                   </div>
                 </td>
-<!--                <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">-->
-<!--                  <div class="d-flex justify-content-center">-->
-<!--                    <a th:href="@{/quan-ly-nhan-vien/delete-nhan-vien/{id}(id=${nhanvien.id})}" class="btn btn-outline-secondary me-2">Delete</a>-->
-<!--                    <div class="btn btn-outline-secondary" style="display: inline-block;" data-bs-toggle="modal"-->
-<!--                         data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('${nhanvien.id}','${stat.index}' , '${nhanvien.trangThai}' )|" >Update-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </td>-->
+                <!--                <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">-->
+                <!--                  <div class="d-flex justify-content-center">-->
+                <!--                    <a th:href="@{/quan-ly-nhan-vien/delete-nhan-vien/{id}(id=${nhanvien.id})}" class="btn btn-outline-secondary me-2">Delete</a>-->
+                <!--                    <div class="btn btn-outline-secondary" style="display: inline-block;" data-bs-toggle="modal"-->
+                <!--                         data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('${nhanvien.id}','${stat.index}' , '${nhanvien.trangThai}' )|" >Update-->
+                <!--                    </div>-->
+                <!--                  </div>-->
+                <!--                </td>-->
               </tr>
               </tbody>
             </table>
@@ -298,7 +295,7 @@
             </div>
             <div class="mb-4">
               <label for="ngaysinhCate" class="form-label">Ngày sinh</label>
-              <input type="date" class="form-control" name="ngaySinh" id="ngaysinhCate" placeholder="Ngày sinh nhân viên" th:field="*{ngaySinh}" required >
+              <input type="date" class="form-control" name="ngaySinh" id="ngaysinhCate" placeholder="Ngày sinh nhân viên"  th:value="${#dates.format(NVCre.ngaySinh, 'yyyy-MM-dd')}"  required >
               <div class="invalid-feedback">Ngày sinh không hợp lệ</div>
             </div>
             <div class="mb-4">
@@ -306,13 +303,14 @@
               <input type="text" class="form-control" name="diaChi" id="diachiCate" placeholder="Địa chỉ nhân viên" th:field="*{diaChi}" required >
               <div class="invalid-feedback">Địa chỉ nhân viên không hợp lệ</div>
             </div>
-            <div class="mb-4 display_none" id="statusSection">
-              <label class="form-label">Trạng thái</label><br>
-              <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">
-              <label for="active">Active</label><br>
-              <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">
-              <label for="inactive">Inactive</label>
-            </div>
+
+            <!--            <div class="mb-4 display_none" id="statusSection">-->
+            <!--              <label class="form-label">Trạng thái</label><br>-->
+            <!--              <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">-->
+            <!--              <label for="active">Đang hoạt động</label><br>-->
+            <!--              <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">-->
+            <!--              <label for="inactive">Ngừng hoạt động</label>-->
+            <!--            </div>-->
             <div>
               <button type="submit" class="btn btn-dark">Lưu</button>
             </div>
@@ -336,7 +334,7 @@
 <script>
   // Khởi tạo Bootstrap tooltips
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  var tooltipsList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
   });
 </script>
@@ -346,8 +344,9 @@
   const valueMa = document.querySelectorAll(".valueMa");
   const valueName = document.querySelectorAll(".valueName");
   const valueSDT = document.querySelectorAll(".valueSDT");
-  const valueNgaySinh = document.querySelectorAll(".valueNgaySinh");
+  const valueNgaySinh = document.querySelectorAll(".valueNgaySinh");  // Kiểm tra có dữ liệu ngày sinh hợp lệ không
   const valueDiaChi = document.querySelectorAll(".valueDiaChi");
+
   // Lấy về thuộc tính có id và điều chỉnh theo mong muốn trong hàm saveIdOrder
   const maCate = document.getElementById('maCate');
   const nameCate = document.getElementById('nameCate');
@@ -356,34 +355,46 @@
   const diachiCate = document.getElementById('diachiCate');
   const statusSection = document.getElementById('statusSection');
 
-  function saveIdOrder(id , index , hanhDong){
+  function saveIdOrder(id, index, hanhDong) {
     idCustomer.value = id;
-    if(index != null) {
+
+    if (index !== null) {
+      // Kiểm tra ngày sinh có hợp lệ không, nếu có thì cập nhật
+      let ngaySinh = valueNgaySinh[index].textContent.trim();
+
+      // Nếu ngày sinh là hợp lệ (theo định dạng yyyy-MM-dd)
+      if (ngaySinh) {
+        ngaysinhCate.value = ngaySinh;  // Cập nhật vào trường ngày sinh
+      }
+
       maCate.value = valueMa[index].textContent.trim();
       nameCate.value = valueName[index].textContent.trim();
       sdtCate.value = valueSDT[index].textContent.trim();
-      ngaysinhCate.value = valueNgaySinh[index].textContent.trim();
       diachiCate.value = valueDiaChi[index].textContent.trim();
+
+      // Hiển thị phần chọn trạng thái
       // statusSection.classList.remove('display_none');
       document.getElementById('exampleModalLabel').innerText = 'Cập nhật nhân viên';
-      // Kiểm tra class của icon
+
+      // Kiểm tra trạng thái và chọn radio button tương ứng
       // if (hanhDong == "ACTIVE") {
-      //   // Nếu class là 'fa-check', chọn radio button active
       //   document.getElementById('active').checked = true;
       // } else {
-      //   // Ngược lại nếu class là 'fa-x', chọn radio button inactive
       //   document.getElementById('inactive').checked = true;
       // }
-      document.getElementById("form_submit").action = '/quan-ly-nhan-vien/update-nhan-vien' ;
+
+      // Thay đổi hành động của form
+      document.getElementById("form_submit").action = '/quan-ly-nhan-vien/update-nhan-vien';
     } else {
+      // Nếu không có index (thêm mới)
       // statusSection.classList.add('display_none');
       document.getElementById('exampleModalLabel').innerText = 'Thêm nhân viên';
       maCate.value = "";
       nameCate.value = "";
       sdtCate.value = "";
-      ngaysinhCate.value = "";
+      ngaysinhCate.value = "";  // Xóa trường ngày sinh
       diachiCate.value = "";
-      document.getElementById("form_submit").action = '/quan-ly-nhan-vien/add-nhan-vien' ;
+      document.getElementById("form_submit").action = '/quan-ly-nhan-vien/add-nhan-vien';
     }
   }
 
@@ -454,12 +465,12 @@
     });
 
   })();
+
   function toggleSubmenu(id) {
     const submenu = document.getElementById(id);
     // Toggle between 'none' and 'block' to show/hide submenu
     submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
   }
-
   function highlightLink(link){
     //     Remove the 'bg_profile_btn' class from all links
     const links = document.querySelectorAll('.bg_profile_btn');
