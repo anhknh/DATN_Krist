@@ -11,10 +11,6 @@
   <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
   <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
   <link rel="stylesheet" href="/css/StyleHomePage.css">
-  <link rel="stylesheet" href="/css/DonHang.css">
-  <link rel="stylesheet" href="/css/ProductDetail.css">
-  <link rel="stylesheet" href="/css/ban-hang.css">
-
   <style>
     html, body {
       height: 100%;
@@ -61,7 +57,7 @@
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
             <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
           </a>
-          <a href="/quan-ly-san-pham/pagination-san-pham" class="mb-3"
+          <a href="/quan-ly-san-pham/pagination-san-pham" class="bg_profile_btn mb-3"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
             <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
           </a>
@@ -106,7 +102,7 @@
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-cart-flatbed" style="margin-right: 10px;"></i> Đơn hàng
           </a>
-          <a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="bg_profile_btn mb-3" onclick="highlightLink(this)"
+          <a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-tickets-perforated" style="margin-right: 10px;"></i> Khuyến mại
           </a>
@@ -133,7 +129,20 @@
         </div>
 
         <!-- Extra Menu -->
-
+<!--        <div id="drop_right" style="padding: 0px 22px 28px; cursor: pointer;"-->
+<!--             onclick="toggleSubmenu('extrasSubMenu')">-->
+<!--          <p class="mb-3"-->
+<!--             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center;">-->
+<!--            <i class="fa-regular fa-plus" style="margin-right: 10px;"></i> Extras-->
+<!--            <i class="fa fa-chevron-down" style="margin-left:auto;"></i>-->
+<!--          </p>-->
+<!--          <ul id="extrasSubMenu" class="submenu" style="list-style: none; padding-left: 20px; display: none;">-->
+<!--            <li style="padding: 8px;"><a href="./adminSize.html"-->
+<!--                                         style="text-decoration: none; color: #000;">Size</a></li>-->
+<!--            <li style="padding: 8px;"><a href="./adminColor.html"-->
+<!--                                         style="text-decoration: none; color: #000;">Color</a></li>-->
+<!--          </ul>-->
+<!--        </div>-->
       </div>
       <div class="col-10">
         <!-- navigator_link -->
@@ -142,7 +151,8 @@
           <div>
             <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb">
               <ol class="breadcrumb" style="height: 40px; margin: 0px;">
-                <li class="breadcrumb-item "><a href="/quan-ly-san-pham/pagination-san-pham" class="nav_link">Khuyến mãi</a></li>
+                <li class="breadcrumb-item "><a href="#" class="nav_link">Admin</a></li>
+                <li class="breadcrumb-item "><a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="nav_link_active">Khuyến Mại</a></li>
               </ol>
             </nav>
           </div>
@@ -176,12 +186,12 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label style="font-weight: bold">Trạng thái</label>
-                      <select class="form-select" aria-label="Default select example" name="trangThai">
-                        <option  th:each="khuyenMai : ${khuyenMaiList}" th:value="${khuyenMai.trangThai}" th:text="${khuyenMai.trangThai}"></option>
+                      <select class="form-select" name="trangThai" aria-label="Trạng thái">
+                        <option value="">Chọn trạng thái</option>
+                        <option value="Chưa kích hoạt">Chưa kích hoạt</option>
+                        <option value="Đang hoạt động">Đang hoạt động</option>
+                        <option value="Hết hạn">Hết hạn</option>
                       </select>
-                      <!--                      <select id="theoTrangThai" name="trangThai" class="form-select" multiple>-->
-                      <!--                        <option th:each="khuyenMai : ${khuyenMaiList}" th:value="${khuyenMai.trangThai}" th:text="${khuyenMai.trangThai}"></option>-->
-                      <!--                      </select>-->
                     </div>
                   </div>
                 </div>
@@ -198,26 +208,23 @@
                         <input class="form-check-input" type="radio" name="kieuKhuyenMai" id="inlineRadio2" value="%">
                         <label class="form-check-label" for="inlineRadio2">%</label>
                       </div>
-
-                      <!--                      <select id="theoKieuKhuyenMai" name="kieuKhuyenMai" class="form-select" multiple>-->
-                      <!--                        <option th:each="khuyenMai : ${khuyenMaiList}" th:value="${khuyenMai.kieuKhuyenMai}" th:text="${khuyenMai.kieuKhuyenMai}"></option>-->
-                      <!--                      </select>-->
-                      <!--                      </select>-->
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="ngayBD" style="font-weight: bold">Ngày bắt đầu</label>
-                      <input type="date" class="form-control" id="ngayBD">
+                      <input type="date" class="form-control" id="ngayBD" name="ngayBatDau"> <!-- Thêm name -->
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="ngayKT" style="font-weight: bold">Ngày kết thúc</label>
-                      <input type="date" id="ngayKT" class="form-control" >
+                      <input type="date" class="form-control" id="ngayKT" name="ngayKetThuc"> <!-- Thêm name -->
                     </div>
                   </div>
+
                 </div>
+
                 <div class="d-flex justify-content-end mt-3">
                   <button type="submit" class="btn btn-dark me-3">Tìm kiếm</button>
                   <a href="/quan-ly-khuyen-mai/pagination-add-khuyen-mai" type="button" class="btn btn-dark md-3">Thêm mới</a>
@@ -232,10 +239,10 @@
             <table class="table" style="border-top: 1px solid #E9E9EB;">
               <thead>
               <tr>
-                <th scope="col" style="white-space: nowrap;">ID</th>
-                <th scope="col" style="white-space: nowrap;">Mã khuyến mại</th>
-                <th scope="col" style="white-space: nowrap;">Tên khuyến mại</th>
-                <th scope="col" style="white-space: nowrap;">Kiểu khuyến mại</th>
+                <th scope="col" style="white-space: nowrap;">STT</th>
+                <th scope="col" style="white-space: nowrap;">Mã khuyến mãi</th>
+                <th scope="col" style="white-space: nowrap;">Tên khuyến mãi</th>
+                <th scope="col" style="white-space: nowrap;">Kiểu khuyến mãi</th>
                 <th scope="col" style="white-space: nowrap;">Giá trị</th>
                 <th scope="col" style="white-space: nowrap;">Mức giảm tối đa</th>
                 <th scope="col" style="white-space: nowrap;">Trạng thái</th>
@@ -247,27 +254,27 @@
               </thead>
               <tbody>
               <tr th:each="khuyenMai , stat : ${khuyenMaiList}">
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${khuyenMai.id}">
-                </td>
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${stat.index + 1}"></td>
                 <td style="padding: 12px 6px; line-height: 305%;" th:text="${khuyenMai.maKhuyenMai}"
                     th:class="valueName">
                 </td>
                 <td style="padding: 12px 6px; line-height: 305%;" th:text="${khuyenMai.tenKhuyenMai}"
                     th:class="valueDes">
                 </td>
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${khuyenMai.kieuKhuyenMai}"
+                <td style="padding: 12px 6px; line-height: 305%;" th:switch="${khuyenMai.kieuKhuyenMai}">
+                  <span th:case="true">Giảm theo %</span>
+                  <span th:case="false">Giảm theo VNĐ</span>
+                </td>
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${DataUtils.formatCurrency(khuyenMai.mucGiamToiDa)}">
                     th:class="valueDes">
                 </td>
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${khuyenMai.mucGiamToiDa}"
-                    th:class="valueDes">
-                </td>
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${khuyenMai.giaTri}"
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${DataUtils.formatCurrency(khuyenMai.giaTri)}">
                     th:class="valueDes">
                 </td>
 
                 <td class="text-center" style="padding: 12px 6px; line-height: 305%;">
                   <i class="fa-regular"
-                     th:classappend="${khuyenMai.trangThai == 'Dang hoat dong' ? 'fa-check' : (khuyenMai.trangThai == 'Ngung hoat dong' ? 'fa-x' : 'fa-hourglass-end')}"></i>
+                     th:classappend="${khuyenMai.trangThai == 'Chưa kích hoạt' ? 'fa-hourglass-end' : (khuyenMai.trangThai == 'Đang hoạt động' ? 'fa-check' : (khuyenMai.trangThai == 'Hết hạn' ? 'fa-x' : ''))}"></i>
                 </td>
                 <td style="padding: 12px 6px; line-height: 305%;" th:text="${#dates.format(khuyenMai.ngayBatDau, 'dd/MM/yyyy')}"
                     th:class="valueDes">
@@ -278,24 +285,24 @@
 
 
                 </td>
-                <td class="text-center" style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">
+                <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">
                   <div class="d-flex justify-content-center">
 
 
-
                     <!-- Nút Update -->
-                    <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top"  title="Cập nhật">
-                      <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly-khuyen-mai/pagination-update-khuyen-mai/{id}(id=${khuyenMai.id})}"><i class="fa-solid fa-pen-to-square" ></i></a>
-                    </div>
-
-                    <!-- Nút Detail -->
-                    <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
-                      <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly-khuyen-mai/pagination-detail-khuyen-mai/{id}(id=${khuyenMai.id})}"><i class="fa-solid fa-eye" style="color: black;"></i></a>
+                    <div class="d-inline-block me-3 "  title="Cập nhật">
+                      <a th:href="@{/quan-ly-khuyen-mai/pagination-update-khuyen-mai/{id}(id=${khuyenMai.id})}"><i class="fa-solid fa-pen-to-square" style="color: black;"></i></a>
                     </div>
                     <!-- Nút Delete -->
-                    <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top"  title="Xóa">
-                      <a class="d-block" style="color: #000; text-decoration: none"  th:href="@{/quan-ly-khuyen-mai/delete-khuyen-mai/{id}(id=${khuyenMai.id})}"><i class="fa-solid fa-trash-can"  ></i></a>
+                    <div class="d-inline-block me-3 "  title="Xóa">
+                      <a  th:href="@{/quan-ly-khuyen-mai/delete-khuyen-mai/{id}(id=${khuyenMai.id})}"><i class="fa-sharp-duotone fa-regular fa-swap-arrows" style="color: black;"></i></a>
                     </div>
+
+
+                    <!--                    &lt;!&ndash; Nút Detail &ndash;&gt;-->
+<!--                    <div class="d-inline-block me-3 "  title="Xem chi tiết">-->
+<!--                      <a th:href="@{/quan-ly-khuyen-mai/pagination-detail-khuyen-mai/{id}(id=${khuyenMai.id})}"><i class="fa-solid fa-eye" style="color: black;"></i></a>-->
+<!--                    </div>-->
                   </div>
                 </td>
               </tr>
@@ -394,13 +401,6 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  // Khởi tạo Bootstrap tooltips
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl);
-  });
-</script>
 <script>
 
   const idKhuyenMai = document.getElementById("idKhuyenMai");
@@ -502,7 +502,9 @@
       }
     });
 
+
   })();
+
   function toggleSubmenu(id) {
     const submenu = document.getElementById(id);
     // Toggle between 'none' and 'block' to show/hide submenu

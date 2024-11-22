@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -24,6 +25,7 @@ public class NhanVien extends BaseEntity{
     private String maNhanVien;
     private String tenNhanVien;
     private String soDienThoai;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngaySinh;
     private String diaChi;
 
