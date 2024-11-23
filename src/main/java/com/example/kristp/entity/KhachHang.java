@@ -24,7 +24,8 @@ public class KhachHang extends BaseEntity {
     private Integer id;
 
     private String tenKhachHang;
-
+    @Column(name = "sdt_kh")
+    private String soDienThoai;
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "trang_thai")
     private Status trangThai;

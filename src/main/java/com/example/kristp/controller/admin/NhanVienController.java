@@ -50,7 +50,7 @@ public class NhanVienController {
         }
         nhanVienService.addNhanVien(nhanVien);
         attributes.addFlashAttribute("message" , "Thêm mới thành công");
-        attributes.addFlashAttribute("messageType" , "alert-danger");
+        attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-nhan-vien/phan-trang-nhan-vien";
     }
@@ -68,7 +68,7 @@ public class NhanVienController {
         }
         nhanVienService.updateNhanVien(nhanVien, idNV);
         attributes.addFlashAttribute("message" , "Update nhân viên thành công");
-        attributes.addFlashAttribute("messageType" , "alert-danger");
+        attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-nhan-vien/phan-trang-nhan-vien";
     }
@@ -77,7 +77,7 @@ public class NhanVienController {
     private String deleteNV(@PathVariable("id")Integer idNV, RedirectAttributes attributes){
         nhanVienService.deleteNhanVien(idNV);
         attributes.addFlashAttribute("message" , "Đổi trạng thái nhân viên thành công");
-        attributes.addFlashAttribute("messageType" , "alert-danger");
+        attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
         return "redirect:/quan-ly-nhan-vien/phan-trang-nhan-vien";
     }
