@@ -7,6 +7,7 @@ import com.example.kristp.repository.NhanVienRepository;
 import com.example.kristp.service.BanHangService;
 import com.example.kristp.service.HoaDonService;
 import com.example.kristp.utils.Authen;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -113,4 +115,43 @@ public class HoaDonServiceImpl implements HoaDonService {
         Pageable pageable = PageRequest.of(pageNo , 3);
         return hoaDonRepository.getPaginationTrangThai(pageable , trangThai);
     }
+// Sử dụng cho thống kê
+    @Override
+    public Page<HoaDon> findTop5() {
+        Pageable pageable = PageRequest.of(0, 5);
+        Page<HoaDon> hoaDons = hoaDonRepository.findTop5(pageable );
+        return hoaDons ;
+    }
+// Sử dụng cho thống kê
+
+    @Override
+    public List<String> doanhThuTungThang() {
+        List<String> doanhThuTungThang = hoaDonRepository.thongKeTungThang();
+        return doanhThuTungThang;
+    }
+
+    @Override
+    public Double doanhThuHomNay() {
+        Double doanhThDouble= hoaDonRepository.getDoanhThuHomNay(HoaDonStatus.DA_THANH_TOAN);
+        return doanhThDouble;
+    }
+
+    @Override
+    public Integer soSanPhamBanTrongThang() {
+        Integer doanhThDouble= hoaDonRepository.getSanPhamBanTrongThang(HoaDonStatus.DA_THANH_TOAN);
+        return doanhThDouble;
+    }
+
+    @Override
+    public Double doanhThuTrongNam() {
+        Double doanhThDouble= hoaDonRepository.getDoanhThuTrongNam(HoaDonStatus.DA_THANH_TOAN);
+        return doanhThDouble;
+    }
+
+    @Override
+    public List<Integer> trangThaiDonHang() {
+        List<Integer> listTrangThai = hoaDonRepository.thongKeTrangThaiDonHang();
+        return listTrangThai;
+    }
+
 }

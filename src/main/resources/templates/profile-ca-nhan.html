@@ -48,36 +48,29 @@
                                         aria-labelledby="navbarDropdown">
                                         <div class="d-flex">
                                             <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
-                                                <p class="font-blod">Men</p>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
+                                                <p class="font-blod">Danh mục</p>
+                                                <hr>
+                                                <div class="p-2 hover-effect" th:each="item : ${listDanhMuc}">
+                                                    <a th:if="${listDanhMuc.size() > 0}" href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getTenDanhMuc()}"></span></a>
+                                                </div>
+                                                <h5 th:unless="${listDanhMuc.size() > 0}" style="color: gray;">Hiện tại không có danh mục nào</h5>
+
                                             </div>
                                             <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
-                                                <p class="font-blod">Men</p>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
+                                                <p class="font-blod">Cổ áo</p>
+                                                <hr>
+                                                <div class="p-2 hover-effect" th:each="item : ${listCoAo}">
+                                                    <a th:if="${listCoAo.size() > 0}" href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuCoAo()}"></span></a>
+                                                </div>
+                                                <h5 th:unless="${listCoAo.size() > 0}" style="color: gray;">Hiện tại không có cổ áo nào</h5>
                                             </div>
                                             <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
-                                                <p class="font-blod">Men</p>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                            </div>
-                                            <div class="text-center" style="flex: 1;">
-                                                <p class="font-blod">Men</p>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
+                                                <p class="font-blod">Tay áo</p>
+                                                <hr>
+                                                <div th:if="${listTayAo.size() > 0}" class="p-2 hover-effect" th:each="item : ${listTayAo}">
+                                                    <a href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuTayAo()}"></span></a>
+                                                </div>
+                                                <h5 th:unless="${listTayAo.size() > 0}" style="color: gray;">Hiện tại không có tay áo nào</h5>
                                             </div>
                                         </div>
                                     </ul>
@@ -135,53 +128,53 @@
             <li class="active" onclick="setActive(this)">
                 <a href="/quan-ly/ca-nhan">
                     <i class="fas fa-user"></i>
-                    Personal Information
+                    Thông tin cá nhân
                 </a>
             </li>
             <li onclick="setActive(this)">
                 <a href="/quan-ly/don-hang">
                     <i class="fas fa-box"></i>
-                    My Orders
+                    Đơn hàng của tôi
                 </a>
             </li>
             <li onclick="setActive(this)">
                 <a href="#">
                     <i class="fas fa-heart"></i>
-                    My Wishlists
+                    Danh sách yêu thích
                 </a>
             </li>
             <li onclick="setActive(this)">
                 <a href="#">
                     <i class="fas fa-map-marker-alt"></i>
-                    Manage Addresses
+                    Quản lý địa chỉ
                 </a>
             </li>
             <li onclick="setActive(this)">
                 <a href="#">
                     <i class="fas fa-credit-card"></i>
-                    Saved Cards
+                   Thẻ đã lưu
                 </a>
             </li>
             <li onclick="setActive(this)">
                 <a href="#">
                     <i class="fas fa-bell"></i>
-                    Notifications
+                    Thông báo
                 </a>
             </li>
             <li onclick="setActive(this)">
                 <a href="#">
                     <i class="fas fa-cog"></i>
-                    Settings
+                    Cài đặt
                 </a>
             </li>
         </ul>
     </div>
     <!--  Start content-->
     <div class="content">
-        <h1>My Profile</h1>
+        <h1>Hồ sơ cá nhân</h1>
         <div class="profile-pic d-flex align-items-center justify-content-between mb-3">
             <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modal_review">
-                <i class="fas fa-edit"></i> Edit Profile
+                <i class="fas fa-edit"></i> Chỉnh sửa hồ sơ
             </button>
         </div>
         <div class="form-row">

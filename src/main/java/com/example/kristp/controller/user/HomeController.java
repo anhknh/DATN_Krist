@@ -27,12 +27,14 @@ public class HomeController {
     @Autowired
     private TayAoService tayAoService ;
 
+
+    @Autowired
+    private CoAoService coAoService ;
     @Autowired
     private ChiTietSanPhamService chiTietSanPhamService;
 
 
-    @Autowired
-    private CoAoService coAoService ;
+
 
     @Autowired
     GioHangService gioHangService;
@@ -49,10 +51,9 @@ public class HomeController {
 
         List<ChiTietSanPham> chiTietSanPhamList = chiTietSanPhamService.getAllCTSP();
         model.addAttribute("chiTietSanPhamList", chiTietSanPhamList);
-        List<DanhMuc> danhMucs = danhMucService.getAllDanhMuc();
-        List<CoAo> listCoAo = coAoService.getAllCoAo();
-
-        List<TayAo> listTayAo = tayAoService.getAllTayAo();
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
 
 
         model.addAttribute("listDanhMuc" , danhMucs);

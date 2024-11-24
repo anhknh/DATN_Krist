@@ -1,8 +1,10 @@
 package com.example.kristp.controller.user;
 
 
+import com.example.kristp.entity.CoAo;
 import com.example.kristp.entity.DanhMuc;
 import com.example.kristp.entity.SanPham;
+import com.example.kristp.entity.TayAo;
 import com.example.kristp.service.*;
 import com.example.kristp.utils.DataUtils;
 import com.example.kristp.utils.Pagination;
@@ -75,6 +77,20 @@ public class ListProductController {
         model.addAttribute("listMauSac", mauSacService.getAllMauSacHD());
         model.addAttribute("listSize", sizeService.getAllSizeHD());
         model.addAttribute("chiTietSanPhamService", chiTietSanPhamService);
+
+//        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+//        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+//        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+//
+//        model.addAttribute("listDanhMuc" , danhMucs);
+//        model.addAttribute("listCoAo" , listCoAo);
+//        model.addAttribute("listTayAo" , listTayAo);
+//
+//        Page<SanPham> sanPhams = sanPhamService.getPaginationSanPham(pageNo);
+//        System.out.println(gioHangService.countCartItem() + "===========================");
+//        model.addAttribute("productList" , sanPhams.getContent());
+//        model.addAttribute("currentPage" , pageNo);
+//        model.addAttribute("totalPage" , sanPhams.getTotalPages());
         return "view/list-product/list-product-page";
     }
 }

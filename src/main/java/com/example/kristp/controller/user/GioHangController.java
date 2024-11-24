@@ -1,9 +1,7 @@
 package com.example.kristp.controller.user;
 
 import com.example.kristp.entity.*;
-import com.example.kristp.service.ChiTietSanPhamService;
-import com.example.kristp.service.GioHangChiTietService;
-import com.example.kristp.service.GioHangService;
+import com.example.kristp.service.*;
 import com.example.kristp.utils.Authen;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -30,6 +29,15 @@ public class GioHangController {
     private GioHangChiTietService gioHangChiTietService;
 
 
+    @Autowired
+    private DanhMucService danhMucService ;
+
+    @Autowired
+    private TayAoService tayAoService ;
+
+    @Autowired
+    private CoAoService coAoService ;
+
     // Hiển thị giỏ hàng của khách hàng
     @GetMapping
     public String hienThiGioHang(Model model) {
@@ -41,6 +49,15 @@ public class GioHangController {
         }
         model.addAttribute("tongTien", tongTien);
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
+
         return "gio-hang";
     }
     @GetMapping("/add")

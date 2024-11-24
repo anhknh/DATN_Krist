@@ -50,4 +50,10 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
     public List<ChiTietSanPham> getProductDetailsByProductId(Integer productId) {
         return chiTietSanPhamRepository.findAllProductDetailsByProductId(productId);
     }
+
+    @Override
+    public List<ChiTietSanPham> getAllChiTietSanPhamSPHD() {
+        List<ChiTietSanPham> chiTietSanPhamList = chiTietSanPhamRepository.findAllProductDetailsSPHD();
+        return chiTietSanPhamList;
+    }
 }

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
     <link rel="stylesheet" href="/css/StyleHomePage.css">
+    <link rel="stylesheet" href="/css/StyleThuoctinh.css">
 </head>
 <body>
 <div class="container-fluid g-0">
@@ -38,29 +39,32 @@
                                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Danh mục
                                         </a>
-                                        <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;"
-                                            aria-labelledby="navbarDropdown">
+                                        <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;" aria-labelledby="navbarDropdown">
                                             <div class="d-flex">
                                                 <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
                                                     <p class="font-blod">Danh mục</p>
-                                                    <div class="p-2" th:each="item : ${listDanhMuc}">
-                                                        <a href="#" style="text-decoration: none ; color : black"><span
-                                                                th:text="${item.getTenDanhMuc()}"></span></a>
+                                                    <hr>
+                                                    <div class="p-2 hover-effect" th:each="item : ${listDanhMuc}">
+                                                        <a th:if="${listDanhMuc.size() > 0}" href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getTenDanhMuc()}"></span></a>
                                                     </div>
+                                                    <h5 th:unless="${listDanhMuc.size() > 0}" style="color: gray;">Hiện tại không có danh mục nào</h5>
+
                                                 </div>
                                                 <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
                                                     <p class="font-blod">Cổ áo</p>
-                                                    <div class="p-2" th:each="item : ${listCoAo}">
-                                                        <a href="#" style="text-decoration: none ; color : black"><span
-                                                                th:text="${item.getKieuCoAo()}"></span></a>
+                                                    <hr>
+                                                    <div class="p-2 hover-effect" th:each="item : ${listCoAo}">
+                                                        <a th:if="${listCoAo.size() > 0}" href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuCoAo()}"></span></a>
                                                     </div>
+                                                    <h5 th:unless="${listCoAo.size() > 0}" style="color: gray;">Hiện tại không có cổ áo nào</h5>
                                                 </div>
                                                 <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
                                                     <p class="font-blod">Tay áo</p>
-                                                    <div class="p-2" th:each="item : ${listTayAo}">
-                                                        <a href="#" style="text-decoration: none ; color : black"><span
-                                                                th:text="${item.getKieuTayAo()}"></span></a>
+                                                    <hr>
+                                                    <div th:if="${listTayAo.size() > 0}" class="p-2 hover-effect" th:each="item : ${listTayAo}">
+                                                        <a href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuTayAo()}"></span></a>
                                                     </div>
+                                                    <h5 th:unless="${listTayAo.size() > 0}" style="color: gray;">Hiện tại không có tay áo nào</h5>
                                                 </div>
                                             </div>
                                         </ul>

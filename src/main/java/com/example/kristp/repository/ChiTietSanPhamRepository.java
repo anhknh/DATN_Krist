@@ -5,6 +5,7 @@ import com.example.kristp.entity.ChiTietSanPham;
 import com.example.kristp.entity.MauSac;
 import com.example.kristp.entity.SanPham;
 import com.example.kristp.entity.Size;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -44,5 +45,8 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
                 "WHERE sp.id = :sanPhamId")
         List<ChiTietSanPham> findAllProductDetailsByProductId(@Param("sanPhamId") Integer sanPhamId);
         
+//Lấy các chi tiết sản phẩm san pham có trạng thái là đang hoạt động
+        @Query("from ChiTietSanPham ctsp join SanPham sp on ctsp.sanPham.id = sp.id where sp.trangThai = 1")
+    List<ChiTietSanPham> findAllProductDetailsSPHD();
 
 }
