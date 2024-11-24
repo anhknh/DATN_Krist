@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nhân viên</title>
+  <title>Khách Hàng</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
   <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
@@ -33,8 +33,10 @@
 <div class="main" >
   <div class="container-fluid g-0">
     <div class="row g-0">
+      <!--            sider bar-->
       <div class="col-2" style="height: 100vh;">
-        <div style="height: 72px; margin-bottom: 42px;" class="d-flex align-items-center justify-content-center">
+        <div style="height: 72px; margin-bottom: 42px;"
+             class="d-flex align-items-center justify-content-center">
           <div>
             <img style="width: 78%" src="/img/logo.png" alt="logo">
           </div>
@@ -42,11 +44,10 @@
             Krist
           </div>
         </div>
-
         <!-- Main Menu Items -->
         <div style="padding: 0px 22px 28px; border-bottom: 1px solid #E9E9EB;" class="mb-4">
           <!--                    Hiện tại vẫn chưa có tính năng doanh thu đường dẫn là #-->
-          <a href="#" class=" mb-3"
+          <a href="#" class="bg_profile_btn mb-3"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;"
              onclick="highlightLink(this)">
             <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
@@ -55,7 +56,7 @@
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
             <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
           </a>
-          <a href="/quan-ly-san-pham/pagination-san-pham" class="bg_profile_btn mb-3"
+          <a href="/quan-ly-san-pham/pagination-san-pham" class="mb-3"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
             <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
           </a>
@@ -125,14 +126,17 @@
             <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
           </a>
         </div>
+        <!-- Extra Menu -->
+
       </div>
+      <!--            end sider bar-->
       <div class="col-10">
         <!-- navigator_link -->
         <div class="d-flex justify-content-between align-items-center" style="height: 72px; margin-bottom: 18px;">
           <div>
             <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb" >
               <ol class="breadcrumb" style="height: 40px; margin: 0px;">
-                <li class="breadcrumb-item "><a href="/quan-ly-nhan-vien/phan-trang-nhan-vien" class="nav_link">Nhân viên</a></li>
+                <li class="breadcrumb-item "><a href="#" class="nav_link_active">Khách hàng</a></li>
               </ol>
             </nav>
           </div>
@@ -144,20 +148,20 @@
           <!-- headre_content -->
           <div class="d-flex justify-content-between" style="padding-bottom: 28px;">
             <div>
-              <h4>Nhân Viên</h4>
+              <h4>Khách Hàng</h4>
             </div>
             <div style="width: 580px;">
 
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <form action="/quan-ly-nhan-vien/tim-ma-nhan-vien" method="GET">
+                  <form action="/quan-ly-khach-hang/tim-kiem-tat-ca-khach-hang" method="GET">
                     <div class="input-group flex-nowrap" style="width: 400px;">
                                         <span class="input-group-text" id="addon-wrapping" style="background-color: #fff;">
                                             <i class="fa-solid fa-magnifying-glass" style="color: #5C5F6A;"></i>
                                         </span>
-                      <input type="text" class="form-control" name="timKiemMa"
-                             placeholder="Tìm kiếm nhân viên"
-                             style="border-left: none; ">
+                      <input type="text" class="form-control" name="tenTimKiem"
+                             placeholder="Search Category"
+                             style="border-left: none; padding: 8px 10px 8px 0px;">
                       <div class="input-group-append" style="padding-left: 20px">
                         <button type="submit" class="btn btn-dark">Tìm kiếm</button>
                       </div>
@@ -166,7 +170,7 @@
                 </div>
                 <div>
                   <div class="btn btn-dark" style="display: inline-block;" data-bs-toggle="modal"
-                       data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('',null , '' )|">Thêm nhân viên</div>
+                       data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('',null , '' )|">Thêm khách hàng</div>
                 </div>
               </div>
             </div>
@@ -176,50 +180,46 @@
             <table class="table" style="border-top: 1px solid #E9E9EB;">
               <thead>
               <tr>
-                <th scope="col" >STT</th>
-                <th scope="col">Ma nhân viên</th>
-                <th scope="col">Tên nhân viên</th>
+                <th scope="col">STT</th>
+                <th scope="col">Tên khách hàng</th>
                 <th scope="col">Số điện thoại</th>
-                <th scope="col">Ngày sinh</th>
-                <th scope="col">Địa chỉ</th>
                 <th scope="col" class="text-center">Trạng thái</th>
-                <th scope="col" class="text-center">Thao tác </th>
+                <th scope="col" class="text-center">Thao tác</th>
               </tr>
               </thead>
               <tbody>
-              <tr th:each="nhanvien , stat : ${NVList}">
+              <tr th:each="khachHang, stat : ${khachHangList}">
                 <td style="padding: 12px 6px; line-height: 305%;" th:text="${stat.index + 1}"></td>
-
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${nhanvien.maNhanVien}" th:class="valueMa"></td>
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${nhanvien.tenNhanVien}" th:class="valueName"></td>
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${nhanvien.soDienThoai}" th:class="valueSDT"></td>
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${#dates.format(nhanvien.ngaySinh, 'dd-MM-yyyy')}" th:class="valueNgaySinh"></td>
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${nhanvien.diaChi}" th:class="valueDiaChi"></td>
-                <td class="text-center" style="padding: 12px 6px; line-height: 305%;">
-                  <i class="fa-regular"
-                     th:classappend="${nhanvien.trangThai == nhanvien.trangThai.ACTIVE ? 'fa-check' : 'fa-x'}"></i>
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${khachHang.tenKhachHang}" th:class="valueName">
+                </td>
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${khachHang.soDienThoai}" th:class="valueDes">
                 </td>
 
+                <td class="text-center" style="padding: 12px 6px; line-height: 305%;">
+                  <i class="fa-regular"
+                     th:classappend="${khachHang.trangThai == khachHang.trangThai.ACTIVE ? 'fa-check' : 'fa-x'}"></i>
+                </td>
                 <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">
                   <div class="d-flex justify-content-center">
-                    <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top" title="Chi tiết nhân viên">
+                    <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top" title="chi tiết khách hàng">
                       <div  style="display: inline-block;"
                             data-bs-toggle="modal"
                             data-bs-target="#modalCategories"
-                            th:attr="onclick=|saveIdOrder('${nhanvien.id}','${stat.index}'  )|">
+                            th:attr="onclick=|saveIdOrder('${khachHang.id}','${stat.index}'  )|">
                         <i class="fa-solid fa-pen-to-square" ></i>
                       </div>
-                      <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top"  title="Thay đổi trạng thái">
-                        <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly-nhan-vien/delete-nhan-vien/{id}(id=${nhanvien.id})}" ><i class="fa-solid fa-swap-arrows"></i></a>
-                      </div>
+                    </div>
+                    <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top"  title="Thay đổi trạng thái">
+                      <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly-khach-hang/delete-khach-hang/{id}(id=${khachHang.id})}"><i class="fa-solid fa-swap-arrows"></i></a>
                     </div>
                   </div>
                 </td>
+
                 <!--                <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">-->
                 <!--                  <div class="d-flex justify-content-center">-->
-                <!--                    <a th:href="@{/quan-ly-nhan-vien/delete-nhan-vien/{id}(id=${nhanvien.id})}" class="btn btn-outline-secondary me-2">Delete</a>-->
-                <!--                    <div class="btn btn-outline-secondary" style="display: inline-block;" data-bs-toggle="modal"-->
-                <!--                         data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('${nhanvien.id}','${stat.index}' , '${nhanvien.trangThai}' )|" >Update-->
+                <!--                    <a th:href="@{/quan-ly-co-ao/delete-co-ao/{id}(id=${coAo.id})}" class="btn btn-outline-secondary me-2" title="cập nhật trạng thái"><i class="fa-light fa-pen-nib"></i></a>-->
+                <!--                    <div class="btn btn-outline-secondary" title="chi tiết cổ áo" style="display: inline-block;" data-bs-toggle="modal"-->
+                <!--                         data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('${coAo.id}','${stat.index}'  )|" ><i class="fa-light fa-pen-to-square"></i>-->
                 <!--                    </div>-->
                 <!--                  </div>-->
                 <!--                </td>-->
@@ -234,7 +234,7 @@
                 <!-- Nút Previous -->
                 <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
                   <a class="page-link" style="color: #5C5F6A"
-                     th:href="@{/quan-ly-nhan-vien/phan-trang-nhan-vien(pageNo=0)}"
+                     th:href="@{/quan-ly-khach-hang/pagination-khach-hang(pageNo=0)}"
                      aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                   </a>
@@ -243,14 +243,14 @@
                 <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i - 1 ? 'active' : ''}"
                     class="page-item">
                   <a class="page-link"
-                     th:href="@{/quan-ly-nhan-vien/phan-trang-nhan-vien(pageNo=${i - 1})}"
+                     th:href="@{/quan-ly-khach-hang/pagination-khach-hang(pageNo=${i - 1})}"
                      th:text="${i}" style="color: white; background-color: #5b5c64"></a>
                 </li>
                 <!-- Nút Next -->
                 <li class="page-item"
                     th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}">
                   <a class="page-link" style="color: #5C5F6A"
-                     th:href="@{/quan-ly-nhan-vien/phan-trang-nhan-vien(pageNo=${totalPage - 1})}"
+                     th:href="@{/quan-ly-khach-hang/pagination-khach-hang(pageNo=${totalPage - 1})}"
                      aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                   </a>
@@ -268,46 +268,30 @@
 <div class="modal fade" id="modalCategories" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="margin-top: 100px;">
-      <div class="modal-header">`
+      <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body"  style="padding:30px">
         <div>
-          <form  method="post"  id="form_submit" novalidate th:object="${NVCre}" class="needs-validation">
+          <form method="post" id="form_submit" novalidate th:object="${khachHangCre}" class="needs-validation">
             <div class="display_none">
-              <input type="text" class="form-control" id="idCustomer" name="id" value="" th:field="*{id}">
+              <input type="text" class="form-control" id="idCustomer" name="idColor" value="" th:field="*{id}">
             </div>
             <div class="mb-4">
-              <label for="maCate" class="form-label">Mã nhân viên</label>
-              <input type="text" class="form-control" id="maCate" placeholder="Mã nhân viên" name="maNhanVien" th:field="*{maNhanVien}" required>
-              <div class="invalid-feedback">Mã nhân viên không hợp lệ</div>
+              <label for="nameCate" class="form-label">Tên khách hàng</label>
+              <input type="text" class="form-control" id="nameCate" placeholder="Nhập tên khách hàng" name="categoryName" th:field="*{tenKhachHang}" required>
+              <div class="invalid-feedback">Tên khách hàng không hợp lệ.</div>
             </div>
             <div class="mb-4">
-              <label for="nameCate" class="form-label">Tên nhân viên</label>
-              <input type="text" class="form-control" name="tenNhanVien" id="nameCate" placeholder="Tên nhân viên" th:field="*{tenNhanVien}" required >
-              <div class="invalid-feedback">Tên nhân viên không hợp lệ</div>
+              <label for="desCate" class="form-label">Số điện thoại </label>
+              <input type="text" class="form-control" name="describe" id="desCate" placeholder="Nhập số điện thoại" th:field="*{soDienThoai}" required >
+              <div class="invalid-feedback">Số điện thoại không hợp lệ.</div>
             </div>
-            <div class="mb-4">
-              <label for="sdtCate" class="form-label">Số điện thoại</label>
-              <input type="text" class="form-control" name="soDienThoai" id="sdtCate" placeholder="số điện thoại nhân viên" th:field="*{soDienThoai}" required >
-              <div class="invalid-feedback">Số điện thoại không hợp lệ</div>
-            </div>
-            <div class="mb-4">
-              <label for="ngaysinhCate" class="form-label">Ngày sinh</label>
-              <input type="date" class="form-control" name="ngaySinh" id="ngaysinhCate" placeholder="Ngày sinh nhân viên"  th:value="${#dates.format(NVCre.ngaySinh, 'yyyy-MM-dd')}"  required >
-              <div class="invalid-feedback">Ngày sinh không hợp lệ</div>
-            </div>
-            <div class="mb-4">
-              <label for="diachiCate" class="form-label">Địa chỉ</label>
-              <input type="text" class="form-control" name="diaChi" id="diachiCate" placeholder="Địa chỉ nhân viên" th:field="*{diaChi}" required >
-              <div class="invalid-feedback">Địa chỉ nhân viên không hợp lệ</div>
-            </div>
-
             <!--            <div class="mb-4 display_none" id="statusSection">-->
             <!--              <label class="form-label">Trạng thái</label><br>-->
             <!--              <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">-->
-            <!--              <label for="active">Đang hoạt động</label><br>-->
+            <!--              <label for="active">Hoạt động</label><br>-->
             <!--              <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">-->
             <!--              <label for="inactive">Ngừng hoạt động</label>-->
             <!--            </div>-->
@@ -334,67 +318,42 @@
 <script>
   // Khởi tạo Bootstrap tooltips
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-  var tooltipsList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
   });
 </script>
 <script>
 
   const idCustomer = document.getElementById("idCustomer");
-  const valueMa = document.querySelectorAll(".valueMa");
   const valueName = document.querySelectorAll(".valueName");
-  const valueSDT = document.querySelectorAll(".valueSDT");
-  const valueNgaySinh = document.querySelectorAll(".valueNgaySinh");  // Kiểm tra có dữ liệu ngày sinh hợp lệ không
-  const valueDiaChi = document.querySelectorAll(".valueDiaChi");
-
+  const valueDes = document.querySelectorAll(".valueDes");
   // Lấy về thuộc tính có id và điều chỉnh theo mong muốn trong hàm saveIdOrder
-  const maCate = document.getElementById('maCate');
   const nameCate = document.getElementById('nameCate');
-  const sdtCate = document.getElementById('sdtCate');
-  const ngaysinhCate = document.getElementById('ngaysinhCate');
-  const diachiCate = document.getElementById('diachiCate');
+  const desCate = document.getElementById('desCate');
   const statusSection = document.getElementById('statusSection');
 
-  function saveIdOrder(id, index, hanhDong) {
+  function saveIdOrder(id , index , hanhDong){
     idCustomer.value = id;
-
-    if (index !== null) {
-      // Kiểm tra ngày sinh có hợp lệ không, nếu có thì cập nhật
-      let ngaySinh = valueNgaySinh[index].textContent.trim();
-
-      // Nếu ngày sinh là hợp lệ (theo định dạng yyyy-MM-dd)
-      if (ngaySinh) {
-        ngaysinhCate.value = ngaySinh;  // Cập nhật vào trường ngày sinh
-      }
-
-      maCate.value = valueMa[index].textContent.trim();
+    if(index != null) {
       nameCate.value = valueName[index].textContent.trim();
-      sdtCate.value = valueSDT[index].textContent.trim();
-      diachiCate.value = valueDiaChi[index].textContent.trim();
-
-      // Hiển thị phần chọn trạng thái
+      desCate.value = valueDes[index].textContent.trim();
       // statusSection.classList.remove('display_none');
-      document.getElementById('exampleModalLabel').innerText = 'Cập nhật nhân viên';
-
-      // Kiểm tra trạng thái và chọn radio button tương ứng
+      document.getElementById('exampleModalLabel').innerText = 'Chi tiết khách hàng';
+      // Kiểm tra class của icon
       // if (hanhDong == "ACTIVE") {
+      //   // Nếu class là 'fa-check', chọn radio button active
       //   document.getElementById('active').checked = true;
       // } else {
+      //   // Ngược lại nếu class là 'fa-x', chọn radio button inactive
       //   document.getElementById('inactive').checked = true;
       // }
-
-      // Thay đổi hành động của form
-      document.getElementById("form_submit").action = '/quan-ly-nhan-vien/update-nhan-vien';
+      document.getElementById("form_submit").action = '/quan-ly-khach-hang/update-khach-hang' ;
     } else {
-      // Nếu không có index (thêm mới)
       // statusSection.classList.add('display_none');
-      document.getElementById('exampleModalLabel').innerText = 'Thêm nhân viên';
-      maCate.value = "";
+      document.getElementById('exampleModalLabel').innerText = 'Thêm khách hàng';
       nameCate.value = "";
-      sdtCate.value = "";
-      ngaysinhCate.value = "";  // Xóa trường ngày sinh
-      diachiCate.value = "";
-      document.getElementById("form_submit").action = '/quan-ly-nhan-vien/add-nhan-vien';
+      desCate.value = "";
+      document.getElementById("form_submit").action = '/quan-ly-khach-hang/add-khach-hang' ;
     }
   }
 
@@ -471,6 +430,7 @@
     // Toggle between 'none' and 'block' to show/hide submenu
     submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
   }
+
   function highlightLink(link){
     //     Remove the 'bg_profile_btn' class from all links
     const links = document.querySelectorAll('.bg_profile_btn');
