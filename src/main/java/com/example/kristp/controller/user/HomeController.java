@@ -3,6 +3,7 @@ package com.example.kristp.controller.user;
 import com.example.kristp.entity.*;
 import com.example.kristp.service.*;
 import com.example.kristp.utils.Authen;
+import com.example.kristp.utils.DataUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,13 +35,12 @@ public class HomeController {
     private CoAoService coAoService ;
 
     @Autowired
-    private SanPhamService sanPhamService;
-
+    GioHangService gioHangService;
     @Autowired
-    private GioHangService gioHangService;
-
+    GioHangChiTietService gioHangChiTietService;
     @Autowired
-    private GioHangChiTietService gioHangChiTietService;
+    DataUtils dataUtils;
+
 
     @GetMapping("/trang-chu")
     public String hello(Model model) {
@@ -54,9 +54,24 @@ public class HomeController {
 
         List<TayAo> listTayAo = tayAoService.getAllTayAo();
 
+
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
+
+        float tongTien = 0;
+        GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+        ArrayList<GioHangChiTiet> gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+        for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+            tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+        }
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        model.addAttribute("khachHang", Authen.khachHang);
+        model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        //hàm format
+        model.addAttribute("convertMoney", dataUtils);
         return "view/home/home-page";
     }
 

@@ -11,6 +11,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocationRequest {
+    private String hoTen;
+    private String soDienThoai;
+    private String diaChi;
     private String provinceName;
     private String provinceCode;
     private String districtName;

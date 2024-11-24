@@ -25,6 +25,13 @@ public class DiaChi extends BaseEntity {
     private String diaChi;
 
     private String tenKhachHang;
+    private String maTinhThanh;
+    private String tenTinhThanh;
+    private String maQuanHuyen;
+    private String tenQuanHuyen;
+    private String maPhuongXa;
+    private String tenPhuongXa;
+
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "trang_thai")

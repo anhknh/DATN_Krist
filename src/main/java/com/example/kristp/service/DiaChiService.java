@@ -18,9 +18,9 @@ public interface DiaChiService {
     List<DiaChi> getAllActiveDiaChiByUser(KhachHang khachHang);
     DiaChi getDiaChiById(Integer id);
     DiaChi addDiaChi(DiaChi diaChi);
-    DiaChi updateDiaChi(DiaChi diaChi, Integer idDiaChi);
+    boolean updateDiaChi(DiaChi diaChi, Integer idDiaChi);
     void deleteDiaChi(Integer id);
 
-    boolean saveDiaChi(LocationRequest request);
+    boolean saveDiaChi(DiaChi request);
 
 }

@@ -138,7 +138,7 @@
     <!--    content-->
     <div class="container-fluid" style="padding: 30px;">
         <div class="container">
-            <form action="danh-sach-san-pham" method="get" class="d-flex flex-column" style="width: 100%;">
+            <form action="/danh-sach-san-pham" method="get" class="d-flex flex-column" style="width: 100%;">
                 <div class="d-flex align-items-center mb-3">
                     <input class="form-control me-2" name="tenSanPham" type="search" placeholder="Tên sản phẩm"
                            aria-label="Search" style="width: 1030px">
@@ -153,11 +153,11 @@
                     <div class="col-md-3">
                         <div class="collapse multi-collapse" id="multiCollapseExample1">
                             <div class="card p-2">
-                                <label class="form-label">Kiểu cổ áo</label>
-                                <select class="form-select livesearch" name="coAo" multiple
-                                        aria-label="Default select example">
-                                    <option value="1">Cổ tròn</option>
-                                    <option value="2">Cổ trái tim</option>
+                                <label class="form-label">Danh mục</label>
+                                <select class="form-select livesearch" name="danhMucId" multiple data-placeholder="Danh mục">
+                                    <option th:each="danhMuc, iterStat : ${listDanhMuc}"
+                                            th:value="${danhMuc.id}"
+                                            th:text="${danhMuc.tenDanhMuc}"></option>
                                 </select>
                             </div>
                         </div>
@@ -165,12 +165,11 @@
                     <div class="col-md-3">
                         <div class="collapse multi-collapse" id="multiCollapseExample2">
                             <div class="card p-2">
-                                <label class="form-label">Giá</label>
-                                <select class="form-select livesearch" name="gia" multiple
-                                        aria-label="Default select example">
-                                    <option value="1">100K - 300K</option>
-                                    <option value="2">300K - 500K</option>
-                                    <option value="3">> 500K</option>
+                                <label class="form-label">Chất liệu</label>
+                                <select class="form-select livesearch" name="chatLieuId" multiple data-placeholder="Chất liệu">
+                                    <option th:each="chatLieu, iterStat : ${listChatLieu}"
+                                            th:value="${chatLieu.id}"
+                                            th:text="${chatLieu.tenChatLieu}"></option>
                                 </select>
                             </div>
                         </div>
@@ -178,14 +177,11 @@
                     <div class="col-md-3">
                         <div class="collapse multi-collapse" id="multiCollapseExample3">
                             <div class="card p-2">
-                                <label class="form-label">Size</label>
-                                <select class="form-select livesearch" name="size" multiple
-                                        aria-label="Default select example">
-                                    <option value="1">S</option>
-                                    <option value="2">M</option>
-                                    <option value="3">L</option>
-                                    <option value="4">XL</option>
-                                    <option value="5">XXL</option>
+                                <label class="form-label">Tay áo</label>
+                                <select class="form-select livesearch" name="tayAoId" multiple data-placeholder="Tay áo">
+                                    <option th:each="tayAo, iterStat : ${listTayAo}"
+                                            th:value="${tayAo.id}"
+                                            th:text="${tayAo.kieuTayAo}"></option>
                                 </select>
                             </div>
                         </div>
@@ -193,14 +189,35 @@
                     <div class="col-md-3">
                         <div class="collapse multi-collapse" id="multiCollapseExample4">
                             <div class="card p-2">
+                                <label class="form-label">Cổ áo</label>
+                                <select class="form-select livesearch" name="coAoId" multiple data-placeholder="Cổ áo">
+                                    <option th:each="coAo, iterStat : ${listCoAo}"
+                                            th:value="${coAo.id}"
+                                            th:text="${coAo.kieuCoAo}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="collapse multi-collapse" id="multiCollapseExample5">
+                            <div class="card p-2">
                                 <label class="form-label">Màu sắc</label>
-                                <select class="form-select livesearch" name="mauSac" multiple
-                                        aria-label="Default select example">
-                                    <option value="1">Đỏ</option>
-                                    <option value="2">Đen</option>
-                                    <option value="3">Trắng</option>
-                                    <option value="4">Nâu</option>
-                                    <option value="5">Hồng</option>
+                                <option th:each="mauSac : ${listMauSac}"
+                                        th:style="'color:' + ${mauSac.maMauSac}"
+                                        th:value="${mauSac.id}"
+                                        th:text="${mauSac.maMauSac}">
+                                </option>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="collapse multi-collapse" id="multiCollapseExample6">
+                            <div class="card p-2">
+                                <label class="form-label">Size</label>
+                                <select class="form-select livesearch" name="sizeId" multiple data-placeholder="Size">
+                                    <option th:each="size, iterStat : ${listSize}"
+                                            th:value="${size.id}"
+                                            th:text="${size.tenSize}"></option>
                                 </select>
                             </div>
                         </div>
@@ -231,44 +248,48 @@
                             </a>
                             <div class="cart-content">
                                 <div class="category-name" th:text="${product.getDanhMuc().getTenDanhMuc()}"></div>
-                                <div class="product-name" th:text="${product.getTenSanPham()}">Áo phông cộc tay</div>
+                                <a class="product-name cl-black" style="text-decoration: none" th:text="${product.getTenSanPham()}" th:href="@{/chi-tiet-san-pham(idSanPham=${product.id})}">Áo phông cộc tay</a>
                                 <div class="price"
-                                     th:text="${product.chiTietSanPham.size() > 0 ? product.chiTietSanPham[0].donGia : 'N/A'}"></div>
+                                     th:text="${product.chiTietSanPham.size() > 0 ? dataUtils.formatCurrency(product.chiTietSanPham[0].donGia) : 'N/A'}"></div>
                             </div>
                         </div>
                     </div>
 
                 </div>
-                <div style="padding-left: 1000px">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-end">
-                            <!-- Nút Previous -->
-                            <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
-                                <a class="page-link" style="color: #5C5F6A"
-                                   th:href="@{/danh-sach-san-pham(pageNo=0)}"
-                                   aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <!-- Vòng lặp phân trang -->
-                            <li th:if="${totalPage > 0}" th:each="i : ${#numbers.sequence(1, totalPage)}"
-                                th:classappend="${currentPage == i - 1 ? 'active' : ''}"
-                                class="page-item">
-                                <a class="page-link"
-                                   th:href="@{/danh-sach-san-pham(pageNo=${i - 1})}"
-                                   th:text="${i}" style="color: #5C5F6A"></a>
-                            </li>
-                            <!-- Nút Next -->
-                            <li class="page-item"
-                                th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}">
-                                <a class="page-link" style="color: #5C5F6A"
-                                   th:href="@{/danh-sach-san-pham(pageNo=${totalPage - 1})}"
-                                   aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                <div class="d-flex justify-content-end">
+                    <div>
+                        <!-- Pagination for SanPham -->
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                                <!-- Link to the first page -->
+                                <li class="page-item">
+                                    <a class="page-link" th:style="'color: #5C5F6A'"
+                                       th:href="@{/danh-sach-san-pham(page=0)}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <!-- Loop through each page number in the pagination -->
+                                <li th:each="p : ${pagination}"
+                                    th:classappend="${page.number == p} ? 'active' : ''">
+                                    <a class="page-link"
+                                       th:style="${page.number == p} ? 'color: #ffffff; background-color: #5C5F6A' : 'color: #5C5F6A'"
+                                       th:href="@{/danh-sach-san-pham(page=${p})}">
+                                        <span th:text="${p + 1}">1</span>
+                                    </a>
+                                </li>
+
+                                <!-- Link to the last page -->
+                                <li class="page-item">
+                                    <a class="page-link" th:style="'color: #5C5F6A'"
+                                       th:href="@{/danh-sach-san-pham(page=${totalPage})}"
+                                       aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
                 </div>
             </div>
         </div>
