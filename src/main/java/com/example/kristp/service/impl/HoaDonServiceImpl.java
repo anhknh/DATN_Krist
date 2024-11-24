@@ -4,6 +4,7 @@ import com.example.kristp.entity.HoaDon;
 import com.example.kristp.enums.HoaDonStatus;
 import com.example.kristp.repository.HoaDonRepository;
 import com.example.kristp.repository.NhanVienRepository;
+import com.example.kristp.service.BanHangService;
 import com.example.kristp.service.HoaDonService;
 import com.example.kristp.utils.Authen;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,13 +26,16 @@ public class HoaDonServiceImpl implements HoaDonService {
     HoaDonRepository hoaDonRepository;
     @Autowired
     NhanVienRepository nhanVienRepository;
+    @Autowired
+    BanHangService banHangService;
 
     @Override
     public Boolean taoHoaDon() {
         HoaDon hoaDon = new HoaDon();
         hoaDon.setNhanVien(nhanVienRepository.findById(1).orElse(null));
         hoaDon.setTrangThai(HoaDonStatus.HOA_DON_CHO);
-        if(hoaDonRepository.countByTrangThai(HoaDonStatus.HOA_DON_CHO) < 5){
+        hoaDon.setTrangThaiThanhToan(HoaDonStatus.CHUA_THANH_TOAN);
+        if (hoaDonRepository.countByTrangThai(HoaDonStatus.HOA_DON_CHO) < 5) {
             hoaDonRepository.save(hoaDon);
             return true;
         }
@@ -42,7 +47,9 @@ public class HoaDonServiceImpl implements HoaDonService {
         if(hoaDon == null ) {
             return false;
         }
-        hoaDon.setTrangThai(HoaDonStatus.DA_THANH_TOAN);
+        hoaDon.setTrangThaiThanhToan(HoaDonStatus.DA_THANH_TOAN);
+        hoaDon.setTrangThai(HoaDonStatus.HOAN_TAT);
+        hoaDon.setNgayDatHang(new Date());
          hoaDonRepository.save(hoaDon);
          return true;
     }

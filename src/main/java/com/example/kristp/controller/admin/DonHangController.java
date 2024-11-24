@@ -2,7 +2,9 @@ package com.example.kristp.controller.admin;
 
 import com.example.kristp.entity.HoaDon;
 import com.example.kristp.enums.HoaDonStatus;
+import com.example.kristp.service.HoaDonChiTietService;
 import com.example.kristp.service.HoaDonService;
+import com.example.kristp.utils.DataUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,10 @@ import java.util.stream.Collectors;
 public class DonHangController {
     @Autowired
     private HoaDonService hoaDonService;
+    @Autowired
+    HoaDonChiTietService hoaDonChiTietService;
+    @Autowired
+    DataUtils dataUtils;
 
     @GetMapping("/view-don-hang")
     public String viewHoaDon(
@@ -94,7 +100,11 @@ public class DonHangController {
     }
 
     @GetMapping("/view-chi-tiet-don-hang")
-    public String chiTietDonHang() {
+    public String chiTietDonHang(@RequestParam("idHoaDon") Integer idHoaDon, Model model) {
+        HoaDon hoaDon = hoaDonService.findHoaDonById(idHoaDon);
+        model.addAttribute("hoaDon", hoaDon);
+        model.addAttribute("hoaDonChiTiet", hoaDonChiTietService.getHoaDonChiTietByHoaDon(hoaDon, null).getContent());
+        model.addAttribute("convertMoney", dataUtils);
         return "view-admin/dashbroad/chi-tiet-don-hang";
     }
 

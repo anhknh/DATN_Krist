@@ -4,6 +4,7 @@ import com.example.kristp.entity.*;
 import com.example.kristp.service.DiaChiService;
 import com.example.kristp.service.KhachHangService;
 import com.example.kristp.service.TaiKhoanService;
+import com.example.kristp.utils.DataUtils;
 import com.example.kristp.utils.Pagination;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class DiaChiController {
 
     @Autowired
     private TaiKhoanService taiKhoanService;
+    @Autowired
+    DataUtils dataUtils;
 
 
 
@@ -44,6 +47,7 @@ public class DiaChiController {
         model.addAttribute("page", diachis);
         model.addAttribute("pagination", pagination.getPage(diachis.getNumber(), diachis.getTotalPages()));
         model.addAttribute("diaChiCre", new DiaChi());
+        model.addAttribute("dataUtils", dataUtils);
         return "view-admin/dashbroad/crud-dia-chi";
     }
 
@@ -54,63 +58,30 @@ public class DiaChiController {
     @PostMapping("/add-dia-chi")
     public String addDiaChi(@Valid @ModelAttribute("diaChiCre") DiaChi diaChi, BindingResult result,
                             RedirectAttributes attributes) {
-        if (result.hasErrors()) {
-            attributes.addFlashAttribute("message", "Thêm mới địa chỉ không thành công.");
+        if(diaChiService.saveDiaChi(diaChi)) {
+            attributes.addFlashAttribute("message", "Thêm mới địa chỉ thành công.");
+            attributes.addFlashAttribute("messageType", "alert-success");
+            attributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            attributes.addFlashAttribute("message", "Số điện thoại đã tồn tại hoặc dữ liệu không đúng");
             attributes.addFlashAttribute("messageType", "alert-danger");
-            return "redirect:/user-dia-chi/pagination-dia-chi";
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
         }
-
-        // Gọi phương thức từ service để thêm địa chỉ
-        diaChiService.addDiaChi(diaChi);
-        attributes.addFlashAttribute("message", "Thêm mới địa chỉ thành công.");
-        attributes.addFlashAttribute("messageType", "alert-success");
         return "redirect:/user-dia-chi/pagination-dia-chi";
     }
 
-//    @PostMapping("/update-dia-chi")
-//    public String updateDiaChi(@Valid @ModelAttribute("diaChi") DiaChi diaChi,
-//                               BindingResult result,
-//                               RedirectAttributes attributes,
-//                               @RequestParam("id") Integer id) {
-//        // Gán id cho diaChi
-//        diaChi.setId(id);
-//
-//        // Kiểm tra lỗi trong binding
-//        if (result.hasErrors()) {
-//            attributes.addFlashAttribute("message", "Cập nhật địa chỉ không thành công.");
-//            attributes.addFlashAttribute("messageType", "alert-danger");
-//            return "redirect:/user-dia-chi/pagination-dia-chi";
-//        }
-//
-//        // Cập nhật địa chỉ
-//        DiaChi updatedDiaChi = diaChiService.updateDiaChi(diaChi);
-//
-//        if (updatedDiaChi == null) {
-//            attributes.addFlashAttribute("message", "Cập nhật địa chỉ không thành công.");
-//            attributes.addFlashAttribute("messageType", "alert-danger");
-//            return "redirect:/user-dia-chi/pagination-dia-chi";
-//        }
-//
-//        attributes.addFlashAttribute("message", "Cập nhật địa chỉ thành công.");
-//        attributes.addFlashAttribute("messageType", "alert-success");
-//        return "redirect:/user-dia-chi/pagination-dia-chi";
-//    }
 @PostMapping("/update-dia-chi")
 private String updateDiaChi(@Valid @ModelAttribute("diaChiCre") DiaChi diaChi, BindingResult result, RedirectAttributes attributes) {
 
-
-    if (result.hasErrors()) {
-        attributes.addFlashAttribute("diaChi", diaChi);
-        attributes.addFlashAttribute("message", "Cập nhật địa chỉ không thành công.");
+    if(diaChiService.updateDiaChi(diaChi, diaChi.getId())) {
+        attributes.addFlashAttribute("message", "Cập nhật địa chỉ thành công.");
+        attributes.addFlashAttribute("messageType", "alert-success");
+        attributes.addFlashAttribute("titleMsg", "Thành công");
+    } else {
+        attributes.addFlashAttribute("message", "Số điện thoại đã tồn tại hoặc dữ liệu không đúng");
         attributes.addFlashAttribute("messageType", "alert-danger");
         attributes.addFlashAttribute("titleMsg", "Thất bại");
-        return "redirect:/user-dia-chi/pagination-dia-chi";
     }
-
-    diaChiService.updateDiaChi(diaChi, diaChi.getId());
-    attributes.addFlashAttribute("message", "Cập nhật địa chỉ thành công.");
-    attributes.addFlashAttribute("messageType", "alert-success");
-    attributes.addFlashAttribute("titleMsg", "Thành công");
     return "redirect:/user-dia-chi/pagination-dia-chi";
 }
 

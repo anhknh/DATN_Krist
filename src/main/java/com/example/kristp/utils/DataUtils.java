@@ -4,7 +4,10 @@ import com.example.kristp.entity.KhuyenMai;
 import org.springframework.stereotype.Service;
 
 import java.text.NumberFormat;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -16,28 +19,72 @@ public class DataUtils {
     }
 
     public static String calculatorTotal(double tongTien, KhuyenMai khuyenMai) {
-        if (khuyenMai != null) {
-            if (khuyenMai.getKieuKhuyenMai().equals("VND")) {
-                double check = tongTien - khuyenMai.getGiaTri() + 30000;
-                if(check < 0) {
-                    return formatCurrency(0);
+        double finalAmount = tongTien; // Tổng tiền ban đầu
+
+        if (khuyenMai != null && khuyenMai.getKieuKhuyenMai() != null) {
+            double discountValue = khuyenMai.getGiaTri();
+
+            if ("VND".equals(khuyenMai.getKieuKhuyenMai())) {
+                // Giảm theo số tiền cố định
+                finalAmount -= discountValue;
+            } else if ("%".equals(khuyenMai.getKieuKhuyenMai())) {
+                // Giảm theo phần trăm
+                if (discountValue > 0 && discountValue <= 100) {
+                    finalAmount -= (finalAmount * discountValue / 100);
                 }
-                return formatCurrency(check);
             }
         }
-        return formatCurrency(tongTien + 30000);
+
+        // Luôn thêm phí vận chuyển 30,000
+        finalAmount += 30000;
+
+        // Đảm bảo tổng tiền không âm
+        if (finalAmount < 0) {
+            finalAmount = 0;
+        }
+
+        return formatCurrency(finalAmount);
     }
 
+
+
     public static double calculatorTotal2(double tongTien, KhuyenMai khuyenMai) {
-        if (khuyenMai != null) {
-            if (khuyenMai.getKieuKhuyenMai().equals("VND")) {
-                double check = tongTien - khuyenMai.getGiaTri() + 30000;
-                if(check < 0) {
-                    return 0;
+        double finalAmount = tongTien; // Tổng tiền ban đầu
+
+        if (khuyenMai != null && khuyenMai.getKieuKhuyenMai() != null) {
+            double discountValue = khuyenMai.getGiaTri();
+
+            if ("VND".equals(khuyenMai.getKieuKhuyenMai())) {
+                // Giảm theo số tiền cố định
+                finalAmount -= discountValue;
+            } else if ("%".equals(khuyenMai.getKieuKhuyenMai())) {
+                // Giảm theo phần trăm
+                if (discountValue > 0 && discountValue <= 100) {
+                    finalAmount -= (finalAmount * discountValue / 100);
                 }
-                return check;
             }
         }
-        return (tongTien + 30000);
+
+        // Luôn thêm phí vận chuyển 30,000
+        finalAmount += 30000;
+
+        // Đảm bảo tổng tiền không âm
+        return Math.max(finalAmount, 0);
     }
+
+
+    public static String formatFullAddress(String diaChi, String phuongXa, String quanHuyen, String tinhThanh) {
+        // Tạo danh sách các phần của địa chỉ
+        List<String> parts = Arrays.asList(diaChi, phuongXa, quanHuyen, tinhThanh);
+
+        // Loại bỏ phần tử null hoặc chuỗi rỗng
+        List<String> filteredParts = parts.stream()
+                .filter(part -> part != null && !part.trim().isEmpty()) // Loại bỏ null hoặc chuỗi rỗng
+                .map(String::trim) // Xóa khoảng trắng thừa
+                .collect(Collectors.toList());
+
+        // Nối các phần tử lại với dấu phẩy
+        return String.join(", ", filteredParts);
+    }
+
 }

@@ -134,41 +134,43 @@
     <div class="content_left"
          style="width: 512px; height: 548px; background-color: #F6F6F6; border-radius: 6px; margin-right: 10px;">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <!-- Indicators -->
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                        aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
+                <th:block th:each="image, indexStat : ${listCTSP}">
+                    <button type="button"
+                            data-bs-target="#carouselExampleIndicators"
+                            th:data-bs-slide-to="${indexStat.index}"
+                            th:classappend="${indexStat.index == 0} ? 'active'"
+                            th:aria-label="'Slide ' + ${indexStat.index + 1}">
+                    </button>
+                </th:block>
             </div>
+
+            <!-- Carousel Items -->
             <div class="carousel-inner" style="padding: 28px;">
-                <div class="carousel-item active text-center">
-                    <img src="/img/monochrome_tees.png" style="width: 80%;" alt="...">
-                </div>
-                <div class="carousel-item text-center">
-                    <img src="/img/monochrome_tees.png" style="width: 80%;" alt="...">
-                </div>
-                <div class="carousel-item text-center">
-                    <img src="/img/monochrome_tees.png" style="width: 80%;" alt="...">
-                </div>
+                <th:block th:each="image, indexStat : ${listCTSP}">
+                    <div class="carousel-item text-center" th:classappend="${indexStat.index == 0} ? 'active'">
+                        <img th:src="'/img/' + ${image.anhSanPham}" style="width: 80%;" alt="Chi tiết sản phẩm">
+                    </div>
+                </th:block>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="prev">
+
+            <!-- Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
+
     </div>
     <div class="content_right" style="width: 512px; height: 548px; margin-right: 108px;">
         <div class="d-flex  justify-content-between align-items-center" style="margin-bottom: 12px;">
             <div>
-                <h3>Áo phông trơn</h3>
+                <h3 th:text="${sanPham.tenSanPham}"></h3>
             </div>
             <div>
                 <p class="m-0"
@@ -182,7 +184,7 @@
 
         </div>
         <div style="margin-bottom: 12px;">
-            <h4>150.000 VNĐ</h4>
+            <h4 th:text="${dataUtils.formatCurrency(sanPham.getChiTietSanPham().get(0).getDonGia())}">150.000 VNĐ</h4>
         </div>
         <div style="margin-bottom: 18px;">
             <div>
@@ -191,28 +193,22 @@
             </div>
             <div>
                 <!-- list_color -->
-                <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                    <input class="form-check-input radio_color" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                           value="option1" style="display: none;" checked>
-                    <label class="form-check-label lable_radio_color selected_radio_color" for="inlineRadio1"
+                <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;" th:each="color, indexStat : ${ListColorProductDetail}">
+                    <input class="form-check-input radio_color"
+                           type="radio"
+                           name="inlineRadioOptions"
+                           th:id="'color'+${color.id}"
+                           th:value="${color.id}"
+                           style="display: none;"
+                           th:checked="${indexStat.index == 1}">
+                    <label class="form-check-label lable_radio_color selected_radio_color"
+                           th:for="'color'+${color.id}"
                            style="padding: 2px;">
-                        <p style="margin: 0; padding: 9px;border-radius: 50%; background-color: #A3BEF8; border:1px solid #E6E7E8; cursor: pointer;"></p>
+                        <p th:style="'margin: 0; padding: 9px; border-radius: 50%; background-color: ' + ${color.maMauSac} + '; border: 1px solid #E6E7E8; cursor: pointer;'">
+                        </p>
                     </label>
                 </div>
-                <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                    <input class="form-check-input radio_color" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                           style="display: none;" value="option2">
-                    <label class="form-check-label lable_radio_color" for="inlineRadio2" style="padding: 2px;">
-                        <p style="margin: 0; padding: 9px;border-radius: 50%; background-color: #FFD58A; border:1px solid #E6E7E8; cursor: pointer;"></p>
-                    </label>
-                </div>
-                <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                    <input class="form-check-input radio_color" type="radio" name="inlineRadioOptions" id="inlineRadio3"
-                           style="display: none;" value="option3">
-                    <label class="form-check-label lable_radio_color" for="inlineRadio3" style="padding: 2px;">
-                        <p style="margin: 0; padding: 9px;border-radius: 50%; background-color: #83B18B; border:1px solid #E6E7E8; cursor: pointer;"></p>
-                    </label>
-                </div>
+
             </div>
         </div>
         <div style="margin-bottom: 18px;">
@@ -222,51 +218,19 @@
             </div>
             <!-- list_size -->
             <div>
-                <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                    <input class="form-check-input radio_size" type="radio" name="size" id="inlineRadio4" value="size1"
-                           style="display: none;" checked>
-                    <label class="form-check-label lable_radio_size selected_radio_size" for="inlineRadio4"
+                <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;" th:each="size, indexStat : ${ListSizeProductDetail}">
+                    <input class="form-check-input radio_size" type="radio" name="size" th:id="'size'+${size.id}" th:value="${size.id}"
+                           style="display: none;" th:checked="${indexStat.index == 1}">
+                    <label class="form-check-label lable_radio_size selected_radio_size" th:for="'size'+${size.id}"
                            style="padding: 10px 16px; cursor: pointer;border-radius: 4px;">
-                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">S</p>
-                    </label>
-                </div>
-                <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                    <input class="form-check-input radio_size" type="radio" name="size" id="inlineRadio5"
-                           style="display: none;" value="size1">
-                    <label class="form-check-label lable_radio_size non_radio_size" for="inlineRadio5"
-                           style="padding: 10px 16px; cursor: pointer;border-radius: 4px;;">
-                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">M</p>
-                    </label>
-                </div>
-                <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                    <input class="form-check-input radio_size" type="radio" name="size" id="inlineRadio6"
-                           style="display: none;" value="size1">
-                    <label class="form-check-label lable_radio_size non_radio_size" for="inlineRadio6"
-                           style="padding: 10px 16px; cursor: no-drop;border-radius: 4px;;">
-                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">X</p>
-                    </label>
-                </div>
-                <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                    <input class="form-check-input radio_size" type="radio" name="size" id="inlineRadio7"
-                           style="display: none;" value="size1">
-                    <label class="form-check-label lable_radio_size non_radio_size" for="inlineRadio7"
-                           style="padding: 10px 16px; cursor: pointer;border-radius: 4px;;">
-                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">XL</p>
-                    </label>
-                </div>
-                <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                    <input class="form-check-input radio_size" type="radio" name="size" id="inlineRadio8"
-                           style="display: none;" value="size1">
-                    <label class="form-check-label lable_radio_size non_radio_size" for="inlineRadio8"
-                           style="padding: 10px 16px; cursor: pointer;border-radius: 4px;;">
-                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;">XXL</p>
+                        <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;" th:text="${size.tenSize}"></p>
                     </label>
                 </div>
             </div>
         </div>
         <div style="margin-bottom: 32px;">
             <div>
-                <p style="font-size: 12px; color: #5C5F6A; font-weight: 500; line-height: 24px; letter-spacing: 0.6px;">
+                <p style="font-size: 12px; color: #5C5F6A; font-weight: 500; line-height: 24px; letter-spacing: 0.6px;" th:text="'Số lượng hiện có: ' + ${sanPham.getChiTietSanPham().get(0).soLuong}">
                     Số lượng</p>
             </div>
             <div class="product_cart">
@@ -287,7 +251,7 @@
         <div>
             <div>
                 <div style=" display: inline-block;">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal_popup"
+                    <a th:href="@{/gio-hang/add(idChiTietSanPham=${product.chiTietSanPham.get(0).id})}"
                        style=" color: #fff; text-decoration: none; background-color: #000; font-size: 14px; font-weight: 500; border-radius: 4px; padding: 12px 68px; margin-right: 8px;">Thêm
                         vào giỏ hàng</a>
                 </div>
@@ -496,7 +460,7 @@
         </div>
     </div>
 </div>
-</div>
+
 
 <!-- modal_review -->
 <div class="modal fade" id="modal_review" tabindex="-1" aria-labelledby="modal_reviewLabel" aria-hidden="true">
@@ -573,101 +537,6 @@
     </div>
 </div>
 
-<!--modal popup-->
-<div class="modal fade" id="modal_popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="max-width: 370px; margin-left: auto; margin-right: 250px;">
-        <div class="modal-content" style="margin-top: 70px;">
-            <div class="modal-header">
-                <p class="modal-title" id="exampleModalLabel">you have 2 items in your cart</p>
-            </div>
-            <div class="modal-body" style="margin-top: 5px;">
-                <!-- cart_product -->
-                <div class="cart_product_row" style="border-bottom: 2px solid #F6F6F6; padding: 12px 4px;">
-                    <div class="d-flex">
-                        <!-- img_product_cart -->
-                        <div class="text-center img_product_cart" style="width: 80px; height: 80px; background-color: #F6F6F6;">
-                            <img src="/img/monochrome_tees.png" style="width: 74%;" alt="">
-                        </div>
-
-                        <!-- product_cart_detail -->
-                        <div class="product_cart" style="margin-left: 10px;">
-                            <p style="font-size: 14px; font-weight: 500;">Áo phông cộc tay</p>
-                            <div class="d-flex justify-content-between align-items-center" style="width: 62px; height: 22px;">
-                                <div style="padding: 8px; border-radius: 50%; border: 1px solid #5C5F6A; background-color: cadetblue;"></div>
-                                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
-                                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">M</div>
-                            </div>
-                            <div style="display: inline-block;">
-                                <div class="d-flex justify-content-between align-items-center" style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height: 40px;">
-                                    <div class="btn_Subtrac" style="cursor: pointer;">
-                                        <button type="button" style="background-color: #fff; border: none;">&#8722;</button>
-                                    </div>
-                                    <div class="quantity_number">1</div>
-                                    <div class="btn_plus" style="cursor: pointer;">
-                                        <button type="button" style="background-color: #fff; border: none;">&#43;</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <p style="font-size: 14px; font-weight: 500; display: inline-block; margin-left: 8px;"><i class="fa-regular fa-dollar-sign"></i>30.00</p>
-
-                            <a class="btn">
-                                <div class="prevent_select" style="padding: 1px 12px; background-color: #F6F6F6; border-radius: 6px; display: inline-block;">
-                                    <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!--        2-->
-                <div class="cart_product_row" style="border-bottom: 2px solid #F6F6F6; padding: 12px 4px;">
-                    <div class="d-flex">
-                        <!-- img_product_cart -->
-                        <div class="text-center img_product_cart" style="width: 80px; height: 80px; background-color: #F6F6F6;">
-                            <img src="/img/monochrome_tees.png" style="width: 74%;" alt="">
-                        </div>
-
-                        <!-- product_cart_detail -->
-                        <div class="product_cart" style="margin-left: 10px;">
-                            <p style="font-size: 14px; font-weight: 500;">Áo phông cộc tay</p>
-                            <div class="d-flex justify-content-between align-items-center" style="width: 62px; height: 22px;">
-                                <div style="padding: 8px; border-radius: 50%; border: 1px solid #5C5F6A; background-color: cadetblue;"></div>
-                                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
-                                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">M</div>
-                            </div>
-                            <div style="display: inline-block;">
-                                <div class="d-flex justify-content-between align-items-center" style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height: 40px;">
-                                    <div class="btn_Subtrac" style="cursor: pointer;">
-                                        <button type="button" style="background-color: #fff; border: none;">&#8722;</button>
-                                    </div>
-                                    <div class="quantity_number">1</div>
-                                    <div class="btn_plus" style="cursor: pointer;">
-                                        <button type="button" style="background-color: #fff; border: none;">&#43;</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <p style="font-size: 14px; font-weight: 500; display: inline-block; margin-left: 8px;"><i class="fa-regular fa-dollar-sign"></i>30.00</p>
-
-                            <a class="btn">
-                                <div class="prevent_select" style="padding: 1px 12px; background-color: #F6F6F6; border-radius: 6px; display: inline-block;">
-                                    <i class="fa-regular fa-trash-can" style="font-size: 16px; color: #f40606;"></i>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer" style="border: none; align-items: normal; justify-content: unset;">
-                    <div class="d-flex justify-content-between" style="border-top: 2px solid #F6F6F6; width: 100%; padding: 12px; margin-bottom: 12px;">
-                        <div style="font-size: 14px; font-weight: 500;">Subtotal</div>
-                        <div style="font-size: 14px; font-weight: 500;"><i class="fa-regular fa-dollar-sign"></i>60.00</div>
-                    </div>
-                    <button class="btn bg-black" style="font-size: 14px; font-weight: 500; width: 100%; height: 40px;">
-                        <a href="/gio-hang" style="text-decoration: none; color: #fff;">Thanh toán</a>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/ProductDetail.js"></script>

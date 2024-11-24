@@ -5,6 +5,7 @@ import com.example.kristp.entity.CoAo;
 import com.example.kristp.entity.DanhMuc;
 import com.example.kristp.entity.DiaChi;
 import com.example.kristp.entity.KhachHang;
+import com.example.kristp.entity.dto.LocationRequest;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,9 @@ public interface DiaChiService {
     List<DiaChi> getAllActiveDiaChiByUser(KhachHang khachHang);
     DiaChi getDiaChiById(Integer id);
     DiaChi addDiaChi(DiaChi diaChi);
-    DiaChi updateDiaChi(DiaChi diaChi, Integer idDiaChi);
+    boolean updateDiaChi(DiaChi diaChi, Integer idDiaChi);
     void deleteDiaChi(Integer id);
+
+    boolean saveDiaChi(DiaChi request);
 
 }
