@@ -1,11 +1,14 @@
 package com.example.kristp.controller.user;
 
-import com.example.kristp.entity.KhachHang;
-import com.example.kristp.entity.TaiKhoan;
+import com.example.kristp.entity.*;
 import com.example.kristp.enums.Status;
 import com.example.kristp.repository.KhachHangRepository;
+import com.example.kristp.service.CoAoService;
+import com.example.kristp.service.DanhMucService;
 import com.example.kristp.service.KhachHangService;
+import com.example.kristp.service.TayAoService;
 import com.example.kristp.utils.Authen;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -25,20 +29,32 @@ public class TrangCaNhanController {
 
     @Autowired
     private KhachHangRepository khachHangRepository ;
+
+    @Autowired
+    private DanhMucService danhMucService ;
+
+    @Autowired
+    private TayAoService tayAoService ;
+
+
+    @Autowired
+    private CoAoService coAoService ;
+
+
     @GetMapping("/ca-nhan")
-    public String caNhan(Model model){
+    public String caNhan(Model model, HttpSession session){
 //        KhachHang khachHang = khachHangService.getKHByUserId(Authen.khachHang.getTaiKhoan());
-        Optional<KhachHang> khachHang = khachHangRepository.findById(1);
-//        TaiKhoan taiKhoan = new TaiKhoan();
-//        taiKhoan.setId(1);
-//        // Thiết lập các giá trị
-//        taiKhoan.setTenDangNhap("new_user");
-//        taiKhoan.setMatKhau("secure_password");
-//        taiKhoan.setEmail("new_user@example.com");
-//        taiKhoan.setTrangThai(Status.ACTIVE); // Gán trạng thái
-//        taiKhoan.setChucVu("Khách hàng");
-//
-//        KhachHang khachHang1 = new KhachHang(1, "Nguyễn Hùng Mạnh" , Status.ACTIVE , taiKhoan);
+//        Chưa lấy được id của khách hàng
+
+        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
+
         model.addAttribute("khachHang" , khachHang.get());
         return "profile-ca-nhan";
     }

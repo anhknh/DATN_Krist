@@ -1,10 +1,8 @@
 package com.example.kristp.controller.user;
 
-import com.example.kristp.entity.HoaDon;
-import com.example.kristp.entity.HoaDonChiTiet;
+import com.example.kristp.entity.*;
 import com.example.kristp.enums.HoaDonStatus;
-import com.example.kristp.service.HoaDonChiTietService;
-import com.example.kristp.service.HoaDonService;
+import com.example.kristp.service.*;
 import com.example.kristp.utils.DataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/quan-ly")
 public class DonHangChiTietKhController {
@@ -24,11 +24,26 @@ public class DonHangChiTietKhController {
     private HoaDonService hoaDonService ;
     @Autowired
     DataUtils dataUtils;
+    @Autowired
+    private DanhMucService danhMucService ;
 
+    @Autowired
+    private TayAoService tayAoService ;
+
+
+    @Autowired
+    private CoAoService coAoService ;
     @Autowired
     private HoaDonChiTietService hoaDonChiTietService ;
     @GetMapping("/don-hang-chi-tiet-kh")
     public String getPagination(@RequestParam(name = "id" , defaultValue = "0")Integer id , @RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model , RedirectAttributes attributes){
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
         Pageable pageable = PageRequest.of(pageNo , 3);
         HoaDon hoaDon = hoaDonService.findHoaDonById(id);
 

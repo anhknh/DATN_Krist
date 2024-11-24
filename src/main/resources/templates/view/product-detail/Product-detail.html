@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
     <link rel="stylesheet" href="/css/StyleHomePage.css">
     <link rel="stylesheet" href="/css/ProductDetail.css">
+    <link rel="stylesheet" href="/css/StyleThuoctinh.css">
 </head>
 <body>
 <div class="container-fluid g-0"></div>
@@ -43,36 +44,29 @@
                                         aria-labelledby="navbarDropdown">
                                         <div class="d-flex">
                                             <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
-                                                <p class="font-blod">Men</p>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
+                                                <p class="font-blod">Danh mục</p>
+                                                <hr>
+                                                <div class="p-2 hover-effect" th:each="item : ${listDanhMuc}">
+                                                    <a th:if="${listDanhMuc.size() > 0}" href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getTenDanhMuc()}"></span></a>
+                                                </div>
+                                                <h5 th:unless="${listDanhMuc.size() > 0}" style="color: gray;">Hiện tại không có danh mục nào</h5>
+
                                             </div>
                                             <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
-                                                <p class="font-blod">Men</p>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
+                                                <p class="font-blod">Cổ áo</p>
+                                                <hr>
+                                                <div class="p-2 hover-effect" th:each="item : ${listCoAo}">
+                                                    <a th:if="${listCoAo.size() > 0}" href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuCoAo()}"></span></a>
+                                                </div>
+                                                <h5 th:unless="${listCoAo.size() > 0}" style="color: gray;">Hiện tại không có cổ áo nào</h5>
                                             </div>
                                             <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
-                                                <p class="font-blod">Men</p>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                            </div>
-                                            <div class="text-center" style="flex: 1;">
-                                                <p class="font-blod">Men</p>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
-                                                <div class="p-2">hoanganh</div>
+                                                <p class="font-blod">Tay áo</p>
+                                                <hr>
+                                                <div th:if="${listTayAo.size() > 0}" class="p-2 hover-effect" th:each="item : ${listTayAo}">
+                                                    <a href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuTayAo()}"></span></a>
+                                                </div>
+                                                <h5 th:unless="${listTayAo.size() > 0}" style="color: gray;">Hiện tại không có tay áo nào</h5>
                                             </div>
                                         </div>
                                     </ul>

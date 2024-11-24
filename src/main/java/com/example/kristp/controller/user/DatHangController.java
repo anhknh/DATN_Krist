@@ -1,8 +1,6 @@
 package com.example.kristp.controller.user;
 
-import com.example.kristp.entity.DiaChi;
-import com.example.kristp.entity.GioHangChiTiet;
-import com.example.kristp.entity.KhuyenMai;
+import com.example.kristp.entity.*;
 import com.example.kristp.payment.VNPayRequest;
 import com.example.kristp.service.*;
 import com.example.kristp.utils.Authen;
@@ -46,6 +44,16 @@ public class DatHangController {
     @Autowired
     VNpayService vnpayService;
 
+    @Autowired
+    private DanhMucService danhMucService ;
+
+    @Autowired
+    private TayAoService tayAoService ;
+
+
+    @Autowired
+    private CoAoService coAoService ;
+
     //khai báo biến toàn cục
     List<String> listProductDetailSelectedInCart = null;
     Float totalPrice = 0f;
@@ -81,12 +89,22 @@ public class DatHangController {
         model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
         //hàm format
         model.addAttribute("convertMoney", dataUtils);
+// Hiển thị danh mục
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
+
         return "dia-chi-giao-hang";
     }
 
     @PostMapping("/add-dia-chi-dat-hang")
     public String addDiaChi(@Valid @ModelAttribute("diaChiCre") DiaChi diaChi, BindingResult result,
                             RedirectAttributes attributes, HttpServletRequest request) {
+
         if (result.hasErrors()) {
             attributes.addFlashAttribute("message", "Thêm mới địa chỉ không thành công.");
             attributes.addFlashAttribute("messageType", "alert-danger");
@@ -117,6 +135,7 @@ public class DatHangController {
             //get url request
             String referer = request.getHeader("referer");
             //reload page
+
             return "redirect:" + referer;
         }
 
@@ -141,6 +160,15 @@ public class DatHangController {
         //get url request
         String referer = request.getHeader("referer");
         //reload page
+
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+        attributes.addFlashAttribute("listDanhMuc" , danhMucs);
+        attributes.addFlashAttribute("listCoAo" , listCoAo);
+        attributes.addFlashAttribute("listTayAo" , listTayAo);
+
         return "redirect:" + referer;
     }
 
@@ -151,7 +179,6 @@ public class DatHangController {
         idDiaChiSelected = diaChiSelected;
         return "redirect:/dat-hang/phuong-thuc-thanh-toan";
     }
-
 
     @GetMapping("/phuong-thuc-thanh-toan")
     public String helloPhuongthucthanhtoan(Model model) {
@@ -173,6 +200,15 @@ public class DatHangController {
         model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
         //hàm format
         model.addAttribute("convertMoney", dataUtils);
+
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
+
         return "phuong-thuc-thanh-toan";
     }
 
@@ -187,9 +223,7 @@ public class DatHangController {
     public String addKhuyenMai(HttpServletRequest request,
                                @RequestParam Integer idKhuyenMai,
                                Model model, RedirectAttributes redirectAttributes) {
-
         khuyenMaiSelected = khuyenMaiService.getKhuyenMaiById(idKhuyenMai);
-
         //khuyến mại đã chọn
         model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
 
@@ -221,6 +255,14 @@ public class DatHangController {
         model.addAttribute("convertMoney", dataUtils);
         //phương thức thanh toán đã chọn
         model.addAttribute("payMethod", thanhToanSelected);
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
+
         return "review";
     }
 
@@ -228,6 +270,10 @@ public class DatHangController {
     public String datHangOnline(Model model, HttpServletRequest reqs,
                                 HttpServletResponse response, RedirectAttributes attributes) throws Exception {
         ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
         for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
             Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
             listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
@@ -235,11 +281,17 @@ public class DatHangController {
         if (thanhToanSelected.equals("offline")) {
             boolean check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, khuyenMaiSelected.getId(), thanhToanSelected, totalPrice);
             if (check) {
+                model.addAttribute("listDanhMuc" , danhMucs);
+                model.addAttribute("listCoAo" , listCoAo);
+                model.addAttribute("listTayAo" , listTayAo);
                 return "SuscessOrder";
             } else {
                 attributes.addFlashAttribute("message", "Vui lòng kiểm tra lại số lượng.");
                 attributes.addFlashAttribute("messageType", "alert-danger");
                 attributes.addFlashAttribute("titleMsg", "Thất bại");
+                model.addAttribute("listDanhMuc" , danhMucs);
+                model.addAttribute("listCoAo" , listCoAo);
+                model.addAttribute("listTayAo" , listTayAo);
                 return "FailOrder";
             }
         } else {
@@ -254,6 +306,9 @@ public class DatHangController {
             String paymentUrl = vnpayService.createPayment(request, reqs);
             response.sendRedirect(paymentUrl);
         }
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
         return "FailOrder";
     }
 
@@ -265,6 +320,9 @@ public class DatHangController {
                               @RequestParam("vnp_OrderInfo") String vnp_OrderInfo
 
     ) {
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
         if (status.equals("00")) {
             ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
             for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
@@ -274,15 +332,24 @@ public class DatHangController {
             boolean check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, khuyenMaiSelected.getId(), thanhToanSelected, totalPrice);
             if(check) {
                 totalPrice = 0f;
+                model.addAttribute("listDanhMuc" , danhMucs);
+                model.addAttribute("listCoAo" , listCoAo);
+                model.addAttribute("listTayAo" , listTayAo);
                 return "SuscessOrder";
             } else {
                 attributes.addFlashAttribute("message", "Vui lòng kiểm tra lại số lượng.");
                 attributes.addFlashAttribute("messageType", "alert-danger");
                 attributes.addFlashAttribute("titleMsg", "Thất bại");
+                model.addAttribute("listDanhMuc" , danhMucs);
+                model.addAttribute("listCoAo" , listCoAo);
+                model.addAttribute("listTayAo" , listTayAo);
                 return "FailOrder";
             }
         }
         totalPrice = 0f;
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
         return "FailOrder";
     }
 

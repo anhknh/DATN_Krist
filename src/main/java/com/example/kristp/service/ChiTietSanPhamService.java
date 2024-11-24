@@ -4,6 +4,7 @@ import com.example.kristp.entity.ChiTietSanPham;
 import com.example.kristp.entity.MauSac;
 import com.example.kristp.entity.SanPham;
 import com.example.kristp.entity.Size;
+import org.springframework.data.jpa.repository.Query;
 
 
 import java.util.ArrayList;
@@ -18,4 +19,8 @@ public interface ChiTietSanPhamService {
     List<Size> getSizesByProductId(Integer productId);
     ChiTietSanPham getProductDetailByColorAndSize(Integer productId, Integer colorId, Integer sizeId);
     List<ChiTietSanPham> getProductDetailsByProductId(Integer productId);
+// Hiện tại chưa được sử dụng
+    List<ChiTietSanPham> getAllChiTietSanPhamSPHD();
+
+
 }

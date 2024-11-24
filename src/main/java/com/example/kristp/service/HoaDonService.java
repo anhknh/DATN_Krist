@@ -20,4 +20,18 @@ public interface HoaDonService {
     Map<HoaDonStatus, Long> getCountByTrangThai();
 
     Page<HoaDon> getPaginationHoaDon(Integer pageNo , HoaDonStatus trangThai);
+
+
+    Page<HoaDon> findTop5();
+
+
+    List<String> doanhThuTungThang();
+
+    Double doanhThuHomNay();
+
+    Integer soSanPhamBanTrongThang();
+
+    Double doanhThuTrongNam();
+
+    List<Integer> trangThaiDonHang();
 }

@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="/css/StyleHomePage.css">
     <link rel="stylesheet" href="/css/thongke.css">
-<!--    <script src="/js/thongke.js"></script>-->
+    <!--    <script src="/js/thongke.js"></script>-->
     <style>
         html, body {
             height: 100%;
@@ -50,7 +50,7 @@
                 <!-- Main Menu Items -->
                 <div style="padding: 0px 22px 28px; border-bottom: 1px solid #E9E9EB;" class="mb-4">
                     <!--                    Hiện tại vẫn chưa có tính năng doanh thu đường dẫn là #-->
-                    <a href="#" class="bg_profile_btn mb-3"
+                    <a href="/quan-ly/thong-ke" class="bg_profile_btn mb-3"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;"
                        onclick="highlightLink(this)">
                         <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
@@ -118,21 +118,7 @@
                     </a>
                 </div>
                 <!-- Extra Menu -->
-                <div id="drop_right" style="padding: 0px 22px 28px; cursor: pointer;"
-                     onclick="toggleSubmenu('extrasSubMenu')">
-                    <p class="mb-3"
-                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center;">
-                        <!--                        tính năng chưa được xác định hiện tại để trống-->
-                        <i class="fa-regular fa-plus" style="margin-right: 10px;"></i> Bổ sung
-                        <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
-                    </p>
-                    <ul id="extrasSubMenu" class="submenu" style="list-style: none; padding-left: 20px; display: none;">
-                        <li style="padding: 8px;"><a href="./adminSize.html"
-                                                     style="text-decoration: none; color: #000;">Size</a></li>
-                        <li style="padding: 8px;"><a href="./adminColor.html"
-                                                     style="text-decoration: none; color: #000;">Color</a></li>
-                    </ul>
-                </div>
+
             </div>
             <!--            end sider bar-->
             <div class="col-10">
@@ -152,21 +138,21 @@
                     </div>
                 </div>
 
-                <div class="container">
-                    <div class="card">
+                <div class="container row">
+                    <div class="card col-4">
                         <i class="fas fa-shopping-cart"> </i>
-                        <h2 id="totalorder"></h2>
                         <p>Doanh thu hôm nay</p>
+                        <h2 th:text="${dataUtils.formatCurrency(doanhThuNgay)}"></h2>
                     </div>
-                    <div class="card">
+                    <div class="card col-4">
                         <i class="fas fa-comments"> </i>
-                        <h2 id="comments"></h2>
                         <p>Sản phẩm bán đã trong tháng</p>
+                        <h2 th:text="${spBanTrongThang}"></h2>
                     </div>
-                    <div class="card">
+                    <div class="card col-4">
                         <i class="fas fa-money-bill-wave"> </i>
-                        <h2 id="totalrevenue"></h2>
-                        <p>Doanh thu tháng này</p>
+                        <p>Doanh thu trong năm nay</p>
+                        <h2 th:text="${dataUtils.formatCurrency(doanhThuNam)}"></h2>
                     </div>
                 </div>
                 <div class="row">
@@ -175,148 +161,187 @@
                             <div class="status-container">
                                 <div class="status-title">Trạng thái đơn hàng :</div>
                                 <div class="status-item">
-                                    <button th:onclick="choXacNhan()" class="btn" th:classappend="${check == 'choXacNhan'} ? 'btn-dark' : 'btn-outline-secondary'">Ngày</button>
+                                    <button onclick="fetchChartData('1')" class="btn btn-outline-secondary">Tháng</button>
                                 </div>
                                 <div class="status-item">
-                                    <button th:onclick="dangXuLy()" class="btn" th:classappend="${check == 'dangXuLy'} ? 'btn-dark' : 'btn-outline-secondary'">Tháng</button>
-                                </div>
-                                <div class="status-item">
-                                    <button th:onclick="dangGiaoHang()" class="btn" th:classappend="${check == 'dangGiaoHang'} ? 'btn-dark' : 'btn-outline-secondary'">Năm</button>
+                                    <button onclick="fetchChartData('2')" class="btn btn-outline-secondary">Năm</button>
                                 </div>
                             </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="charts1">
+                            <div class="chart1">
+                                <h3>Thống kê doanh thu</h3>
+                                <div>
+                                    <canvas id="myChart" width="400" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="charts ">
+                            <div class="chart col-6">
+                                <h3>5 Đơn hàng gần nhất</h3>
+                                <!-- Bảng Bootstrap -->
+                                <div class="table-responsive mt-4">
+                                    <table class="table table-bordered table-hover">
+                                        <thead class="thead-dark">
+                                        <tr>
+                                            <th>Mã</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Ngày đặt</th>
+                                            <th>Xem đơn hàng</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="hd : ${hoaDons}">
+                                            <td th:text="${hd.getId()}"></td>
+                                            <td th:text="${hd.getDiaChi().getKhachHang().getTenKhachHang()}"></td>
+                                            <td th:text="${dataUtils.formatCurrency(hd.getTongTien())}"></td>
+                                            <td th:text="${#dates.format(hd.getNgayTao(), 'dd/MM/yyyy')}"></td>
+                                            <td class="text-center">
+                                                <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
+                                                    <a  class="d-block" style="color: #000; text-decoration: none" href="/quan-ly-don-hang/view-don-hang">
+                                                        <i class="fa-sharp fa-light fa-eye"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            </td>
+                                        </tr>
 
-                <div class="charts">
-                    <div class="chart">
-                        <h3>Biểu đồ doanh thu theo ngày</h3>
-                        <div>
-                            <canvas id="myChart" width="400" height="200"></canvas>
-                        </div>
-                    </div>
-                    <div class="chart">
-                        <h3>Biểu đồ doanh thu theo tháng/năm</h3>
-                        <div style="width: 500px">
-                            <canvas id="myChart1" width="400" height="400"></canvas>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="chart col-6">
+                                <h3>Trạng thái đơn hàng trong tháng</h3>
+                                <div style="width: 500px">
+                                    <canvas id="myChart1" width="400" height="400"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-           </div>
+            </div>
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    async function fetchChartData(c) {
-        let d = 1 ;
-        try {
-            d = parseInt(c);
-        }catch (e) {
-            d = 1 ;
-        }
-        try {
-            // Gọi API để lấy dữ liệu biểu đồ
-            const response = await fetch('/api/chart-data'+'?a='+d);
-            const data = await response.json();
-            document.getElementById("totalorder").innerText = data.totalorder;
-            document.getElementById("comments").innerText = data.comments;
-            document.getElementById("totalrevenue").innerText = data.totalrevenue;
-            // Lưu các dữ liệu vào các biến
-            const labelsArray = data.labels;
-            const dataArray = data.dataValues;
-            const backgroundColorsArray = data.backgroundColors;
-            const borderColorsArray = data.borderColors;
-            const labelsArrayTron = data.labelsTron;
-            const dataArrayTron = data.dataValuesTron;
-            const backgroundColorsArrayTron = data.backgroundColorsTron;
-            // Gọi hàm initializeChart để khởi tạo biểu đồ với dữ liệu từ API
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        async function fetchChartData(c) {
+            if(Object.prototype.toString.call(c) === '[object Event]'){
+                return ;
+            }
+            try {
+                // Gọi API để lấy dữ liệu biểu đồ
+                const response = await fetch('/api/chart-data'+'?a='+c);
+                const data = await response.json();
+                // document.getElementById("totalorder").innerText = data.totalorder;
+                // document.getElementById("comments").innerText = data.comments;
+                // document.getElementById("totalrevenue").innerText = data.totalrevenue;
+                // Lưu các dữ liệu vào các biến
+                const labelsArray = data.labels;
+                const dataArray = data.dataValues;
+                const backgroundColorsArray = data.backgroundColors;
+                const borderColorsArray = data.borderColors;
+                const labelsArrayTron = data.labelsTron;
+                const dataArrayTron = data.dataValuesTron;
+                const backgroundColorsArrayTron = data.backgroundColorsTron;
+                // Gọi hàm initializeChart để khởi tạo biểu đồ với dữ liệu từ API
 
-            initializeChart(labelsArray, dataArray, backgroundColorsArray, borderColorsArray);
-            initializeChart1(labelsArrayTron , dataArrayTron , backgroundColorsArrayTron);
-        } catch (error) {
-            console.error("Lỗi khi gọi API:", error);
+                initializeChart(labelsArray, dataArray, backgroundColorsArray, borderColorsArray);
+                initializeChart1(labelsArrayTron , dataArrayTron , backgroundColorsArrayTron);
+            } catch (error) {
+                console.error("Lỗi khi gọi API:", error);
+            }
         }
-    }
-    let myChart = null ;
-    let myChart1 = null ;
-    function initializeChart(labelsArray, dataArray, backgroundColorsArray, borderColorsArray) {
+        let myChart = null ;
+        let myChart1 = null ;
+        function initializeChart(labelsArray, dataArray, backgroundColorsArray, borderColorsArray) {
 
-        const data = {
-            labels: labelsArray,
-            datasets: [{
-                label: 'Biểu đồ doanh số',
-                data: dataArray,
-                backgroundColor: backgroundColorsArray,
-                borderColor: borderColorsArray,
-                borderWidth: 1
-            }]
-        };
-        const config = {
-            type: 'bar',
-            data: data,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+            const data = {
+                labels: labelsArray,
+                datasets: [{
+                    label: 'Biểu đồ doanh số',
+                    data: dataArray,
+                    backgroundColor: backgroundColorsArray,
+                    borderColor: borderColorsArray,
+                    borderWidth: 1
+                }]
+            };
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
+            };
+            if (myChart) {
+                myChart.destroy();
             }
-        };
-        if (myChart) {
-            myChart.destroy();
+            // Render biểu đồ
+            myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
         }
-        // Render biểu đồ
-        myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-        );
-    }
 
-    function initializeChart1(labelsArray, dataArray, backgroundColorsArray) {
-        const data = {
-            labels: labelsArray,
-            datasets: [{
-                label: 'Áo',
-                data: dataArray,
-                backgroundColor:
-                backgroundColorsArray,
-                hoverOffset: 4
-            }]
-        };
+        function initializeChart1(labelsArray, dataArray, backgroundColorsArray) {
+            const data = {
+                labels: labelsArray,
+                datasets: [{
+                    label: 'Áo',
+                    data: dataArray,
+                    backgroundColor:
+                    backgroundColorsArray,
+                    hoverOffset: 4
+                }]
+            };
 
-        const config = {
-            type: 'pie', // Specify the chart type here, like 'bar', 'line', etc.
-            data: data,
-            options: {}
-        };
-        if (myChart1) {
-            myChart1.destroy();
+            const config = {
+                type: 'pie', // Specify the chart type here, like 'bar', 'line', etc.
+                data: data,
+                options: {}
+            };
+            if (myChart1) {
+                myChart1.destroy();
+            }
+            // Render biểu đồ
+
+            myChart1 = new Chart(
+                document.getElementById('myChart1'),
+                config
+            );
         }
-        // Render biểu đồ
-
-        myChart1 = new Chart(
-            document.getElementById('myChart1'),
-            config
-        );
-    }
-    // Gọi hàm fetchChartData để tải và hiển thị dữ liệu khi trang load
-    window.onload = fetchChartData;
+        // Gọi hàm fetchChartData để tải và hiển thị dữ liệu khi trang load
+        window.onload = fetchChartData;
 
 
-    function highlightLink(link){
-        //     Remove the 'bg_profile_btn' class from all links
-        const links = document.querySelectorAll('.bg_profile_btn');
-        links.forEach(link => {
-            link.classList.remove('bg_profile_btn');
-        })
-        link.classList.add('bg_profile_btn');
-    }
+        function highlightLink(link){
+            //     Remove the 'bg_profile_btn' class from all links
+            const links = document.querySelectorAll('.bg_profile_btn');
+            links.forEach(link => {
+                link.classList.remove('bg_profile_btn');
+            })
+            link.classList.add('bg_profile_btn');
+        }
 
-    function toggleSubmenu(id) {
-        const submenu = document.getElementById(id);
-        // Toggle between 'none' and 'block' to show/hide submenu
-        submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
-    }
-</script>
+        function toggleSubmenu(id) {
+            const submenu = document.getElementById(id);
+            // Toggle between 'none' and 'block' to show/hide submenu
+            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const c = 1; // Giá trị truyền vào
+            fetchChartData(c);
+        });
+    </script>
 </body>
 </html>

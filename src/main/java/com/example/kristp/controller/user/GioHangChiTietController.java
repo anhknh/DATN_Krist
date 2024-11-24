@@ -1,8 +1,6 @@
 package com.example.kristp.controller.user;
 
-import com.example.kristp.entity.GioHang;
-import com.example.kristp.entity.GioHangChiTiet;
-import com.example.kristp.entity.HoaDon;
+import com.example.kristp.entity.*;
 import com.example.kristp.repository.GioHangChiTietRepository;
 import com.example.kristp.service.*;
 import com.example.kristp.utils.Authen;
@@ -38,6 +36,17 @@ public class GioHangChiTietController {
 
     HoaDon hoaDonSelected = null;
 
+
+    @Autowired
+    private DanhMucService danhMucService ;
+
+    @Autowired
+    private TayAoService tayAoService ;
+
+
+    @Autowired
+    private CoAoService coAoService ;
+
     // Hiển thị giỏ hàng chi tiết
     @GetMapping("/gio-hang-chi-tiet")
     public String showGioHangChiTiet(Model model, @RequestParam(value = "idHoaDon", required = false) Integer idHoaDon) {
@@ -58,6 +67,15 @@ public class GioHangChiTietController {
         model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
         //hàm format
         model.addAttribute("convertMoney", dataUtils);
+
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
+
         return "gio-hang";
     }
 

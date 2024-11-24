@@ -1,10 +1,11 @@
 package com.example.kristp.controller.user;
 
 
+import com.example.kristp.entity.CoAo;
 import com.example.kristp.entity.DanhMuc;
 import com.example.kristp.entity.SanPham;
-import com.example.kristp.service.GioHangService;
-import com.example.kristp.service.SanPhamService;
+import com.example.kristp.entity.TayAo;
+import com.example.kristp.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,15 @@ public class ListProductController {
     private SanPhamService sanPhamService ;
     @Autowired
     GioHangService gioHangService;
+    @Autowired
+    private DanhMucService danhMucService ;
 
+    @Autowired
+    private TayAoService tayAoService ;
+
+
+    @Autowired
+    private CoAoService coAoService ;
 
     @GetMapping("/danh-sach-san-pham")
     public String danhSachPham(@RequestParam(value = "coAo",required = false) List<String> coAo,
@@ -34,6 +43,14 @@ public class ListProductController {
         System.out.println(size);
         System.out.println(mauSac);
         System.out.println(tenSanPham);
+
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
 
         Page<SanPham> sanPhams = sanPhamService.getPaginationSanPham(pageNo);
         System.out.println(gioHangService.countCartItem() + "===========================");

@@ -1,0 +1,8 @@
+.hover-effect {
+    background-color: transparent; /* Màu nền mặc định */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi */
+}
+
+.hover-effect:hover {
+    background-color: #F6F6F6; /* Màu nền khi hover */
+}
