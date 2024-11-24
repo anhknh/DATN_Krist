@@ -122,7 +122,7 @@ public class DiaChiServiceImpl implements DiaChiService {
             return false;
         }
         request.setKhachHang(Authen.khachHang);
-        request.setTrangThai(Status.INACTIVE);
+        request.setTrangThai(Status.ACTIVE);
         diaChiRepository.save(request);
         return true; // Lưu thành
 
