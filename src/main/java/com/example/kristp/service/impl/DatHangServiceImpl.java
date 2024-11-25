@@ -41,17 +41,20 @@ public class DatHangServiceImpl implements DatHangService {
 
     @Override
     public boolean datHangOnline(List<GioHangChiTiet> gioHangChiTietList, Integer idDiaChi,
-                                 Integer idKhuyenMai, String phuongThucThanhToan, Float tongTien) {
+                                 Integer idKhuyenMai, String phuongThucThanhToan, Float tongTien, Float phiVanChuyen) {
         DiaChi diaChi = diaChiService.getDiaChiById(idDiaChi);
-        KhuyenMai khuyenMai = khuyenMaiService.getKhuyenMaiById(idKhuyenMai);
+        KhuyenMai khuyenMai = null;
+        if(idKhuyenMai != null) {
+            khuyenMai = khuyenMaiService.getKhuyenMaiById(idKhuyenMai);
+        }
         HoaDon hoaDon = new HoaDon();
         hoaDon.setTrangThai(HoaDonStatus.CHO_XAC_NHAN);
         hoaDon.setKhuyenMai(khuyenMai);
         hoaDon.setDiaChi(diaChi);
         hoaDon.setHinhThucThanhToan(phuongThucThanhToan);
         hoaDon.setNgayDatHang(new Date());
-        hoaDon.setTongTien(BigDecimal.valueOf(DataUtils.calculatorTotal2(tongTien, khuyenMai)));
-        hoaDon.setPhiVanChuyen(30000);
+        hoaDon.setTongTien(BigDecimal.valueOf(DataUtils.calculatorTotal2(tongTien, khuyenMai, phiVanChuyen)));
+        hoaDon.setPhiVanChuyen(phiVanChuyen);
         if(phuongThucThanhToan.equals("online")) {
             hoaDon.setTrangThaiThanhToan(HoaDonStatus.DA_THANH_TOAN);
         } else {

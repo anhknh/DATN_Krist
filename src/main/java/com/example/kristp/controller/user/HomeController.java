@@ -61,16 +61,20 @@ public class HomeController {
         model.addAttribute("listTayAo" , listTayAo);
 
         float tongTien = 0;
-        GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
-        ArrayList<GioHangChiTiet> gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
-        for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
-            tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+             gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
         }
+
         model.addAttribute("tongTien", tongTien);
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
 
         model.addAttribute("khachHang", Authen.khachHang);
-        model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
         //hàm format
         model.addAttribute("convertMoney", dataUtils);
         return "view/home/home-page";

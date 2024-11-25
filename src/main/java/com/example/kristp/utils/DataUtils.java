@@ -18,25 +18,26 @@ public class DataUtils {
         return currencyFormat.format(amount);
     }
 
-    public static String calculatorTotal(double tongTien, KhuyenMai khuyenMai) {
+    public static String calculatorTotal(double tongTien, KhuyenMai khuyenMai, Float phiVanChuyen) {
         double finalAmount = tongTien; // Tổng tiền ban đầu
 
         if (khuyenMai != null && khuyenMai.getKieuKhuyenMai() != null) {
             double discountValue = khuyenMai.getGiaTri();
 
-            if ("VND".equals(khuyenMai.getKieuKhuyenMai())) {
-                // Giảm theo số tiền cố định
-                finalAmount -= discountValue;
-            } else if ("%".equals(khuyenMai.getKieuKhuyenMai())) {
+            if (khuyenMai.getKieuKhuyenMai()) {
                 // Giảm theo phần trăm
                 if (discountValue > 0 && discountValue <= 100) {
                     finalAmount -= (finalAmount * discountValue / 100);
                 }
+
+            } else  {
+                // Giảm theo số tiền cố định
+                finalAmount -= discountValue;
             }
         }
 
         // Luôn thêm phí vận chuyển 30,000
-        finalAmount += 30000;
+        finalAmount += phiVanChuyen;
 
         // Đảm bảo tổng tiền không âm
         if (finalAmount < 0) {
@@ -48,25 +49,26 @@ public class DataUtils {
 
 
 
-    public static double calculatorTotal2(double tongTien, KhuyenMai khuyenMai) {
+    public static double calculatorTotal2(double tongTien, KhuyenMai khuyenMai , Float phiVanChuyen) {
         double finalAmount = tongTien; // Tổng tiền ban đầu
 
         if (khuyenMai != null && khuyenMai.getKieuKhuyenMai() != null) {
             double discountValue = khuyenMai.getGiaTri();
 
-            if ("VND".equals(khuyenMai.getKieuKhuyenMai())) {
-                // Giảm theo số tiền cố định
-                finalAmount -= discountValue;
-            } else if ("%".equals(khuyenMai.getKieuKhuyenMai())) {
+            if (khuyenMai.getKieuKhuyenMai()) {
                 // Giảm theo phần trăm
                 if (discountValue > 0 && discountValue <= 100) {
                     finalAmount -= (finalAmount * discountValue / 100);
                 }
+
+            } else  {
+                // Giảm theo số tiền cố định
+                finalAmount -= discountValue;
             }
         }
 
         // Luôn thêm phí vận chuyển 30,000
-        finalAmount += 30000;
+        finalAmount += phiVanChuyen;
 
         // Đảm bảo tổng tiền không âm
         return Math.max(finalAmount, 0);

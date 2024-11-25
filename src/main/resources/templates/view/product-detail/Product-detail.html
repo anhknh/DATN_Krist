@@ -178,7 +178,7 @@
 
         </div>
         <div style="margin-bottom: 12px;">
-            <h4 th:text="${dataUtils.formatCurrency(sanPham.getChiTietSanPham().get(0).getDonGia())}">150.000 VNĐ</h4>
+            <h4 id="price-product" th:text="${dataUtils.formatCurrency(sanPham.getChiTietSanPham().get(0).getDonGia())}">150.000 VNĐ</h4>
         </div>
         <div style="margin-bottom: 18px;">
             <div>
@@ -194,8 +194,9 @@
                            th:id="'color'+${color.id}"
                            th:value="${color.id}"
                            style="display: none;"
-                           th:checked="${indexStat.index == 1}">
-                    <label class="form-check-label lable_radio_color selected_radio_color"
+                           th:checked="${indexStat.index == 0}">
+                    <label class="form-check-label lable_radio_color "
+                           th:classappend="${indexStat.index == 0} ? 'selected_radio_color' : ''"
                            th:for="'color'+${color.id}"
                            style="padding: 2px;">
                         <p th:style="'margin: 0; padding: 9px; border-radius: 50%; background-color: ' + ${color.maMauSac} + '; border: 1px solid #E6E7E8; cursor: pointer;'">
@@ -214,8 +215,8 @@
             <div>
                 <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;" th:each="size, indexStat : ${ListSizeProductDetail}">
                     <input class="form-check-input radio_size" type="radio" name="size" th:id="'size'+${size.id}" th:value="${size.id}"
-                           style="display: none;" th:checked="${indexStat.index == 1}">
-                    <label class="form-check-label lable_radio_size selected_radio_size" th:for="'size'+${size.id}"
+                           style="display: none;" th:checked="${indexStat.index == 0}">
+                    <label class="form-check-label lable_radio_size " th:for="'size'+${size.id}"
                            style="padding: 10px 16px; cursor: pointer;border-radius: 4px;">
                         <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;" th:text="${size.tenSize}"></p>
                     </label>
@@ -224,7 +225,7 @@
         </div>
         <div style="margin-bottom: 32px;">
             <div>
-                <p style="font-size: 12px; color: #5C5F6A; font-weight: 500; line-height: 24px; letter-spacing: 0.6px;" th:text="'Số lượng hiện có: ' + ${sanPham.getChiTietSanPham().get(0).soLuong}">
+                <p style="font-size: 12px; color: #5C5F6A; font-weight: 500; line-height: 24px; letter-spacing: 0.6px;" id="quantily-product" th:text="'Số lượng hiện có: ' + ${sanPham.getChiTietSanPham().get(0).soLuong}">
                     Số lượng</p>
             </div>
             <div class="product_cart">
@@ -245,7 +246,8 @@
         <div>
             <div>
                 <div style=" display: inline-block;">
-                    <a th:href="@{/gio-hang/add(idChiTietSanPham=${product.chiTietSanPham.get(0).id})}"
+                    <a th:href="@{/gio-hang/add}"
+                       id="linkAdd"
                        style=" color: #fff; text-decoration: none; background-color: #000; font-size: 14px; font-weight: 500; border-radius: 4px; padding: 12px 68px; margin-right: 8px;">Thêm
                         vào giỏ hàng</a>
                 </div>
@@ -532,8 +534,130 @@
 </div>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/ProductDetail.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Sự kiện thay đổi màu sắc sản phẩm
+        $('input[name="inlineRadioOptions"]').change(handleColorChange);
+
+        // Thực hiện logic cập nhật kích thước khi trang được tải
+        var selectedColor = $('input[name="inlineRadioOptions"]:checked').val();
+        if (selectedColor) {
+            handleColorChange.call($('input[name="inlineRadioOptions"]:checked'));
+        }
+
+        // Sự kiện thay đổi kích thước sản phẩm
+        $('input[name="size"]').change(updateProductDetails);
+
+        // Hàm xử lý khi thay đổi màu sắc
+        function handleColorChange() {
+            var selectedColor = $(this).val();
+
+            // Gọi API để lấy danh sách kích thước tương ứng với màu được chọn
+            $.ajax({
+                url: '/product-detail/find-size',
+                method: 'GET',
+                data: { colorId: selectedColor },
+                success: function (response) {
+                    updateSizeOptions(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        // Hàm cập nhật danh sách kích thước
+        function updateSizeOptions(sizes) {
+            // Vô hiệu hóa tất cả các tùy chọn kích thước
+            $('.radio_size').prop('disabled', true).prop('checked', false);
+            $('.lable_radio_size').addClass('disabled');
+            $('.lable_radio_size').removeClass('selected_radio_size');
+
+            // Bật lại các tùy chọn kích thước tương ứng với màu được chọn
+            $.each(sizes, function (index, sizeId) {
+                var $sizeInput = $('#size' + sizeId);
+                var $sizeLabel = $sizeInput.next('label');
+
+                $sizeInput.prop('disabled', false);
+                $sizeLabel.removeClass('disabled');
+
+                // Nếu đây là mục đầu tiên trong danh sách kích thước, chọn nó
+                if (index === 0) {
+                    $sizeInput.prop('checked', true);
+                    $sizeLabel.addClass('selected_radio_size');
+                }
+            });
+
+            // Cập nhật chi tiết sản phẩm sau khi cập nhật kích thước
+            updateProductDetails();
+        }
+
+        // Hàm cập nhật chi tiết sản phẩm
+        function updateProductDetails() {
+            var size = $('input[name="size"]:checked').val();
+            var color = $('input[name="inlineRadioOptions"]:checked').val();
+
+            if (size && color) {
+                if ($('#linkAdd').data('product-size') === size && $('#linkAdd').data('product-color') === color) {
+                    return; // Không gọi lại API nếu không có thay đổi
+                }
+
+                $.ajax({
+                    url: '/product-detail/find-detail',
+                    type: 'GET',
+                    data: { sizeId: size, colorId: color },
+                    success: function (response) {
+                        $('#price-product').text('$ ' + response.donGia);
+                        $('#quantily-product').text('Số lượng hiện có: ' + response.soLuong);
+                        $('#linkAdd')
+                            .data('product-id', response.id)
+                            .data('product-size', size)
+                            .data('product-color', color)
+                            .attr('href', "/gio-hang/add?idChiTietSanPham=" + response.id + "&soLuong=1");
+                        $('.quantity_number').text('1'); // Reset số lượng khi đổi sản phẩm
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        }
+
+        // Hàm cập nhật liên kết giỏ hàng
+        function updateCartLink() {
+            var quantity = $('.quantity_number').text();
+            var size = $('input[name="size"]:checked').val();
+            var color = $('input[name="inlineRadioOptions"]:checked').val();
+
+            if (size && color) {
+                $('#linkAdd').attr(
+                    'href',
+                    "/gio-hang/add?idChiTietSanPham=" + $('#linkAdd').data('product-id') + "&soLuong=" + quantity
+                );
+            }
+        }
+
+        // Sự kiện tăng giảm số lượng
+        $('.btn_Subtrac').click(function () {
+            var quantity = parseInt($('.quantity_number').text());
+            if (quantity > 1) {
+                $('.quantity_number').text(quantity - 1);
+                updateCartLink(); // Chỉ cập nhật link
+            }
+        });
+
+        $('.btn_plus').click(function () {
+            var quantity = parseInt($('.quantity_number').text());
+            $('.quantity_number').text(quantity + 1);
+            updateCartLink(); // Chỉ cập nhật link
+        });
+    });
+</script>
+
 
 </body>
 </html>

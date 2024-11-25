@@ -1,11 +1,9 @@
 package com.example.kristp.controller.user;
 
 
-import com.example.kristp.entity.CoAo;
-import com.example.kristp.entity.DanhMuc;
-import com.example.kristp.entity.SanPham;
-import com.example.kristp.entity.TayAo;
+import com.example.kristp.entity.*;
 import com.example.kristp.service.*;
+import com.example.kristp.utils.Authen;
 import com.example.kristp.utils.DataUtils;
 import com.example.kristp.utils.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +43,8 @@ public class ListProductController {
     SizeService sizeService;
     @Autowired
     ChiTietSanPhamService chiTietSanPhamService;
+    @Autowired
+    GioHangChiTietService gioHangChiTietService;
 
 
     @GetMapping("/danh-sach-san-pham")
@@ -78,19 +79,34 @@ public class ListProductController {
         model.addAttribute("listSize", sizeService.getAllSizeHD());
         model.addAttribute("chiTietSanPhamService", chiTietSanPhamService);
 
-//        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
-//        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
-//        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
-//
-//        model.addAttribute("listDanhMuc" , danhMucs);
-//        model.addAttribute("listCoAo" , listCoAo);
-//        model.addAttribute("listTayAo" , listTayAo);
-//
-//        Page<SanPham> sanPhams = sanPhamService.getPaginationSanPham(pageNo);
-//        System.out.println(gioHangService.countCartItem() + "===========================");
-//        model.addAttribute("productList" , sanPhams.getContent());
-//        model.addAttribute("currentPage" , pageNo);
-//        model.addAttribute("totalPage" , sanPhams.getTotalPages());
+        List<ChiTietSanPham> chiTietSanPhamList = chiTietSanPhamService.getAllCTSP();
+        model.addAttribute("chiTietSanPhamList", chiTietSanPhamList);
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
+
+        float tongTien = 0;
+        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        }
+
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        model.addAttribute("khachHang", Authen.khachHang);
+        //hàm format
+        model.addAttribute("convertMoney", dataUtils);
         return "view/list-product/list-product-page";
     }
 }

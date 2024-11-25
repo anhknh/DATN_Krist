@@ -50,7 +50,6 @@ public class DatHangController {
     @Autowired
     private TayAoService tayAoService ;
 
-
     @Autowired
     private CoAoService coAoService ;
 
@@ -60,6 +59,7 @@ public class DatHangController {
     Integer idDiaChiSelected = null;
     String thanhToanSelected = null;
     KhuyenMai khuyenMaiSelected = null;
+    Float phiVanChuyen = 0f;
 
     @GetMapping("/dia-chi-giao-hang")
     public String helloDiachigiaohang(Model model, @RequestParam(name = "productCheck", required = false) List<String> productCheck) {
@@ -71,6 +71,7 @@ public class DatHangController {
             listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
         }
         //lưu biến toàn cục tổng tiền sản phẩm đã chọn
+        totalPrice = 0f;
         for (GioHangChiTiet gioHangChiTiet : listCartDetailItem) {
             totalPrice = totalPrice + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
         }
@@ -105,19 +106,15 @@ public class DatHangController {
     public String addDiaChi(@Valid @ModelAttribute("diaChiCre") DiaChi diaChi, BindingResult result,
                             RedirectAttributes attributes, HttpServletRequest request) {
 
-        if (result.hasErrors()) {
-            attributes.addFlashAttribute("message", "Thêm mới địa chỉ không thành công.");
+        if(diaChiService.saveDiaChi(diaChi)) {
+            attributes.addFlashAttribute("message", "Thêm mới địa chỉ thành công.");
+            attributes.addFlashAttribute("messageType", "alert-success");
+            attributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            attributes.addFlashAttribute("message", "Số điện thoại đã tồn tại hoặc dữ liệu không đúng");
             attributes.addFlashAttribute("messageType", "alert-danger");
-            //get url request
-            String referer = request.getHeader("referer");
-            //reload page
-            return "redirect:" + referer;
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
         }
-
-        // Gọi phương thức từ service để thêm địa chỉ
-        diaChiService.addDiaChi(diaChi);
-        attributes.addFlashAttribute("message", "Thêm mới địa chỉ thành công.");
-        attributes.addFlashAttribute("messageType", "alert-success");
         //get url request
         String referer = request.getHeader("referer");
         //reload page
@@ -127,22 +124,15 @@ public class DatHangController {
     @PostMapping("/update-dia-chi-dat-hang")
     private String updateDiaChi(@Valid @ModelAttribute("diaChiCre") DiaChi diaChi, BindingResult result,
                                 RedirectAttributes attributes, HttpServletRequest request) {
-        if (result.hasErrors()) {
-            attributes.addFlashAttribute("diaChi", diaChi);
-            attributes.addFlashAttribute("message", "Cập nhật địa chỉ không thành công.");
+        if(diaChiService.updateDiaChi(diaChi, diaChi.getId())) {
+            attributes.addFlashAttribute("message", "Cập nhật địa chỉ thành công.");
+            attributes.addFlashAttribute("messageType", "alert-success");
+            attributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            attributes.addFlashAttribute("message", "Số điện thoại đã tồn tại hoặc dữ liệu không đúng");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
-            //get url request
-            String referer = request.getHeader("referer");
-            //reload page
-
-            return "redirect:" + referer;
         }
-
-        diaChiService.updateDiaChi(diaChi, diaChi.getId());
-        attributes.addFlashAttribute("message", "Cập nhật địa chỉ thành công.");
-        attributes.addFlashAttribute("messageType", "alert-success");
-        attributes.addFlashAttribute("titleMsg", "Thành công");
         //get url request
         String referer = request.getHeader("referer");
         //reload page
@@ -174,9 +164,12 @@ public class DatHangController {
 
 
     @PostMapping("/chon-di-chi")
-    public String chonDiaChi(@RequestParam(value = "diaChiSelected", required = false) Integer diaChiSelected, RedirectAttributes attributes,
+    public String chonDiaChi(@RequestParam(value = "diaChiSelected", required = false) Integer diaChiSelected,
+                             @RequestParam(value = "shipFee", required = false) Float ship,
+                             RedirectAttributes attributes,
                              HttpServletRequest request) {
         idDiaChiSelected = diaChiSelected;
+        phiVanChuyen = ship;
         return "redirect:/dat-hang/phuong-thuc-thanh-toan";
     }
 
@@ -198,6 +191,8 @@ public class DatHangController {
         model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
         //khuyến mại đã chọn
         model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
+        //phí vận chuyển
+        model.addAttribute("phiVanChuyen", phiVanChuyen);
         //hàm format
         model.addAttribute("convertMoney", dataUtils);
 
@@ -255,6 +250,8 @@ public class DatHangController {
         model.addAttribute("convertMoney", dataUtils);
         //phương thức thanh toán đã chọn
         model.addAttribute("payMethod", thanhToanSelected);
+        //phis vaanj chuyen
+        model.addAttribute("phiVanChuyen", phiVanChuyen);
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
@@ -279,7 +276,12 @@ public class DatHangController {
             listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
         }
         if (thanhToanSelected.equals("offline")) {
-            boolean check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, khuyenMaiSelected.getId(), thanhToanSelected, totalPrice);
+            boolean check;
+            if(khuyenMaiSelected == null) {
+                 check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, null, thanhToanSelected, totalPrice, phiVanChuyen);
+            } else {
+                 check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, khuyenMaiSelected.getId(), thanhToanSelected, totalPrice, phiVanChuyen);
+            }
             if (check) {
                 model.addAttribute("listDanhMuc" , danhMucs);
                 model.addAttribute("listCoAo" , listCoAo);
@@ -296,7 +298,7 @@ public class DatHangController {
             }
         } else {
             VNPayRequest request = new VNPayRequest();
-            float amount = (float) DataUtils.calculatorTotal2(totalPrice, khuyenMaiSelected);
+            float amount = (float) DataUtils.calculatorTotal2(totalPrice, khuyenMaiSelected, phiVanChuyen);
             DecimalFormat df = new DecimalFormat("#.##"); // Định dạng số thập phân với tối đa hai chữ số sau dấu chấm
             String formattedTotalAmount = df.format(amount);
             request.setAmount(formattedTotalAmount);
@@ -329,7 +331,12 @@ public class DatHangController {
                 Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
                 listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
             }
-            boolean check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, khuyenMaiSelected.getId(), thanhToanSelected, totalPrice);
+            boolean check;
+            if(khuyenMaiSelected == null) {
+                check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, null, thanhToanSelected, totalPrice, phiVanChuyen);
+            } else {
+                check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, khuyenMaiSelected.getId(), thanhToanSelected, totalPrice, phiVanChuyen);
+            }
             if(check) {
                 totalPrice = 0f;
                 model.addAttribute("listDanhMuc" , danhMucs);

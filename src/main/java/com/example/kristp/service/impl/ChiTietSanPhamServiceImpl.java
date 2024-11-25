@@ -56,4 +56,14 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
         List<ChiTietSanPham> chiTietSanPhamList = chiTietSanPhamRepository.findAllProductDetailsSPHD();
         return chiTietSanPhamList;
     }
+
+    @Override
+    public List<Integer> getSizeIdByProductIdAndColorId(Integer productId, Integer colorId) {
+        return chiTietSanPhamRepository.getSizeByIdProductAndIdColor(productId, colorId);
+    }
+
+    @Override
+    public ChiTietSanPham getByColorAndSize(Integer colorId, Integer sizeId, Integer productId) {
+        return chiTietSanPhamRepository.findByMau_IdAndSize_IdAndSanPham_Id(colorId, sizeId, productId);
+    }
 }

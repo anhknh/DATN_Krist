@@ -22,5 +22,9 @@ public interface ChiTietSanPhamService {
 // Hiện tại chưa được sử dụng
     List<ChiTietSanPham> getAllChiTietSanPhamSPHD();
 
+    List<Integer> getSizeIdByProductIdAndColorId(Integer productId, Integer colorId);
+
+    ChiTietSanPham getByColorAndSize(Integer colorId, Integer sizeId, Integer productId);
+
 
 }
