@@ -37,6 +37,8 @@ public class DonHangKhController {
 
     @Autowired
     private CoAoService coAoService ;
+    @Autowired
+    DataUtils dataUtils;
 
     @GetMapping("/don-hang")
     public String getPagination(@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model){
@@ -54,6 +56,7 @@ public class DonHangKhController {
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
+        model.addAttribute("dataFormat", dataUtils);
         return "don-hang";
     }
 

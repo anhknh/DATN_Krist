@@ -136,7 +136,7 @@
                         <div class="d-flex align-items-center" style="padding: 10px 18px;">
                             <!-- Hình ảnh người dùng -->
                             <div class="text-center"
-                                 style="width: 80px; height: 80px; background-color: #F6F6F6; border-radius: 50%; overflow: hidden;">
+                                 style="width: 100px; height: 80px; background-color: #F6F6F6; border-radius: 50%; overflow: hidden;">
                                 <img style="width: 100%;" src="/img/khachHang.png" alt="">
                             </div>
                             <!-- Tên và tiểu sử người dùng -->
@@ -230,11 +230,7 @@
                                         </h3>
                                         <p th:text="'Date Created : ' + ${order.getNgayDatHang()}">Ngày tạo</p>
                                         <div class="order-status">
-                                        <span class="in-process" th:if="${order.getTrangThai() != T(com.example.kristp.enums.HoaDonStatus).DA_THANH_TOAN}">
-                                         In Process
-                                        </span>
-                                            <span class="delivered" th:if="${order.getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).DA_THANH_TOAN}">
-                                         Delivered
+                                        <span class="in-process" th:text="${dataFormat.formatStatus(order.trangThai)}">
                                         </span>
                                         </div>
                                     </div>

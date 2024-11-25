@@ -39,7 +39,7 @@ public class KhachHangServiceImpl implements KhachHangService {
         KhachHang khachHang = new KhachHang();
         khachHang.setTaiKhoan(taiKhoan);
         khachHang.setTenKhachHang(tenKhachHang);
-        khachHang.setSdtKh(sdtKh);
+        khachHang.setSoDienThoai(sdtKh);
         khachHang.setTrangThai(Status.ACTIVE);
         return khachHangRepository.save(khachHang);
     }
