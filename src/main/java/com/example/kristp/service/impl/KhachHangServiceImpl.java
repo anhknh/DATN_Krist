@@ -18,10 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 @Service
 public class KhachHangServiceImpl implements KhachHangService {
@@ -35,10 +32,11 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public KhachHang saveKhachHang(String tenKhachHang, TaiKhoan taiKhoan) {
+    public KhachHang saveKhachHang(String tenKhachHang, TaiKhoan taiKhoan, String sdtKh) {
         KhachHang khachHang = new KhachHang();
         khachHang.setTaiKhoan(taiKhoan);
         khachHang.setTenKhachHang(tenKhachHang);
+        khachHang.setSoDienThoai(sdtKh);
         khachHang.setTrangThai(Status.ACTIVE);
         return khachHangRepository.save(khachHang);
     }
@@ -98,6 +96,17 @@ public class KhachHangServiceImpl implements KhachHangService {
     public Page<KhachHang> timTatCaTheoTen(Integer pageNo, String tenKhachHang, String sdtKh) {
         Pageable pageable = PageRequest.of(pageNo, 5);
         return khachHangRepository.timKiemKhachHang(pageable,tenKhachHang,sdtKh);
+    }
+
+    @Override
+    public KhachHang findBySoDienThoai(String soDienThoai) {
+        Optional<KhachHang> khachHangOpt = khachHangRepository.findBySoDienThoai(soDienThoai);
+        return khachHangOpt.orElse(null); // Trả về null nếu không tìm thấy khách hàng
+    }
+
+    @Override
+    public boolean isSoDienThoaiExists(String soDienThoai) {
+        return khachHangRepository.findBySoDienThoai(soDienThoai).isPresent();
     }
 
 

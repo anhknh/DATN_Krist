@@ -5,16 +5,21 @@ import com.example.kristp.service.*;
 import com.example.kristp.utils.Pagination;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -45,6 +50,8 @@ public class BanHangController {
     BanHangService banHangService;
     @Autowired
     KhuyenMaiService khuyenMaiService;
+    @Autowired
+    KhachHangService khachHangService;
     HoaDon hoaDonSelected = null;
 
 
@@ -76,6 +83,7 @@ public class BanHangController {
         }
         model.addAttribute("listHoaDon", hoaDons);
         model.addAttribute("hoaDonSelected", hoaDonSelected);
+        model.addAttribute("khachHangCre", new KhachHang());
 
         Page<HoaDonChiTiet> listHoaDonChiTiet = hoaDonChiTietService.getHoaDonChiTietByHoaDon(hoaDonSelected, pageablehd);
         model.addAttribute("totalPage", listSanPham.getTotalPages() - 1);
@@ -194,6 +202,128 @@ public class BanHangController {
         //reload page
         return "redirect:" +referer;
     }
+
+    @PostMapping("/them-khach-hang")
+    public String themKhachHang(HttpServletRequest request, Model model,
+                                RedirectAttributes redirectAttributes,
+                                @RequestParam(value = "soDienThoai", required = false) String soDienThoai,
+                                @RequestParam(value = "tenKhachHang", required = false) String tenKhachHang) {
+
+        // Kiểm tra xem có hóa đơn đang chọn không
+        if (hoaDonSelected == null) {
+            redirectAttributes.addFlashAttribute("message", "Vui lòng chọn hóa đơn thao tác!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+            redirectAttributes.addFlashAttribute("soDienThoai", soDienThoai);
+            redirectAttributes.addFlashAttribute("tenKhachHang", tenKhachHang);
+        } else {
+            try {
+
+                // Kiểm tra nếu khách hàng đã tồn tại theo số điện thoại
+                KhachHang khachHang = khachHangService.findBySoDienThoai(soDienThoai);
+                if (khachHang != null) {
+                    // Nếu đã có khách hàng, điền tên khách hàng
+                    tenKhachHang = khachHang.getTenKhachHang();
+                } else {
+                    // Nếu chưa có khách hàng, tạo mới khách hàng
+                    KhachHang khachHangMoi = new KhachHang();
+                    // Kiểm tra nếu số điện thoại và tên khách hàng không được nhập
+//                    if (soDienThoai == null || soDienThoai.trim().isEmpty()) {
+//                        khachHangMoi.setSoDienThoai("Trống");  // Gán mặc định nếu không nhập số điện thoại
+//                    }
+//
+//                    if (tenKhachHang == null || tenKhachHang.trim().isEmpty()) {
+//                        khachHangMoi.setTenKhachHang("Khách vãng lai");  // Gán mặc định nếu không nhập tên khách hàng
+//                    }
+                    khachHangMoi.setSoDienThoai(soDienThoai);
+                    khachHangMoi.setTenKhachHang(tenKhachHang);
+                    khachHangService.addKhachHang(khachHangMoi);
+                }
+                // Thêm khách hàng vào hóa đơn
+                banHangService.addKhachHang(null, soDienThoai, tenKhachHang, hoaDonSelected);
+                model.addAttribute("message", "Thêm khách hàng thành công!");
+                model.addAttribute("messageType", "alert-success");
+                model.addAttribute("titleMsg", "Thành công");
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("message", "Đã xảy ra lỗi: " + e.getMessage());
+                redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+                redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+                redirectAttributes.addFlashAttribute("soDienThoai", soDienThoai);
+                redirectAttributes.addFlashAttribute("tenKhachHang", tenKhachHang);
+            }
+        }
+        KhachHang khachHangCre = new KhachHang();
+        khachHangCre.setSoDienThoai(soDienThoai);
+        khachHangCre.setTenKhachHang(tenKhachHang);
+        model.addAttribute("khachHangCre", khachHangCre);
+
+        // Reload trang hiện tại
+        String referer = request.getHeader("referer");
+        return "redirect:" + referer;
+    }
+
+    @GetMapping("/kiem-tra-khach-hang")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> kiemTraKhachHang(@RequestParam("soDienThoai") String soDienThoai,
+                                                                HttpServletRequest request, Model model,
+                                                                RedirectAttributes redirectAttributes) {
+        Map<String, Object> response = new HashMap<>();
+
+        // Tìm khách hàng theo số điện thoại
+        KhachHang khachHang = khachHangService.findBySoDienThoai(soDienThoai);
+
+        if (khachHang != null) {
+            response.put("exists", true);
+            response.put("tenKhachHang", khachHang.getTenKhachHang());
+
+        } else {
+            response.put("exists", false);
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/them-nhanh-khach-hang")
+    private String addKH(
+            @Valid @ModelAttribute("khachHang") KhachHang khachHang,
+            BindingResult result,
+            RedirectAttributes attributes) {
+
+        // Kiểm tra lỗi validation
+        if (result.hasErrors()) {
+            attributes.addFlashAttribute("khachHang", khachHang);
+            attributes.addFlashAttribute("message", "Thêm mới khách hàng không thành công. Vui lòng kiểm tra thông tin nhập.");
+            attributes.addFlashAttribute("messageType", "alert-danger");
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
+            return "redirect:/quan-ly/ban-hang";
+        }
+        // Kiểm tra độ dài số điện thoại
+        String soDienThoai = khachHang.getSoDienThoai();
+        if (!soDienThoai.matches("\\d{10,13}")) { // Regex chỉ chấp nhận số từ 10 đến 13 ký tự
+            attributes.addFlashAttribute("khachHang", khachHang);
+            attributes.addFlashAttribute("message", "Số điện thoại phải có từ 10 đến 13 chữ số.");
+            attributes.addFlashAttribute("messageType", "alert-danger");
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
+            return "redirect:/quan-ly/ban-hang";
+        }
+
+        // Kiểm tra số điện thoại đã tồn tại
+        if (khachHangService.isSoDienThoaiExists(khachHang.getSoDienThoai())) {
+            attributes.addFlashAttribute("khachHang", khachHang);
+            attributes.addFlashAttribute("message", "Số điện thoại đã tồn tại.");
+            attributes.addFlashAttribute("messageType", "alert-danger");
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
+            return "redirect:/quan-ly/ban-hang";
+        }
+
+        // Lưu khách hàng
+        khachHangService.addKhachHang(khachHang);
+        attributes.addFlashAttribute("message", "Thêm mới khách hàng thành công.");
+        attributes.addFlashAttribute("messageType", "alert-success");
+        attributes.addFlashAttribute("titleMsg", "Thành công");
+        return "redirect:/quan-ly/ban-hang";
+    }
+
 
     @GetMapping("/add-khuyen-mai")
     public String addKhuyenMai(HttpServletRequest request,

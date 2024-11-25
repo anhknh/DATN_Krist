@@ -49,4 +49,9 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
         @Query("from ChiTietSanPham ctsp join SanPham sp on ctsp.sanPham.id = sp.id where sp.trangThai = 1")
     List<ChiTietSanPham> findAllProductDetailsSPHD();
 
+        @Query(value = "select id_size from chi_tiet_san_pham where id_san_pham = :id and id_mau_sac = :idMau", nativeQuery = true)
+        List<Integer> getSizeByIdProductAndIdColor(Integer id, Integer idMau);
+
+        ChiTietSanPham findByMau_IdAndSize_IdAndSanPham_Id(Integer mau_id, Integer size_id, Integer sanPham_id);
+
 }

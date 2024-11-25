@@ -34,5 +34,8 @@ public class KhachHang extends BaseEntity {
     @JoinColumn(name = "id_tai_khoan")
     private TaiKhoan taiKhoan;
 
+//    @Column(name = "sdt_kh")
+//    private String sdtKh;
+
 
 }

@@ -21,7 +21,9 @@
         <div style="flex: 1;">
             <div class="d-flex align-items-center">
                 <img style="height: 36px; margin-right: 8px;" src="/img/logo.png" alt="logo">
-                <p class="title d-inline p-0 m-0">Krist</p>
+                <p class="title d-inline p-0 m-0">
+                    <a style="color: #000; text-decoration: none" href="/trang-chu">Krist</a>
+                </p>
             </div>
         </div>
         <div style="flex: 2;">
@@ -31,7 +33,7 @@
                         <div class="navbar-nav" style="width: 100%; justify-content: space-between;">
                             <div>
                                 <li class="nav-item">
-                                    <a class="nav-link cl-black s-18" href="#">Trang chủ</a>
+                                    <a class="nav-link cl-black s-18" href="/trang-chu">Trang chủ</a>
                                 </li>
                             </div>
                             <div>
@@ -40,14 +42,16 @@
                                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Danh mục
                                     </a>
-                                    <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;"
-                                        aria-labelledby="navbarDropdown">
+                                    <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;" aria-labelledby="navbarDropdown">
                                         <div class="d-flex">
                                             <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
                                                 <p class="font-blod">Danh mục</p>
                                                 <hr>
                                                 <div class="p-2 hover-effect" th:each="item : ${listDanhMuc}">
-                                                    <a th:if="${listDanhMuc.size() > 0}" href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getTenDanhMuc()}"></span></a>
+                                                    <a th:if="${listDanhMuc.size() > 0}"
+                                                       th:href="@{/danh-sach-san-pham(danhMucId=${item.id})}"
+                                                       style="text-decoration: none ; color : black">
+                                                        <span  th:text="${item.getTenDanhMuc()}"></span></a>
                                                 </div>
                                                 <h5 th:unless="${listDanhMuc.size() > 0}" style="color: gray;">Hiện tại không có danh mục nào</h5>
 
@@ -56,7 +60,10 @@
                                                 <p class="font-blod">Cổ áo</p>
                                                 <hr>
                                                 <div class="p-2 hover-effect" th:each="item : ${listCoAo}">
-                                                    <a th:if="${listCoAo.size() > 0}" href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuCoAo()}"></span></a>
+                                                    <a th:if="${listCoAo.size() > 0}"
+
+                                                       th:href="@{/danh-sach-san-pham(coAoId=${item.id})}"
+                                                       style="text-decoration: none ; color : black"><span  th:text="${item.getKieuCoAo()}"></span></a>
                                                 </div>
                                                 <h5 th:unless="${listCoAo.size() > 0}" style="color: gray;">Hiện tại không có cổ áo nào</h5>
                                             </div>
@@ -64,7 +71,7 @@
                                                 <p class="font-blod">Tay áo</p>
                                                 <hr>
                                                 <div th:if="${listTayAo.size() > 0}" class="p-2 hover-effect" th:each="item : ${listTayAo}">
-                                                    <a href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuTayAo()}"></span></a>
+                                                    <a th:href="@{/danh-sach-san-pham(tayAoId=${item.id})}" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuTayAo()}"></span></a>
                                                 </div>
                                                 <h5 th:unless="${listTayAo.size() > 0}" style="color: gray;">Hiện tại không có tay áo nào</h5>
                                             </div>
@@ -95,18 +102,72 @@
         <div style="flex: 1;">
             <div class="header_right d-flex align-items-center justify-content-end" style="height: 100%;">
                 <div>
-                    <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
+                    <a class="cl-black" href="/danh-sach-san-pham"><i
                             class="fa-regular s-18 fa-magnifying-glass"></i></a>
                 </div>
                 <div style="margin: 0px 46px;">
                     <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
                             class="fa-sharp s-18 fa-regular fa-heart"></i></a>
                 </div>
-                <div class="me-4">
-                    <a class="cl-black" href="./profileOrder.html"><i class="fa-regular s-18 fa-cart-minus"></i></a>
+                <div class="me-4 position-relative cart-container">
+                    <a class="cl-black" href="/gio-hang-chi-tiet">
+                        <i class="fa-regular s-18 fa-cart-minus"></i>
+                        <!-- Hiển thị tổng số lượng -->
+                        <span th:if="${totalCartItem > 0}"
+                              th:text="${totalCartItem}" style="background-color: red"
+                              class="badge badge-danger position-absolute top-0 start-100 translate-middle">
+                            </span>
+                    </a>
+                    <!-- Popup cart -->
+                    <div class="cart-popup position-absolute bg-white shadow p-3 display_none"
+                         style=" width: 370px; right: -16px; top: 20px; z-index: 10;">
+                        <div class="cart-popup-header">
+                            <p class="modal-title" th:text="'Bạn có ' + ${totalCartItem} + ' sản phẩm trong giỏ hàng'">Bạn có </p>
+                        </div>
+                        <div class="cart-popup-body">
+                            <div class="cart_product_row" th:each="item : ${gioHangChiTietList}">
+                                <div class="img_product_cart">
+                                    <div th:style="|background: url('/img/${item.chiTietSanPham.anhSanPham}') no-repeat center / cover; width: 100%; height: 100%;|">
+                                    </div>
+                                </div>
+                                <div class="product_cart">
+                                    <!-- Tên sản phẩm -->
+                                    <p th:text="${item.getChiTietSanPham().sanPham.tenSanPham}"></p>
+
+                                    <!-- Màu sắc và kích thước -->
+                                    <div class="product-info">
+                                        <div>
+                                            <span>Color:</span>
+                                            <div class="color-indicator" th:style="'background-color:' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
+                                        </div>
+                                        <span>Size: <span th:text="${item.getChiTietSanPham().size.tenSize}"></span></span>
+                                    </div>
+
+                                    <!-- Giá tiền và số lượng -->
+                                    <div class="price-quantity">
+                                        <p th:text="'Giá: ' + ${convertMoney.formatCurrency(item.getChiTietSanPham().donGia)}"></p>
+                                        <p th:text="'Số lượng: ' + ${item.soLuong}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cart-popup-footer">
+                            <div class="d-flex justify-content-between"
+                                 style="border-top: 2px solid #F6F6F6; padding: 12px;">
+                                <div style="font-size: 14px; font-weight: 500;">Tổng tiền</div>
+                                <div style="font-size: 14px; font-weight: 500;" th:text="${convertMoney.formatCurrency(tongTien)}">
+                                </div>
+                            </div>
+                            <a href="/gio-hang-chi-tiet" class="btn btn-dark w-100">Thanh toán</a>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <button type="button" class="btn btn-dark">Đăng nhập</button>
+                <div style="margin-left: 14px" th:if="khachHang != null">
+                    <a class="cl-black" href="/quan-ly/don-hang"><i class="fa-regular s-18 fa-user"></i></a>
+                </div>
+                <div th:if="khachHang == null">
+                    <a href="/dang-nhap" class="btn btn-dark">Đăng nhập</a>
                 </div>
             </div>
         </div>
@@ -178,7 +239,7 @@
 
         </div>
         <div style="margin-bottom: 12px;">
-            <h4 th:text="${dataUtils.formatCurrency(sanPham.getChiTietSanPham().get(0).getDonGia())}">150.000 VNĐ</h4>
+            <h4 id="price-product" th:text="${dataUtils.formatCurrency(sanPham.getChiTietSanPham().get(0).getDonGia())}">150.000 VNĐ</h4>
         </div>
         <div style="margin-bottom: 18px;">
             <div>
@@ -194,8 +255,9 @@
                            th:id="'color'+${color.id}"
                            th:value="${color.id}"
                            style="display: none;"
-                           th:checked="${indexStat.index == 1}">
-                    <label class="form-check-label lable_radio_color selected_radio_color"
+                           th:checked="${indexStat.index == 0}">
+                    <label class="form-check-label lable_radio_color "
+                           th:classappend="${indexStat.index == 0} ? 'selected_radio_color' : ''"
                            th:for="'color'+${color.id}"
                            style="padding: 2px;">
                         <p th:style="'margin: 0; padding: 9px; border-radius: 50%; background-color: ' + ${color.maMauSac} + '; border: 1px solid #E6E7E8; cursor: pointer;'">
@@ -214,8 +276,8 @@
             <div>
                 <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;" th:each="size, indexStat : ${ListSizeProductDetail}">
                     <input class="form-check-input radio_size" type="radio" name="size" th:id="'size'+${size.id}" th:value="${size.id}"
-                           style="display: none;" th:checked="${indexStat.index == 1}">
-                    <label class="form-check-label lable_radio_size selected_radio_size" th:for="'size'+${size.id}"
+                           style="display: none;" th:checked="${indexStat.index == 0}">
+                    <label class="form-check-label lable_radio_size " th:for="'size'+${size.id}"
                            style="padding: 10px 16px; cursor: pointer;border-radius: 4px;">
                         <p style="margin: 0; padding: 0; font-size: 12px; font-weight: 500;" th:text="${size.tenSize}"></p>
                     </label>
@@ -224,7 +286,7 @@
         </div>
         <div style="margin-bottom: 32px;">
             <div>
-                <p style="font-size: 12px; color: #5C5F6A; font-weight: 500; line-height: 24px; letter-spacing: 0.6px;" th:text="'Số lượng hiện có: ' + ${sanPham.getChiTietSanPham().get(0).soLuong}">
+                <p style="font-size: 12px; color: #5C5F6A; font-weight: 500; line-height: 24px; letter-spacing: 0.6px;" id="quantily-product" th:text="'Số lượng hiện có: ' + ${sanPham.getChiTietSanPham().get(0).soLuong}">
                     Số lượng</p>
             </div>
             <div class="product_cart">
@@ -245,7 +307,8 @@
         <div>
             <div>
                 <div style=" display: inline-block;">
-                    <a th:href="@{/gio-hang/add(idChiTietSanPham=${product.chiTietSanPham.get(0).id})}"
+                    <a th:href="@{/gio-hang/add}"
+                       id="linkAdd"
                        style=" color: #fff; text-decoration: none; background-color: #000; font-size: 14px; font-weight: 500; border-radius: 4px; padding: 12px 68px; margin-right: 8px;">Thêm
                         vào giỏ hàng</a>
                 </div>
@@ -532,8 +595,130 @@
 </div>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/ProductDetail.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Sự kiện thay đổi màu sắc sản phẩm
+        $('input[name="inlineRadioOptions"]').change(handleColorChange);
+
+        // Thực hiện logic cập nhật kích thước khi trang được tải
+        var selectedColor = $('input[name="inlineRadioOptions"]:checked').val();
+        if (selectedColor) {
+            handleColorChange.call($('input[name="inlineRadioOptions"]:checked'));
+        }
+
+        // Sự kiện thay đổi kích thước sản phẩm
+        $('input[name="size"]').change(updateProductDetails);
+
+        // Hàm xử lý khi thay đổi màu sắc
+        function handleColorChange() {
+            var selectedColor = $(this).val();
+
+            // Gọi API để lấy danh sách kích thước tương ứng với màu được chọn
+            $.ajax({
+                url: '/product-detail/find-size',
+                method: 'GET',
+                data: { colorId: selectedColor },
+                success: function (response) {
+                    updateSizeOptions(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        // Hàm cập nhật danh sách kích thước
+        function updateSizeOptions(sizes) {
+            // Vô hiệu hóa tất cả các tùy chọn kích thước
+            $('.radio_size').prop('disabled', true).prop('checked', false);
+            $('.lable_radio_size').addClass('disabled');
+            $('.lable_radio_size').removeClass('selected_radio_size');
+
+            // Bật lại các tùy chọn kích thước tương ứng với màu được chọn
+            $.each(sizes, function (index, sizeId) {
+                var $sizeInput = $('#size' + sizeId);
+                var $sizeLabel = $sizeInput.next('label');
+
+                $sizeInput.prop('disabled', false);
+                $sizeLabel.removeClass('disabled');
+
+                // Nếu đây là mục đầu tiên trong danh sách kích thước, chọn nó
+                if (index === 0) {
+                    $sizeInput.prop('checked', true);
+                    $sizeLabel.addClass('selected_radio_size');
+                }
+            });
+
+            // Cập nhật chi tiết sản phẩm sau khi cập nhật kích thước
+            updateProductDetails();
+        }
+
+        // Hàm cập nhật chi tiết sản phẩm
+        function updateProductDetails() {
+            var size = $('input[name="size"]:checked').val();
+            var color = $('input[name="inlineRadioOptions"]:checked').val();
+
+            if (size && color) {
+                if ($('#linkAdd').data('product-size') === size && $('#linkAdd').data('product-color') === color) {
+                    return; // Không gọi lại API nếu không có thay đổi
+                }
+
+                $.ajax({
+                    url: '/product-detail/find-detail',
+                    type: 'GET',
+                    data: { sizeId: size, colorId: color },
+                    success: function (response) {
+                        $('#price-product').text('$ ' + response.donGia);
+                        $('#quantily-product').text('Số lượng hiện có: ' + response.soLuong);
+                        $('#linkAdd')
+                            .data('product-id', response.id)
+                            .data('product-size', size)
+                            .data('product-color', color)
+                            .attr('href', "/gio-hang/add?idChiTietSanPham=" + response.id + "&soLuong=1");
+                        $('.quantity_number').text('1'); // Reset số lượng khi đổi sản phẩm
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        }
+
+        // Hàm cập nhật liên kết giỏ hàng
+        function updateCartLink() {
+            var quantity = $('.quantity_number').text();
+            var size = $('input[name="size"]:checked').val();
+            var color = $('input[name="inlineRadioOptions"]:checked').val();
+
+            if (size && color) {
+                $('#linkAdd').attr(
+                    'href',
+                    "/gio-hang/add?idChiTietSanPham=" + $('#linkAdd').data('product-id') + "&soLuong=" + quantity
+                );
+            }
+        }
+
+        // Sự kiện tăng giảm số lượng
+        $('.btn_Subtrac').click(function () {
+            var quantity = parseInt($('.quantity_number').text());
+            if (quantity > 1) {
+                $('.quantity_number').text(quantity - 1);
+                updateCartLink(); // Chỉ cập nhật link
+            }
+        });
+
+        $('.btn_plus').click(function () {
+            var quantity = parseInt($('.quantity_number').text());
+            $('.quantity_number').text(quantity + 1);
+            updateCartLink(); // Chỉ cập nhật link
+        });
+    });
+</script>
+
 
 </body>
 </html>

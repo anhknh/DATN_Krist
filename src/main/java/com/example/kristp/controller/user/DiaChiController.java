@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,6 +55,13 @@ public class DiaChiController {
         model.addAttribute("diaChiCre", new DiaChi());
         model.addAttribute("dataUtils", dataUtils);
         return "view-admin/dashbroad/crud-dia-chi";
+    }
+
+    @GetMapping("/find-dia-chi")
+    @ResponseBody
+    public ResponseEntity<?> getDiaChi(Model model, @RequestParam("id") Integer id) {
+        DiaChi  diaChi = diaChiService.getDiaChiById(id);
+        return ResponseEntity.ok(diaChi);
     }
 
 

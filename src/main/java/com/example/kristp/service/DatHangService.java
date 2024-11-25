@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface DatHangService {
 
-    public boolean datHangOnline(List<GioHangChiTiet> gioHangChiTietList, Integer idDiaChi, Integer idKhuyenMai, String phuongThucThanhToan, Float tongTien);
+    public boolean datHangOnline(List<GioHangChiTiet> gioHangChiTietList, Integer idDiaChi, Integer idKhuyenMai, String phuongThucThanhToan, Float tongTien, Float phiVanChuyen);
 }

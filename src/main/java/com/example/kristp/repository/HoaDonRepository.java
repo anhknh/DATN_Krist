@@ -36,7 +36,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
       //count
         @Query("SELECT h.trangThai, COUNT(h) FROM HoaDon h GROUP BY h.trangThai")
         List<Object[]> countByTrangThaiGrouped();
-    @Query(value = "select hd from HoaDon hd where hd.trangThai = ?1")
+    @Query(value = "select hd from HoaDon hd where hd.trangThai = ?1 and hd.")
     public Page<HoaDon> getPaginationTrangThai(Pageable pageable , HoaDonStatus trangThai);
 
 //Thống kê

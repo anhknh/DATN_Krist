@@ -1,8 +1,12 @@
 package com.example.kristp.service.impl;
 
+import com.example.kristp.entity.GioHang;
+import com.example.kristp.entity.KhachHang;
 import com.example.kristp.entity.TaiKhoan;
 import com.example.kristp.enums.Status;
+import com.example.kristp.repository.GioHangRepository;
 import com.example.kristp.repository.TaiKhoanRepository;
+import com.example.kristp.service.GioHangService;
 import com.example.kristp.service.KhachHangService;
 import com.example.kristp.service.TaiKhoanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,8 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
     TaiKhoanRepository taiKhoanRepository;
     @Autowired
     KhachHangService khachHangService;
+    @Autowired
+    GioHangRepository gioHangRepository;
 
 
     @Override
@@ -39,12 +45,18 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         return taiKhoanRepository.findByTenDangNhapAndMatKhau(tenDangNhap, matKhau);
     }
 
+
     @Override
-    public TaiKhoan taoTaiKhoan(TaiKhoan taiKhoan, String tenKhachHang) {
+    public TaiKhoan taoTaiKhoan(TaiKhoan taiKhoan, String tenKhachHang, String sdtKh) {
         taiKhoan.setChucVu("KhachHang");
         taiKhoan.setTrangThai(Status.ACTIVE);
         TaiKhoan taiKhoanNew = taiKhoanRepository.save(taiKhoan);
-        khachHangService.saveKhachHang(tenKhachHang, taiKhoanNew);
+
+        KhachHang khachHangSaved = khachHangService.saveKhachHang(tenKhachHang, taiKhoanNew, sdtKh);
+        GioHang gioHang = new GioHang();
+        gioHang.setKhachHang(khachHangSaved);
+        gioHang.setTrangThai(Status.ACTIVE);
+        gioHangRepository.save(gioHang);
         return taiKhoanNew;
     }
 }

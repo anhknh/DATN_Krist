@@ -10,12 +10,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface KhachHangRepository extends JpaRepository<KhachHang, Integer> {
     KhachHang findByTaiKhoan(TaiKhoan taiKhoan);
 
-
+    Optional<KhachHang> findBySoDienThoai(String soDienThoai);
     @Query("SELECT kh FROM KhachHang kh " +
             "WHERE (:tenKhachHang IS NULL OR kh.tenKhachHang LIKE %:tenKhachHang%) " +
             "AND (:sdtKh IS NULL OR kh.soDienThoai LIKE %:sdtKh%)")
