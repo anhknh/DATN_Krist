@@ -1,9 +1,6 @@
 package com.example.kristp.service.impl;
 
-import com.example.kristp.entity.ChiTietSanPham;
-import com.example.kristp.entity.HoaDon;
-import com.example.kristp.entity.HoaDonChiTiet;
-import com.example.kristp.entity.SanPham;
+import com.example.kristp.entity.*;
 import com.example.kristp.enums.HoaDonStatus;
 import com.example.kristp.repository.HoaDonRepository;
 import com.example.kristp.service.BanHangService;
@@ -72,8 +69,15 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
             try (PDPageContentStream luoiNoiDung = new PDPageContentStream(taiLieu, trang)) {
                 Integer maHoaDon = hoaDon.getId();
                 String tenNhanVien = hoaDon.getNhanVien() == null ? "" : hoaDon.getNhanVien().getTenNhanVien();
-                String tenKhachHang = "";
-                String sdt = "";
+
+                KhachHang khachHang = hoaDon.getKhachHang();
+                String tenKhachHang = (khachHang != null && khachHang.getTenKhachHang() != null && !khachHang.getTenKhachHang().isBlank())
+                        ? khachHang.getTenKhachHang()
+                        : "Khách vãng lai";
+
+                String sdt = (khachHang != null && khachHang.getSoDienThoai() != null && !khachHang.getSoDienThoai().isBlank())
+                        ? khachHang.getSoDienThoai()
+                        : "N/A";
                 String ngayTao = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(hoaDon.getNgayTao());
 
                 List<String> sanPhamList = new ArrayList<>();
@@ -92,10 +96,12 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
                     giaBanList.add(giaBan);
                 }
                 double tongTien = banHangService.getTongTien(hoaDon);
-                String phuongThucThanhToan = "Chuyển khoản";
-                String tenKhuyenMai = hoaDon.getKhuyenMai() == null ? "" : hoaDon.getKhuyenMai().getTenKhuyenMai(); // Giảm giá 10%
+                String tenKhuyenMai = (hoaDon.getKhuyenMai() == null || hoaDon.getKhuyenMai().getTenKhuyenMai() == null || hoaDon.getKhuyenMai().getTenKhuyenMai().isBlank())
+                        ? "Không"
+                        : hoaDon.getKhuyenMai().getTenKhuyenMai();
                 double giamGia = hoaDon.getKhuyenMai() == null ? 0 : hoaDon.getKhuyenMai().getGiaTri(); // Giảm giá 10%
                 double tongSauGiam = tongTien - giamGia;
+                String phuongThucThanhToan = hoaDon.getHinhThucThanhToan();
 
                 MyTextClass myTextClass = new MyTextClass(taiLieu, luoiNoiDung);
                 NumberFormat currencyFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
