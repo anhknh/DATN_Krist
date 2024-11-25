@@ -57,7 +57,7 @@ public class TrangCaNhanController {
         model.addAttribute("listTayAo" , listTayAo);
 
 
-        return "profile/ca-nhan";
+        return "profile-ca-nhan";
     }
 
     @PostMapping("/update-thong-tin-kh")
