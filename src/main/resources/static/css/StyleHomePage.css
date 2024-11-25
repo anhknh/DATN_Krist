@@ -250,6 +250,13 @@
 .cart-popup-body::-webkit-scrollbar-track {
     background-color: #f1f1f1;
 }
+.item-hover {
+    border-radius: 5px;
+}
 
+.item-hover:hover {
+    background-color: #f6f6f6; /* Thay đổi màu nền khi hover */
+    cursor: pointer;         /* Thay đổi con trỏ thành hình bàn tay */
+}
 /*admin*/
 

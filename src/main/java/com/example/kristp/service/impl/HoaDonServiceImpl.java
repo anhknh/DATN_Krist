@@ -119,7 +119,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public Page<HoaDon> findTop5() {
         Pageable pageable = PageRequest.of(0, 5);
-        Page<HoaDon> hoaDons = hoaDonRepository.findTop5(pageable );
+        Page<HoaDon> hoaDons = hoaDonRepository.findTop5(pageable);
         return hoaDons ;
     }
 // Sử dụng cho thống kê

@@ -1,14 +1,14 @@
 package com.example.kristp.controller.user;
 
-import com.example.kristp.entity.CoAo;
-import com.example.kristp.entity.DanhMuc;
-import com.example.kristp.entity.HoaDon;
-import com.example.kristp.entity.TayAo;
+import com.example.kristp.entity.*;
 import com.example.kristp.enums.HoaDonStatus;
+import com.example.kristp.repository.KhachHangRepository;
 import com.example.kristp.service.CoAoService;
 import com.example.kristp.service.DanhMucService;
 import com.example.kristp.service.HoaDonService;
 import com.example.kristp.service.TayAoService;
+import com.example.kristp.utils.Authen;
+import com.example.kristp.utils.DataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/quan-ly")
 public class DonHangKhController {
-
+    @Autowired
+    private KhachHangRepository khachHangRepository ;
     @Autowired
     private HoaDonService hoaDonService ;
 
@@ -46,7 +48,9 @@ public class DonHangKhController {
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
-
+        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
+        model.addAttribute("khachHang" , khachHang.get());
+        model.addAttribute("dataUtils", new DataUtils());
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
@@ -63,7 +67,9 @@ public class DonHangKhController {
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
-
+        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
+        model.addAttribute("khachHang" , khachHang.get());
+        model.addAttribute("dataUtils", new DataUtils());
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
@@ -80,7 +86,9 @@ public class DonHangKhController {
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
-
+        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
+        System.out.println(khachHang.get().getTenKhachHang());
+        model.addAttribute("khachHang" , khachHang.get());
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
@@ -97,7 +105,8 @@ public class DonHangKhController {
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
-
+        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
+        model.addAttribute("khachHang" , khachHang.get());
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);

@@ -58,7 +58,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
 
 
     @Query("select hd from HoaDon hd order by hd.id desc ")
-    Page<HoaDon> findTop5(Pageable pageable);
+    Page<HoaDon> findTop5(Pageable pageable );
 
 
     @Query("select SUM(hd.tongTien) from HoaDon hd where cast(hd.ngaySua as DATE ) = current date AND  hd.trangThaiThanhToan = :trangthai")

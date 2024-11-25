@@ -50,7 +50,6 @@ function hoanThanh(){
 }
 
 function donHangChiTiet(id){
-
     window.location.href = "/quan-ly/don-hang-chi-tiet-kh?id="+id ;
 }
 
@@ -122,3 +121,9 @@ function donHangChiTiet(id){
     });
 
 })();
+
+
+
+
+
+
