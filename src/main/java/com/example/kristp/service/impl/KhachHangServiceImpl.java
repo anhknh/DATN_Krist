@@ -30,10 +30,11 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public KhachHang saveKhachHang(String tenKhachHang, TaiKhoan taiKhoan) {
+    public KhachHang saveKhachHang(String tenKhachHang, TaiKhoan taiKhoan, String sdtKh) {
         KhachHang khachHang = new KhachHang();
         khachHang.setTaiKhoan(taiKhoan);
         khachHang.setTenKhachHang(tenKhachHang);
+        khachHang.setSdtKh(sdtKh);
         khachHang.setTrangThai(Status.ACTIVE);
         return khachHangRepository.save(khachHang);
     }

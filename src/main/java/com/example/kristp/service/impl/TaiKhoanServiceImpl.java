@@ -39,12 +39,13 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         return taiKhoanRepository.findByTenDangNhapAndMatKhau(tenDangNhap, matKhau);
     }
 
+
     @Override
-    public TaiKhoan taoTaiKhoan(TaiKhoan taiKhoan, String tenKhachHang) {
+    public TaiKhoan taoTaiKhoan(TaiKhoan taiKhoan, String tenKhachHang, String sdtKh) {
         taiKhoan.setChucVu("KhachHang");
         taiKhoan.setTrangThai(Status.ACTIVE);
         TaiKhoan taiKhoanNew = taiKhoanRepository.save(taiKhoan);
-        khachHangService.saveKhachHang(tenKhachHang, taiKhoanNew);
+        khachHangService.saveKhachHang(tenKhachHang, taiKhoanNew, sdtKh);
         return taiKhoanNew;
     }
 }

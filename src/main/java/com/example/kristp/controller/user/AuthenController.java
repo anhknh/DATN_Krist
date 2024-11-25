@@ -66,7 +66,7 @@ public class AuthenController {
     @PostMapping("/dang-ki-tai-khoan")
     public String dangKyForm(@ModelAttribute("taiKhoan")TaiKhoan taiKhoan, Model model,
                          HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        TaiKhoan taiKhoanNew = taiKhoanService.taoTaiKhoan(taiKhoan, request.getParameter("tenKhachHang"));
+        TaiKhoan taiKhoanNew = taiKhoanService.taoTaiKhoan(taiKhoan, request.getParameter("tenKhachHang"), request.getParameter("sdtKh"));
         if (taiKhoanNew != null) {
             redirectAttributes.addFlashAttribute("message", "Đăng ký thành công!");
             redirectAttributes.addFlashAttribute("messageType", "alert-success");
