@@ -1,14 +1,13 @@
 package com.example.kristp.service.impl;
 
-import com.example.kristp.entity.ChiTietSanPham;
-import com.example.kristp.entity.HoaDon;
-import com.example.kristp.entity.HoaDonChiTiet;
-import com.example.kristp.entity.KhuyenMai;
+import com.example.kristp.entity.*;
 import com.example.kristp.repository.ChiTietSanPhamRepository;
 import com.example.kristp.repository.HoaDonChiTietRepo;
 import com.example.kristp.repository.HoaDonRepository;
+import com.example.kristp.repository.KhachHangRepository;
 import com.example.kristp.service.BanHangService;
 import com.example.kristp.service.ChiTietSanPhamService;
+import com.example.kristp.service.KhachHangService;
 import com.example.kristp.service.KhuyenMaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +17,7 @@ import org.w3c.dom.stylesheets.LinkStyle;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class BanHangServiceImpl implements BanHangService {
@@ -25,11 +25,15 @@ public class BanHangServiceImpl implements BanHangService {
     @Autowired
     HoaDonChiTietRepo hoaDonChiTietRepo;
     @Autowired
+    KhachHangRepository khachHangRepository;
+    @Autowired
     ChiTietSanPhamService chiTietSanPhamService;
     @Autowired
     ChiTietSanPhamRepository chiTietSanPhamRepository;
     @Autowired
     KhuyenMaiService khuyenMaiService;
+    @Autowired
+    KhachHangService khachHangService;
     @Autowired
     private HoaDonRepository hoaDonRepository;
 
@@ -89,6 +93,49 @@ public class BanHangServiceImpl implements BanHangService {
     }
 
     @Override
+    public boolean addKhachHang(Integer idKhachHang, String soDienThoai, String tenKhachHang, HoaDon hoaDon) {
+        KhachHang khachHang;
+
+        // Kiểm tra khách hàng đã tồn tại chưa
+        if (idKhachHang != null) {
+            khachHang = khachHangRepository.findById(idKhachHang).orElse(null);
+            if (khachHang == null) {
+                // Trường hợp ID khách hàng không tồn tại
+                return false;
+            }
+        } else {
+            // Tìm khách hàng theo số điện thoại
+            khachHang = khachHangRepository.findBySoDienThoai(soDienThoai).orElse(null);
+
+            if (khachHang == null) {
+                // Tạo mới khách hàng nếu chưa tồn tại
+                khachHang = new KhachHang();
+//                if (tenKhachHang == null || tenKhachHang.trim().isEmpty()) {
+//                    khachHang.setTenKhachHang("Khách vãng lai");
+//                }
+//
+//                // Nếu số điện thoại không có, gán mặc định
+//                if (soDienThoai == null || soDienThoai.trim().isEmpty()) {
+//                    khachHang.setSoDienThoai("Trống");
+//                }
+                khachHang.setTenKhachHang(tenKhachHang);
+                khachHang.setSoDienThoai(soDienThoai);
+                khachHangRepository.save(khachHang);
+            }
+        }
+
+        // Gắn khách hàng vào hóa đơn
+        hoaDon.setKhachHang(khachHang);
+
+        // Lưu hóa đơn
+        hoaDonRepository.save(hoaDon);
+
+        return true;
+    }
+
+
+
+    @Override
     public Float findTongTienKhuyenMai(HoaDon hoaDon) {
         Float tongTien = getTongTien(hoaDon);
         if(hoaDon.getKhuyenMai() == null) {
@@ -143,5 +190,6 @@ public class BanHangServiceImpl implements BanHangService {
 
         return false;
     }
+
 
 }

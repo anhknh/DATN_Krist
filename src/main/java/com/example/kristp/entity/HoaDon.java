@@ -41,6 +41,10 @@ public class HoaDon extends BaseEntity {
     @JoinColumn(name = "id_khuyen_mai")
     private KhuyenMai khuyenMai;
 
+    @ManyToOne
+    @JoinColumn(name = "id_khach_hang")
+    private KhachHang khachHang;
+
 
 
     @Override
@@ -55,6 +59,7 @@ public class HoaDon extends BaseEntity {
                 ", phiVanChuyen=" + phiVanChuyen +
                 ", hinhThucThanhToan='" + hinhThucThanhToan + '\'' +
                 ", nhanVien=" + nhanVien +
+                ", khachHang=" + khachHang +
                 ", khuyenMai=" + khuyenMai +
                 '}';
     }

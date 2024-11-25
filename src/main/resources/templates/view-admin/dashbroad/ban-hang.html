@@ -445,17 +445,40 @@
 
                         <!-- Thông tin Khách hàng -->
                         <div style="font-weight: 600;">Thông tin Khách hàng</div>
-                        <div class="input-group input-group-sm mb-3">
-                            <span class="input-group-text" id="inputGroup-sizing-m">SĐT</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-m">
-                            <div class="ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm nhanh khách hàng">
-                                <i class="fa-regular fa-user-plus"></i>
+                        <form action="/quan-ly/them-khach-hang" method="post" id="formThemKhachHang">
+                            <!-- Input Số Điện Thoại -->
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-m">SĐT</span>
+                                <input type="text" name="soDienThoai" class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-m"
+                                       placeholder="Nhập số điện thoại"
+                                       th:value="${hoaDonSelected != null && hoaDonSelected.khachHang != null ? hoaDonSelected.khachHang.soDienThoai : ''}"
+                                       id="soDienThoaiInput" required>
+                                <div class="ms-2" id="addCustomerButton" onclick="handleCustomerButtonClick(event)" >
+                                    <i class="fa-regular fa-user-plus"></i>
+                                </div>
                             </div>
-                        </div>
-                        <div class="input-group input-group-sm mb-3">
-                            <span class="input-group-text" id="inputGroup-sizing-sm">Họ Tên</span>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                        </div>
+
+                            <!-- Input Họ Tên -->
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Họ Tên</span>
+                                <input type="text" name="tenKhachHang" class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-sm"
+                                       placeholder="Nhập họ và tên khách hàng"
+                                       th:value="${hoaDonSelected != null && hoaDonSelected.khachHang != null ? hoaDonSelected.khachHang.tenKhachHang : ''}"
+                                       id="tenKhachHangInput" required>
+                            </div>
+
+                            <!-- Nút Submit Ẩn -->
+                            <button type="submit" class="d-none"></button>
+                        </form>
+
+
+
+
+
 
                         <!-- Thông tin Thanh toán -->
                         <div style="font-weight: 600;">Thông tin Thanh toán</div>
@@ -709,7 +732,38 @@
 </div>
 
 
-
+<div class="modal fade" id="modalCategories" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top: 100px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"  style="padding:30px">
+                <div>
+                    <form method="post" id="form_submit" novalidate th:object="${khachHangCre}" class="needs-validation">
+                        <div class="display_none">
+                            <input type="text" class="form-control" id="idCustomer" name="idColor" value="" th:field="*{id}">
+                        </div>
+                        <div class="mb-4">
+                            <label for="nameCate" class="form-label">Tên khách hàng</label>
+                            <input type="text" class="form-control" id="nameCate" placeholder="Nhập tên khách hàng" name="categoryName" th:field="*{tenKhachHang}" required>
+                            <div class="invalid-feedback">Tên khách hàng không hợp lệ.</div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="desCate" class="form-label">Số điện thoại </label>
+                            <input type="text" class="form-control" name="describe" id="desCate" placeholder="Nhập số điện thoại" th:field="*{soDienThoai}" required >
+                            <div class="invalid-feedback">Số điện thoại không hợp lệ.</div>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-dark">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- Alert thông báo thất bại -->
     <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage"
          style="display: none; z-index: 1060;">
@@ -1130,6 +1184,219 @@
             }
         });
     }
+    /////////////////// nút chueyern đổi khi input có dữ li
+    document.getElementById('soDienThoaiInput').addEventListener('keydown', function(event) {
+        if (event.keyCode === 13) {  // Nếu nhấn phím Enter
+            event.preventDefault();  // Ngăn việc gửi form và reload trang
+
+            let soDienThoai = this.value;
+
+            // Gửi yêu cầu AJAX tới backend để kiểm tra số điện thoại
+            fetch(`/quan-ly/kiem-tra-khach-hang?soDienThoai=${soDienThoai}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        // Nếu khách hàng đã tồn tại, điền tên vào trường "Họ Tên"
+                        document.getElementById('tenKhachHangInput').value = data.tenKhachHang;
+
+                        // Thay đổi nút "Thêm nhanh khách hàng" thành nút "Xóa"
+                        const addButton = document.getElementById('addCustomerButton');
+                        addButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
+                        addButton.setAttribute('onclick', 'clearCustomerFields()');  // Gán hành động cho nút xóa
+
+                        // Hiển thị thông báo tìm khách hàng thành công
+                        showAlert('success', 'Tìm khách hàng thành công');
+                    } else {
+                        // Nếu không có khách hàng, giữ trường "Họ Tên" trống và cho phép người dùng nhập tiếp
+                        document.getElementById('tenKhachHangInput').value = '';  // Giữ ô Họ Tên trống
+
+                        // Hiển thị thông báo khách hàng không tồn tại
+                        showAlert('success', 'Khách hàng không tồn tại. Bạn có thể nhập thông tin mới');
+
+                        // Thay đổi nút "Thêm nhanh khách hàng" về trạng thái ban đầu
+                        const addButton = document.getElementById('addCustomerButton');
+                        addButton.innerHTML = '<i class="fa-regular fa-user-plus"></i>';
+                        addButton.setAttribute('onclick', 'handleCustomerButtonClick(event)');  // Mở modal để thêm khách hàng mới
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi kiểm tra số điện thoại:', error);
+                });
+        }
+    });
+
+    // Hàm xử lý nút "Thêm khách hàng" hoặc "Xóa thông tin khách hàng"
+    function handleCustomerButtonClick(event) {
+        const addButton = document.getElementById('addCustomerButton');
+        const soDienThoai = document.getElementById('soDienThoaiInput').value;
+
+        // Kiểm tra xem số điện thoại đã tồn tại hay chưa
+        fetch(`/quan-ly/kiem-tra-khach-hang?soDienThoai=${soDienThoai}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    // Nếu khách hàng đã tồn tại, chỉ xóa thông tin và không mở modal
+                    document.getElementById('tenKhachHangInput').value = data.tenKhachHang;
+
+                    // Thay đổi nút thành nút "Xóa"
+                    addButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
+                    addButton.setAttribute('onclick', 'clearCustomerFields()');
+                    showAlert('success', 'Tìm khách hàng thành công');
+                } else {
+                    // Nếu không có khách hàng, mở modal để thêm khách hàng mới
+                    saveIdOrder('', null, '');  // Gọi hàm saveIdOrder để chuẩn bị cho việc thêm khách hàng
+                    $('#modalCategories').modal('show');  // Mở modal thêm khách hàng mới
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi khi kiểm tra số điện thoại:', error);
+            });
+    }
+
+    // Hàm xóa thông tin khách hàng
+    function clearCustomerFields() {
+        // Xóa nội dung các ô input mà không ẩn ô input
+        document.getElementById('soDienThoaiInput').value = '';
+        document.getElementById('tenKhachHangInput').value = '';
+
+        // Hiển thị lại nút "Thêm khách hàng"
+        const addButton = document.getElementById('addCustomerButton');
+        addButton.innerHTML = '<i class="fa-regular fa-user-plus"></i>';
+        addButton.setAttribute('onclick', 'handleCustomerButtonClick(event)');  // Quay lại hành động thêm khách hàng
+    }
+
+    // Hàm hiển thị thông báo (Có thể mở rộng sau này)
+    // function showAlert(type, message) {
+    //     const alertContainer = document.getElementById('alertContainer');
+    //
+    //     // Tạo thông báo mới
+    //     const alertDiv = document.createElement('div');
+    //     alertDiv.classList.add('alert', type === 'success' ? 'alert-success' : type === 'warning' ? 'alert-warning' : 'alert-danger');
+    //     alertDiv.innerText = message;
+    //
+    //     // Thêm thông báo vào container
+    //     alertContainer.appendChild(alertDiv);
+    //
+    //     // Tự động ẩn thông báo sau 3 giây
+    //     setTimeout(() => {
+    //         alertDiv.remove();
+    //     }, 3000);
+    // }
+
+
+
+
+
+    //////////////////////////////////////////////khi bỏ trống sdt va tenkhachhang nhưng vẫn thanh toán
+    // document.getElementById('formThemKhachHang').onsubmit = function(e) {
+    //     // Kiểm tra nếu không có giá trị số điện thoại hoặc tên khách hàng, gán giá trị mặc định
+    //     let soDienThoai = document.getElementById('soDienThoaiInput').value;
+    //     let tenKhachHang = document.getElementById('tenKhachHangInput').value;
+    //
+    //     // Nếu không nhập số điện thoại, gán mặc định
+    //     if (!soDienThoai) {
+    //         document.getElementById('soDienThoaiInput').value = 'Trống';
+    //     }
+    //
+    //     // Nếu không nhập tên khách hàng, gán mặc định
+    //     if (!tenKhachHang) {
+    //         document.getElementById('tenKhachHangInput').value = 'Khách vãng lai';
+    //     }
+    //
+    //     // Gửi form sau khi gán giá trị mặc định nếu cần
+    //     document.getElementById('submitButton').click();
+    // };
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    const idCustomer = document.getElementById("idCustomer");
+    const valueName = document.querySelectorAll(".valueName");
+    const valueDes = document.querySelectorAll(".valueDes");
+    // Lấy về thuộc tính có id và điều chỉnh theo mong muốn trong hàm saveIdOrder
+    const nameCate = document.getElementById('nameCate');
+    const desCate = document.getElementById('desCate');
+    const statusSection = document.getElementById('statusSection');
+
+    function saveIdOrder(id, index, hanhDong) {
+        const idCustomer = document.getElementById('idCustomer');
+        const nameCate = document.getElementById('nameCate');
+        const desCate = document.getElementById('desCate');
+
+        idCustomer.value = id;
+        if (index != null) {
+            nameCate.value = valueName[index].textContent.trim();
+            desCate.value = valueDes[index].textContent.trim();
+        } else {
+            document.getElementById('exampleModalLabel2').innerText = 'Thêm khách hàng';
+            nameCate.value = "";
+            desCate.value = "";
+            document.getElementById("form_submit").action = '/quan-ly/them-nhanh-khach-hang';
+        }
+    }(function () {
+        'use strict';
+        // Fetch all forms with class 'needs-validation'
+        var forms = document.querySelectorAll('.needs-validation');
+
+        // Loop over forms and prevent submission if validation fails
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    showAlert( "error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
+                }
+                form.classList.add('was-validated');
+            }, false);
+
+            // Add 'change' event listener for all inputs to validate them dynamically
+            var inputs = form.querySelectorAll('input');
+            Array.prototype.slice.call(inputs).forEach(function (input) {
+                input.addEventListener('change', function () {
+                    if (input.checkValidity()) {
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+                    } else {
+                        input.classList.remove('is-valid');
+                        input.classList.add('is-invalid');
+                        showAlert("error","Dữ liệu không hợp lệ trong " + input.placeholder);
+                    }
+                });
+            });
+        });
+
+        //thông báo
+        function showAlert(type, message) {
+            let alertElement;
+
+            if (type === 'success') {
+                alertElement = document.getElementById('successAlert');
+                alertElement.querySelector('span').textContent = message; // Thiết lập nội dung thông báo thành công
+                alertElement.style.display = 'block'; // Hiển thị thông báo thành công
+            } else if (type === 'error') {
+                alertElement = document.getElementById('alertMessage');
+                alertElement.querySelector('#alertBody').textContent = message; // Thiết lập nội dung thông báo lỗi
+                alertElement.style.display = 'block'; // Hiển thị thông báo lỗi
+            }
+
+            // Tự động ẩn thông báo sau 5 giây
+            setTimeout(() => {
+                if (alertElement) {
+                    var bootstrapAlert = new bootstrap.Alert(alertElement);
+                    bootstrapAlert.close();
+                }
+            }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function (){
+            // Kiểm tra và ẩn thông báo thành công nếu có
+            var successAlert = document.getElementById('successAlert');
+            if (successAlert && successAlert.style.display !== 'none') {
+                setTimeout(function () {
+                    var bootstrapAlert = new bootstrap.Alert(successAlert);
+                    bootstrapAlert.close();
+                }, 5000);
+            }
+        });
+
+    })();
 </script>
 
 

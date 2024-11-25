@@ -1,9 +1,6 @@
 package com.example.kristp.service;
 
-import com.example.kristp.entity.CoAo;
-import com.example.kristp.entity.DanhMuc;
-import com.example.kristp.entity.KhachHang;
-import com.example.kristp.entity.TaiKhoan;
+import com.example.kristp.entity.*;
 import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;
@@ -24,4 +21,6 @@ public interface KhachHangService {
 
     Page<KhachHang> timTatCaTheoTen(Integer pageNo, String tenKhachHang, String sdtKh);
 
+    KhachHang findBySoDienThoai(String soDienThoai);
+    boolean isSoDienThoaiExists(String soDienThoai);
 }

@@ -19,14 +19,18 @@
         <thead>
         <tr>
             <th>Mã Hóa Đơn</th>
+            <th>Tên Khách Hàng</th>
+            <th>Số Điện Thoại</th>
             <th>Ngày Tạo</th>
             <th>Thao Tác</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="hoaDon : ${hoaDonList}">
-            <td th:text="${hoaDon.id}">1</td>
-            <td th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}">01/01/2024</td>
+            <td th:text="${hoaDon.id}"></td>
+            <td th:text="${hoaDon.khachHang.tenKhachHang}"></td>
+            <td th:text="${hoaDon.khachHang.soDienThoai}"></td>
+            <td th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></td>
             <td>
                 //nút In Hóa Đơn
                 <form th:action="@{/hoa-don-pdf/in/{idOrder}(idOrder=${hoaDon.id})}" method="post">
