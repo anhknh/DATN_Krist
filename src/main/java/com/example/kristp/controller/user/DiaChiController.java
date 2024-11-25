@@ -1,9 +1,11 @@
 package com.example.kristp.controller.user;
 
 import com.example.kristp.entity.*;
+import com.example.kristp.repository.KhachHangRepository;
 import com.example.kristp.service.DiaChiService;
 import com.example.kristp.service.KhachHangService;
 import com.example.kristp.service.TaiKhoanService;
+import com.example.kristp.utils.Authen;
 import com.example.kristp.utils.DataUtils;
 import com.example.kristp.utils.Pagination;
 import jakarta.validation.Valid;
@@ -34,7 +36,8 @@ public class DiaChiController {
     @Autowired
     DataUtils dataUtils;
 
-
+    @Autowired
+    private KhachHangRepository khachHangRepository ;
 
     // Hiển thị danh sách địa chỉ của khách hàng với phân trang
     @GetMapping("/pagination-dia-chi")
@@ -43,6 +46,8 @@ public class DiaChiController {
         Pageable pageable = PageRequest.of(page.orElse(0), 3);
         Page<DiaChi> diachis = diaChiService.getAllActiveDiaChi(pageable); // Giả sử mỗi trang có 5 địa chỉ
         model.addAttribute("diaChiList", diachis.getContent());
+        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
+        model.addAttribute("khachHang" , khachHang.get());
         //phân trang
         model.addAttribute("totalPage", diachis.getTotalPages() - 1);
         model.addAttribute("page", diachis);
@@ -58,9 +63,6 @@ public class DiaChiController {
         DiaChi  diaChi = diaChiService.getDiaChiById(id);
         return ResponseEntity.ok(diaChi);
     }
-
-
-
 
 
     @PostMapping("/add-dia-chi")

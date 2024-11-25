@@ -37,6 +37,7 @@ public class DonHangChiTietKhController {
     private HoaDonChiTietService hoaDonChiTietService ;
     @GetMapping("/don-hang-chi-tiet-kh")
     public String getPagination(@RequestParam(name = "id" , defaultValue = "0")Integer id , @RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model , RedirectAttributes attributes){
+        System.out.println("Đã vào đây đơn hàng chi tiết");
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
@@ -46,7 +47,7 @@ public class DonHangChiTietKhController {
         model.addAttribute("listTayAo" , listTayAo);
         Pageable pageable = PageRequest.of(pageNo , 3);
         HoaDon hoaDon = hoaDonService.findHoaDonById(id);
-
+        System.out.println(id);
         Page<HoaDonChiTiet> hoaDons = hoaDonChiTietService.getHoaDonChiTietByHoaDon(hoaDon , pageable);
         if(hoaDons.isEmpty()){
             attributes.addFlashAttribute("message" , "Hiện tại không có chi tiết hóa đơn nào trong hóa đơn .");
@@ -65,6 +66,7 @@ public class DonHangChiTietKhController {
                 return "redirect:/quan-ly/hoan-thanh";
             }
         }
+
         Float tongThanhToan = Float.parseFloat(String.valueOf(hoaDon.getTongTien())) + hoaDon.getPhiVanChuyen();
         model.addAttribute("tongThanhToan" , tongThanhToan);
         model.addAttribute("hoaDon" , hoaDon);

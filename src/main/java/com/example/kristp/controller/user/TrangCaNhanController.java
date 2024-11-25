@@ -47,6 +47,7 @@ public class TrangCaNhanController {
 //        Chưa lấy được id của khách hàng
 
         Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
+        model.addAttribute("khachHang" , khachHang.get());
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
@@ -55,8 +56,8 @@ public class TrangCaNhanController {
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
 
-        model.addAttribute("khachHang" , khachHang.get());
-        return "profile-ca-nhan";
+
+        return "profile/ca-nhan";
     }
 
     @PostMapping("/update-thong-tin-kh")

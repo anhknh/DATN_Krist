@@ -125,7 +125,6 @@ public class DiaChiServiceImpl implements DiaChiService {
         request.setTrangThai(Status.ACTIVE);
         diaChiRepository.save(request);
         return true; // Lưu thành
-
     }
 
     // Phương thức kiểm tra hợp lệ
