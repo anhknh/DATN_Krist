@@ -21,7 +21,6 @@ public class ThongKe {
         Page<HoaDon> hoaDons = hoaDonService.findTop5();
         model.addAttribute("dataUtils" , new DataUtils());
         model.addAttribute("hoaDons", hoaDons.getContent());
-
         Double doanhThuNgay = hoaDonService.doanhThuHomNay();
         if(doanhThuNgay == null) doanhThuNgay = 0.0;
         System.out.println(doanhThuNgay + "Doanh thu hôm nay");

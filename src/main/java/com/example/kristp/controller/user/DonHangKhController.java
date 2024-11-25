@@ -41,8 +41,8 @@ public class DonHangKhController {
 
     @GetMapping("/don-hang")
     public String getPagination(@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model){
-
-        Page<HoaDon> hoaDons = hoaDonService.getPaginationHoaDon(pageNo, HoaDonStatus.CHO_XAC_NHAN);
+        Optional<KhachHang> khachHang1 = khachHangRepository.findById(Authen.khachHang.getId());
+        Page<HoaDon> hoaDons = hoaDonService.getPaginationHoaDon(pageNo, HoaDonStatus.CHO_XAC_NHAN , khachHang1.get().getId());
         model.addAttribute("HoaDonList" , hoaDons.getContent());
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
@@ -62,7 +62,8 @@ public class DonHangKhController {
 
     @GetMapping("/dang-xu-ly")
     public String dangXuLy(@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model){
-        Page<HoaDon> hoaDons = hoaDonService.getPaginationHoaDon(pageNo, HoaDonStatus.DANG_XU_LY);
+        Optional<KhachHang> khachHang1 = khachHangRepository.findById(Authen.khachHang.getId());
+        Page<HoaDon> hoaDons = hoaDonService.getPaginationHoaDon(pageNo, HoaDonStatus.DANG_XU_LY , khachHang1.get().getId());
         model.addAttribute("HoaDonList" , hoaDons.getContent());
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
@@ -81,7 +82,8 @@ public class DonHangKhController {
 
     @GetMapping("/dang-giao-hang")
     public String dangGiaoHang(@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model){
-        Page<HoaDon> hoaDons = hoaDonService.getPaginationHoaDon(pageNo, HoaDonStatus.DANG_GIAO_HANG);
+        Optional<KhachHang> khachHang1 = khachHangRepository.findById(Authen.khachHang.getId());
+        Page<HoaDon> hoaDons = hoaDonService.getPaginationHoaDon(pageNo, HoaDonStatus.DANG_GIAO_HANG , khachHang1.get().getId());
         model.addAttribute("HoaDonList" , hoaDons.getContent());
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
@@ -92,6 +94,7 @@ public class DonHangKhController {
         Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
         System.out.println(khachHang.get().getTenKhachHang());
         model.addAttribute("khachHang" , khachHang.get());
+        model.addAttribute("dataUtils", new DataUtils());
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
@@ -100,7 +103,8 @@ public class DonHangKhController {
 
     @GetMapping("/hoan-thanh")
     public String hoanThanh(@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model){
-        Page<HoaDon> hoaDons = hoaDonService.getPaginationHoaDon(pageNo, HoaDonStatus.HOAN_TAT);
+        Optional<KhachHang> khachHang1 = khachHangRepository.findById(Authen.khachHang.getId());
+        Page<HoaDon> hoaDons = hoaDonService.getPaginationHoaDon(pageNo, HoaDonStatus.HOAN_TAT , khachHang1.get().getId());
         model.addAttribute("HoaDonList" , hoaDons.getContent());
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
@@ -110,6 +114,7 @@ public class DonHangKhController {
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
         Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
         model.addAttribute("khachHang" , khachHang.get());
+        model.addAttribute("dataUtils", new DataUtils());
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);

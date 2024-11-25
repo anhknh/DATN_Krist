@@ -1,6 +1,7 @@
 package com.example.kristp.service.impl;
 
 import com.example.kristp.entity.HoaDon;
+import com.example.kristp.entity.KhachHang;
 import com.example.kristp.enums.HoaDonStatus;
 import com.example.kristp.repository.HoaDonRepository;
 import com.example.kristp.repository.NhanVienRepository;
@@ -111,9 +112,9 @@ public class HoaDonServiceImpl implements HoaDonService {
 
 
     @Override
-    public Page<HoaDon> getPaginationHoaDon(Integer pageNo,HoaDonStatus trangThai) {
+    public Page<HoaDon> getPaginationHoaDon(Integer pageNo, HoaDonStatus trangThai , Integer idKhachHang) {
         Pageable pageable = PageRequest.of(pageNo , 3);
-        return hoaDonRepository.getPaginationTrangThai(pageable , trangThai);
+        return hoaDonRepository.getPaginationTrangThai(pageable , trangThai , idKhachHang);
     }
 // Sử dụng cho thống kê
     @Override

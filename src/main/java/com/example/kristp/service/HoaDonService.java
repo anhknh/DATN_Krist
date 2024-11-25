@@ -1,6 +1,7 @@
 package com.example.kristp.service;
 
 import com.example.kristp.entity.HoaDon;
+import com.example.kristp.entity.KhachHang;
 import com.example.kristp.enums.HoaDonStatus;
 import com.example.kristp.enums.HoaDonStatus;
 import org.springframework.data.domain.Page;
@@ -19,7 +20,7 @@ public interface HoaDonService {
     List<HoaDon> timKiemHoaDon(Integer id, LocalDateTime ngayBatDau, LocalDateTime ngayKetThuc);
     Map<HoaDonStatus, Long> getCountByTrangThai();
 
-    Page<HoaDon> getPaginationHoaDon(Integer pageNo , HoaDonStatus trangThai);
+    Page<HoaDon> getPaginationHoaDon(Integer pageNo , HoaDonStatus trangThai , Integer idKhachHang );
 
 
     Page<HoaDon> findTop5();

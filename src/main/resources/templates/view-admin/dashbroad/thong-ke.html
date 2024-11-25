@@ -208,7 +208,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr th:each="hd : ${hoaDons}">
+                                        <tr th:if="${hoaDons != null}" th:each="hd : ${hoaDons}">
                                             <td th:text="${hd.getId()}"></td>
                                             <td th:text="${hd.getDiaChi().getKhachHang().getTenKhachHang()}"></td>
                                             <td th:text="${dataUtils.formatCurrency(hd.getTongTien())}"></td>
@@ -220,9 +220,10 @@
                                                     </a>
                                                 </div>
                                             </td>
-                                            </td>
                                         </tr>
-
+                                        <tr th:if="${hoaDons == null}" class="text-center">
+                                            <td colspan="5">Không có bản ghi nào</td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>

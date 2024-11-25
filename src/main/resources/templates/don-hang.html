@@ -228,9 +228,13 @@
                                         <h3>
                                             Girls Pink Moana Printed Dress
                                         </h3>
-                                        <p th:text="'Date Created : ' + ${order.getNgayDatHang()}">Ngày tạo</p>
+                                        <p th:text="'Date Created : ' + ${#dates.format(order.ngayDatHang, 'dd/MM/yyyy')}">Ngày tạo</p>
                                         <div class="order-status">
-                                        <span class="in-process" th:text="${dataFormat.formatStatus(order.trangThai)}">
+                                        <span class="in-process" th:if="${order.getTrangThai() != T(com.example.kristp.enums.HoaDonStatus).DA_THANH_TOAN}">
+                                         In Process
+                                        </span>
+                                            <span class="delivered" th:if="${order.getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).DA_THANH_TOAN}">
+                                         Delivered
                                         </span>
                                         </div>
                                     </div>
@@ -269,7 +273,7 @@
                                         class="page-item">
                                         <a class="page-link"
                                            th:attr="onclick=|changeLink('${i - 1}')|"
-                                           th:text="${i}" style="color: #5C5F6A"></a>
+                                           th:text="${i}" style="background-color: black; color: white;"></a>
                                     </li>
                                     <!-- Nút Next -->
                                     <li class="page-item"
