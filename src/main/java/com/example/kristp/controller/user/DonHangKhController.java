@@ -34,12 +34,12 @@ public class DonHangKhController {
     @Autowired
     private TayAoService tayAoService ;
 
-
     @Autowired
     private CoAoService coAoService ;
 
     @GetMapping("/don-hang")
     public String getPagination(@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model){
+
         Page<HoaDon> hoaDons = hoaDonService.getPaginationHoaDon(pageNo, HoaDonStatus.CHO_XAC_NHAN);
         model.addAttribute("HoaDonList" , hoaDons.getContent());
         model.addAttribute("currentPage" , pageNo);
