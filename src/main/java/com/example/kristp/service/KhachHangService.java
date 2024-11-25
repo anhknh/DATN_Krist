@@ -13,6 +13,7 @@ public interface KhachHangService {
     KhachHang getKHByUserId(TaiKhoan id);
     KhachHang saveKhachHang(String tenKhachHang, TaiKhoan taiKhoan);
     ArrayList<KhachHang> getAllKhachHang();
+    KhachHang saveKhachHang(String tenKhachHang, TaiKhoan taiKhoan, String sdtKh);
     void updateKhachHang(KhachHang kh);
     KhachHang getKhachHangById(int id);
     KhachHang addKhachHang(KhachHang khachHang);
