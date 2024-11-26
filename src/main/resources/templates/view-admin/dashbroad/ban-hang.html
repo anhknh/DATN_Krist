@@ -731,15 +731,15 @@
     </div>
 </div>
 
-
+<!--mada thêm khách hàng-->
 <div class="modal fade" id="modalCategories" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width: 400px ; margin: auto">
         <div class="modal-content" style="margin-top: 100px;">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel2"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body"  style="padding:30px">
+            <div class="modal-body"  style="padding-top:30px; padding-left: 70px" >
                 <div>
                     <form method="post" id="form_submit" novalidate th:object="${khachHangCre}" class="needs-validation">
                         <div class="display_none">
@@ -755,7 +755,7 @@
                             <input type="text" class="form-control" name="describe" id="desCate" placeholder="Nhập số điện thoại" th:field="*{soDienThoai}" required >
                             <div class="invalid-feedback">Số điện thoại không hợp lệ.</div>
                         </div>
-                        <div>
+                        <div style="text-align: center">
                             <button type="submit" class="btn btn-dark">Lưu</button>
                         </div>
                     </form>
