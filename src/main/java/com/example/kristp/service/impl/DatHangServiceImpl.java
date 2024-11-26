@@ -55,6 +55,7 @@ public class DatHangServiceImpl implements DatHangService {
         hoaDon.setNgayDatHang(new Date());
         hoaDon.setTongTien(BigDecimal.valueOf(DataUtils.calculatorTotal2(tongTien, khuyenMai, phiVanChuyen)));
         hoaDon.setPhiVanChuyen(phiVanChuyen);
+        hoaDon.setKhachHang(Authen.khachHang);
         if(phuongThucThanhToan.equals("online")) {
             hoaDon.setTrangThaiThanhToan(HoaDonStatus.DA_THANH_TOAN);
         } else {

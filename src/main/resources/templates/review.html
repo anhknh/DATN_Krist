@@ -252,7 +252,7 @@
                                    style="margin-top: 0.5rem; display: flex; align-items: center;">
                                     <i class="fa-light fa-location-dot"
                                        style="margin-right: 8px;"></i>
-                                    <span th:text="${diaChi.diaChi}">Lê Đức Thọ, Hà Nội</span>
+                                    <span th:text="${convertMoney.formatFullAddress(diaChi.diaChi, diaChi.tenPhuongXa, diaChi.tenQuanHuyen, diaChi.tenTinhThanh)}">Lê Đức Thọ, Hà Nội</span>
                                 </p>
 
                                 <p class="card-text"

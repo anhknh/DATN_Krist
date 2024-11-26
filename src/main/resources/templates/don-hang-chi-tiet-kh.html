@@ -265,10 +265,18 @@
             </div>
             <div class="col-1"></div>
             <div class="col-4">
-                <div class="card p-3" style="border: none;border-radius: 12px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div class="card p-3" style="border: 1px solid #ccc ;border-radius: 4px;margin-bottom: 12px">
                     <div class="card-body" style=" position: relative;">
-                        <h5 class="card-title" style="font-weight: bold; margin-bottom: 0;" th:text="${donHangChiTiet.get(0).getHoaDon().getDiaChi().tenKhachHang}"></h5>
-                        <p class="card-text" style=" margin-top: 0.5rem;" th:text="${donHangChiTiet.get(0).getHoaDon().getDiaChi().getDiaChi()}"></p>
+                        <h5 class="card-title" style="font-weight: bold; margin-bottom: 0;" th:text="${hoaDon.diaChi.tenKhachHang}"></h5>
+                        <p class="card-text" style=" margin-top: 0.5rem;"
+                           th:text="${convertMoney.formatFullAddress(hoaDon.diaChi.diaChi, hoaDon.diaChi.tenPhuongXa, hoaDon.diaChi.tenQuanHuyen, hoaDon.diaChi.tenTinhThanh)}"
+                        ></p>
+                        <p class="card-text"
+                           style="margin-top: 0.5rem; display: flex; align-items: center;">
+                            <i class="fa-sharp fa-light fa-phone"
+                               style="margin-right: 8px;"></i>
+                            <span th:text="${hoaDon.diaChi.sdt}">0987654321</span>
+                        </p>
                     </div>
                 </div>
                 <div style="border: 1px solid #E6E7E8; border-radius: 4px; padding: 38px 18px; position: relative;">
@@ -285,17 +293,19 @@
 
                     <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between" style="margin-bottom: 18px;">
                         <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Mức giảm:</div>
-                        <div style="font-size: 16px; font-weight: 500;"><span th:text="${convertMoney.formatCurrency(hoaDon.khuyenMai.giaTri)} + ' ' + ${hoaDon.khuyenMai.kieuKhuyenMai}"></span></div>
+                        <div style="font-size: 16px; font-weight: 500;"><span
+                                th:text="${convertMoney.formatCurrency(hoaDon.khuyenMai.giaTri)} + ' ' + ${hoaDon.khuyenMai.kieuKhuyenMai? '%':'VND'}"></span>
+                        </div>
                     </div>
 
                     <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                         <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
-                        <div style="font-size: 16px; font-weight: 500;"><span id="shipping-fee">30.000</span></div>
+                        <div style="font-size: 16px; font-weight: 500;"><span id="shipping-fee" th:text="${convertMoney.formatCurrency(hoaDon.phiVanChuyen)}">30.000</span></div>
                     </div>
                     <hr style="color: #E6E7E8; border-width: 3px; margin-bottom: 18px;">
                     <div class="d-flex justify-content-between">
                         <div style="font-size: 16px; font-weight: bold;">Tổng thanh toán:</div>
-                        <div style="font-size: 16px; font-weight: bold;"><span id="final-total" th:text="${convertMoney.calculatorTotal(hoaDon.tongTien, hoaDon.khuyenMai)}">0.00</span></div>
+                        <div style="font-size: 16px; font-weight: bold;"><span id="final-total" th:text="${convertMoney.calculatorTotal(hoaDon.tongTien, hoaDon.khuyenMai, hoaDon.phiVanChuyen)}">0.00</span></div>
                     </div>
                 </div>
             </div>

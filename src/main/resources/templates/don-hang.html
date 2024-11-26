@@ -230,11 +230,7 @@
                                         </h3>
                                         <p th:text="'Date Created : ' + ${#dates.format(order.ngayDatHang, 'dd/MM/yyyy')}">Ngày tạo</p>
                                         <div class="order-status">
-                                        <span class="in-process" th:if="${order.getTrangThai() != T(com.example.kristp.enums.HoaDonStatus).DA_THANH_TOAN}">
-                                         In Process
-                                        </span>
-                                            <span class="delivered" th:if="${order.getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).DA_THANH_TOAN}">
-                                         Delivered
+                                        <span class="in-process" th:text="${dataFormat.formatStatus(order.trangThai)}">
                                         </span>
                                         </div>
                                     </div>
