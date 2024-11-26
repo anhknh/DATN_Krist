@@ -53,6 +53,9 @@ public class DatHangController {
     @Autowired
     private CoAoService coAoService ;
 
+    @Autowired
+    GioHangService gioHangService;
+
     //khai báo biến toàn cục
     List<String> listProductDetailSelectedInCart = null;
     Float totalPrice = 0f;
@@ -89,7 +92,7 @@ public class DatHangController {
         //Hiển thị khuyến mại
         model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
         //hàm format
-        model.addAttribute("convertMoney", dataUtils);
+//        Các dữ liệu cần cho header
 // Hiển thị danh mục
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
@@ -99,6 +102,24 @@ public class DatHangController {
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
 
+        float tongTien = 0;
+        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        }
+
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        model.addAttribute("khachHang", Authen.khachHang);
+        //hàm format
+        model.addAttribute("convertMoney", dataUtils);
+        // các hàm cho phần header
         return "dia-chi-giao-hang";
     }
 
@@ -194,7 +215,6 @@ public class DatHangController {
         //phí vận chuyển
         model.addAttribute("phiVanChuyen", phiVanChuyen);
         //hàm format
-        model.addAttribute("convertMoney", dataUtils);
 
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
@@ -204,6 +224,23 @@ public class DatHangController {
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
 
+        float tongTien = 0;
+        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        }
+
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        model.addAttribute("khachHang", Authen.khachHang);
+        //hàm format
+        model.addAttribute("convertMoney", dataUtils);
         return "phuong-thuc-thanh-toan";
     }
 
@@ -247,7 +284,6 @@ public class DatHangController {
         //khuyến mại đã chọn
         model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
         //hàm format
-        model.addAttribute("convertMoney", dataUtils);
         //phương thức thanh toán đã chọn
         model.addAttribute("payMethod", thanhToanSelected);
         //phis vaanj chuyen
@@ -259,6 +295,23 @@ public class DatHangController {
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
+        float tongTien = 0;
+        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        }
+
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        model.addAttribute("khachHang", Authen.khachHang);
+        //hàm format
+        model.addAttribute("convertMoney", dataUtils);
 
         return "review";
     }
@@ -267,10 +320,31 @@ public class DatHangController {
     public String datHangOnline(Model model, HttpServletRequest reqs,
                                 HttpServletResponse response, RedirectAttributes attributes) throws Exception {
         ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
+//        dành cho header
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
+        float tongTien = 0;
+        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        }
 
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        model.addAttribute("khachHang", Authen.khachHang);
+        //hàm format
+        model.addAttribute("convertMoney", dataUtils);
+//        kết thúc dành cho header
         for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
             Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
             listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
@@ -283,17 +357,13 @@ public class DatHangController {
                  check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, khuyenMaiSelected.getId(), thanhToanSelected, totalPrice, phiVanChuyen);
             }
             if (check) {
-                model.addAttribute("listDanhMuc" , danhMucs);
-                model.addAttribute("listCoAo" , listCoAo);
-                model.addAttribute("listTayAo" , listTayAo);
+
                 return "SuscessOrder";
             } else {
                 attributes.addFlashAttribute("message", "Vui lòng kiểm tra lại số lượng.");
                 attributes.addFlashAttribute("messageType", "alert-danger");
                 attributes.addFlashAttribute("titleMsg", "Thất bại");
-                model.addAttribute("listDanhMuc" , danhMucs);
-                model.addAttribute("listCoAo" , listCoAo);
-                model.addAttribute("listTayAo" , listTayAo);
+
                 return "FailOrder";
             }
         } else {
@@ -308,9 +378,7 @@ public class DatHangController {
             String paymentUrl = vnpayService.createPayment(request, reqs);
             response.sendRedirect(paymentUrl);
         }
-        model.addAttribute("listDanhMuc" , danhMucs);
-        model.addAttribute("listCoAo" , listCoAo);
-        model.addAttribute("listTayAo" , listTayAo);
+
         return "FailOrder";
     }
 
@@ -325,6 +393,28 @@ public class DatHangController {
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
+        float tongTien = 0;
+        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        }
+
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        model.addAttribute("khachHang", Authen.khachHang);
+        //hàm format
+        model.addAttribute("convertMoney", dataUtils);
+
+
         if (status.equals("00")) {
             ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
             for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
@@ -339,24 +429,18 @@ public class DatHangController {
             }
             if(check) {
                 totalPrice = 0f;
-                model.addAttribute("listDanhMuc" , danhMucs);
-                model.addAttribute("listCoAo" , listCoAo);
-                model.addAttribute("listTayAo" , listTayAo);
+
                 return "SuscessOrder";
             } else {
                 attributes.addFlashAttribute("message", "Vui lòng kiểm tra lại số lượng.");
                 attributes.addFlashAttribute("messageType", "alert-danger");
                 attributes.addFlashAttribute("titleMsg", "Thất bại");
-                model.addAttribute("listDanhMuc" , danhMucs);
-                model.addAttribute("listCoAo" , listCoAo);
-                model.addAttribute("listTayAo" , listTayAo);
+
                 return "FailOrder";
             }
         }
         totalPrice = 0f;
-        model.addAttribute("listDanhMuc" , danhMucs);
-        model.addAttribute("listCoAo" , listCoAo);
-        model.addAttribute("listTayAo" , listTayAo);
+
         return "FailOrder";
     }
 

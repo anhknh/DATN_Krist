@@ -3,10 +3,7 @@ package com.example.kristp.controller.user;
 import com.example.kristp.entity.*;
 import com.example.kristp.enums.HoaDonStatus;
 import com.example.kristp.repository.KhachHangRepository;
-import com.example.kristp.service.CoAoService;
-import com.example.kristp.service.DanhMucService;
-import com.example.kristp.service.HoaDonService;
-import com.example.kristp.service.TayAoService;
+import com.example.kristp.service.*;
 import com.example.kristp.utils.Authen;
 import com.example.kristp.utils.DataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +37,12 @@ public class DonHangKhController {
     @Autowired
     DataUtils dataUtils;
 
+    @Autowired
+    GioHangService gioHangService;
+
+    @Autowired
+    private GioHangChiTietService gioHangChiTietService;
+
     @GetMapping("/don-hang")
     public String getPagination(@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model){
         Optional<KhachHang> khachHang1 = khachHangRepository.findById(Authen.khachHang.getId());
@@ -47,16 +51,36 @@ public class DonHangKhController {
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
         model.addAttribute("check" , "choXacNhan");
+        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
+        model.addAttribute("khachHang1" , khachHang.get());
+        model.addAttribute("dataUtils", new DataUtils());
+        model.addAttribute("dataFormat", dataUtils);
+        //        Các dữ liệu cần cho header
+// Hiển thị danh mục
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
-        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
-        model.addAttribute("khachHang" , khachHang.get());
-        model.addAttribute("dataUtils", new DataUtils());
+
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
-        model.addAttribute("dataFormat", dataUtils);
+
+        float tongTien = 0;
+        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        }
+
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        model.addAttribute("khachHang", Authen.khachHang);
+        //hàm format
         return "don-hang";
     }
 
@@ -68,15 +92,34 @@ public class DonHangKhController {
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
         model.addAttribute("check" , "dangXuLy");
+        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
+        model.addAttribute("khachHang1" , khachHang.get());
+        model.addAttribute("dataUtils", new DataUtils());
+        //        Các dữ liệu cần cho header
+// Hiển thị danh mục
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
-        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
-        model.addAttribute("khachHang" , khachHang.get());
-        model.addAttribute("dataUtils", new DataUtils());
+
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
+
+        float tongTien = 0;
+        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        }
+
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        model.addAttribute("khachHang", Authen.khachHang);
         return "don-hang";
     }
 
@@ -88,18 +131,40 @@ public class DonHangKhController {
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
         model.addAttribute("check" , "dangGiaoHang");
+        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
+        System.out.println(khachHang.get().getTenKhachHang());
+        model.addAttribute("khachHang1" , khachHang.get());
+        model.addAttribute("dataUtils", new DataUtils());
+
+        //        Các dữ liệu cần cho header
+// Hiển thị danh mục
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
-        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
-        System.out.println(khachHang.get().getTenKhachHang());
-        model.addAttribute("khachHang" , khachHang.get());
-        model.addAttribute("dataUtils", new DataUtils());
+
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
+
+        float tongTien = 0;
+        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        }
+
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        model.addAttribute("khachHang", Authen.khachHang);
+        //hàm format
         return "don-hang";
     }
+
 
     @GetMapping("/hoan-thanh")
     public String hoanThanh(@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model){
@@ -109,15 +174,36 @@ public class DonHangKhController {
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
         model.addAttribute("check" , "hoanThanh");
+
+        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
+        model.addAttribute("khachHang1" , khachHang.get());
+        model.addAttribute("dataUtils", new DataUtils());
+
+        //        Các dữ liệu cần cho header
+// Hiển thị danh mục
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
         List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
-        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
-        model.addAttribute("khachHang" , khachHang.get());
-        model.addAttribute("dataUtils", new DataUtils());
+
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
+
+        float tongTien = 0;
+        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        }
+
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        model.addAttribute("khachHang", Authen.khachHang);
         return "don-hang";
     }
 
