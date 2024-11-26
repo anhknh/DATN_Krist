@@ -6,17 +6,6 @@
     font-family: Arial, sans-serif;
 }
 
-.filter-item {
-    display: flex;
-    flex-direction: column;
-}
-
-.filter-item label {
-    font-size: 12px;
-    margin-bottom: 4px;
-    font-weight: 600;
-    color: #333;
-}
 
 .filter-item input[type="text"],
 .filter-item input[type="date"] {
@@ -27,6 +16,18 @@
     width: 150px;
 }
 
+.filter-item input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.filter-item input:focus {
+    border-color: #007bff;
+    outline: none;
+}
 .filter-button {
     padding: 8px 16px;
     background-color: #007bff;
@@ -103,25 +104,34 @@
 
 .filter-container {
     display: flex;
-    gap: 20px;                       /* Khoảng cách giữa các phần tử */
-    align-items: center;             /* Căn giữa các phần tử theo chiều dọc */
-    flex-wrap: nowrap;               /* Đảm bảo không xuống dòng */
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 20px;
+    border-radius: 8px;
 }
 
 .filter-item {
-    flex: 0 1 auto;                  /* Điều chỉnh chiều rộng phần tử */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 5px;
+    flex: 1 1 200px; /* Cân chỉnh linh hoạt theo độ rộng */
+}
+
+.filter-item label {
+    font-size: 14px;
+    color: #333;
+    font-weight: 600;
 }
 .filter-button {
-    padding: 8px 16px;
-    background-color: #007bff;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
     color: #fff;
+    background-color: #007bff;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
-    font-weight: 600;/* Thêm một chút khoảng cách giữa nút và ngày kết thúc */
+    transition: background-color 0.3s ease;
 }
 
 .filter-button:hover {
