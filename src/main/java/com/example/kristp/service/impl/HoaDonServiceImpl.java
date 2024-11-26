@@ -96,19 +96,9 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public Map<HoaDonStatus, Long> getCountByTrangThai() {
-        List<Object[]> results = hoaDonRepository.countByTrangThaiGrouped();
-
-        // Chuyển kết quả thành một Map<HoaDonStatus, Long>
-        Map<HoaDonStatus, Long> countByTrangThai = new HashMap<>();
-        for (Object[] result : results) {
-            HoaDonStatus trangThai = (HoaDonStatus) result[0];
-            Long count = (Long) result[1];
-            countByTrangThai.put(trangThai, count);
-        }
-        return countByTrangThai;
+    public Integer getCountByTrangThai(HoaDonStatus hoaDonStatus) {
+        return hoaDonRepository.countHoaDonByTrangThai(hoaDonStatus);
     }
-
 
 
     @Override

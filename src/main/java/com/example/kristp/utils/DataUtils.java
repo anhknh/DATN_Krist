@@ -105,6 +105,12 @@ public class DataUtils {
             return "Đã thanh toán";
         } else if (trangThai.equals("CHUA_THANH_TOAN")) {
             return "Chưa thanh toán";
+        }
+        else if (trangThai.equals("online")) {
+            return "VN Pay";
+        }
+        else if (trangThai.equals("offline")) {
+            return "Trực tiếp";
         } else {
             return "Trạng thái không xác định";
         }

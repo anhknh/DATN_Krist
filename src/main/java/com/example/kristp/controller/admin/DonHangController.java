@@ -2,6 +2,7 @@ package com.example.kristp.controller.admin;
 
 import com.example.kristp.entity.HoaDon;
 import com.example.kristp.enums.HoaDonStatus;
+import com.example.kristp.repository.HoaDonRepository;
 import com.example.kristp.service.HoaDonChiTietService;
 import com.example.kristp.service.HoaDonService;
 import com.example.kristp.utils.DataUtils;
@@ -29,6 +30,8 @@ public class DonHangController {
     HoaDonChiTietService hoaDonChiTietService;
     @Autowired
     DataUtils dataUtils;
+    @Autowired
+    private HoaDonRepository hoaDonRepository;
 
     @GetMapping("/view-don-hang")
     public String viewHoaDon(
@@ -50,32 +53,13 @@ public class DonHangController {
         model.addAttribute("currentTrangThai", trangThai);  // Truyền giá trị trangThai vào model
         // Lấy số lượng đơn hàng theo trạng thái
 
-        // Chuyển Map<HoaDonStatus, Long> thành JSON String
-        Map<HoaDonStatus, Long> countByTrangThai = hoaDonService.getCountByTrangThai();
-
-        // Kiểm tra dữ liệu countByTrangThai để chắc chắn nó không null
-        if (countByTrangThai != null) {
-            System.out.println("Count By Trang Thai in Controller: " + countByTrangThai);
-        } else {
-            System.out.println("countByTrangThai is null");
-        }
-
-        // Chuyển Map<HoaDonStatus, Long> thành chuỗi JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String countJson = null;
-        try {
-            // Sử dụng ObjectMapper để chuyển Map thành JSON String
-            // Nếu bạn muốn hiển thị giá trị (0, 1, 2...) thay vì tên enum, bạn cần sử dụng value() của enum
-            Map<String, Long> stringMap = countByTrangThai.entrySet().stream()
-                    .collect(Collectors.toMap(entry -> String.valueOf(entry.getKey().getValue()), Map.Entry::getValue));
-
-            countJson = objectMapper.writeValueAsString(stringMap);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        // Truyền JSON vào model
-        model.addAttribute("countJson", countJson);
+        //count trang thái
+        model.addAttribute("trangThaiCho", hoaDonService.getCountByTrangThai(HoaDonStatus.CHO_XAC_NHAN));
+        model.addAttribute("trangThaiXuLy", hoaDonService.getCountByTrangThai(HoaDonStatus.DANG_XU_LY));
+        model.addAttribute("trangThaiGiao", hoaDonService.getCountByTrangThai(HoaDonStatus.DANG_GIAO_HANG));
+        model.addAttribute("trangThaiHT", hoaDonService.getCountByTrangThai(HoaDonStatus.HOAN_TAT));
+        model.addAttribute("trangThaiAll", hoaDonRepository.count());
+        model.addAttribute("dataUtils", dataUtils);
         return "view-admin/dashbroad/don-hang";
     }
 
