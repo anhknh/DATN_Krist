@@ -38,8 +38,6 @@ public class DatHangController {
     @Autowired
     KhuyenMaiService khuyenMaiService;
     @Autowired
-    DataUtils dataUtils;
-    @Autowired
     DatHangService datHangService;
     @Autowired
     VNpayService vnpayService;
@@ -118,7 +116,7 @@ public class DatHangController {
 
         model.addAttribute("khachHang", Authen.khachHang);
         //hàm format
-        model.addAttribute("convertMoney", dataUtils);
+        model.addAttribute("convertMoney", new DataUtils());
         // các hàm cho phần header
         return "dia-chi-giao-hang";
     }
@@ -240,7 +238,7 @@ public class DatHangController {
 
         model.addAttribute("khachHang", Authen.khachHang);
         //hàm format
-        model.addAttribute("convertMoney", dataUtils);
+        model.addAttribute("convertMoney", new DataUtils());
         return "phuong-thuc-thanh-toan";
     }
 
@@ -311,7 +309,7 @@ public class DatHangController {
 
         model.addAttribute("khachHang", Authen.khachHang);
         //hàm format
-        model.addAttribute("convertMoney", dataUtils);
+        model.addAttribute("convertMoney", new DataUtils());
 
         return "review";
     }
@@ -343,7 +341,7 @@ public class DatHangController {
 
         model.addAttribute("khachHang", Authen.khachHang);
         //hàm format
-        model.addAttribute("convertMoney", dataUtils);
+        model.addAttribute("convertMoney", new DataUtils());
 //        kết thúc dành cho header
         for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
             Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
@@ -412,7 +410,7 @@ public class DatHangController {
 
         model.addAttribute("khachHang", Authen.khachHang);
         //hàm format
-        model.addAttribute("convertMoney", dataUtils);
+        model.addAttribute("convertMoney", new DataUtils());
 
 
         if (status.equals("00")) {

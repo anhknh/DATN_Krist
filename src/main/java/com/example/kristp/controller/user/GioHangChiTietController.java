@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -66,7 +67,6 @@ public class GioHangChiTietController {
         //khuyến mại
         model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
         //hàm format
-        model.addAttribute("convertMoney", dataUtils);
 
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
         List<CoAo> listCoAo = coAoService.getAllCoAoHD();
@@ -75,6 +75,24 @@ public class GioHangChiTietController {
         model.addAttribute("listDanhMuc" , danhMucs);
         model.addAttribute("listCoAo" , listCoAo);
         model.addAttribute("listTayAo" , listTayAo);
+
+        float tongTien = 0;
+        ArrayList<GioHangChiTiet> gioHangChiTietListHeader = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHangHeader = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHangHeader.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietListHeader) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        }
+
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietListHeader", gioHangChiTietListHeader);
+
+        model.addAttribute("khachHang", Authen.khachHang);
+        //hàm format
+        model.addAttribute("convertMoney", new DataUtils());
 
         return "gio-hang";
     }

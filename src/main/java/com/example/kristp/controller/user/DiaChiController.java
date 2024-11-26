@@ -2,9 +2,7 @@ package com.example.kristp.controller.user;
 
 import com.example.kristp.entity.*;
 import com.example.kristp.repository.KhachHangRepository;
-import com.example.kristp.service.DiaChiService;
-import com.example.kristp.service.KhachHangService;
-import com.example.kristp.service.TaiKhoanService;
+import com.example.kristp.service.*;
 import com.example.kristp.utils.Authen;
 import com.example.kristp.utils.DataUtils;
 import com.example.kristp.utils.Pagination;
@@ -20,6 +18,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -29,12 +29,26 @@ public class DiaChiController {
     private DiaChiService diaChiService;
 
     @Autowired
+    private DanhMucService danhMucService ;
+
+    @Autowired
+    private TayAoService tayAoService ;
+
+
+    @Autowired
+    private CoAoService coAoService ;
+
+    @Autowired
     private KhachHangService khachHangService;
 
     @Autowired
     private TaiKhoanService taiKhoanService;
+
     @Autowired
-    DataUtils dataUtils;
+    private GioHangService gioHangService;
+
+    @Autowired
+    private GioHangChiTietService gioHangChiTietService;
 
     @Autowired
     private KhachHangRepository khachHangRepository ;
@@ -53,7 +67,31 @@ public class DiaChiController {
         model.addAttribute("page", diachis);
         model.addAttribute("pagination", pagination.getPage(diachis.getNumber(), diachis.getTotalPages()));
         model.addAttribute("diaChiCre", new DiaChi());
-        model.addAttribute("dataUtils", dataUtils);
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
+
+        float tongTien = 0;
+        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        }
+
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        model.addAttribute("khachHang", Authen.khachHang);
+        //hàm format
+        model.addAttribute("convertMoney", new DataUtils());
         return "view-admin/dashbroad/crud-dia-chi";
     }
 

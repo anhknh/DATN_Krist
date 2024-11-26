@@ -53,8 +53,7 @@ public class DonHangKhController {
         model.addAttribute("check" , "choXacNhan");
         Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
         model.addAttribute("khachHang1" , khachHang.get());
-        model.addAttribute("dataUtils", new DataUtils());
-        model.addAttribute("dataFormat", dataUtils);
+        model.addAttribute("convertMoney", new DataUtils());
         //        Các dữ liệu cần cho header
 // Hiển thị danh mục
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
@@ -94,7 +93,7 @@ public class DonHangKhController {
         model.addAttribute("check" , "dangXuLy");
         Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
         model.addAttribute("khachHang1" , khachHang.get());
-        model.addAttribute("dataUtils", new DataUtils());
+        model.addAttribute("convertMoney", new DataUtils());
         //        Các dữ liệu cần cho header
 // Hiển thị danh mục
         List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
@@ -134,7 +133,7 @@ public class DonHangKhController {
         Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
         System.out.println(khachHang.get().getTenKhachHang());
         model.addAttribute("khachHang1" , khachHang.get());
-        model.addAttribute("dataUtils", new DataUtils());
+        model.addAttribute("convertMoney", new DataUtils());
 
         //        Các dữ liệu cần cho header
 // Hiển thị danh mục
@@ -177,7 +176,7 @@ public class DonHangKhController {
 
         Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
         model.addAttribute("khachHang1" , khachHang.get());
-        model.addAttribute("dataUtils", new DataUtils());
+        model.addAttribute("convertMoney", new DataUtils());
 
         //        Các dữ liệu cần cho header
 // Hiển thị danh mục
