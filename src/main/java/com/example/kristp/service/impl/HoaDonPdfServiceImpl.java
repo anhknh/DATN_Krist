@@ -69,15 +69,22 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
             try (PDPageContentStream luoiNoiDung = new PDPageContentStream(taiLieu, trang)) {
                 Integer maHoaDon = hoaDon.getId();
                 String tenNhanVien = hoaDon.getNhanVien() == null ? "" : hoaDon.getNhanVien().getTenNhanVien();
+                String tenKhachHang;
+                String sdt;
+                if(hoaDon.getDiaChi() != null) {
+                     tenKhachHang = hoaDon.getDiaChi().getTenKhachHang();
 
-                KhachHang khachHang = hoaDon.getKhachHang();
-                String tenKhachHang = (khachHang != null && khachHang.getTenKhachHang() != null && !khachHang.getTenKhachHang().isBlank())
-                        ? khachHang.getTenKhachHang()
-                        : "Khách vãng lai";
+                     sdt = hoaDon.getDiaChi().getSdt();
+                } else {
+                    KhachHang khachHang = hoaDon.getKhachHang();
+                     tenKhachHang = (khachHang != null && khachHang.getTenKhachHang() != null && !khachHang.getTenKhachHang().isBlank())
+                            ? khachHang.getTenKhachHang()
+                            : "Khách vãng lai";
 
-                String sdt = (khachHang != null && khachHang.getSoDienThoai() != null && !khachHang.getSoDienThoai().isBlank())
-                        ? khachHang.getSoDienThoai()
-                        : "N/A";
+                     sdt = (khachHang != null && khachHang.getSoDienThoai() != null && !khachHang.getSoDienThoai().isBlank())
+                            ? khachHang.getSoDienThoai()
+                            : "N/A";
+                }
                 String ngayTao = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(hoaDon.getNgayTao());
 
                 List<String> sanPhamList = new ArrayList<>();

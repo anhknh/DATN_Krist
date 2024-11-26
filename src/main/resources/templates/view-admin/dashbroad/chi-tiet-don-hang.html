@@ -225,8 +225,8 @@
                         <div style="font-size: 18px; font-weight: 700; margin: 12px">Thông tin đơn hàng</div>
                         <div>
                             <div th:text="'Mã đơn hàng: ' + ${hoaDon.id} ">Mã đơn hàng: </div>
-                            <div th:text="'Trạng thái đơn hàng: ' + ${hoaDon.trangThai}">Trạng thái đơn hàng: Chờ xác nhận</div>
-                            <div th:text="'Thông tin thanh toán: ' + ${hoaDon.trangThaiThanhToan}">Thông tin thanh toán: VN Pay | Đã thanh toán</div>
+                            <div th:text="'Trạng thái đơn hàng: ' + ${convertMoney.formatStatus(hoaDon.trangThai)}">Trạng thái đơn hàng: Chờ xác nhận</div>
+                            <div th:text="'Thông tin thanh toán: ' + ${convertMoney.formatStatus(hoaDon.trangThaiThanhToan)}">Thông tin thanh toán: VN Pay | Đã thanh toán</div>
                             <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between" style="margin-bottom: 18px;">
                             <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Tên khuyến mại:</div>
                             <div style="font-size: 16px; font-weight: 500;"><span th:text="${hoaDon.khuyenMai.tenKhuyenMai}"></span></div>
@@ -234,7 +234,7 @@
 
                             <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between" style="margin-bottom: 18px;">
                                 <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Mức giảm:</div>
-                                <div style="font-size: 16px; font-weight: 500;"><span th:text="${convertMoney.formatCurrency(hoaDon.khuyenMai.giaTri)} + ' ' + ${hoaDon.khuyenMai.kieuKhuyenMai}"></span></div>
+                                <div style="font-size: 16px; font-weight: 500;"><span th:text="${convertMoney.formatCurrency(hoaDon.khuyenMai.giaTri)} + ' ' + ${hoaDon.khuyenMai.kieuKhuyenMai? '%':'VND'}"></span></div>
                             </div>
                             <div th:text="'Tổng tiền: ' + ${convertMoney.formatCurrency(hoaDon.tongTien)}">Tổng tiền: 12.000.000 VNĐ</div>
                             <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
@@ -243,35 +243,40 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div style="font-size: 16px; font-weight: bold;">Tổng tiền sau giảm:</div>
-                                <div style="font-size: 16px; font-weight: bold;"><span id="final-total" th:text="${convertMoney.calculatorTotal(hoaDon.tongTien, hoaDon.khuyenMai)}">0.00</span></div>
+                                <div style="font-size: 16px; font-weight: bold;"><span id="final-total" th:text="${convertMoney.calculatorTotal(hoaDon.tongTien, hoaDon.khuyenMai, hoaDon.phiVanChuyen)}">0.00</span></div>
                             </div>
+                        </div>
+                        <div class="mt-3 mb-3" style="text-align: center">
+                            <button class="btn btn-dark btn-sm" th:onclick="'inHoaDon(' + ${idHoaDonSelected} + ')'">In hóa đơn</button>
+
                         </div>
                     </div>
                     <div class="box" style="flex: 2">
                         <div class="d-flex align-items-center" style="margin: 24px">
                             <div class="step-container">
-                                <div class="step active">
+                                <!--                        Thêm hoặc xóa class active để nó hiện màu đen hoặc xám-->
+                                <div class="step" th:classappend="${hoaDon.getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN} ? 'active' : ''">
                                     <i class="fa-sharp fa-regular fa-hourglass-start"></i>
                                 </div>
                                 <span class="step-description">Chờ xác nhận</span>
                             </div>
                             <div class="line"></div>
                             <div class="step-container">
-                                <div class="step">
+                                <div class="step" th:classappend="${hoaDon.getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).DANG_XU_LY} ? 'active' : ''">
                                     <i class="fa-regular fa-box-open-full"></i>
                                 </div>
                                 <span class="step-description">Đang xử lý</span>
                             </div>
                             <div class="line"></div>
                             <div class="step-container">
-                                <div class="step">
+                                <div class="step" th:classappend="${hoaDon.getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).DANG_GIAO_HANG} ? 'active' : ''">
                                     <i class="fa-light fa-truck-fast"></i>
                                 </div>
                                 <span class="step-description">Đang giao hàng</span>
                             </div>
                             <div class="line"></div>
                             <div class="step-container">
-                                <div class="step">
+                                <div class="step" th:classappend="${hoaDon.getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).HOAN_TAT} ? 'active' : ''">
                                     <i class="fa-light fa-hand-holding-heart"></i>
                                 </div>
                                 <span class="step-description">Hoàn tất</span>
@@ -282,10 +287,11 @@
 
                         <div style="display: flex; justify-content: end; margin: 16px">
 
-                            <div>
-                                <div class="btn btn-dark">
+                            <div th:if="${hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).HOAN_TAT}">
+                                <a class="btn btn-dark" style="color: #fff; text-decoration: none"
+                                   th:href="@{/quan-ly-don-hang/doi-trang-thai(idHoaDon=${idHoaDonSelected})}">
                                     <i class="fa-sharp fa-regular fa-arrow-right"></i> Chuyển trạng thái
-                                </div>
+                                </a>
                             </div>
 
                         </div>
@@ -306,7 +312,7 @@
                                style="margin-top: 0.5rem; display: flex; align-items: center;">
                                 <i class="fa-light fa-location-dot"
                                    style="margin-right: 8px;"></i>
-                                <span th:text="${hoaDon.diaChi.diaChi}">Lê Đức Thọ, Hà Nội</span>
+                                <span th:text="${convertMoney.formatFullAddress(hoaDon.diaChi.diaChi, hoaDon.diaChi.tenPhuongXa, hoaDon.diaChi.tenQuanHuyen, hoaDon.diaChi.tenTinhThanh)}">Lê Đức Thọ, Hà Nội</span>
                             </p>
 
                             <p class="card-text"
@@ -321,89 +327,131 @@
 
 
                 <div class="box mt-2">
-                    <div style="font-size: 18px; font-weight: 700; margin: 12px">Chi tiết sản phẩm - đơn hàng abcdef</div>
-                    <div style="display: flex; justify-content: end; margin: 16px">
+                    <div style="font-size: 18px; font-weight: 700; margin: 12px">Chi tiết sản phẩm - đơn hàng</div>
+                    <div style="display: flex; justify-content: end; margin: 16px" th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN}">
                         <div class="btn btn-dark">
                             <i class="fa-light fa-plus"></i> Thêm nhanh sản phẩm
                         </div>
                     </div>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th style="width: 10%; text-align: center;">Ảnh</th>
-                            <th style="width: 20%;">Thông tin</th>
-                            <th style="width: 15%; text-align: center;">Giá</th>
-                            <th style="width: 15%; text-align: center;">Số lượng</th>
-                            <th style="width: 15%; text-align: center;">Tổng cộng</th>
-                            <th style="width: 20%; text-align: center;">Hành động</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="item : ${hoaDonChiTiet}">
+                    <div th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN}">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th style="width: 10%; text-align: center;">Ảnh</th>
+                                <th style="width: 20%;">Thông tin</th>
+                                <th style="width: 15%; text-align: center;">Giá</th>
+                                <th style="width: 15%; text-align: center;">Số lượng</th>
+                                <th style="width: 15%; text-align: center;">Tổng cộng</th>
+                                <th style="width: 20%; text-align: center;">Hành động</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item : ${hoaDonChiTiet}">
 
-                        <!-- Cột Hình ảnh -->
-                        <td style="text-align: center; vertical-align: middle;">
-                            <div class="d-flex justify-content-center align-items-center"
-                                 style="background-color: #f6f6f6; border-radius: 4px; width: 46px; height: 46px;">
-                                <div th:style="|width: 46px; height: 46px; background: url('/img/${item.chiTietSanPham.anhSanPham}') no-repeat center center / cover;|">
-                                </div>
-                            </div>
-                        </td>
+                                <!-- Cột Hình ảnh -->
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <div class="d-flex justify-content-center align-items-center"
+                                         style="background-color: #f6f6f6; border-radius: 4px; width: 46px; height: 46px;">
+                                        <div th:style="|width: 46px; height: 46px; background: url('/img/${item.chiTietSanPham.anhSanPham}') no-repeat center center / cover;|">
+                                        </div>
+                                    </div>
+                                </td>
 
-                        <!-- Cột Thông tin -->
-                        <td>
-                            <!-- Tên sản phẩm -->
-                            <p style="font-size: 16px; font-weight: 500;"
-                               th:text="${item.getChiTietSanPham().sanPham.tenSanPham}"></p>
-                            <!-- Màu sắc và kích thước -->
-                            <div class="d-flex align-items-center" style="margin-top: 8px;">
-                                <span style="margin-right: 8px;">Color:</span>
-                                <div th:style="'padding: 8px; border-radius: 50%; background-color: ' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
-                                <span style="margin-left: 16px;">Size: <span
-                                        th:text="${item.getChiTietSanPham().size.tenSize}"></span></span>
-                            </div>
-                        </td>
-
-                        <!-- Cột Giá -->
-                        <td style="text-align: center; vertical-align: middle;">
+                                <!-- Cột Thông tin -->
+                                <td>
+                                    <!-- Tên sản phẩm -->
+                                    <p style="font-size: 16px; font-weight: 500;"
+                                       th:text="${item.getChiTietSanPham().sanPham.tenSanPham}"></p>
+                                    <!-- Màu sắc và kích thước -->
+                                    <div class="d-flex align-items-center" style="margin-top: 8px;">
+                                        <span style="margin-right: 8px;">Color:</span>
+                                        <div th:style="'padding: 8px; border-radius: 50%; background-color: ' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
+                                        <span style="margin-left: 16px;">Size: <span
+                                                th:text="${item.getChiTietSanPham().size.tenSize}"></span></span>
+                                    </div>
+                                </td>
+                                <!-- Cột Giá -->
+                                <td style="text-align: center; vertical-align: middle;">
                                 <span th:text="${convertMoney.formatCurrency(item.getChiTietSanPham().donGia)}"
                                       class="product-price" th:id="'gia-' + ${item.id}"></span>
-                        </td>
-
-                        <!-- Cột Số lượng -->
-                        <td style="text-align: center; vertical-align: middle;">
-                            <div class="d-flex justify-content-between align-items-center"
-                                 style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height: 40px;">
-                                <button type="button" style="background-color: #fff; border: none;"
-                                        onclick="capNhatSoLuong(this, -1)" th:data-id="${item.id}">&#8722;
-                                </button>
-                                <span th:id="'soLuong-' + ${item.id}" th:text="${item.soLuong}"
-                                      class="product-quantity"></span>
-                                <button type="button" style="background-color: #fff; border: none;"
-                                        onclick="capNhatSoLuong(this, 1)" th:data-id="${item.id}">&#43;
-                                </button>
-                            </div>
-                        </td>
-
-                        <!-- Cột Tổng cộng -->
-                        <td style="text-align: center; vertical-align: middle;">
+                                </td>
+                                <!-- Cột Số lượng -->
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <div class="d-flex justify-content-between align-items-center"
+                                         style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px; width: 107px; height: 40px;">
+                                        <button type="button" style="background-color: #fff; border: none;"
+                                                onclick="capNhatSoLuong(this, -1)" th:data-id="${item.id}">&#8722;
+                                        </button>
+                                        <span th:id="'soLuong-' + ${item.id}" th:text="${item.soLuong}"
+                                              class="product-quantity"></span>
+                                        <button type="button" style="background-color: #fff; border: none;"
+                                                onclick="capNhatSoLuong(this, 1)" th:data-id="${item.id}">&#43;
+                                        </button>
+                                    </div>
+                                </td>
+                                <!-- Cột Tổng cộng -->
+                                <td style="text-align: center; vertical-align: middle;">
                                 <span th:text="${convertMoney.formatCurrency(item.getChiTietSanPham().donGia * item.soLuong)}"
                                       th:id="'tong-' + ${item.id}"
                                       class="product-total"></span>
-                        </td>
+                                </td>
+                                <!-- Cột Hành động -->
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <a style="color: #e10a0a; text-decoration: none;" data-bs-toggle="tooltip"
+                                       data-bs-placement="top" title="Xóa"
+                                       th:href="@{/xoa-gio-hang-chi-tiet/{id}(id=${item.id})}">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </a>
+                                </td>
+                            </tr>
 
-                        <!-- Cột Hành động -->
-                        <td style="text-align: center; vertical-align: middle;">
-                            <a style="color: #e10a0a; text-decoration: none;" data-bs-toggle="tooltip"
-                               data-bs-placement="top" title="Xóa"
-                               th:href="@{/xoa-gio-hang-chi-tiet/{id}(id=${item.id})}">
-                                <i class="fa-regular fa-trash-can"></i>
-                            </a>
-                        </td>
-                        </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div th:if="${hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN}">
+                        <!-- Danh sách sản phẩm -->
+                        <div class="product-list">
+                            <div class="product-item d-flex align-items-start"
+                                 th:each="item : ${hoaDonChiTiet}"
+                                 style="border: 1px solid #e6e7e8; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                                <!-- Hình ảnh sản phẩm -->
+                                <div style="flex: 1; max-width: 80px;">
+                                    <div style="width: 80px; height: 80px; border-radius: 8px; background-color: #f6f6f6;">
+                                        <div th:style="|width: 100%; height: 100%; background: url('/img/${item.chiTietSanPham.anhSanPham}') no-repeat center center / cover;|">
+                                        </div>
+                                    </div>
+                                </div>
 
-                        </tbody>
-                    </table>
+                                <!-- Thông tin sản phẩm -->
+                                <div style="flex: 3; margin-left: 16px;">
+                                    <!-- Tên sản phẩm -->
+                                    <p style="font-size: 16px; font-weight: 500;"
+                                       th:text="${item.getChiTietSanPham().sanPham.tenSanPham}"></p>
+                                    <!-- Màu sắc và kích thước -->
+                                    <div class="d-flex align-items-center" style="margin-top: 8px;">
+                                        <span style="margin-right: 8px;">Color:</span>
+                                        <div th:style="'width: 20px; height: 20px; border-radius: 50%; background-color: ' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
+                                        <span style="margin-left: 16px;">Size:
+                                                            <span th:text="${item.getChiTietSanPham().size.tenSize}"></span>
+                                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Giá và số lượng -->
+                                <div style="flex: 2; margin-left: auto; text-align: right;">
+                                    <!-- Giá -->
+                                    <p style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">
+                                        Giá: <span
+                                            th:text="${convertMoney.formatCurrency(item.getChiTietSanPham().donGia)}"></span>
+                                    </p>
+                                    <!-- Số lượng -->
+                                    <p style="font-size: 16px;">
+                                        Số lượng: <span th:text="${item.soLuong}"></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -420,6 +468,7 @@
     <strong th:text="${titleMsg}">Tiêu đề</strong> <span th:text="${message}">Thông báo này sẽ hiển thị kết quả.</span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -447,6 +496,32 @@
     const nameCate = document.getElementById('nameCate');
     const desCate = document.getElementById('desCate');
     const statusSection = document.getElementById('statusSection');
+
+    function inHoaDon(idOrder) {
+        $.ajax({
+            url: '/hoa-don-pdf/in/' + idOrder,
+            method: 'GET',
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(data) {
+                const filename = "HoaDon.pdf";
+                const url = window.URL.createObjectURL(new Blob([data], { type: 'application/pdf' }));
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            },
+            error: function() {
+                alert("Lỗi khi in hóa đơn!");
+            }
+        });
+    }
+
 
     function saveIdOrder(id , index , hanhDong){
         idCustomer.value = id;

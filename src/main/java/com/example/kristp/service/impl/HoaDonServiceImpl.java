@@ -145,4 +145,32 @@ public class HoaDonServiceImpl implements HoaDonService {
         return listTrangThai;
     }
 
+    @Override
+    public boolean changeStatus(Integer id) {
+        HoaDon hoaDon = hoaDonRepository.findById(id).orElse(null);
+        if (hoaDon != null) {
+            switch (hoaDon.getTrangThai()) {
+                case CHO_XAC_NHAN:
+                    hoaDon.setTrangThai(HoaDonStatus.DANG_XU_LY);
+                    break;
+                case DANG_XU_LY:
+                    hoaDon.setTrangThai(HoaDonStatus.DANG_GIAO_HANG);
+                    break;
+                case DANG_GIAO_HANG:
+                    hoaDon.setTrangThai(HoaDonStatus.HOAN_TAT);
+                    break;
+                case HOAN_TAT:
+                    // Trạng thái đã hoàn tất, không cần thay đổi.
+                    return false;
+                default:
+                    // Trường hợp trạng thái không hợp lệ
+                    return false;
+            }
+            hoaDonRepository.save(hoaDon); // Lưu trạng thái mới vào cơ sở dữ liệu
+            return true; // Trả về true khi trạng thái được thay đổi thành công
+        }
+        return false; // Trả về false nếu hóa đơn không tồn tại
+    }
+
+
 }

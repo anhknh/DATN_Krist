@@ -210,7 +210,7 @@
                                         <tbody>
                                         <tr th:if="${hoaDons != null}" th:each="hd : ${hoaDons}">
                                             <td th:text="${hd.getId()}"></td>
-                                            <td th:text="${hd.getDiaChi().getKhachHang().getTenKhachHang()}"></td>
+<!--                                            <td th:text="${hd.getDiaChi().getKhachHang().getTenKhachHang()}"></td>-->
                                             <td th:text="${dataUtils.formatCurrency(hd.getTongTien())}"></td>
                                             <td th:text="${#dates.format(hd.getNgayTao(), 'dd/MM/yyyy')}"></td>
                                             <td class="text-center">

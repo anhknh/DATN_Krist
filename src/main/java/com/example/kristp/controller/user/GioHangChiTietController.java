@@ -81,14 +81,14 @@ public class GioHangChiTietController {
         if(Authen.khachHang != null) {
             GioHang gioHangHeader = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
             gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHangHeader.getId());
-            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietListHeader) {
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
                 tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
             }
             model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
         }
 
         model.addAttribute("tongTien", tongTien);
-        model.addAttribute("gioHangChiTietListHeader", gioHangChiTietListHeader);
+        model.addAttribute("gioHangChiTietListHeader", gioHangChiTietList);
 
         model.addAttribute("khachHang", Authen.khachHang);
         //hàm format

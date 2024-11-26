@@ -35,4 +35,6 @@ public interface HoaDonService {
     Double doanhThuTrongNam();
 
     List<Integer> trangThaiDonHang();
+
+    boolean changeStatus(Integer id);
 }

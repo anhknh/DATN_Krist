@@ -8,6 +8,7 @@ import com.example.kristp.service.HoaDonService;
 import com.example.kristp.utils.DataUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,6 +34,8 @@ public class DonHangController {
     DataUtils dataUtils;
     @Autowired
     private HoaDonRepository hoaDonRepository;
+
+    Integer idHoaDonSelected;
 
     @GetMapping("/view-don-hang")
     public String viewHoaDon(
@@ -86,10 +90,29 @@ public class DonHangController {
     @GetMapping("/view-chi-tiet-don-hang")
     public String chiTietDonHang(@RequestParam("idHoaDon") Integer idHoaDon, Model model) {
         HoaDon hoaDon = hoaDonService.findHoaDonById(idHoaDon);
+        idHoaDonSelected = idHoaDon;
         model.addAttribute("hoaDon", hoaDon);
         model.addAttribute("hoaDonChiTiet", hoaDonChiTietService.getHoaDonChiTietByHoaDon(hoaDon, null).getContent());
         model.addAttribute("convertMoney", dataUtils);
+        model.addAttribute("idHoaDonSelected", idHoaDonSelected);
         return "view-admin/dashbroad/chi-tiet-don-hang";
+    }
+
+    @GetMapping("/doi-trang-thai")
+    public String changeStatus(@RequestParam("idHoaDon") Integer idHoaDon, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        if(hoaDonService.changeStatus(idHoaDon)) {
+            redirectAttributes.addFlashAttribute("message", "Chuyển trạng thái đơn hàng thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Đơn đã hoàn tất hoặc có lỗi xảy ra!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+        }
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
     }
 
 }
