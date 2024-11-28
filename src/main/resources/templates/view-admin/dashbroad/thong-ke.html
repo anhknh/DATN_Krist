@@ -134,6 +134,7 @@
             </div>
             <!--            end sider bar-->
             <div class="col-10">
+
                 <div class="d-flex justify-content-between align-items-center"
                      style="height: 72px; margin-bottom: 18px;">
                     <div>
@@ -149,7 +150,7 @@
                                 class="fa-thin fa-arrow-right-from-bracket"></i></a>
                     </div>
                 </div>
-
+                <div class="container">
                 <div class="container row">
                     <div class="card col-4">
                         <i class="fas fa-shopping-cart"> </i>
@@ -171,13 +172,13 @@
                     <div class="col-9">
                         <div class="content">
                             <div class="status-container">
-                                <div class="status-title">Trạng thái đơn hàng :</div>
-                                <div class="status-item">
-                                    <button onclick="fetchChartData('1')" class="btn btn-outline-secondary">Tháng</button>
-                                </div>
-                                <div class="status-item">
-                                    <button onclick="fetchChartData('2')" class="btn btn-outline-secondary">Năm</button>
-                                </div>
+                                <div class="status-title">Doanh thu theo từng tháng :</div>
+                                <select class="form-select" style="width: 100px" id="month" name="month" th:field="*{years}" onchange="fetchChartData(this.value)">
+                                    <option th:each="month : ${years}"
+                                            th:value="${month}"
+                                            th:text="${month}">
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -210,7 +211,7 @@
                                         <tbody>
                                         <tr th:if="${hoaDons != null}" th:each="hd : ${hoaDons}">
                                             <td th:text="${hd.getId()}"></td>
-<!--                                            <td th:text="${hd.getDiaChi().getKhachHang().getTenKhachHang()}"></td>-->
+                                            <td th:text="${hd.diaChi.tenKhachHang}"></td>
                                             <td th:text="${dataUtils.formatCurrency(hd.getTongTien())}"></td>
                                             <td th:text="${#dates.format(hd.getNgayTao(), 'dd/MM/yyyy')}"></td>
                                             <td class="text-center">
@@ -237,6 +238,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -352,7 +354,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            const c = 1; // Giá trị truyền vào
+            const c = new Date().getFullYear(); // Giá trị truyền vào
             fetchChartData(c);
         });
     </script>

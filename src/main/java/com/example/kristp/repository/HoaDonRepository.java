@@ -45,21 +45,42 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
     public Page<HoaDon> getPaginationTrangThai(Pageable pageable , HoaDonStatus trangThai , Integer idKhachHang);
 
 //Thống kê
-    @Query(nativeQuery = true , value = "SELECT \n" +
-            "\tISNULL(SUM(hd.tong_tien + hd.phi_van_chuyen), 0) AS Tong_Tien\n" +
+//    @Query(nativeQuery = true , value = "SELECT \n" +
+//            "\tISNULL(SUM(hd.tong_tien + hd.phi_van_chuyen), 0) AS Tong_Tien\n" +
+//            "FROM \n" +
+//            "    master.dbo.spt_values\n" +
+//            "LEFT JOIN \n" +
+//            "    hoa_don hd ON FORMAT(hd.ngay_tao, 'MM-yyyy') = FORMAT(DATEFROMPARTS(YEAR(GETDATE()), spt_values.number, 1), 'MM-yyyy')\n" +
+//            "    AND hd.trang_thai_thanh_toan = 'DA_THANH_TOAN' AND hd.trang_thai = 'DA_THANH_TOAN' -- Lọc chỉ các hóa đơn đã thanh toán\n" +
+//            "WHERE \n" +
+//            "    spt_values.type = 'P' \n" +
+//            "    AND spt_values.number BETWEEN 1 AND 12 \n" +
+//            "    AND YEAR(hd.ngay_tao) = :year \n" +  // Điều kiện lọc năm
+//            "GROUP BY \n" +
+//            "    FORMAT(DATEFROMPARTS(YEAR(GETDATE()), spt_values.number, 1), 'MM-yyyy')\n" +
+//            "ORDER BY \n" +
+//            "    FORMAT(DATEFROMPARTS(YEAR(GETDATE()), spt_values.number, 1), 'MM-yyyy');")
+//    List<String> thongKeTungThang(@Param("year") int year);
+
+    @Query(nativeQuery = true, value = "SELECT \n" +
+            "    ISNULL(SUM(hd.tong_tien + hd.phi_van_chuyen), 0) AS TongDoanhThu \n" +
             "FROM \n" +
-            "    master.dbo.spt_values\n" +
+            "    master.dbo.spt_values spt_values \n" +
             "LEFT JOIN \n" +
-            "    hoa_don hd ON FORMAT(hd.ngay_tao, 'MM-yyyy') = FORMAT(DATEFROMPARTS(YEAR(GETDATE()), spt_values.number, 1), 'MM-yyyy')\n" +
-            "    AND hd.trang_thai_thanh_toan = 'DA_THANH_TOAN' AND hd.trang_thai = 'DA_THANH_TOAN' -- Lọc chỉ các hóa đơn đã thanh toán\n" +
+            "    hoa_don hd ON FORMAT(hd.ngay_tao, 'MM-yyyy') = FORMAT(DATEFROMPARTS(:year, spt_values.number, 1), 'MM-yyyy') \n" +
+            "    AND YEAR(hd.ngay_tao) = :year \n" +
+            "    AND hd.trang_thai_thanh_toan = 'DA_THANH_TOAN' \n" +
+            "    AND hd.trang_thai = 'DA_THANH_TOAN' \n" +
             "WHERE \n" +
             "    spt_values.type = 'P' \n" +
             "    AND spt_values.number BETWEEN 1 AND 12 \n" +
             "GROUP BY \n" +
-            "    FORMAT(DATEFROMPARTS(YEAR(GETDATE()), spt_values.number, 1), 'MM-yyyy')\n" +
+            "    FORMAT(DATEFROMPARTS(:year, spt_values.number, 1), 'MM-yyyy'),\n" +
+            "    spt_values.number -- Bổ sung cột spt_values.number vào GROUP BY\n" +
             "ORDER BY \n" +
-            "    FORMAT(DATEFROMPARTS(YEAR(GETDATE()), spt_values.number, 1), 'MM-yyyy');")
-    List<String> thongKeTungThang();
+            "    FORMAT(DATEFROMPARTS(:year, spt_values.number, 1), 'MM-yyyy');\n")
+    List<String> thongKeTungThang(@Param("year") int year);
+
 
 
     @Query("select hd from HoaDon hd order by hd.id desc ")
@@ -96,4 +117,8 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
             "GROUP BY t.trang_thai\n" +
             "ORDER BY t.trang_thai;" , nativeQuery = true)
      List<Integer> thongKeTrangThaiDonHang();
+
+
+    @Query("select distinct YEAR(hd.ngayTao) from HoaDon hd order by YEAR(hd.ngayTao)")
+    List<Integer> getNamDonHang();
 }
