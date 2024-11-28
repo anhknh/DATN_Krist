@@ -234,32 +234,42 @@
                             </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div>``
                     <div>
                         <!-- page_number -->
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-end">
                                 <!-- Nút Previous -->
-                                <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
-                                    <a class="page-link" style="color: #5C5F6A"
+                                <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}"
+                                    style="border-color: #A0A0A0;">
+                                    <a class="page-link"
                                        th:href="@{/quan-ly-san-pham/pagination-san-pham(pageNo=0)}"
-                                       aria-label="Previous">
+                                       aria-label="Previous"
+                                       style="color: #5C5F6A; background-color: transparent; border-color: #5C5F6A;">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
+
                                 <!-- Vòng lặp phân trang -->
-                                <li th:each="i : ${#numbers.sequence(1, totalPage)}" th:classappend="${currentPage == i - 1 ? 'active' : ''}"
-                                    class="page-item">
+                                <li th:if="${totalPage > 0}" th:each="i : ${#numbers.sequence(1, totalPage)}"
+                                    th:classappend="${currentPage == i - 1 ? 'active' : ''}"
+                                    class="page-item"
+                                    style="border-color: #5C5F6A;">
                                     <a class="page-link"
                                        th:href="@{/quan-ly-san-pham/pagination-san-pham(pageNo=${i - 1})}"
-                                       th:text="${i}" style="color: white; background-color: #5b5c64"></a>
+                                       th:text="${i}"
+                                       th:styleappend="${currentPage == i - 1 ? 'color: #FFFFFF; background-color: #5C5F6A;' : 'color: #5C5F6A; background-color: transparent; border-color: #5C5F6A;'}">
+                                    </a>
                                 </li>
+
                                 <!-- Nút Next -->
                                 <li class="page-item"
-                                    th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}">
-                                    <a class="page-link" style="color: #5C5F6A"
+                                    th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}"
+                                    style="border-color: #A0A0A0;">
+                                    <a class="page-link"
                                        th:href="@{/quan-ly-san-pham/pagination-san-pham(pageNo=${totalPage - 1})}"
-                                       aria-label="Next">
+                                       aria-label="Next"
+                                       style="color: #5C5F6A; background-color: transparent; border-color: #5C5F6A;">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
