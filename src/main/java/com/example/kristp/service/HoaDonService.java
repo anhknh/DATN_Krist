@@ -26,7 +26,7 @@ public interface HoaDonService {
     Page<HoaDon> findTop5();
 
 
-    List<String> doanhThuTungThang();
+    List<String> doanhThuTungThang(Integer year);
 
     Double doanhThuHomNay();
 
@@ -37,4 +37,6 @@ public interface HoaDonService {
     List<Integer> trangThaiDonHang();
 
     boolean changeStatus(Integer id);
+
+    List<Integer> getNamCoTrongHoaDon();
 }

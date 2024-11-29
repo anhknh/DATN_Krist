@@ -116,8 +116,8 @@ public class HoaDonServiceImpl implements HoaDonService {
 // Sử dụng cho thống kê
 
     @Override
-    public List<String> doanhThuTungThang() {
-        List<String> doanhThuTungThang = hoaDonRepository.thongKeTungThang();
+    public List<String> doanhThuTungThang(Integer year) {
+        List<String> doanhThuTungThang = hoaDonRepository.thongKeTungThang(year);
         return doanhThuTungThang;
     }
 
@@ -170,6 +170,12 @@ public class HoaDonServiceImpl implements HoaDonService {
             return true; // Trả về true khi trạng thái được thay đổi thành công
         }
         return false; // Trả về false nếu hóa đơn không tồn tại
+    }
+
+    @Override
+    public List<Integer> getNamCoTrongHoaDon() {
+        List<Integer> integers = hoaDonRepository.getNamDonHang();
+        return integers;
     }
 
 

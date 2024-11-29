@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/quan-ly")
 public class ThongKe {
@@ -32,6 +34,10 @@ public class ThongKe {
         Double doanhThuNam = hoaDonService.doanhThuTrongNam();
         if(doanhThuNam == null) doanhThuNam = 0.0;
         model.addAttribute("doanhThuNam", doanhThuNam);
+
+        List<Integer> integers = hoaDonService.getNamCoTrongHoaDon();
+        model.addAttribute("years", integers);
+
         return "view-admin/dashbroad/thong-ke";
     }
 }

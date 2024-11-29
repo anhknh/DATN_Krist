@@ -7,6 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.print.DocFlavor;
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -16,10 +19,9 @@ public class ApiThongKe {
     private HoaDonService hoaDonService;
 
     @GetMapping("/api/chart-data")
-    public Map<String, Object> getChartData(@RequestParam(value = "a" , defaultValue = "1")Integer a) {
-
+    public Map<String, Object> getChartData(@RequestParam(value = "a" , defaultValue = "2024")Integer year) {
+        System.out.println(year+"hien tai");
         Map<String, Object> response = null ;
-            System.out.println("Hello Hello");
             response = new HashMap<>();
 //            Biểu đồ cột
 //            Labels hiển thị bên dưới
@@ -29,7 +31,7 @@ public class ApiThongKe {
             ));
             response.put("labels", List.of(c.toArray()));
 //            Dữ liệu đổ vào trên bảng
-            List<String> data = hoaDonService.doanhThuTungThang();
+            List<String> data = hoaDonService.doanhThuTungThang(year);
             response.put("dataValues", data.toArray());
             Random random = new Random();
             List<String> background = new ArrayList<>();
