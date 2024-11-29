@@ -1,6 +1,8 @@
 package com.example.kristp.utils;
 
+import com.example.kristp.entity.DanhGia;
 import com.example.kristp.entity.KhuyenMai;
+import com.example.kristp.enums.HoaDonStatus;
 import com.example.kristp.enums.Status;
 import org.springframework.stereotype.Service;
 
@@ -116,5 +118,41 @@ public class DataUtils {
         }
     }
 
+    public String getCssClass(String trangThai) {
+        switch (trangThai) {
+            case "CHO_XAC_NHAN", "HOA_DON_CHO":
+                return "pending-confirmation";
+            case "DANG_XU_LY":
+                return "in-processing";
+            case "DANG_GIAO_HANG":
+                return "shipping";
+            case "HOAN_TAT", "DA_THANH_TOAN":
+                return "completed";
+            case "CHUA_THANH_TOAN":
+                return "cancelled";
+            default:
+                return "";
+        }
+    }
+
+    /**
+     * Hàm tính tổng điểm đánh giá
+     *
+     * @param danhGiaList Danh sách các đối tượng đánh giá
+     * @return Tổng điểm đánh giá đã làm tròn (nếu không có đánh giá hợp lệ trả về 0)
+     */
+    public static int tinhTongDiemDanhGia(List<DanhGia> danhGiaList) {
+        if (danhGiaList == null || danhGiaList.isEmpty()) {
+            return 0;
+        }
+
+        // Tính tổng điểm
+        int tongDiem = danhGiaList.stream()
+                .filter(danhGia -> danhGia != null && danhGia.getMucDoDanhGia() != null) // Lọc bỏ các giá trị null
+                .mapToInt(DanhGia::getMucDoDanhGia) // Lấy điểm đánh giá
+                .sum();
+
+        return tongDiem; // Trả về tổng điểm
+    }
 
 }

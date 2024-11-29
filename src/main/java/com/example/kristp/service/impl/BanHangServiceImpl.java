@@ -1,6 +1,7 @@
 package com.example.kristp.service.impl;
 
 import com.example.kristp.entity.*;
+import com.example.kristp.enums.HoaDonStatus;
 import com.example.kristp.repository.ChiTietSanPhamRepository;
 import com.example.kristp.repository.HoaDonChiTietRepo;
 import com.example.kristp.repository.HoaDonRepository;
@@ -133,6 +134,19 @@ public class BanHangServiceImpl implements BanHangService {
         return true;
     }
 
+    @Override
+    public boolean huyDonHang(Integer idHoaDon) {
+        HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).orElse(null);
+        if (hoaDon != null) {
+            if(hoaDon.getTrangThai() == HoaDonStatus.CHO_XAC_NHAN) {
+                hoaDon.setTrangThai(HoaDonStatus.DA_HUY);
+                hoaDonRepository.save(hoaDon);
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
 
 
     @Override

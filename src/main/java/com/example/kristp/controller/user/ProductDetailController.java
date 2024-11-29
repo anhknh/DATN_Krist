@@ -12,6 +12,7 @@ import com.example.kristp.service.CoAoService;
 import com.example.kristp.service.DanhMucService;
 import com.example.kristp.service.TayAoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +46,8 @@ public class ProductDetailController {
     GioHangService gioHangService;
     @Autowired
     GioHangChiTietService gioHangChiTietService;
+    @Autowired
+    DanhGiaService danhGiaService;
 
 
     Integer idProductPage = 0;
@@ -80,6 +83,8 @@ public class ProductDetailController {
             }
             model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
         }
+        Integer limit = 999; // Mặc định hiển thị 3 đánh giá
+        Page<DanhGia> listDanhGia  = danhGiaService.getDanhGiaBySanPham(idSanPham, limit);
 
         model.addAttribute("tongTien", tongTien);
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
@@ -87,6 +92,7 @@ public class ProductDetailController {
         model.addAttribute("khachHang", Authen.khachHang);
         //hàm format
         model.addAttribute("convertMoney", dataUtils);
+        model.addAttribute("listDanhGia", listDanhGia.getContent());
 
         return "view/product-detail/Product-detail";
     }

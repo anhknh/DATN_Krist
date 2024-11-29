@@ -22,4 +22,9 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     public Page<HoaDonChiTiet> getHoaDonChiTietByHoaDon(HoaDon hoaDon, Pageable pageable) {
         return hoaDonChiTietRepo.getHoaDonChiTietByHoaDon(hoaDon, pageable);
     }
+
+    @Override
+    public List<HoaDonChiTiet> getHoaDonChiTietByHoaDon(HoaDon hoaDon) {
+        return hoaDonChiTietRepo.getHoaDonChiTietByHoaDonList(hoaDon);
+    }
 }

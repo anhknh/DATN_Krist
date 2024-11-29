@@ -41,7 +41,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
         //laod trạng thái
     Integer countHoaDonByTrangThai(HoaDonStatus trangThai);
 
-    @Query(value = "select hd from HoaDon hd where hd.trangThai = ?1 and hd.khachHang.id = ?2")
+    @Query(value = "select hd from HoaDon hd where hd.trangThai = ?1 and hd.khachHang.id = ?2 order by hd.ngayDatHang desc ")
     public Page<HoaDon> getPaginationTrangThai(Pageable pageable , HoaDonStatus trangThai , Integer idKhachHang);
 
 //Thống kê

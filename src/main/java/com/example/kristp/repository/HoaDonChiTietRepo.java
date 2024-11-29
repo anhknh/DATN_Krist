@@ -16,7 +16,12 @@ public interface HoaDonChiTietRepo extends JpaRepository<HoaDonChiTiet, Integer>
     @Query("select hct from HoaDonChiTiet hct where hct.hoaDon = :hoaDon")
     Page<HoaDonChiTiet> getHoaDonChiTietByHoaDon(HoaDon hoaDon, Pageable pageable);
 
+    @Query("select hct from HoaDonChiTiet hct where hct.hoaDon = :hoaDon")
+    List<HoaDonChiTiet> getHoaDonChiTietByHoaDonList(HoaDon hoaDon);
+
     @Query("SELECT hct FROM HoaDonChiTiet hct WHERE hct.hoaDon = :hoaDon AND hct.chiTietSanPham = :chiTietSanPham")
     HoaDonChiTiet findByHoaDonAndChiTietSanPham(@Param("hoaDon") HoaDon hoaDon, @Param("chiTietSanPham") ChiTietSanPham chiTietSanPham);
+
+    boolean existsByHoaDon_KhachHang_IdAndChiTietSanPham_Id(Integer khachHangId, Integer chiTietSanPhamId);
 
 }

@@ -10,4 +10,5 @@ import java.util.List;
 public interface HoaDonChiTietService {
 
     Page<HoaDonChiTiet> getHoaDonChiTietByHoaDon(HoaDon hoaDon, Pageable pageable);
+    List<HoaDonChiTiet> getHoaDonChiTietByHoaDon(HoaDon hoaDon);
 }

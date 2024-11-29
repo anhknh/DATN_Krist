@@ -42,6 +42,8 @@ public class DonHangKhController {
 
     @Autowired
     private GioHangChiTietService gioHangChiTietService;
+    @Autowired
+    HoaDonChiTietService hoaDonChiTietService;
 
     @GetMapping("/don-hang")
     public String getPagination(@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model){
@@ -79,6 +81,7 @@ public class DonHangKhController {
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
 
         model.addAttribute("khachHang", Authen.khachHang);
+        model.addAttribute("hoaDonChiTietService", hoaDonChiTietService);
         //hàm format
         return "don-hang";
     }
@@ -119,6 +122,7 @@ public class DonHangKhController {
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
 
         model.addAttribute("khachHang", Authen.khachHang);
+        model.addAttribute("hoaDonChiTietService", hoaDonChiTietService);
         return "don-hang";
     }
 
@@ -160,6 +164,7 @@ public class DonHangKhController {
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
 
         model.addAttribute("khachHang", Authen.khachHang);
+        model.addAttribute("hoaDonChiTietService", hoaDonChiTietService);
         //hàm format
         return "don-hang";
     }
@@ -203,6 +208,7 @@ public class DonHangKhController {
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
 
         model.addAttribute("khachHang", Authen.khachHang);
+        model.addAttribute("hoaDonChiTietService", hoaDonChiTietService);
         return "don-hang";
     }
 

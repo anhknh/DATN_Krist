@@ -1,4 +1,9 @@
 
+.color-review{
+    color: #FFD700;
+}
+
+
 /* detail */
 .selected_radio_color {
     border: 1px solid #000;
@@ -38,4 +43,11 @@
 .non_select_tab_detail {
     cursor: pointer;
     color: #5C5F6A;
+}
+
+/* Định kiểu cho các label bị vô hiệu hóa */
+.disabled {
+    pointer-events: none; /* Ngăn chặn việc click */
+    color: #ccc; /* Màu xám để biểu thị vô hiệu hóa */
+    cursor: no-drop;
 }
