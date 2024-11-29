@@ -36,12 +36,17 @@ public class DonHangChiTietKhController {
 
     @Autowired
     private TayAoService tayAoService ;
-
-
     @Autowired
     private CoAoService coAoService ;
     @Autowired
     private HoaDonChiTietService hoaDonChiTietService ;
+    @Autowired
+    DataUtils dataUtils;
+    @Autowired
+    DanhGiaService danhGiaService;
+
+
+
     @GetMapping("/don-hang-chi-tiet-kh")
     public String getPagination(@RequestParam(name = "id" , defaultValue = "0")Integer id , @RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model , RedirectAttributes attributes){
         System.out.println("Đã vào đây đơn hàng chi tiết");
@@ -97,8 +102,8 @@ public class DonHangChiTietKhController {
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
 
         model.addAttribute("khachHang", Authen.khachHang);
-        model.addAttribute("convertMoney", new DataUtils());
-        System.out.println(hoaDons.getContent().get(0).getChiTietSanPham().getMau().getMaMauSac());
+        model.addAttribute("convertMoney", dataUtils);
+        model.addAttribute("danhGiaService", danhGiaService);
         return "don-hang-chi-tiet-kh";
     }
 }

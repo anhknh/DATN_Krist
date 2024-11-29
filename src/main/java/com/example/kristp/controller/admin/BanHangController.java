@@ -383,4 +383,23 @@ public class BanHangController {
         return "redirect:" +referer;
     }
 
+    @PostMapping("/huy-don-hang")
+    public String huyDonHang(HttpServletRequest request,
+                                       @RequestParam("orderId") Integer orderId,
+                                       Model model, RedirectAttributes redirectAttributes) {
+        if (banHangService.huyDonHang(orderId)) {
+            redirectAttributes.addFlashAttribute("message", "Hủy thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Trạng thái đã thay đổi hoặc lỗi khác!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Hủy thất bại");
+        }
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
+    }
+
 }

@@ -50,14 +50,36 @@
     font-size: 12px;
     margin-right: 10px;
 }
-.delivered {
-    background-color: #d4edda;
-    color: #155724;
+/* Chờ xác nhận */
+.pending-confirmation {
+    background-color: #cce5ff; /* Màu xanh nhạt */
+    color: #004085; /* Màu xanh đậm */
 }
-.in-process {
-    background-color: #fff3cd;
-    color: #856404;
+
+/* Đang xử lý */
+.in-processing {
+    background-color: #fff3cd; /* Màu vàng nhạt */
+    color: #856404; /* Màu vàng đậm */
 }
+
+/* Đang giao hàng */
+.shipping {
+    background-color: #d1ecf1; /* Màu xanh nước biển nhạt */
+    color: #0c5460; /* Màu xanh nước biển đậm */
+}
+
+/* Hoàn tất */
+.completed {
+    background-color: #d4edda; /* Màu xanh lá nhạt */
+    color: #155724; /* Màu xanh lá đậm */
+}
+
+/* Đã hủy */
+.cancelled {
+    background-color: #f8d7da; /* Màu đỏ nhạt */
+    color: #721c24; /* Màu đỏ đậm */
+}
+
 .order-price {
     font-size: 18px;
     font-weight: bold;
@@ -74,6 +96,21 @@
     cursor: pointer;
     font-size: 14px;
 }
+
+.order-actions2 {
+    display: flex;
+    flex-direction: column;
+}
+.order-actions2 button {
+    padding: 6px 6px;
+    margin: 26px 0 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+
 .view-order {
     background-color: #fff;
     color: #000;

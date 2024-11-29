@@ -9,17 +9,20 @@
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css"><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/css/StyleHomePage.css">
     <link rel="stylesheet" href="/css/StyleThuoctinh.css">
+    <link rel="stylesheet" href="/css/don-hang-test.css">
     <style>
         .step-container {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+
         .step {
             display: flex;
             align-items: center;
@@ -43,11 +46,15 @@
             color: #555;
             text-align: center;
         }
+
         .line {
             flex-grow: 1;
             height: 2px;
             border-top: 2px dashed #ddd;
             margin: 0 10px; /* Tạo khoảng cách giữa các vòng tròn */
+        }
+        .number_star_review {
+            transition: color 0.3s ease;
         }
     </style>
 </head>
@@ -80,7 +87,8 @@
                                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Danh mục
                                     </a>
-                                    <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;" aria-labelledby="navbarDropdown">
+                                    <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;"
+                                        aria-labelledby="navbarDropdown">
                                         <div class="d-flex">
                                             <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
                                                 <p class="font-blod">Danh mục</p>
@@ -89,9 +97,10 @@
                                                     <a th:if="${listDanhMuc.size() > 0}"
                                                        th:href="@{/danh-sach-san-pham(danhMucId=${item.id})}"
                                                        style="text-decoration: none ; color : black">
-                                                        <span  th:text="${item.getTenDanhMuc()}"></span></a>
+                                                        <span th:text="${item.getTenDanhMuc()}"></span></a>
                                                 </div>
-                                                <h5 th:unless="${listDanhMuc.size() > 0}" style="color: gray;">Hiện tại không có danh mục nào</h5>
+                                                <h5 th:unless="${listDanhMuc.size() > 0}" style="color: gray;">Hiện tại
+                                                    không có danh mục nào</h5>
 
                                             </div>
                                             <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
@@ -101,17 +110,23 @@
                                                     <a th:if="${listCoAo.size() > 0}"
 
                                                        th:href="@{/danh-sach-san-pham(coAoId=${item.id})}"
-                                                       style="text-decoration: none ; color : black"><span  th:text="${item.getKieuCoAo()}"></span></a>
+                                                       style="text-decoration: none ; color : black"><span
+                                                            th:text="${item.getKieuCoAo()}"></span></a>
                                                 </div>
-                                                <h5 th:unless="${listCoAo.size() > 0}" style="color: gray;">Hiện tại không có cổ áo nào</h5>
+                                                <h5 th:unless="${listCoAo.size() > 0}" style="color: gray;">Hiện tại
+                                                    không có cổ áo nào</h5>
                                             </div>
                                             <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
                                                 <p class="font-blod">Tay áo</p>
                                                 <hr>
-                                                <div th:if="${listTayAo.size() > 0}" class="p-2 hover-effect" th:each="item : ${listTayAo}">
-                                                    <a th:href="@{/danh-sach-san-pham(tayAoId=${item.id})}" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuTayAo()}"></span></a>
+                                                <div th:if="${listTayAo.size() > 0}" class="p-2 hover-effect"
+                                                     th:each="item : ${listTayAo}">
+                                                    <a th:href="@{/danh-sach-san-pham(tayAoId=${item.id})}"
+                                                       style="text-decoration: none ; color : black"><span
+                                                            th:text="${item.getKieuTayAo()}"></span></a>
                                                 </div>
-                                                <h5 th:unless="${listTayAo.size() > 0}" style="color: gray;">Hiện tại không có tay áo nào</h5>
+                                                <h5 th:unless="${listTayAo.size() > 0}" style="color: gray;">Hiện tại
+                                                    không có tay áo nào</h5>
                                             </div>
                                         </div>
                                     </ul>
@@ -160,7 +175,8 @@
                     <div class="cart-popup position-absolute bg-white shadow p-3 display_none"
                          style=" width: 370px; right: -16px; top: 20px; z-index: 10;">
                         <div class="cart-popup-header">
-                            <p class="modal-title" th:text="'Bạn có ' + ${totalCartItem} + ' sản phẩm trong giỏ hàng'">Bạn có </p>
+                            <p class="modal-title" th:text="'Bạn có ' + ${totalCartItem} + ' sản phẩm trong giỏ hàng'">
+                                Bạn có </p>
                         </div>
                         <div class="cart-popup-body">
                             <div class="cart_product_row" th:each="item : ${gioHangChiTietList}">
@@ -176,14 +192,16 @@
                                     <div class="product-info">
                                         <div>
                                             <span>Color:</span>
-                                            <div class="color-indicator" th:style="'background-color:' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
+                                            <div class="color-indicator"
+                                                 th:style="'background-color:' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
                                         </div>
-                                        <span>Size: <span th:text="${item.getChiTietSanPham().size.tenSize}"></span></span>
+                                        <span>Size: <span
+                                                th:text="${item.getChiTietSanPham().size.tenSize}"></span></span>
                                     </div>
 
                                     <!-- Giá tiền và số lượng -->
                                     <div class="price-quantity">
-                                        <p th:text="'Giá: ' + ${convertMoney.formatCurrency(item.getChiTietSanPham().donGia)}"></p>
+                                        <p th:text="'Giá: ' + ${convertMoney.formatCurrency(item.chiTietSanPham.donGia)}"></p>
                                         <p th:text="'Số lượng: ' + ${item.soLuong}"></p>
                                     </div>
                                 </div>
@@ -194,7 +212,8 @@
                             <div class="d-flex justify-content-between"
                                  style="border-top: 2px solid #F6F6F6; padding: 12px;">
                                 <div style="font-size: 14px; font-weight: 500;">Tổng tiền</div>
-                                <div style="font-size: 14px; font-weight: 500;" th:text="${convertMoney.formatCurrency(tongTien)}">
+                                <div style="font-size: 14px; font-weight: 500;"
+                                     th:text="${convertMoney.formatCurrency(tongTien)}">
                                 </div>
                             </div>
                             <a href="/gio-hang-chi-tiet" class="btn btn-dark w-100">Thanh toán</a>
@@ -212,42 +231,46 @@
     </div>
 </div>
 <!--start content-->
-    <div class="container" style="padding: 54px 0px; margin-bottom: 120px;">
-        <div class="row">
-            <div class="box" style="flex: 2">
-                <div class="d-flex align-items-center" style="margin: 24px">
-                    <div class="step-container">
-<!--                        Thêm hoặc xóa class active để nó hiện màu đen hoặc xám-->
-                        <div class="step" th:classappend="${donHangChiTiet.get(0).getHoaDon().getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN} ? 'active' : ''">
-                            <i class="fa-sharp fa-regular fa-hourglass-start"></i>
-                        </div>
-                        <span class="step-description">Chờ xác nhận</span>
+<div class="container" style="padding: 54px 0px; margin-bottom: 120px;">
+    <div class="row">
+        <div class="box" style="flex: 2">
+            <div class="d-flex align-items-center" style="margin: 24px 24px 60px 24px">
+                <div class="step-container">
+                    <!--                        Thêm hoặc xóa class active để nó hiện màu đen hoặc xám-->
+                    <div class="step"
+                         th:classappend="${donHangChiTiet.get(0).getHoaDon().getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN} ? 'active' : ''">
+                        <i class="fa-sharp fa-regular fa-hourglass-start"></i>
                     </div>
-                    <div class="line"></div>
-                    <div class="step-container">
-                        <div class="step" th:classappend="${donHangChiTiet.get(0).getHoaDon().getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).DANG_XU_LY} ? 'active' : ''">
-                            <i class="fa-regular fa-box-open-full"></i>
-                        </div>
-                        <span class="step-description">Đang xử lý</span>
-                    </div>
-                    <div class="line"></div>
-                    <div class="step-container">
-                        <div class="step" th:classappend="${donHangChiTiet.get(0).getHoaDon().getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).DANG_GIAO_HANG} ? 'active' : ''">
-                            <i class="fa-light fa-truck-fast"></i>
-                        </div>
-                        <span class="step-description">Đang giao hàng</span>
-                    </div>
-                    <div class="line"></div>
-                    <div class="step-container">
-                        <div class="step" th:classappend="${donHangChiTiet.get(0).getHoaDon().getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).HOAN_TAT} ? 'active' : ''">
-                            <i class="fa-light fa-hand-holding-heart"></i>
-                        </div>
-                        <span class="step-description">Hoàn tất</span>
-                    </div>
+                    <span class="step-description">Chờ xác nhận</span>
                 </div>
+                <div class="line"></div>
+                <div class="step-container">
+                    <div class="step"
+                         th:classappend="${donHangChiTiet.get(0).getHoaDon().getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).DANG_XU_LY} ? 'active' : ''">
+                        <i class="fa-regular fa-box-open-full"></i>
+                    </div>
+                    <span class="step-description">Đang xử lý</span>
+                </div>
+                <div class="line"></div>
+                <div class="step-container">
+                    <div class="step"
+                         th:classappend="${donHangChiTiet.get(0).getHoaDon().getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).DANG_GIAO_HANG} ? 'active' : ''">
+                        <i class="fa-light fa-truck-fast"></i>
+                    </div>
+                    <span class="step-description">Đang giao hàng</span>
+                </div>
+                <div class="line"></div>
+                <div class="step-container">
+                    <div class="step"
+                         th:classappend="${donHangChiTiet.get(0).getHoaDon().getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).HOAN_TAT} ? 'active' : ''">
+                        <i class="fa-light fa-hand-holding-heart"></i>
+                    </div>
+                    <span class="step-description">Hoàn tất</span>
+                </div>
+            </div>
         </div>
         <div class="row">
-            <div class="col-7">
+            <div class="col-8">
                 <!--    table-->
                 <table class="table">
                     <thead>
@@ -256,6 +279,9 @@
                         <th scope="col">Giá</th>
                         <th scope="col">Số lượng</th>
                         <th scope="col">Tổng cộng</th>
+                        <th scope="col"
+                            th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).HOAN_TAT}">Hành động
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -272,23 +298,54 @@
                                 </div>
                                 <!-- Tên sản phẩm và chi tiết -->
                                 <div style="margin-left: 12px; width: 200px;">
-                                    <p style="font-size: 16px; font-weight: 500;" th:text="${dhct.getChiTietSanPham().getSanPham().getTenSanPham()}"></p>
+                                    <p style="font-size: 16px; font-weight: 500;"
+                                       th:text="${dhct.getChiTietSanPham().getSanPham().getTenSanPham()}"></p>
                                     <!-- Màu sắc và kích thước -->
-                                    <div class="d-flex justify-content-between align-items-center" style="width: 154px; height: 24px;">
+                                    <div class="d-flex justify-content-between align-items-center"
+                                         style="width: 154px; height: 24px;">
                                         <div>Color:</div>
                                         <div th:style="'padding: 8px; border-radius: 50%;background-color: '+ ${dhct.getChiTietSanPham().getMau().getMaMauSac()}"></div>
-                                        <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">&#8722;</div>
-                                        <div>Size: <span th:text="${dhct.getChiTietSanPham().getSize().getTenSize()}"></span></div>
+                                        <div style="font-size: 16px; font-weight: 500; color: #5C5F6A; margin: 0px 6px;">
+                                            &#8722;
+                                        </div>
+                                        <div>Size: <span
+                                                th:text="${dhct.getChiTietSanPham().getSize().getTenSize()}"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </td>
-                        <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px" th:text="${dhct.getChiTietSanPham().getDonGia()}"><i class="fa-regular fa-dollar-sign"></i><p
-                                style="display: inline-block;"></p></div></td>
-                        <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px" th:text="${dhct.getSoLuong()}"><p
-                                style="display: inline-block;"></p></div></td>
-                        <td><div style="font-size: 14px; font-weight: 500; padding-top: 30px" th:text="${dhct.getChiTietSanPham().getDonGia() * dhct.getSoLuong()}"><i class="fa-regular fa-dollar-sign"></i><p
-                                style="display: inline-block;"></p></div></td>
+                        <td>
+                            <div style="font-size: 14px; padding-top: 30px"
+                                 th:text="${convertMoney.formatCurrency(dhct.getChiTietSanPham().getDonGia())}">gia ban
+                                <p
+                                        style="display: inline-block;"></p></div>
+                        </td>
+                        <td>
+                            <div style="font-size: 14px; padding-top: 30px"
+                                 th:text="${dhct.getSoLuong()}"><p
+                                    style="display: inline-block;"></p></div>
+                        </td>
+                        <td>
+                            <div style="font-size: 14px; font-weight: 500; padding-top: 30px"
+                                 th:text="${convertMoney.formatCurrency(dhct.getChiTietSanPham().getDonGia() * dhct.getSoLuong())}">
+                                tong tien<p
+                                    style="display: inline-block;"></p></div>
+                        </td>
+                        <td>
+                            <div class="order-actions2">
+                                <button class="view-order btn-review"
+                                        th:if="${!danhGiaService.checkDanhGiaAndDonHang(dhct.id)}"
+                                        th:attr="data-order-id=${dhct.id}"
+                                        data-bs-toggle="modal" data-bs-target="#modal_review">
+                                    Viết đánh giá
+                                </button>
+                                <button class="view-order btn-review" style="background-color: #000; color: #fff"
+                                        th:if="${danhGiaService.checkDanhGiaAndDonHang(dhct.id)}">
+                                    Đã đánh giá
+                                </button>
+                            </div>
+                        </td>
                     </tr>
 
                     </tbody>
@@ -324,11 +381,11 @@
                 </nav>
                 <!-- table-->
             </div>
-            <div class="col-1"></div>
             <div class="col-4">
                 <div class="card p-3" style="border: 1px solid #ccc ;border-radius: 4px;margin-bottom: 12px">
                     <div class="card-body" style=" position: relative;">
-                        <h5 class="card-title" style="font-weight: bold; margin-bottom: 0;" th:text="${hoaDon.diaChi.tenKhachHang}"></h5>
+                        <h5 class="card-title" style="font-weight: bold; margin-bottom: 0;"
+                            th:text="${hoaDon.diaChi.tenKhachHang}"></h5>
                         <p class="card-text" style=" margin-top: 0.5rem;"
                            th:text="${convertMoney.formatFullAddress(hoaDon.diaChi.diaChi, hoaDon.diaChi.tenPhuongXa, hoaDon.diaChi.tenQuanHuyen, hoaDon.diaChi.tenTinhThanh)}"
                         ></p>
@@ -343,16 +400,21 @@
                 <div style="border: 1px solid #E6E7E8; border-radius: 4px; padding: 38px 18px; position: relative;">
                     <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                         <div style="font-size: 16px; font-weight: 500;">Tổng cộng:</div>
-                        <div style="font-size: 16px; font-weight: 500;"><span id="grand-total" th:text="${convertMoney.formatCurrency(hoaDon.tongTien)}">0.00</span></div>
+                        <div style="font-size: 16px; font-weight: 500;"><span id="grand-total"
+                                                                              th:text="${convertMoney.formatCurrency(hoaDon.tongTien)}">0.00</span>
+                        </div>
                     </div>
                     <hr style="color: #5b5c64; border-width: 1px; margin-bottom: 18px;">
 
-                    <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between" style="margin-bottom: 18px;">
+                    <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between"
+                         style="margin-bottom: 18px;">
                         <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Tên khuyến mại:</div>
-                        <div style="font-size: 16px; font-weight: 500;"><span th:text="${hoaDon.khuyenMai.tenKhuyenMai}"></span></div>
+                        <div style="font-size: 16px; font-weight: 500;"><span
+                                th:text="${hoaDon.khuyenMai.tenKhuyenMai}"></span></div>
                     </div>
 
-                    <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between" style="margin-bottom: 18px;">
+                    <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between"
+                         style="margin-bottom: 18px;">
                         <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Mức giảm:</div>
                         <div style="font-size: 16px; font-weight: 500;"><span
                                 th:text="${convertMoney.formatCurrency(hoaDon.khuyenMai.giaTri)} + ' ' + ${hoaDon.khuyenMai.kieuKhuyenMai? '%':'VND'}"></span>
@@ -361,18 +423,22 @@
 
                     <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                         <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
-                        <div style="font-size: 16px; font-weight: 500;"><span id="shipping-fee" th:text="${convertMoney.formatCurrency(hoaDon.phiVanChuyen)}">30.000</span></div>
+                        <div style="font-size: 16px; font-weight: 500;"><span id="shipping-fee"
+                                                                              th:text="${convertMoney.formatCurrency(hoaDon.phiVanChuyen)}">30.000</span>
+                        </div>
                     </div>
                     <hr style="color: #E6E7E8; border-width: 3px; margin-bottom: 18px;">
                     <div class="d-flex justify-content-between">
                         <div style="font-size: 16px; font-weight: bold;">Tổng thanh toán:</div>
-                        <div style="font-size: 16px; font-weight: bold;"><span id="final-total" th:text="${convertMoney.calculatorTotal(hoaDon.tongTien, hoaDon.khuyenMai, hoaDon.phiVanChuyen)}">0.00</span></div>
+                        <div style="font-size: 16px; font-weight: bold;"><span id="final-total"
+                                                                               th:text="${convertMoney.calculatorTotal(hoaDon.tongTien, hoaDon.khuyenMai, hoaDon.phiVanChuyen)}">0.00</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-        </div>
+</div>
 <!--end content-->
 <!--footer-->
 <div class="container-fluid d-flex align-items-center justify-content-evenly"
@@ -461,10 +527,117 @@
         </div>
     </div>
 </div>
+<!--modal đánh giá-->
+<div class="modal fade" id="modal_review" tabindex="-1" aria-labelledby="modal_reviewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="padding: 20px; width: 494px; height: 578px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_reviewLabel">Viết đánh giá</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/them-danh-gia">
+                    <input type="hidden" id="idHoaDonChiTet" name="idHoaDonChiTet">
+                    <div class="mb-3">
+                        <label for="InputEmail" class="form-label">Email</label>
+                        <input type="email" disabled class="form-control" id="InputEmail" name="email"
+                               th:value="${khachHang.taiKhoan.email}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="InputFullName" class="form-label">Họ tên</label>
+                        <input id="InputFullName" class="form-control" disabled th:value="${khachHang.tenKhachHang}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="reviewTextArea" class="form-label">Đánh giá</label>
+                        <textarea class="form-control" id="reviewTextArea" style="height: 100px"
+                                  name="noiDung"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
+                            <input class="form-check-input" type="radio" name="mucDoDanhGia" id="poinReview1" value="1" style="display: none;">
+                            <label class="form-check-label" for="poinReview1" data-star="1">
+                                <i class="fa-regular fa-star number_star_review" style="font-size: 16px; cursor: pointer;"></i>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
+                            <input class="form-check-input" type="radio" name="mucDoDanhGia" id="poinReview2" value="2" style="display: none;">
+                            <label class="form-check-label" for="poinReview2" data-star="2">
+                                <i class="fa-regular fa-star number_star_review" style="font-size: 16px; cursor: pointer;"></i>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
+                            <input class="form-check-input" type="radio" name="mucDoDanhGia" id="poinReview3" value="3" style="display: none;">
+                            <label class="form-check-label" for="poinReview3" data-star="3">
+                                <i class="fa-regular fa-star number_star_review" style="font-size: 16px; cursor: pointer;"></i>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
+                            <input class="form-check-input" type="radio" name="mucDoDanhGia" id="poinReview4" value="4" style="display: none;">
+                            <label class="form-check-label" for="poinReview4" data-star="4">
+                                <i class="fa-regular fa-star number_star_review" style="font-size: 16px; cursor: pointer;"></i>
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
+                            <input class="form-check-input" type="radio" name="mucDoDanhGia" id="poinReview5" value="5" style="display: none;">
+                            <label class="form-check-label" for="poinReview5" data-star="5">
+                                <i class="fa-regular fa-star number_star_review" style="font-size: 16px; cursor: pointer;"></i>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="text-center" style="margin-top: 36px;">
+                        <button type="submit" class="btn bg-black"
+                                style="color: #fff; padding: 8px 68px; font-size: 14px;">Gửi đánh giá
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.11/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const starLabels = document.querySelectorAll(".form-check-label");
+        const starIcons = document.querySelectorAll(".number_star_review");
+
+        // Hàm cập nhật hiển thị ngôi sao
+        function updateStars(selectedStar) {
+            starIcons.forEach((icon, index) => {
+                if (index < selectedStar) {
+                    icon.classList.add("fa-solid");
+                    icon.classList.remove("fa-regular");
+                    icon.style.color = "#FFD700"; // Màu vàng
+                } else {
+                    icon.classList.add("fa-regular");
+                    icon.classList.remove("fa-solid");
+                    icon.style.color = "#5C5F6A"; // Màu xám
+                }
+            });
+        }
+
+        // Lắng nghe sự kiện click trên các label
+        starLabels.forEach(label => {
+            label.addEventListener("click", () => {
+                const selectedStar = parseInt(label.dataset.star); // Lấy số sao từ data-star
+                updateStars(selectedStar);
+            });
+        });
+    });
+
+    document.querySelectorAll('.btn-review').forEach(button => {
+        button.addEventListener('click', function () {
+            // Lấy ID đơn hàng từ thuộc tính data
+            const orderId = this.getAttribute('data-order-id');
+            // Gán ID vào input ẩn trong modal
+            document.getElementById('idHoaDonChiTet').value = orderId;
+        });
+    });
+
+</script>
 </body>
 </html>

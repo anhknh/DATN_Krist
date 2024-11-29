@@ -21,17 +21,14 @@ public class DanhGia extends BaseEntity {
     private KhachHang khachHang;
 
     @ManyToOne
-    @JoinColumn(name="id_san_pham")
-    private SanPham sanPham;
+    @JoinColumn(name = "id_hoa_don_chi_tiet")
+    private HoaDonChiTiet hoaDonChiTiet;
 
 
     private Integer mucDoDanhGia ;
 
     private String noiDung;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "trang_thai")
-    private Status trangThai;
 
 }
 

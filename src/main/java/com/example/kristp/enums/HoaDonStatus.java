@@ -11,7 +11,8 @@ public enum HoaDonStatus {
     HOAN_TAT(3),
     HOA_DON_CHO(4),
     DA_THANH_TOAN(5),
-    CHUA_THANH_TOAN(6);
+    CHUA_THANH_TOAN(6),
+    DA_HUY(7);
 
     private final int value;
 
