@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("/quan-ly-chat-lieu/")
+@RequestMapping("/quan-ly/")
 public class ChatLieuController {
 
     @Autowired
@@ -48,20 +48,20 @@ public class ChatLieuController {
             attributes.addFlashAttribute("message" , "Thêm mới chất liệu không thành công .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-chat-lieu/pagination-chat-lieu";
+            return "redirect:/quan-ly/pagination-chat-lieu";
         }
         else if(chatLieuService.addChatLieu(chatLieu) == null){
             attributes.addFlashAttribute("chatLieu" , chatLieu);
             attributes.addFlashAttribute("message" , "Tên của chất liệu đã tồn tại .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-chat-lieu/pagination-chat-lieu";
+            return "redirect:/quan-ly/pagination-chat-lieu";
         }
         chatLieuService.addChatLieu(chatLieu);
         attributes.addFlashAttribute("message" , "Thêm mới chất liệu thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-chat-lieu/pagination-chat-lieu";
+        return "redirect:/quan-ly/pagination-chat-lieu";
     }
 
     @PostMapping("/update-chat-lieu")
@@ -71,21 +71,21 @@ public class ChatLieuController {
             attributes.addFlashAttribute("message" , "Cập nhật chất liệu không thành công .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-chat-lieu/pagination-chat-lieu";
+            return "redirect:/quan-ly/pagination-chat-lieu";
         }
         else if(chatLieuService.updateChatLieu(chatLieu , idChatLieu) == null){
             attributes.addFlashAttribute("chatLieu" , chatLieu);
             attributes.addFlashAttribute("message" , "Tên của chất liệu đã tồn tại .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-chat-lieu/pagination-chat-lieu";
+            return "redirect:/quan-ly/pagination-chat-lieu";
         }
 
         chatLieuService.updateChatLieu(chatLieu , idChatLieu);
         attributes.addFlashAttribute("message" , "Cập nhật chất liệu thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-chat-lieu/pagination-chat-lieu";
+        return "redirect:/quan-ly/pagination-chat-lieu";
     }
 
     @GetMapping("/delete-chat-lieu/{id}")
@@ -94,11 +94,11 @@ public class ChatLieuController {
             attributes.addFlashAttribute("message" , "Thay đổi trạng thái chất liệu thành công .");
             attributes.addFlashAttribute("messageType" , "alert-success");
             attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-chat-lieu/pagination-chat-lieu";
+        return "redirect:/quan-ly/pagination-chat-lieu";
 
     }
 
-    @GetMapping("/tim-kiem-tat-ca-theo-ten")
+    @GetMapping("/tim-kiem-tat-ca-theo-ten-chat-lieu")
     private String timKiemTatCaTheoTen(@RequestParam("tenTimKiem")String ten ,@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo, Model model){
         Page<ChatLieu> chatLieus = chatLieuService.timTatCaTheoTen(pageNo,"%"+ten+"%");
         model.addAttribute("chatLieuList" , chatLieus.getContent());

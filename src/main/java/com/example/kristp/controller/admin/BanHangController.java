@@ -2,6 +2,7 @@ package com.example.kristp.controller.admin;
 
 import com.example.kristp.entity.*;
 import com.example.kristp.service.*;
+import com.example.kristp.utils.DataUtils;
 import com.example.kristp.utils.Pagination;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,6 +53,10 @@ public class BanHangController {
     KhuyenMaiService khuyenMaiService;
     @Autowired
     KhachHangService khachHangService;
+    @Autowired
+    DataUtils dataUtils;
+
+
     HoaDon hoaDonSelected = null;
 
 
@@ -74,11 +79,13 @@ public class BanHangController {
                 tayAoId,coAoId,mauSacId,sizeId,pageable);
         //load bill
         List<HoaDon> hoaDons = hoaDonService.findAllHoaDonCho();
-        if (hoaDonSelected == null) {
+        if (hoaDonSelected == null && !hoaDons.isEmpty()) {
             hoaDonSelected = hoaDons.get(0);
         } else {
             if(idHoaDon != null) {
                 hoaDonSelected = hoaDonService.findHoaDonById(idHoaDon);
+            } else {
+                hoaDonSelected = null;
             }
         }
         model.addAttribute("listHoaDon", hoaDons);
@@ -108,14 +115,14 @@ public class BanHangController {
         model.addAttribute("chiTietSanPhamService", chiTietSanPhamService);
         //thông tin hóa đơn
         model.addAttribute("tongTien", banHangService.getTongTien(hoaDonSelected));
-        model.addAttribute("tongTienSauGiam", banHangService.findTongTienKhuyenMai(hoaDonSelected));
         //khuyến mại
         model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
+        model.addAttribute("dataUtils", dataUtils);
         return "view-admin/dashbroad/ban-hang";
     }
 
     // Trả về chi tiet san pham theo productId
-    @GetMapping("/chi-tiet-san-pham/{productId}")
+    @GetMapping("/user/chi-tiet-san-pham/{productId}")
     @ResponseBody
     public List<ChiTietSanPham> getCTSPByProductId(@PathVariable Integer productId) {
         return chiTietSanPhamService.getProductDetailsByProductId(productId);
@@ -147,17 +154,15 @@ public class BanHangController {
 
     @GetMapping("/tao-hoa-don")
     public String taoHoaDon(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
-//        if (hoaDonService.taoHoaDon()) {
-//            redirectAttributes.addFlashAttribute("message", "Tạo hóa đơn chờ thành công!");
-//            redirectAttributes.addFlashAttribute("messageType", "alert-success");
-//            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
-//        } else {
-//            redirectAttributes.addFlashAttribute("message", "Hóa đơn chờ đã đạt giới hạn!");
-//            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
-//            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
-//        }
-        hoaDonService.taoHoaDon();
-
+        if (hoaDonService.taoHoaDon()) {
+            redirectAttributes.addFlashAttribute("message", "Tạo hóa đơn chờ thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Hóa đơn chờ đã đạt giới hạn!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+        }
         //get url request
         String referer = request.getHeader("referer");
         //reload page
@@ -177,6 +182,7 @@ public class BanHangController {
             redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
         }
 
+        hoaDonSelected = null;
 
         return "redirect:/quan-ly/ban-hang";
     }
@@ -283,6 +289,33 @@ public class BanHangController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/add-tra-khach-hang")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> addTraKhachHang(@RequestParam("soDienThoai")  String soDienThoai,
+                                                                HttpServletRequest request, Model model,
+                                                                RedirectAttributes redirectAttributes) {
+        Map<String, Object> response = new HashMap<>();
+
+        // Tìm khách hàng theo số điện thoại
+        KhachHang khachHang = khachHangService.findBySoDienThoai(soDienThoai);
+        banHangService.addKhachHang(null, khachHang.getSoDienThoai(), khachHang.getTenKhachHang(), hoaDonSelected);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/huy-khach-hang")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> huyKhachHang(
+                                                               HttpServletRequest request, Model model,
+                                                               RedirectAttributes redirectAttributes) {
+        Map<String, Object> response = new HashMap<>();
+
+        // Tìm khách hàng theo số điện thoại
+        banHangService.huyKhachHang(hoaDonSelected);
+
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/them-nhanh-khach-hang")
     private String addKH(
             @Valid @ModelAttribute("khachHang") KhachHang khachHang,
@@ -338,6 +371,26 @@ public class BanHangController {
             redirectAttributes.addFlashAttribute("messageType", "alert-danger");
             redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
         }
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
+    }
+
+    @GetMapping("/huy-khuyen-mai-ban-hang")
+    public String huyKhuyenMaiBanHang(HttpServletRequest request,
+                               @RequestParam Integer idKhuyenMai,
+                               Model model, RedirectAttributes redirectAttributes) {
+//        if (banHangService.huyKhuyenMai(idKhuyenMai, hoaDonSelected)) {
+//            redirectAttributes.addFlashAttribute("message", "Áp dụng khuyến mại thành công!");
+//            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+//            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+//        } else {
+//            redirectAttributes.addFlashAttribute("message", "Áp dụng khuyến mại thất bại!");
+//            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+//            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+//        }
+        banHangService.huyKhuyenMai(idKhuyenMai, hoaDonSelected);
         //get url request
         String referer = request.getHeader("referer");
         //reload page

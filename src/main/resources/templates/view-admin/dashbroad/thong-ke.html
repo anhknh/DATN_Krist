@@ -59,7 +59,7 @@
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
                         <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
                     </a>
-                    <a href="/quan-ly-san-pham/pagination-san-pham" class="mb-3"
+                    <a href="/quan-ly/pagination-san-pham" class="mb-3"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
                         <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
                     </a>
@@ -73,28 +73,28 @@
                         <ul id="productSubMenu" class="submenu"
                             style="list-style: none; padding-left: 20px; display: none;">
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-danh-muc/pagination-danh-muc"
+                                <a href="/quan-ly/pagination-danh-muc"
                                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Danh
                                     mục</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-chat-lieu/pagination-chat-lieu"
+                                <a href="/quan-ly/pagination-chat-lieu"
                                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Chất liệu</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-mau-sac/pagination-mau-sac"
+                                <a href="/quan-ly/pagination-mau-sac"
                                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Màu sắc</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-size/pagination-size"
+                                <a href="/quan-ly/pagination-size"
                                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Size</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-tay-ao/pagination-tay-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Tay
+                                <a href="/quan-ly/pagination-tay-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Tay
                                     áo</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-co-ao/pagination-co-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Cổ
+                                <a href="/quan-ly/pagination-co-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Cổ
                                     áo</a>
                             </li>
                         </ul>
@@ -104,7 +104,7 @@
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-cart-flatbed" style="margin-right: 10px;"></i> Đơn hàng
                     </a>
-                    <a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="mb-3" onclick="highlightLink(this)"
+                    <a href="/quan-ly/pagination-khuyen-mai" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-tickets-perforated" style="margin-right: 10px;"></i> Khuyến mại
                     </a>
@@ -113,7 +113,7 @@
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
                     </a>
-                    <a href="/quan-ly-nhan-vien/phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
+                    <a href="/quan-ly//phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
                     </a>
@@ -202,7 +202,7 @@
                                         <thead class="thead-dark">
                                         <tr>
                                             <th>Mã</th>
-                                            <th>Tên khách hàng</th>
+                                            <th>Trạng thái thanh toán</th>
                                             <th>Tổng tiền</th>
                                             <th>Ngày đặt</th>
                                             <th>Xem đơn hàng</th>
@@ -211,12 +211,12 @@
                                         <tbody>
                                         <tr th:if="${hoaDons != null}" th:each="hd : ${hoaDons}">
                                             <td th:text="${hd.getId()}"></td>
-                                            <td th:text="${hd.diaChi.tenKhachHang}"></td>
-                                            <td th:text="${dataUtils.formatCurrency(hd.getTongTien())}"></td>
+                                            <td th:text="${dataUtils.formatStatus(hd.trangThaiThanhToan)}"></td>
+                                            <td th:text="${dataUtils.calculatorTotal(hd.tongTien, hd.khuyenMai, hd.phiVanChuyen)}"></td>
                                             <td th:text="${#dates.format(hd.getNgayTao(), 'dd/MM/yyyy')}"></td>
                                             <td class="text-center">
                                                 <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
-                                                    <a  class="d-block" style="color: #000; text-decoration: none" href="/quan-ly-don-hang/view-don-hang">
+                                                    <a  class="d-block" style="color: #000; text-decoration: none" href="/quan-ly//view-don-hang">
                                                         <i class="fa-sharp fa-light fa-eye"></i>
                                                     </a>
                                                 </div>
@@ -251,7 +251,7 @@
             }
             try {
                 // Gọi API để lấy dữ liệu biểu đồ
-                const response = await fetch('/api/chart-data'+'?a='+c);
+                const response = await fetch('/quan-ly/api/chart-data'+'?a='+c);
                 const data = await response.json();
                 // document.getElementById("totalorder").innerText = data.totalorder;
                 // document.getElementById("comments").innerText = data.comments;

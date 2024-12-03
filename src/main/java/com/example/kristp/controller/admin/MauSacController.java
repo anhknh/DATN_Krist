@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/quan-ly-mau-sac/")
+@RequestMapping("/quan-ly/")
 public class MauSacController {
     @Autowired
     private MauSacService mauSacService ;
@@ -42,7 +42,7 @@ public class MauSacController {
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
 
-            return "redirect:/quan-ly-mau-sac/pagination-mau-sac";
+            return "redirect:/quan-ly/pagination-mau-sac";
         }
         else if(mauSacService.addMauSac(mauSac) == null){
             attributes.addFlashAttribute("mauSac" , mauSac);
@@ -50,13 +50,13 @@ public class MauSacController {
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
 
-            return "redirect:/quan-ly-mau-sac/pagination-mau-sac";
+            return "redirect:/quan-ly/pagination-mau-sac";
         }
         mauSacService.addMauSac(mauSac);
         attributes.addFlashAttribute("message" , "Thêm mới ma thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-mau-sac/pagination-mau-sac";
+        return "redirect:/quan-ly/pagination-mau-sac";
     }
 
     @PostMapping("/update-mau-sac")
@@ -66,21 +66,21 @@ public class MauSacController {
             attributes.addFlashAttribute("message" , "Cập nhật màu không thành công .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-mau-sac/pagination-mau-sac";
+            return "redirect:/quan-ly/pagination-mau-sac";
         }
         else if(mauSacService.updateMauSac(mauSac , idMauSac) == null){
             attributes.addFlashAttribute("mauSac", mauSac);
             attributes.addFlashAttribute("message" , "Tên của màu đã tồn tại .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-mau-sac/pagination-mau-sac";
+            return "redirect:/quan-ly/pagination-mau-sac";
         }
 
         mauSacService.updateMauSac(mauSac , idMauSac) ;
         attributes.addFlashAttribute("message" , "Cập nhật màu thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-mau-sac/pagination-mau-sac";
+        return "redirect:/quan-ly/pagination-mau-sac";
     }
 
     @GetMapping("/delete-mau-sac/{id}")
@@ -89,11 +89,11 @@ public class MauSacController {
         attributes.addFlashAttribute("message" , "Thay đổi trạng thái màu thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-mau-sac/pagination-mau-sac";
+        return "redirect:/quan-ly/pagination-mau-sac";
 
     }
 
-    @GetMapping("/tim-kiem-tat-ca-theo-ten")
+    @GetMapping("/tim-kiem-tat-ca-theo-ten-mau-sac")
     private String timKiemTatCaTheoTen(@RequestParam("tenTimKiem")String ten ,@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo, Model model){
         Page<MauSac> mau = mauSacService.timTatCaTheoTen(pageNo,"%"+ten+"%");
         model.addAttribute("mauSacList" , mau.getContent());

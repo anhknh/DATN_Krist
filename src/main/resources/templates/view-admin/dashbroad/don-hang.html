@@ -50,86 +50,72 @@
                 <!-- Main Menu Items -->
                 <div style="padding: 0px 22px 28px; border-bottom: 1px solid #E9E9EB;" class="mb-4">
                     <!--                    Hiện tại vẫn chưa có tính năng doanh thu đường dẫn là #-->
-                    <a href="#" class=" mb-3"
+                    <a href="/quan-ly/thong-ke" class=" mb-3"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;"
                        onclick="highlightLink(this)">
                         <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
                     </a>
-                    <a href="#" class="mb-3"
+                    <a href="/quan-ly/ban-hang" class=" mb-3"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
                         <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
+                    </a>
+                    <a href="/quan-ly/pagination-san-pham" class="mb-3"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
+                        <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
                     </a>
                     <!-- Product Management Tree Menu -->
                     <div class="menu-item mb-3">
                         <p style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center; cursor: pointer;"
                            onclick="toggleSubmenu('productSubMenu')">
-                            <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Sản phẩm
+                            <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Thuộc tính
                             <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
                         </p>
                         <ul id="productSubMenu" class="submenu"
                             style="list-style: none; padding-left: 20px; display: none;">
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-danh-muc/pagination-danh-muc"
+                                <a href="/quan-ly/pagination-danh-muc"
                                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Danh
                                     mục</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-chat-lieu/pagination-chat-lieu"
+                                <a href="/quan-ly/pagination-chat-lieu"
                                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Chất liệu</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-mau-sac/pagination-mau-sac"
+                                <a href="/quan-ly/pagination-mau-sac"
                                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Màu sắc</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-size/pagination-size"
+                                <a href="/quan-ly/pagination-size"
                                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Size</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-tay-ao/pagination-tay-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Tay
+                                <a href="/quan-ly/pagination-tay-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Tay
                                     áo</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-co-ao/pagination-co-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Cổ
+                                <a href="/quan-ly/pagination-co-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Cổ
                                     áo</a>
                             </li>
                         </ul>
                     </div>
                     <!--                    Chức năng chưa có đường dẫn là #-->
-                    <div class="menu-item mb-3">
-                        <p style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center; cursor: pointer;"
-                           onclick="toggleSubmenu('orderSubMenu')">
-                            <i class="fa-light fa-cart-shopping" style="margin-right: 10px;" ></i> Đơn hàng
-                            <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
-                        </p>
-                        <ul id="orderSubMenu" class="submenu"
-                            style="list-style: none; padding-left: 20px; display: none;">
-                            <li style="padding: 8px 12px;">
-                                <a href="#" class="bg_profile_btn"
-                                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Chờ xác nhận</a>
-                            </li>
-                            <li style="padding: 8px 12px;">
-                                <a href="#"
-                                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Chờ xác nhận</a>
-                            </li>
-                            <li style="padding: 8px 12px;">
-                                <a href="#"
-                                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Đang xử lý</a>
-                            </li>
-                            <li style="padding: 8px 12px;">
-                                <a href="#"
-                                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Đang giao hàng</a>
-                            </li>
-                            <li style="padding: 8px 12px;">
-                                <a href="#"
-                                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Hoàn thành</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <a href="/quan-ly/view-don-hang" class="bg_profile_btn mb-3" onclick="highlightLink(this)"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" >
+                        <i class="fa-light fa-cart-flatbed" style="margin-right: 10px;"></i> Đơn hàng
+                    </a>
+                    <a href="/quan-ly/pagination-khuyen-mai" class=" mb-3" onclick="highlightLink(this)"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                        <i class="fa-light fa-tickets-perforated" style="margin-right: 10px;"></i> Khuyến mại
+                    </a>
                     <!--                    Chức năng chưa có đường dẫn là #-->
-                    <a href="/quan-ly-khach-hang/pagination-khach-hang  " class="mb-3" onclick="highlightLink(this)"
+                    <a href="/quan-ly/pagination-khach-hang" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
+                    </a>
+                    <a href="/quan-ly//phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                        <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
                     </a>
                     <!--                    Chức năng chưa có đường dẫn là #-->
 
@@ -180,7 +166,7 @@
                 <div class="box">
 <!--                    tìm kiếm đơn hàng-->
                     <div class="order-filter-box">
-                        <form th:action="@{/quan-ly-don-hang/tim-kiem-don-hang}" method="get" style="width: 100%">
+                        <form th:action="@{/quan-ly//tim-kiem-don-hang}" method="get" style="width: 100%">
                             <div class="filter-container">
                                 <div class="filter-item">
                                     <label for="id">Mã đơn hàng</label>
@@ -203,7 +189,7 @@
                     <div class="order-status-box">
                         <div style="font-size: 18px; font-weight: 700">Trạng thái đơn hàng</div>
                         <div class="status-options">
-                            <form action="/quan-ly-don-hang/view-don-hang" method="get">
+                            <form action="/quan-ly/view-don-hang" method="get">
                                 <!-- Tất cả -->
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="trangThai" id="status1" value="on"
@@ -245,6 +231,13 @@
                                         <span class="status-count" id="HOAN_TAT" th:text="${trangThaiHT}"></span>
                                     </label>
                                 </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="trangThai" id="status6" value="7" onchange="this.form.submit()">
+                                    <label class="form-check-label status-label" for="status6">
+                                        Đã Hủy
+                                        <span class="status-count" id="DA_HUY" th:text="${trangThaiHUY}"></span>
+                                    </label>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -267,7 +260,7 @@
                             <tbody>
                             <tr th:each="hoaDon, stat : ${hoaDons}">
                                 <td th:text="${stat.index + 1}"></td>
-                                <td th:text="${hoaDon.id}"></td>
+                                <td th:text="${hoaDon.maHoaDon}"></td>
                                 <td th:text="${#dates.format(hoaDon.ngayDatHang, 'dd/MM/yyyy')}"></td>
                                 <td th:text="${dataUtils.formatStatus(hoaDon.hinhThucThanhToan)}"></td>
                                 <td th:text="${dataUtils.formatStatus(hoaDon.trangThaiThanhToan)}"></td>
@@ -275,7 +268,7 @@
                                 <td th:text="${dataUtils.formatStatus(hoaDon.trangThai)}"></td>
                                 <td class="text-center">
                                     <div class="d-inline-block me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Xem chi tiết">
-                                        <a  class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly-don-hang/view-chi-tiet-don-hang(idHoaDon=${hoaDon.id})}">
+                                        <a  class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly/view-chi-tiet-don-hang(idHoaDon=${hoaDon.id})}">
                                             <i class="fa-sharp fa-light fa-eye"></i>
                                         </a>
                                     </div>
@@ -347,6 +340,41 @@
 <!--                            </tr>-->
                             </tbody>
                         </table>
+                        <div class="d-flex justify-content-end">
+                            <div>
+                                <!-- Pagination for SanPham -->
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-end">
+                                        <!-- Link to the first page -->
+                                        <li class="page-item">
+                                            <a class="page-link" th:style="'color: #5C5F6A'"
+                                               th:href="@{/quan-ly/view-don-hang(page=0)}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <!-- Loop through each page number in the pagination -->
+                                        <li th:each="p : ${pagination}"
+                                            th:classappend="${page.number == p} ? 'active' : ''">
+                                            <a class="page-link"
+                                               th:style="${page.number == p} ? 'color: #ffffff; background-color: #5C5F6A' : 'color: #5C5F6A'"
+                                               th:href="@{/quan-ly/view-don-hang(page=${p})}">
+                                                <span th:text="${p + 1}">1</span>
+                                            </a>
+                                        </li>
+
+                                        <!-- Link to the last page -->
+                                        <li class="page-item">
+                                            <a class="page-link" th:style="'color: #5C5F6A'"
+                                               th:href="@{/quan-ly/view-don-hang(page=${totalPage})}"
+                                               aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -407,13 +435,13 @@
                 // Ngược lại nếu class là 'fa-x', chọn radio button inactive
                 document.getElementById('inactive').checked = true;
             }
-            document.getElementById("form_submit").action = '/quan-ly-size/update-size' ;
+            document.getElementById("form_submit").action = '/quan-ly/update-size' ;
         } else {
             statusSection.classList.add('display_none');
             document.getElementById('exampleModalLabel').innerText = 'Add material';
             nameCate.value = "";
             desCate.value = "";
-            document.getElementById("form_submit").action = '/quan-ly-size/add-size' ;
+            document.getElementById("form_submit").action = '/quan-ly/add-size' ;
         }
     }
 
@@ -525,6 +553,7 @@
         document.getElementById("DANG_XU_LY").textContent = countByTrangThai["1"] || 0;
         document.getElementById("DANG_GIAO_HANG").textContent = countByTrangThai["2"] || 0;
         document.getElementById("HOAN_TAT").textContent = countByTrangThai["3"] || 0;
+        document.getElementById("DA_HUY").textContent = countByTrangThai["7"] || 0;
     } else {
         console.log("Dữ liệu JSON không hợp lệ hoặc không có dữ liệu");
     }

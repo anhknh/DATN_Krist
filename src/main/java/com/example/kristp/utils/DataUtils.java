@@ -10,6 +10,7 @@ import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 
@@ -108,6 +109,9 @@ public class DataUtils {
         } else if (trangThai.equals("CHUA_THANH_TOAN")) {
             return "Chưa thanh toán";
         }
+        else if (trangThai.equals("DA_HUY")) {
+            return "Đã Hủy";
+        }
         else if (trangThai.equals("online")) {
             return "VN Pay";
         }
@@ -128,7 +132,7 @@ public class DataUtils {
                 return "shipping";
             case "HOAN_TAT", "DA_THANH_TOAN":
                 return "completed";
-            case "CHUA_THANH_TOAN":
+            case "CHUA_THANH_TOAN", "DA_HUY":
                 return "cancelled";
             default:
                 return "";
@@ -153,6 +157,26 @@ public class DataUtils {
                 .sum();
 
         return tongDiem; // Trả về tổng điểm
+    }
+
+    public static String generateBarcode(int length) {
+        if (length <= 0) {
+            return null;
+        }
+
+        // Chuỗi chứa các ký tự hợp lệ cho barcode (chữ hoa và số)
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        StringBuilder barcode = new StringBuilder();
+        Random random = new Random();
+
+        for (int i = 0; i < length; i++) {
+            // Lấy ký tự ngẫu nhiên từ chuỗi characters
+            char randomChar = characters.charAt(random.nextInt(characters.length()));
+            barcode.append(randomChar);
+        }
+
+        return barcode.toString();
     }
 
 }

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/quan-ly")
+@RequestMapping("/user/")
 public class DonHangChiTietKhController {
 
     @Autowired
@@ -59,16 +59,16 @@ public class DonHangChiTietKhController {
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
             if(hoaDon.getTrangThai() == HoaDonStatus.CHO_XAC_NHAN){
-                return "redirect:/quan-ly/don-hang";
+                return "redirect:/user/don-hang";
             }
             else if(hoaDon.getTrangThai() == HoaDonStatus.DANG_XU_LY){
-                return "redirect:/quan-ly/dang-xu-ly";
+                return "redirect:/user/dang-xu-ly";
             }
             else if(hoaDon.getTrangThai() == HoaDonStatus.DANG_GIAO_HANG){
-                return "redirect:/quan-ly/dang-giao-hang";
+                return "redirect:/user/dang-giao-hang";
             }
             else {
-                return "redirect:/quan-ly/hoan-thanh";
+                return "redirect:/user/hoan-thanh";
             }
         }
 

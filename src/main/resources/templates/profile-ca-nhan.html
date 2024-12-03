@@ -23,7 +23,7 @@
                 <div class="d-flex align-items-center">
                     <img style="height: 36px; margin-right: 8px;" src="/img/logo.png" alt="logo">
                     <p class="title d-inline p-0 m-0">
-                        <a style="color: #000; text-decoration: none" href="/trang-chu">Krist</a>
+                        <a style="color: #000; text-decoration: none" href="/user/trang-chu">Krist</a>
                     </p>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                             <div class="navbar-nav" style="width: 100%; justify-content: space-between;">
                                 <div>
                                     <li class="nav-item">
-                                        <a class="nav-link cl-black s-18" href="/trang-chu">Trang chủ</a>
+                                        <a class="nav-link cl-black s-18" href="/user/trang-chu">Trang chủ</a>
                                     </li>
                                 </div>
                                 <div>
@@ -50,7 +50,7 @@
                                                     <hr>
                                                     <div class="p-2 hover-effect" th:each="item : ${listDanhMuc}">
                                                         <a th:if="${listDanhMuc.size() > 0}"
-                                                           th:href="@{/danh-sach-san-pham(danhMucId=${item.id})}"
+                                                           th:href="@{/user/danh-sach-san-pham(danhMucId=${item.id})}"
                                                            style="text-decoration: none ; color : black">
                                                             <span  th:text="${item.getTenDanhMuc()}"></span></a>
                                                     </div>
@@ -63,7 +63,7 @@
                                                     <div class="p-2 hover-effect" th:each="item : ${listCoAo}">
                                                         <a th:if="${listCoAo.size() > 0}"
 
-                                                           th:href="@{/danh-sach-san-pham(coAoId=${item.id})}"
+                                                           th:href="@{/user/danh-sach-san-pham(coAoId=${item.id})}"
                                                            style="text-decoration: none ; color : black"><span  th:text="${item.getKieuCoAo()}"></span></a>
                                                     </div>
                                                     <h5 th:unless="${listCoAo.size() > 0}" style="color: gray;">Hiện tại không có cổ áo nào</h5>
@@ -72,7 +72,7 @@
                                                     <p class="font-blod">Tay áo</p>
                                                     <hr>
                                                     <div th:if="${listTayAo.size() > 0}" class="p-2 hover-effect" th:each="item : ${listTayAo}">
-                                                        <a th:href="@{/danh-sach-san-pham(tayAoId=${item.id})}" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuTayAo()}"></span></a>
+                                                        <a th:href="@{/user/danh-sach-san-pham(tayAoId=${item.id})}" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuTayAo()}"></span></a>
                                                     </div>
                                                     <h5 th:unless="${listTayAo.size() > 0}" style="color: gray;">Hiện tại không có tay áo nào</h5>
                                                 </div>
@@ -103,7 +103,7 @@
             <div style="flex: 1;">
                 <div class="header_right d-flex align-items-center justify-content-end" style="height: 100%;">
                     <div>
-                        <a class="cl-black" href="/danh-sach-san-pham"><i
+                        <a class="cl-black" href="/user/danh-sach-san-pham"><i
                                 class="fa-regular s-18 fa-magnifying-glass"></i></a>
                     </div>
                     <div style="margin: 0px 46px;">
@@ -111,7 +111,7 @@
                                 class="fa-sharp s-18 fa-regular fa-heart"></i></a>
                     </div>
                     <div class="me-4 position-relative cart-container">
-                        <a class="cl-black" href="/gio-hang-chi-tiet">
+                        <a class="cl-black" href="/user/gio-hang-chi-tiet">
                             <i class="fa-regular s-18 fa-cart-minus"></i>
                             <!-- Hiển thị tổng số lượng -->
                             <span th:if="${totalCartItem > 0}"
@@ -160,12 +160,12 @@
                                     <div style="font-size: 14px; font-weight: 500;" th:text="${convertMoney.formatCurrency(tongTien)}">
                                     </div>
                                 </div>
-                                <a href="/gio-hang-chi-tiet" class="btn btn-dark w-100">Thanh toán</a>
+                                <a href="/user/gio-hang-chi-tiet" class="btn btn-dark w-100">Thanh toán</a>
                             </div>
                         </div>
                     </div>
                     <div style="margin-left: 14px" th:if="khachHang != null">
-                        <a class="cl-black" href="/quan-ly/ca-nhan"><i class="fa-regular s-18 fa-user"></i></a>
+                        <a class="cl-black" href="/user/ca-nhan"><i class="fa-regular s-18 fa-user"></i></a>
                     </div>
                     <div th:if="khachHang == null">
                         <a href="/dang-nhap" class="btn btn-dark">Đăng nhập</a>
@@ -203,14 +203,14 @@
                         <div class="d-flex flex-column">
                             <div class="d-flex justify-content-between align-items-center btn btn-block "
                                  style="background-color: #ffffff; width: 100%;" onclick="highlightLink(this)">
-                                <a href="/quan-ly/ca-nhan" class="d-flex align-items-center item-hover"
+                                <a href="/user/ca-nhan" class="d-flex align-items-center item-hover"
                                    style="color: #070707; padding: 10px; text-decoration: none; width: 100%;background-color: black; color: white">
                                     <i class="fa-light fa-user" style="margin-right: 10px;" ></i> Thông tin
                                 </a>
                             </div>
                             <div class="d-flex justify-content-between align-items-center btn btn-block "
                                  style="background-color: #ffffff; width: 100%;" onclick="highlightLink(this)">
-                                <a href="/quan-ly/don-hang" class="d-flex align-items-center item-hover"
+                                <a href="/user/don-hang" class="d-flex align-items-center item-hover"
                                    style="color: #070707; padding: 10px; text-decoration: none; width: 100%;">
                                     <i class="fa-light fa-box-taped" style="margin-right: 10px;"></i> Đơn hàng của tôi
                                 </a>
@@ -224,7 +224,7 @@
                             </div>
                             <div class="d-flex justify-content-between align-items-center btn btn-block "
                                  style="background-color: #ffffff; width: 100%;" onclick="highlightLink(this)">
-                                <a href="/user-dia-chi/pagination-dia-chi" class="d-flex align-items-center item-hover"
+                                <a href="/user/pagination-dia-chi" class="d-flex align-items-center item-hover"
                                    style="color: #070707; padding: 10px; text-decoration: none; width: 100%;">
                                     <i class="fa-light fa-location-dot" style="margin-right: 10px;"></i> Quản lý địa chỉ
                                 </a>
@@ -346,7 +346,7 @@
         </div>
         <div style=" margin-right: 72px; display: inline-block;">
             <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;"> CỬA HÀNG </p>
-            <p><a href="/quan-ly/ca-nhan" class="cl-white"
+            <p><a href="/user/ca-nhan" class="cl-white"
                   style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Tài khoản
             </a></p>
             <p><a href="/dang-ki" class="cl-white"
@@ -386,7 +386,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form th:object="${khachHang}" th:action="@{/quan-ly/update-thong-tin-kh}" method="post">
+                <form th:object="${khachHang}" th:action="@{/user/update-thong-tin-kh}" method="post">
                     <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.tenDangNhap}">
                     <input type="text" class="form-control display_none" th:field="${khachHang.taiKhoan.matKhau}">
                     <input type="text" class="form-control display_none" th:field="${khachHang.trangThai}">

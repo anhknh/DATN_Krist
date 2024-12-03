@@ -67,7 +67,7 @@
             <div class="d-flex align-items-center">
                 <img style="height: 36px; margin-right: 8px;" src="/img/logo.png" alt="logo">
                 <p class="title d-inline p-0 m-0">
-                    <a style="color: #000; text-decoration: none" href="/trang-chu">Krist</a>
+                    <a style="color: #000; text-decoration: none" href="/user/trang-chu">Krist</a>
                 </p>
             </div>
         </div>
@@ -78,7 +78,7 @@
                         <div class="navbar-nav" style="width: 100%; justify-content: space-between;">
                             <div>
                                 <li class="nav-item">
-                                    <a class="nav-link cl-black s-18" href="/trang-chu">Trang chủ</a>
+                                    <a class="nav-link cl-black s-18" href="/user/trang-chu">Trang chủ</a>
                                 </li>
                             </div>
                             <div>
@@ -95,7 +95,7 @@
                                                 <hr>
                                                 <div class="p-2 hover-effect" th:each="item : ${listDanhMuc}">
                                                     <a th:if="${listDanhMuc.size() > 0}"
-                                                       th:href="@{/danh-sach-san-pham(danhMucId=${item.id})}"
+                                                       th:href="@{/user/danh-sach-san-pham(danhMucId=${item.id})}"
                                                        style="text-decoration: none ; color : black">
                                                         <span th:text="${item.getTenDanhMuc()}"></span></a>
                                                 </div>
@@ -109,7 +109,7 @@
                                                 <div class="p-2 hover-effect" th:each="item : ${listCoAo}">
                                                     <a th:if="${listCoAo.size() > 0}"
 
-                                                       th:href="@{/danh-sach-san-pham(coAoId=${item.id})}"
+                                                       th:href="@{/user/danh-sach-san-pham(coAoId=${item.id})}"
                                                        style="text-decoration: none ; color : black"><span
                                                             th:text="${item.getKieuCoAo()}"></span></a>
                                                 </div>
@@ -121,7 +121,7 @@
                                                 <hr>
                                                 <div th:if="${listTayAo.size() > 0}" class="p-2 hover-effect"
                                                      th:each="item : ${listTayAo}">
-                                                    <a th:href="@{/danh-sach-san-pham(tayAoId=${item.id})}"
+                                                    <a th:href="@{/user/danh-sach-san-pham(tayAoId=${item.id})}"
                                                        style="text-decoration: none ; color : black"><span
                                                             th:text="${item.getKieuTayAo()}"></span></a>
                                                 </div>
@@ -155,7 +155,7 @@
         <div style="flex: 1;">
             <div class="header_right d-flex align-items-center justify-content-end" style="height: 100%;">
                 <div>
-                    <a class="cl-black" href="/danh-sach-san-pham"><i
+                    <a class="cl-black" href="/user/danh-sach-san-pham"><i
                             class="fa-regular s-18 fa-magnifying-glass"></i></a>
                 </div>
                 <div style="margin: 0px 46px;">
@@ -163,7 +163,7 @@
                             class="fa-sharp s-18 fa-regular fa-heart"></i></a>
                 </div>
                 <div class="me-4 position-relative cart-container">
-                    <a class="cl-black" href="/gio-hang-chi-tiet">
+                    <a class="cl-black" href="/user/gio-hang-chi-tiet">
                         <i class="fa-regular s-18 fa-cart-minus"></i>
                         <!-- Hiển thị tổng số lượng -->
                         <span th:if="${totalCartItem > 0}"
@@ -216,12 +216,12 @@
                                      th:text="${convertMoney.formatCurrency(tongTien)}">
                                 </div>
                             </div>
-                            <a href="/gio-hang-chi-tiet" class="btn btn-dark w-100">Thanh toán</a>
+                            <a href="/user/gio-hang-chi-tiet" class="btn btn-dark w-100">Thanh toán</a>
                         </div>
                     </div>
                 </div>
                 <div style="margin-left: 14px" th:if="khachHang != null">
-                    <a class="cl-black" href="/quan-ly/ca-nhan"><i class="fa-regular s-18 fa-user"></i></a>
+                    <a class="cl-black" href="/user/ca-nhan"><i class="fa-regular s-18 fa-user"></i></a>
                 </div>
                 <div th:if="khachHang == null">
                     <a href="/dang-nhap" class="btn btn-dark">Đăng nhập</a>
@@ -234,7 +234,9 @@
 <div class="container" style="padding: 54px 0px; margin-bottom: 120px;">
     <div class="row">
         <div class="box" style="flex: 2">
-            <div class="d-flex align-items-center" style="margin: 24px 24px 60px 24px">
+            <div class="d-flex align-items-center"
+                 th:if="${hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).DA_HUY}"
+                 style="margin: 24px 24px 60px 24px">
                 <div class="step-container">
                     <!--                        Thêm hoặc xóa class active để nó hiện màu đen hoặc xám-->
                     <div class="step"
@@ -266,6 +268,27 @@
                         <i class="fa-light fa-hand-holding-heart"></i>
                     </div>
                     <span class="step-description">Hoàn tất</span>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center"
+                 th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).DA_HUY}"
+                 style="margin: 24px 24px 60px 24px">
+                <div class="step-container">
+                    <!--                        Thêm hoặc xóa class active để nó hiện màu đen hoặc xám-->
+                    <div class="step"
+                         th:classappend="${donHangChiTiet.get(0).getHoaDon().getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN} ? 'active' : ''">
+                        <i class="fa-sharp fa-regular fa-hourglass-start"></i>
+                    </div>
+                    <span class="step-description">Chờ xác nhận</span>
+                </div>
+                <div class="line"></div>
+                <div class="step-container">
+                    <div class="step"
+                         th:classappend="${donHangChiTiet.get(0).getHoaDon().getTrangThai() == T(com.example.kristp.enums.HoaDonStatus).DA_HUY} ? 'active' : ''">
+                        <i class="fa-regular fa-box-open-full"></i>
+                    </div>
+                    <span class="step-description">Đã hủy</span>
                 </div>
             </div>
         </div>
@@ -333,7 +356,7 @@
                                     style="display: inline-block;"></p></div>
                         </td>
                         <td>
-                            <div class="order-actions2">
+                            <div class="order-actions2" th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).HOAN_TAT}">
                                 <button class="view-order btn-review"
                                         th:if="${!danhGiaService.checkDanhGiaAndDonHang(dhct.id)}"
                                         th:attr="data-order-id=${dhct.id}"
@@ -355,7 +378,7 @@
                         <!-- Nút Previous -->
                         <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
                             <a class="page-link" style="color: #5C5F6A"
-                               th:href="@{/quan-ly/don-hang-chi-tiet-kh(id=${donHangChiTiet.get(0).getHoaDon().getId()} , pageNo=0)}"
+                               th:href="@{/quan-ly/user/don-hang-chi-tiet-kh(id=${donHangChiTiet.get(0).getHoaDon().getId()} , pageNo=0)}"
                                aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
@@ -365,14 +388,14 @@
                             th:classappend="${currentPage == i - 1 ? 'active' : ''}"
                             class="page-item">
                             <a class="page-link"
-                               th:href="@{/quan-ly/don-hang-chi-tiet-kh(id=${donHangChiTiet.get(0).getHoaDon().getId()} , pageNo=${i}-1)}"
+                               th:href="@{/quan-ly/user/don-hang-chi-tiet-kh(id=${donHangChiTiet.get(0).getHoaDon().getId()} , pageNo=${i}-1)}"
                                th:text="${i}" style="color: #5C5F6A"></a>
                         </li>
                         <!-- Nút Next -->
                         <li class="page-item"
                             th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}">
                             <a class="page-link" style="color: #5C5F6A"
-                               th:href="@{/quan-ly/don-hang-chi-tiet-kh(id=${donHangChiTiet.get(0).getHoaDon().getId()} , pageNo=${totalPage}-1)}"
+                               th:href="@{/quan-ly/user/don-hang-chi-tiet-kh(id=${donHangChiTiet.get(0).getHoaDon().getId()} , pageNo=${totalPage}-1)}"
                                aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
@@ -499,7 +522,7 @@
         </div>
         <div style=" margin-right: 72px; display: inline-block;">
             <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;"> CỬA HÀNG </p>
-            <p><a href="/quan-ly/ca-nhan" class="cl-white"
+            <p><a href="/user/ca-nhan" class="cl-white"
                   style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Tài khoản
             </a></p>
             <p><a href="/dang-ki" class="cl-white"
@@ -538,7 +561,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="/them-danh-gia">
+                <form method="post" action="/user/them-danh-gia">
                     <input type="hidden" id="idHoaDonChiTet" name="idHoaDonChiTet">
                     <div class="mb-3">
                         <label for="InputEmail" class="form-label">Email</label>

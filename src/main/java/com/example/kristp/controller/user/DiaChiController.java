@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/user-dia-chi/")
+@RequestMapping("/user/")
 public class DiaChiController {
     @Autowired
     private DiaChiService diaChiService;
@@ -115,7 +115,7 @@ public class DiaChiController {
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
         }
-        return "redirect:/user-dia-chi/pagination-dia-chi";
+        return "redirect:/user/pagination-dia-chi";
     }
 
 @PostMapping("/update-dia-chi")
@@ -130,7 +130,7 @@ private String updateDiaChi(@Valid @ModelAttribute("diaChiCre") DiaChi diaChi, B
         attributes.addFlashAttribute("messageType", "alert-danger");
         attributes.addFlashAttribute("titleMsg", "Thất bại");
     }
-    return "redirect:/user-dia-chi/pagination-dia-chi";
+    return "redirect:/user/pagination-dia-chi";
 }
 
 
@@ -140,6 +140,6 @@ private String updateDiaChi(@Valid @ModelAttribute("diaChiCre") DiaChi diaChi, B
         diaChiService.deleteDiaChi(idDiaChi);
         attributes.addFlashAttribute("message", "Xóa địa chỉ thành công.");
         attributes.addFlashAttribute("messageType", "alert-success");
-        return "redirect:/user-dia-chi/pagination-dia-chi";
+        return "redirect:/user/pagination-dia-chi";
     }
 }

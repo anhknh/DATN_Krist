@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/quan-ly")
+@RequestMapping("/user/")
 public class TrangCaNhanController {
 
     @Autowired
@@ -83,6 +83,6 @@ public class TrangCaNhanController {
     public String updateThongTin(@ModelAttribute("khachHang")KhachHang khachHang){
         System.out.println("Đã cập nhật" + khachHang.getId());
         khachHangService.updateKhachHang(khachHang);
-        return "redirect:/quan-ly/ca-nhan";
+        return "redirect:/user/ca-nhan";
     }
 }

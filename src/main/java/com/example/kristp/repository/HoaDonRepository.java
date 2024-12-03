@@ -16,14 +16,14 @@ import java.util.List;
 
 public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
     @Query("SELECT h FROM HoaDon h ORDER BY h.ngayDatHang DESC")
-    List<HoaDon> findAllHoaDonsOrderByNgayDatHang();
+    Page<HoaDon> findAllHoaDonsOrderByNgayDatHang(Pageable pageable);
     List<HoaDon> findByTrangThai(HoaDonStatus trangThai);
 
     Integer countByTrangThai(HoaDonStatus trangThai);
 
 
     @Query("SELECT h FROM HoaDon h WHERE h.trangThai = :trangThai ORDER BY h.ngayDatHang DESC")
-    List<HoaDon> findByTrangThaiDonHang(@Param("trangThai") HoaDonStatus trangThai);
+    Page<HoaDon> findByTrangThaiDonHang(@Param("trangThai") HoaDonStatus trangThai, Pageable pageable);
 
     // tìm kiếm đơn hàng
     @Query("SELECT h FROM HoaDon h WHERE " +

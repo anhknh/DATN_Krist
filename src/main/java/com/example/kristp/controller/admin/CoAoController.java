@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/quan-ly-co-ao/")
+@RequestMapping("/quan-ly/")
 public class CoAoController {
     @Autowired
     CoAoService coAoService ;
@@ -42,20 +42,20 @@ public class CoAoController {
             attributes.addFlashAttribute("message" , "Thêm mới cổ ao không thành công .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-co-ao/pagination-co-ao";
+            return "redirect:/quan-ly/pagination-co-ao";
         }
         else if(coAoService.addCoAo(coAo) == null){
             attributes.addFlashAttribute("coAo" , coAo);
             attributes.addFlashAttribute("message" , "Tên của cổ áo đã tồn tại .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-co-ao/pagination-co-ao";
+            return "redirect:/quan-ly/pagination-co-ao";
         }
         coAoService.addCoAo(coAo);
         attributes.addFlashAttribute("message" , "Thêm mới cổ áo thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-co-ao/pagination-co-ao";
+        return "redirect:/quan-ly/pagination-co-ao";
     }
 
     @PostMapping("/update-co-ao")
@@ -65,21 +65,21 @@ public class CoAoController {
             attributes.addFlashAttribute("message" , "Cập nhật cổ á0 không thành công .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-co-ao/pagination-co-ao";
+            return "redirect:/quan-ly/pagination-co-ao";
         }
         else if(coAoService.updateCoAo(coAo , idCoAo) == null){
             attributes.addFlashAttribute("coAo", coAo);
             attributes.addFlashAttribute("message" , "Tên của cổ áo đã tồn tại .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-co-ao/pagination-co-ao";
+            return "redirect:/quan-ly/pagination-co-ao";
         }
 
         coAoService.updateCoAo(coAo , idCoAo) ;
         attributes.addFlashAttribute("message" , "Cập nhật cổ áo thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-co-ao/pagination-co-ao";
+        return "redirect:/quan-ly/pagination-co-ao";
     }
 
     @GetMapping("/delete-co-ao/{id}")
@@ -88,11 +88,11 @@ public class CoAoController {
         attributes.addFlashAttribute("message" , "Thay đổi trạng thái cổ áo thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-co-ao/pagination-co-ao";
+        return "redirect:/quan-ly/pagination-co-ao";
 
     }
 
-    @GetMapping("/tim-kiem-tat-ca-theo-ten")
+    @GetMapping("/tim-kiem-tat-ca-theo-ten-co-ao")
     private String timKiemTatCaTheoTen(@RequestParam("tenTimKiem")String ten ,@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo, Model model){
         Page<CoAo> coaos = coAoService.timTatCaTheoTen(pageNo,"%"+ten+"%");
         model.addAttribute("coAoList" , coaos.getContent());

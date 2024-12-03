@@ -15,10 +15,16 @@ public class test {
 
     @Autowired
     private HoaDonService hoaDonService;
+    @Autowired
+    DataUtils dataUtils;
+
+
+
+
     @GetMapping("/test")
     public String test(Model model) throws JsonProcessingException {
         Page<HoaDon> hoaDons = hoaDonService.findTop5();
-        model.addAttribute("dataUtils" , new DataUtils());
+        model.addAttribute("dataUtils" , dataUtils);
         model.addAttribute("hoaDons", hoaDons.getContent());
 
         Double doanhThuNgay = hoaDonService.doanhThuHomNay();

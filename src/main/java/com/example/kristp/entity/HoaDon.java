@@ -20,6 +20,8 @@ public class HoaDon extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    private String maHoaDon;
     @ManyToOne
     @JoinColumn(name = "id_dia_chi")
     private DiaChi diaChi;

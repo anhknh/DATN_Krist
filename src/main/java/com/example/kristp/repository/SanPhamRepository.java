@@ -44,7 +44,8 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
             "AND (:tayAoId IS NULL OR cts.tayAo.id IN :tayAoId) " +
             "AND (:coAoId IS NULL OR cts.coAo.id IN :coAoId) " +
             "AND (:mauSacId IS NULL OR cts.mau.id IN :mauSacId) " +
-            "AND (:sizeId IS NULL OR cts.size.id IN :sizeId)")
+            "AND (:sizeId IS NULL OR cts.size.id IN :sizeId)" +
+            " AND sp.trangThai = 1")
     Page<SanPham> timKiemSanPham(@Param("tenSanPham") String tenSanPham,
                                  @Param("danhMucId") List<Integer> danhMucId,
                                  @Param("chatLieuId") List<Integer> chatLieuId,
@@ -54,6 +55,12 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
                                  @Param("sizeId") List<Integer> sizeId,
                                  Pageable pageable);
 
+    @Query(value = "SELECT DISTINCT TOP 4 sp.* " +
+            "FROM san_pham sp " +
+            "JOIN chi_tiet_san_pham ctsp ON sp.id = ctsp.id_san_pham " +
+            " WHERE sp.trang_thai = 1" +
+            "ORDER BY sp.ngay_tao DESC; ", nativeQuery = true)
+    List<SanPham> finTop4SanPhamMoi();
 
     boolean existsByTenSanPhamAndTrangThai(String tenSanPham, Status trangThai);
 

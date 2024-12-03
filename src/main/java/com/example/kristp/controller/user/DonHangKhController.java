@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/quan-ly")
+@RequestMapping("/user/")
 public class DonHangKhController {
     @Autowired
     private KhachHangRepository khachHangRepository ;
@@ -178,6 +178,48 @@ public class DonHangKhController {
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
         model.addAttribute("check" , "hoanThanh");
+
+        Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
+        model.addAttribute("khachHang1" , khachHang.get());
+        model.addAttribute("convertMoney", new DataUtils());
+
+        //        Các dữ liệu cần cho header
+// Hiển thị danh mục
+        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+        model.addAttribute("listDanhMuc" , danhMucs);
+        model.addAttribute("listCoAo" , listCoAo);
+        model.addAttribute("listTayAo" , listTayAo);
+
+        float tongTien = 0;
+        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+        if(Authen.khachHang != null) {
+            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+        }
+
+        model.addAttribute("tongTien", tongTien);
+        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+        model.addAttribute("khachHang", Authen.khachHang);
+        model.addAttribute("hoaDonChiTietService", hoaDonChiTietService);
+        return "don-hang";
+    }
+
+    @GetMapping("/da-huy")
+    public String daHuy(@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo , Model model){
+        Optional<KhachHang> khachHang1 = khachHangRepository.findById(Authen.khachHang.getId());
+        Page<HoaDon> hoaDons = hoaDonService.getPaginationHoaDon(pageNo, HoaDonStatus.DA_HUY , khachHang1.get().getId());
+        model.addAttribute("HoaDonList" , hoaDons.getContent());
+        model.addAttribute("currentPage" , pageNo);
+        model.addAttribute("totalPage" , hoaDons.getTotalPages());
+        model.addAttribute("check" , "daHuy");
 
         Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
         model.addAttribute("khachHang1" , khachHang.get());

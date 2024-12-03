@@ -94,6 +94,18 @@ public class BanHangServiceImpl implements BanHangService {
     }
 
     @Override
+    public boolean huyKhuyenMai(Integer idKhuyenMai, HoaDon hoaDon) {
+        KhuyenMai khuyenMai = khuyenMaiService.getKhuyenMaiById(idKhuyenMai);
+        if (khuyenMai == null) {
+            return false;
+        } else {
+            hoaDon.setKhuyenMai(null);
+            hoaDonRepository.save(hoaDon);
+        }
+        return true;
+    }
+
+    @Override
     public boolean addKhachHang(Integer idKhachHang, String soDienThoai, String tenKhachHang, HoaDon hoaDon) {
         KhachHang khachHang;
 
@@ -135,11 +147,24 @@ public class BanHangServiceImpl implements BanHangService {
     }
 
     @Override
+    public boolean huyKhachHang(HoaDon hoaDon) {
+        hoaDon.setKhachHang(null);
+        hoaDonRepository.save(hoaDon);
+        return true;
+    }
+
+    @Override
     public boolean huyDonHang(Integer idHoaDon) {
         HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).orElse(null);
         if (hoaDon != null) {
-            if(hoaDon.getTrangThai() == HoaDonStatus.CHO_XAC_NHAN) {
+            if(hoaDon.getTrangThai() == HoaDonStatus.CHO_XAC_NHAN || hoaDon.getTrangThai() == HoaDonStatus.HOA_DON_CHO) {
                 hoaDon.setTrangThai(HoaDonStatus.DA_HUY);
+                List<HoaDonChiTiet> hoaDonChiTietList = hoaDonChiTietRepo.getHoaDonChiTietByHoaDonList(hoaDon);
+                for (HoaDonChiTiet chiTiet : hoaDonChiTietList) {
+                    ChiTietSanPham sanPham = chiTiet.getChiTietSanPham();
+                    sanPham.setSoLuong(sanPham.getSoLuong() + chiTiet.getSoLuong());
+                    chiTietSanPhamRepository.save(sanPham);
+                }
                 hoaDonRepository.save(hoaDon);
                 return true;
             }
@@ -151,6 +176,9 @@ public class BanHangServiceImpl implements BanHangService {
 
     @Override
     public Float findTongTienKhuyenMai(HoaDon hoaDon) {
+        if(hoaDon == null) {
+            return 0f;
+        }
         Float tongTien = getTongTien(hoaDon);
         if(hoaDon.getKhuyenMai() == null) {
             return tongTien;

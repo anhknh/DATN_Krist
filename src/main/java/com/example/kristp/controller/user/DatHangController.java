@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping("/dat-hang/")
+@RequestMapping("/user/")
 public class DatHangController {
     @Autowired
     private DiaChiService diaChiService;
@@ -189,7 +189,7 @@ public class DatHangController {
                              HttpServletRequest request) {
         idDiaChiSelected = diaChiSelected;
         phiVanChuyen = ship;
-        return "redirect:/dat-hang/phuong-thuc-thanh-toan";
+        return "redirect:/user/phuong-thuc-thanh-toan";
     }
 
     @GetMapping("/phuong-thuc-thanh-toan")
@@ -246,7 +246,7 @@ public class DatHangController {
     public String chonThanhToan(@RequestParam(value = "paymentMethod", required = false) String paymentMethod, RedirectAttributes attributes,
                                 HttpServletRequest request) {
         thanhToanSelected = paymentMethod;
-        return "redirect:/dat-hang/review";
+        return "redirect:/user/review";
     }
 
     @GetMapping("/add-khuyen-mai")
@@ -254,6 +254,20 @@ public class DatHangController {
                                @RequestParam Integer idKhuyenMai,
                                Model model, RedirectAttributes redirectAttributes) {
         khuyenMaiSelected = khuyenMaiService.getKhuyenMaiById(idKhuyenMai);
+        //khuyến mại đã chọn
+        model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
+
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" + referer;
+    }
+
+    @GetMapping("/huy-khuyen-mai")
+    public String huyKhuyenMai(HttpServletRequest request,
+                               @RequestParam Integer idKhuyenMai,
+                               Model model, RedirectAttributes redirectAttributes) {
+        khuyenMaiSelected = null;
         //khuyến mại đã chọn
         model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
 
@@ -433,6 +447,8 @@ public class DatHangController {
                 attributes.addFlashAttribute("message", "Vui lòng kiểm tra lại số lượng.");
                 attributes.addFlashAttribute("messageType", "alert-danger");
                 attributes.addFlashAttribute("titleMsg", "Thất bại");
+                totalPrice = 0f;
+                khuyenMaiSelected = null;
 
                 return "FailOrder";
             }

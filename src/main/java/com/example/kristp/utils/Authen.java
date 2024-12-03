@@ -22,11 +22,11 @@ public class Authen {
 
 
     public static boolean isLoginKhachHang(HttpSession session) {
-        khachHang = (KhachHang) session.getAttribute("KhachHang");
+        khachHang = (KhachHang) session.getAttribute("khachHang");
         return khachHang != null;
     }
     public static boolean isLoginNhanVien(HttpSession session) {
-        nhanVien = (NhanVien)  session.getAttribute("");
+        nhanVien = (NhanVien)  session.getAttribute("nhanVien");
         return nhanVien != null;
     }
 //

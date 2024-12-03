@@ -57,7 +57,7 @@
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
             <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
           </a>
-          <a href="/quan-ly-san-pham/pagination-san-pham" class="bg_profile_btn mb-3"
+          <a href="/quan-ly/pagination-san-pham" class="bg_profile_btn mb-3"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
             <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
           </a>
@@ -71,28 +71,28 @@
             <ul id="productSubMenu" class="submenu"
                 style="list-style: none; padding-left: 20px; display: none;">
               <li style="padding: 8px 12px;">
-                <a href="/quan-ly-danh-muc/pagination-danh-muc"
+                <a href="/quan-ly/pagination-danh-muc"
                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Danh
                   mục</a>
               </li>
               <li style="padding: 8px 12px;">
-                <a href="/quan-ly-chat-lieu/pagination-chat-lieu"
+                <a href="/quan-ly/pagination-chat-lieu"
                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Chất liệu</a>
               </li>
               <li style="padding: 8px 12px;">
-                <a href="/quan-ly-mau-sac/pagination-mau-sac"
+                <a href="/quan-ly/pagination-mau-sac"
                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Màu sắc</a>
               </li>
               <li style="padding: 8px 12px;">
-                <a href="/quan-ly-size/pagination-size"
+                <a href="/quan-ly/pagination-size"
                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Size</a>
               </li>
               <li style="padding: 8px 12px;">
-                <a href="/quan-ly-tay-ao/pagination-tay-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Tay
+                <a href="/quan-ly/pagination-tay-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Tay
                   áo</a>
               </li>
               <li style="padding: 8px 12px;">
-                <a href="/quan-ly-co-ao/pagination-co-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Cổ
+                <a href="/quan-ly/pagination-co-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Cổ
                   áo</a>
               </li>
             </ul>
@@ -102,16 +102,16 @@
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-cart-flatbed" style="margin-right: 10px;"></i> Đơn hàng
           </a>
-          <a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="mb-3" onclick="highlightLink(this)"
+          <a href="/quan-ly/pagination-khuyen-mai" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-tickets-perforated" style="margin-right: 10px;"></i> Khuyến mại
           </a>
           <!--                    Chức năng chưa có đường dẫn là #-->
-          <a href="/quan-ly-khach-hang/pagination-khach-hang" class="mb-3" onclick="highlightLink(this)"
+          <a href="/quan-ly/pagination-khach-hang" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
           </a>
-          <a href="/quan-ly-nhan-vien/phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
+          <a href="/quan-ly//phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
           </a>
@@ -152,9 +152,9 @@
             <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb">
               <ol class="breadcrumb" style="height: 40px; margin: 0px;">
                 <li class="breadcrumb-item "><a href="#" class="nav_link">Admin</a></li>
-                <li class="breadcrumb-item "><a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class="nav_link_active">Khuyến Mại</a></li>
+                <li class="breadcrumb-item "><a href="/quan-ly/pagination-khuyen-mai" class="nav_link_active">Khuyến Mại</a></li>
 
-                <li class="breadcrumb-item "><a href="/quan-ly-khuyen-mai/pagination-add-khuyen-mai" class="nav_link_active">Thêm Khuyến Mại</a></li>
+                <li class="breadcrumb-item "><a href="/quan-ly/pagination-add-khuyen-mai" class="nav_link_active">Thêm Khuyến Mại</a></li>
               </ol>
             </nav>
           </div>
@@ -173,7 +173,7 @@
             <div class="w-100">
               <div class="modal-body" style="padding:30px">
                 <div>
-                  <form action="/quan-ly-khuyen-mai/add-khuyen-mai" method="post" novalidate th:object="${khuyenMaiCre}" class="needs-validation">
+                  <form action="/quan-ly/add-khuyen-mai" method="post" novalidate th:object="${khuyenMaiCre}" class="needs-validation">
                     <div class="row">
                       <!-- Cột bên trái -->
                       <div class="col-md-6">
@@ -196,14 +196,14 @@
                           <label class="form-label">Kiểu khuyến mại</label>
                           <div>
                             <div class="form-check form-check-inline">
-                              <input type="radio" class="form-check-input" id="kieuKhuyenMaiTrue"
-                                     th:field="*{kieuKhuyenMai}" value="true" required>
-                              <label class="form-check-label" for="kieuKhuyenMaiTrue"> VNĐ</label>
+                              <input type="radio" class="form-check-input" id="kieuKhuyenMaiFalse"
+                                     th:field="*{kieuKhuyenMai}" value="false"  checked required>
+                              <label class="form-check-label" for="kieuKhuyenMaiFalse"> VNĐ</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input type="radio" class="form-check-input" id="kieuKhuyenMaiFalse"
-                                     th:field="*{kieuKhuyenMai}" value="false" required>
-                              <label class="form-check-label" for="kieuKhuyenMaiFalse">%</label>
+                              <input type="radio" class="form-check-input" id="kieuKhuyenMaiTrue"
+                                     th:field="*{kieuKhuyenMai}" value="true" required>
+                              <label class="form-check-label" for="kieuKhuyenMaiTrue">%</label>
                             </div>
                           </div>
                           <div class="invalid-feedback">Kiểu khuyến mại không hợp lệ.</div>
@@ -254,7 +254,7 @@
                     <!-- Trường "Trạng thái" và nút "Save" ở giữa -->
                     <div class="d-flex justify-content-end mt-3">
                       <button type="submit" class="btn btn-dark me-2" > Lưu </button>
-                      <a th:href="@{/quan-ly-khuyen-mai/pagination-khuyen-mai}"
+                      <a th:href="@{/quan-ly/pagination-khuyen-mai}"
                          class="btn" style="background-color: #808080; color: white;">Trở về</a>
                     </div>
                 </form>
@@ -317,13 +317,13 @@
       // }
 
       // Cập nhật radio button cho kieuKhuyenMai
-      if (kieu === true) {
+      if (kieu) {
         document.getElementById('kieuKhuyenMaiTrue').checked = true; // Chọn radio "True"
       } else {
         document.getElementById('kieuKhuyenMaiFalse').checked = true; // Chọn radio "False"
       }
 
-      document.getElementById("form_submit").action = '/quan-ly-khuyen-mai/update-khuyen-mai';
+      document.getElementById("form_submit").action = '/quan-ly/update-khuyen-mai';
     } else {
       // Nếu không có index (thêm mới)
       statusSection.classList.add('display_none'); // Ẩn phần trạng thái khi thêm mới
@@ -333,7 +333,7 @@
       document.getElementById('kieuKhuyenMaiTrue').checked = false; // Mặc định không chọn
       document.getElementById('kieuKhuyenMaiFalse').checked = false;
       trangThaiSelect.value = ""; // Đặt giá trị của trạng thái về rỗng khi thêm mới
-      document.getElementById("form_submit").action = '/quan-ly-khuyen-mai/add-khuyen-mai';
+      document.getElementById("form_submit").action = '/quan-ly/add-khuyen-mai';
     }
   }
 

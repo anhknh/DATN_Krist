@@ -1,6 +1,9 @@
 package com.example.kristp.controller.user;
 
 import com.example.kristp.entity.*;
+import com.example.kristp.enums.Status;
+import com.example.kristp.repository.DanhMucRepository;
+import com.example.kristp.repository.SanPhamRepository;
 import com.example.kristp.service.*;
 import com.example.kristp.utils.Authen;
 import com.example.kristp.utils.DataUtils;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
@@ -19,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/user/")
 public class HomeController {
 
     @Autowired
@@ -32,16 +37,16 @@ public class HomeController {
     private CoAoService coAoService ;
     @Autowired
     private ChiTietSanPhamService chiTietSanPhamService;
-
-
-
-
+    @Autowired
+    SanPhamRepository sanPhamRepository;
     @Autowired
     GioHangService gioHangService;
     @Autowired
     GioHangChiTietService gioHangChiTietService;
     @Autowired
     DataUtils dataUtils;
+    @Autowired
+    DanhMucRepository danhMucRepository;
 
 
     @GetMapping("/trang-chu")
@@ -71,12 +76,16 @@ public class HomeController {
             model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
         }
 
+
         model.addAttribute("tongTien", tongTien);
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
 
         model.addAttribute("khachHang", Authen.khachHang);
         //hàm format
         model.addAttribute("convertMoney", dataUtils);
+        model.addAttribute("top4DanhMuc", danhMucRepository.findTop4ByTrangThaiOrderByNgayTaoDesc(Status.ACTIVE));
+        model.addAttribute("top4SanPham", sanPhamRepository.finTop4SanPhamMoi());
+        model.addAttribute("dataUtils", dataUtils);
         return "view/home/home-page";
     }
 

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/quan-ly-danh-muc/")
+@RequestMapping("/quan-ly/")
 public class DanhMucController {
     @Autowired
     private DanhMucService danhMucService ;
@@ -45,20 +45,20 @@ public class DanhMucController {
             attributes.addFlashAttribute("message" , "Thêm mới danh mục không thành công .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-danh-muc/pagination-danh-muc";
+            return "redirect:/quan-ly/pagination-danh-muc";
         }
         else if(danhMucService.addDanhMuc(danhMuc) == null){
             attributes.addFlashAttribute("danhMuc" , danhMuc);
             attributes.addFlashAttribute("message" , "Tên của danh mục đã tồn tại .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-danh-muc/pagination-danh-muc";
+            return "redirect:/quan-ly/pagination-danh-muc";
         }
         danhMucService.addDanhMuc(danhMuc);
         attributes.addFlashAttribute("message" , "Thêm mới danh mục thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-danh-muc/pagination-danh-muc";
+        return "redirect:/quan-ly/pagination-danh-muc";
     }
 
     @PostMapping("/update-danh-muc")
@@ -68,20 +68,20 @@ public class DanhMucController {
             attributes.addFlashAttribute("message" , "Cập nhật danh mục không thành công .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-danh-muc/pagination-danh-muc";
+            return "redirect:/quan-ly/pagination-danh-muc";
         }
         else if(danhMucService.updateDanhMuc(danhMuc , idDanhMuc) == null){
             attributes.addFlashAttribute("danhMuc" , danhMuc);
             attributes.addFlashAttribute("message" , "Tên của danh mục đã tồn tại .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-danh-muc/pagination-danh-muc";
+            return "redirect:/quan-ly/pagination-danh-muc";
         }
         danhMucService.updateDanhMuc(danhMuc , idDanhMuc);
         attributes.addFlashAttribute("message" , "Cập nhật danh mục thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-danh-muc/pagination-danh-muc";
+        return "redirect:/quan-ly/pagination-danh-muc";
     }
 
     @GetMapping("/delete-danh-muc/{id}")
@@ -91,10 +91,10 @@ public class DanhMucController {
             attributes.addFlashAttribute("message" , "Thay đổi trạng thái danh mục thành công .");
             attributes.addFlashAttribute("messageType" , "alert-success");
             attributes.addFlashAttribute("titleMsg" , "Thành công");
-            return "redirect:/quan-ly-danh-muc/pagination-danh-muc";
+            return "redirect:/quan-ly/pagination-danh-muc";
     }
 
-    @GetMapping("/tim-kiem-tat-ca-theo-ten")
+    @GetMapping("/tim-kiem-tat-ca-theo-ten-danh-muc")
     private String timKiemTatCaTheoTen(@RequestParam("tenTimKiem")String ten , Model model,@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo){
         Page<DanhMuc> danhMucs = danhMucService.timTatCaTheoTen(pageNo,"%"+ten+"%");
         System.out.println("Đã vào đây");
@@ -105,7 +105,7 @@ public class DanhMucController {
         model.addAttribute("categoryCre" , new DanhMuc() );
         return "view-admin/dashbroad/danh-muc-dashroad";
     }
-//    @PostMapping("/quan-ly-danh-muc/update-trang-thai/{id}")
+//    @PostMapping("/quan-ly/update-trang-thai/{id}")
 //    public ResponseEntity<Void> updateTrangThai(@PathVariable Integer id, @RequestBody Map<String, String> payload) {
 //        String trangThai = payload.get("trangThai");
 //        if ("ACTIVE".equals(trangThai) || "INACTIVE".equals(trangThai)) {

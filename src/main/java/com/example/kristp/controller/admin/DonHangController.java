@@ -6,10 +6,14 @@ import com.example.kristp.repository.HoaDonRepository;
 import com.example.kristp.service.HoaDonChiTietService;
 import com.example.kristp.service.HoaDonService;
 import com.example.kristp.utils.DataUtils;
+import com.example.kristp.utils.Pagination;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +25,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/quan-ly-don-hang")
+@RequestMapping("/quan-ly/")
 public class DonHangController {
     @Autowired
     private HoaDonService hoaDonService;
@@ -40,6 +45,7 @@ public class DonHangController {
     @GetMapping("/view-don-hang")
     public String viewHoaDon(
             @RequestParam(value = "trangThai", required = false) String trangThai,
+            @RequestParam("page") Optional<Integer> page,
             Model model) throws JsonProcessingException {
 
         // Nếu không có giá trị trangThai, mặc định hiển thị tất cả
@@ -49,11 +55,17 @@ public class DonHangController {
 
         System.out.println("Trạng thái: " + trangThai); // Log để kiểm tra
 
+        Pagination pagination = new Pagination();
+        Pageable pageable = PageRequest.of(page.orElse(0), 10);
+
         // Lấy danh sách đơn hàng theo trạng thái
-        List<HoaDon> hoaDons = hoaDonService.getAllHoaDon(trangThai);
+        Page<HoaDon> hoaDons = hoaDonService.getAllHoaDon(trangThai, pageable);
 
         // Thêm vào model
-        model.addAttribute("hoaDons", hoaDons);
+        model.addAttribute("hoaDons", hoaDons.getContent());
+        model.addAttribute("totalPage", hoaDons.getTotalPages() - 1);
+        model.addAttribute("page", hoaDons);
+        model.addAttribute("pagination", pagination.getPage(hoaDons.getNumber(), hoaDons.getTotalPages()));
         model.addAttribute("currentTrangThai", trangThai);  // Truyền giá trị trangThai vào model
         // Lấy số lượng đơn hàng theo trạng thái
 
@@ -62,6 +74,7 @@ public class DonHangController {
         model.addAttribute("trangThaiXuLy", hoaDonService.getCountByTrangThai(HoaDonStatus.DANG_XU_LY));
         model.addAttribute("trangThaiGiao", hoaDonService.getCountByTrangThai(HoaDonStatus.DANG_GIAO_HANG));
         model.addAttribute("trangThaiHT", hoaDonService.getCountByTrangThai(HoaDonStatus.HOAN_TAT));
+        model.addAttribute("trangThaiHUY", hoaDonService.getCountByTrangThai(HoaDonStatus.DA_HUY));
         model.addAttribute("trangThaiAll", hoaDonRepository.count());
         model.addAttribute("dataUtils", dataUtils);
         return "view-admin/dashbroad/don-hang";

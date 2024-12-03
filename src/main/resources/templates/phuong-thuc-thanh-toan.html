@@ -188,7 +188,7 @@
                     </div>
                     <div class="mt-4">
 
-                        <form id="formDatHang" method="POST" action="/dat-hang/chon-thanh-toan">
+                        <form id="formDatHang" method="POST" action="/user/chon-thanh-toan">
                             <div class="mt-4">
                                 <div class="form-check"
                                      style="padding: 0.75rem 0; border-top: 1px solid #f1f1f1; margin-left: 1.5rem;">
@@ -241,15 +241,18 @@
                                     <div style="flex: 3; padding: 4px; font-size: 14px;">
                                         <div th:text="'Khuyến mại: ' + ${khuyenMai.tenKhuyenMai}">Khuyến mại</div>
                                         <div th:text="'Giá trị: ' + ${convertMoney.formatCurrency(khuyenMai.giaTri)} +' '
-                                         +  ${khuyenMai.kieuKhuyenMai} ">Giá trị - Số lượng
+                                         +  ${khuyenMai.kieuKhuyenMai? '%':'VND'} ">Giá trị - Số lượng
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div th:text="'Ngày hết hạn: ' + ${#dates.format(khuyenMai.ngayKetThuc, 'dd-MM-yyyy')}">
                                                 Ngày hết hạn
                                             </div>
-                                            <a class="btn btn-dark btn-sm"
-                                               th:href="@{/dat-hang/add-khuyen-mai(idKhuyenMai=${khuyenMai.id})}"
+                                            <a class="btn btn-dark btn-sm" th:if="${khuyenMaiSelected == null || khuyenMaiSelected.id != khuyenMai.id}"
+                                               th:href="@{/user/add-khuyen-mai(idKhuyenMai=${khuyenMai.id})}"
                                             >Áp dụng</a>
+                                            <a class="btn btn-dark btn-sm" th:if="${khuyenMaiSelected != null && khuyenMaiSelected.id == khuyenMai.id}"
+                                               th:href="@{/user/huy-khuyen-mai(idKhuyenMai=${khuyenMai.id})}"
+                                            >Hủy</a>
                                         </div>
                                     </div>
                                 </div>
@@ -405,7 +408,7 @@
             </div>
             <div style=" margin-right: 72px; display: inline-block;">
                 <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;"> CỬA HÀNG </p>
-                <p><a href="/quan-ly/ca-nhan" class="cl-white"
+                <p><a href="/user/ca-nhan" class="cl-white"
                       style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Tài khoản
                 </a></p>
                 <p><a href="/dang-ki" class="cl-white"
