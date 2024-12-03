@@ -30,7 +30,6 @@ public class ChatLieu extends BaseEntity {
     @Column(name = "trang_thai")
     private Status trangThai;
 
-
     @Override
     public String toString() {
         return "ChatLieu{" +

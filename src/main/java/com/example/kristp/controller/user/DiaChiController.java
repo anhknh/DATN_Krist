@@ -89,7 +89,7 @@ public class DiaChiController {
         model.addAttribute("tongTien", tongTien);
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
 
-        model.addAttribute("khachHang", Authen.khachHang);
+        model.addAttribute("khachHang", khachHang.get());
         //hàm format
         model.addAttribute("convertMoney", new DataUtils());
         return "view-admin/dashbroad/crud-dia-chi";
