@@ -11,10 +11,12 @@ import javax.swing.JFileChooser;
 
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.*;
 
 import com.example.kristp.service.HoaDonService;
+import com.example.kristp.utils.DataUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -53,6 +55,8 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
     HoaDonChiTietService hoaDonChiTietService;
     @Autowired
     BanHangService banHangService;
+    @Autowired
+    DataUtils dataUtils;
 
     @Override
 // khi lấy được id hóadđơn
@@ -103,12 +107,15 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
                     giaBanList.add(giaBan);
                 }
                 double tongTien = banHangService.getTongTien(hoaDon);
+                BigDecimal tongTien2 = hoaDon.getTongTien();
+                double tongTienDouble = tongTien2 != null ? tongTien2.doubleValue() : 0.0;
                 String tenKhuyenMai = (hoaDon.getKhuyenMai() == null || hoaDon.getKhuyenMai().getTenKhuyenMai() == null || hoaDon.getKhuyenMai().getTenKhuyenMai().isBlank())
                         ? "Không"
                         : hoaDon.getKhuyenMai().getTenKhuyenMai();
                 double giamGia = hoaDon.getKhuyenMai() == null ? 0 : hoaDon.getKhuyenMai().getGiaTri(); // Giảm giá 10%
-                double tongSauGiam = tongTien - giamGia;
-                String phuongThucThanhToan = hoaDon.getHinhThucThanhToan();
+
+                double tongSauGiam = dataUtils.calculatorTotal2(tongTienDouble, hoaDon.getKhuyenMai(), hoaDon.getPhiVanChuyen());
+                String phuongThucThanhToan = hoaDon.getHinhThucThanhToan().equals("online") ? "VNPay" : "Khi nhận hàng";
 
                 MyTextClass myTextClass = new MyTextClass(taiLieu, luoiNoiDung);
                 NumberFormat currencyFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
@@ -146,10 +153,18 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
 
                     myTextClass.addSingleLineText("Tổng tiền: " + currencyFormat.format(tongTien) + " VNĐ", 50, yPosition - 20, font, 14, Color.BLACK);
                     myTextClass.addSingleLineText("Tên khuyến mại: " + tenKhuyenMai, 50, yPosition - 40, font, 14, Color.BLACK);
-                    myTextClass.addSingleLineText("Giảm giá: " + currencyFormat.format(giamGia) + " VNĐ", 50, yPosition - 60, font, 14, Color.BLACK);
+                    if(hoaDon.getKhuyenMai().getKieuKhuyenMai()) {
+                        myTextClass.addSingleLineText("Giảm giá: " + currencyFormat.format(giamGia) + " %", 50, yPosition - 60, font, 14, Color.BLACK);
+                    } else {
+                        myTextClass.addSingleLineText("Giảm giá: " + currencyFormat.format(giamGia) + " VNĐ", 50, yPosition - 60, font, 14, Color.BLACK);
+                    }
                     myTextClass.addSingleLineText("Tổng sau giảm: " + currencyFormat.format(tongSauGiam) + " VNĐ", 50, yPosition - 80, font, 14, Color.BLACK);
-                    myTextClass.addSingleLineText("Phương thức thanh toán: " + phuongThucThanhToan, 50, yPosition - 100, font, 14, Color.BLACK);
+                    if(hoaDon.getDiaChi() == null) {
+                        myTextClass.addSingleLineText("Phương thức thanh toán: Tại quầy", 50, yPosition - 100, font, 14, Color.BLACK);
+                    } else {
+                        myTextClass.addSingleLineText("Phương thức thanh toán: " + phuongThucThanhToan, 50, yPosition - 100, font, 14, Color.BLACK);
 
+                    }
                 } catch (IOException e) {
                     log.error("Lỗi khi tải font: " + e.getMessage());
                 }

@@ -8,6 +8,6 @@ public class testChiTietDonHang {
 
     @GetMapping("/chi-tiet-don-hang")
     public String donHang(){
-        return "view-admin/dashbroad/don-hang-chi-tiet-kh";
+        return "view-admin/dashbroad/user/don-hang-chi-tiet-kh";
     }
 }

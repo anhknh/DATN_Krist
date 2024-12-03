@@ -37,6 +37,8 @@ public class DatHangServiceImpl implements DatHangService {
     ChiTietSanPhamService chiTietSanPhamService;
     @Autowired
     ChiTietSanPhamRepository chiTietSanPhamRepository;
+    @Autowired
+    DataUtils dataUtils;
 
 
     @Override
@@ -48,12 +50,13 @@ public class DatHangServiceImpl implements DatHangService {
             khuyenMai = khuyenMaiService.getKhuyenMaiById(idKhuyenMai);
         }
         HoaDon hoaDon = new HoaDon();
+        hoaDon.setMaHoaDon(dataUtils.generateBarcode(8));
         hoaDon.setTrangThai(HoaDonStatus.CHO_XAC_NHAN);
         hoaDon.setKhuyenMai(khuyenMai);
         hoaDon.setDiaChi(diaChi);
         hoaDon.setHinhThucThanhToan(phuongThucThanhToan);
         hoaDon.setNgayDatHang(new Date());
-        hoaDon.setTongTien(BigDecimal.valueOf(DataUtils.calculatorTotal2(tongTien, khuyenMai, phiVanChuyen)));
+        hoaDon.setTongTien(BigDecimal.valueOf(tongTien));
         hoaDon.setPhiVanChuyen(phiVanChuyen);
         hoaDon.setKhachHang(Authen.khachHang);
         if(phuongThucThanhToan.equals("online")) {

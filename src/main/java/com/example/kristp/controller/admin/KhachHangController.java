@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/quan-ly-khach-hang/")
+@RequestMapping("/quan-ly/")
 public class KhachHangController {
     @Autowired
     private KhachHangService khachHangService ;
@@ -37,20 +37,20 @@ public class KhachHangController {
             attributes.addFlashAttribute("message" , "Thêm mới khách hàng không thành công .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-khach-hang/pagination-khach-hang";
+            return "redirect:/quan-ly/pagination-khach-hang";
         }
         else if(khachHangService.addKhachHang(khachHang) == null){
             attributes.addFlashAttribute("khachHang",khachHang);
             attributes.addFlashAttribute("message" , "Số điện thoại đã tồn tại .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-khach-hang/pagination-khach-hang";
+            return "redirect:/quan-ly/pagination-khach-hang";
         }
         khachHangService.addKhachHang(khachHang);
         attributes.addFlashAttribute("message" , "Thêm mới khách hàng thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-khach-hang/pagination-khach-hang";
+        return "redirect:/quan-ly/pagination-khach-hang";
     }
 
     @PostMapping("/update-khach-hang")
@@ -60,20 +60,20 @@ public class KhachHangController {
             attributes.addFlashAttribute("message", "Mã khách hàng đã tồn tại");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
-            return  "redirect:/quan-ly-khach-hang/pagination-khach-hang";
+            return  "redirect:/quan-ly/pagination-khach-hang";
         }
         else if(khachHangService.updateKhachHang(khachHang,idKhachHang) == null){
             attributes.addFlashAttribute("khachHang",khachHang);
             attributes.addFlashAttribute("message" , "Số điện thoại đã tồn tại .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-khach-hang/pagination-khach-hang";
+            return "redirect:/quan-ly/pagination-khach-hang";
         }
         khachHangService.updateKhachHang(khachHang, idKhachHang);
         attributes.addFlashAttribute("message" , "Cập nhật khách hàng thành công");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return  "redirect:/quan-ly-khach-hang/pagination-khach-hang";
+        return  "redirect:/quan-ly/pagination-khach-hang";
     }
     @GetMapping("/delete-khach-hang/{id}")
     private String deleteKH(@PathVariable("id")Integer idKhachHang, RedirectAttributes attributes){
@@ -81,7 +81,7 @@ public class KhachHangController {
         attributes.addFlashAttribute("message" , "Đổi trạng thái khách hàng thành công");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return  "redirect:/quan-ly-khach-hang/pagination-khach-hang";
+        return  "redirect:/quan-ly/pagination-khach-hang";
     }
 
     @GetMapping("/tim-kiem-tat-ca-khach-hang")

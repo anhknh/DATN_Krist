@@ -8,6 +8,7 @@ import com.example.kristp.repository.NhanVienRepository;
 import com.example.kristp.service.BanHangService;
 import com.example.kristp.service.HoaDonService;
 import com.example.kristp.utils.Authen;
+import com.example.kristp.utils.DataUtils;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,13 +33,20 @@ public class HoaDonServiceImpl implements HoaDonService {
     NhanVienRepository nhanVienRepository;
     @Autowired
     BanHangService banHangService;
+    @Autowired
+    DataUtils dataUtils;
 
     @Override
     public Boolean taoHoaDon() {
         HoaDon hoaDon = new HoaDon();
-        hoaDon.setNhanVien(nhanVienRepository.findById(1).orElse(null));
+        hoaDon.setNhanVien(nhanVienRepository.findById(Authen.nhanVien.getId()).orElse(null));
         hoaDon.setTrangThai(HoaDonStatus.HOA_DON_CHO);
         hoaDon.setTrangThaiThanhToan(HoaDonStatus.CHUA_THANH_TOAN);
+        hoaDon.setTongTien(BigDecimal.valueOf(0));
+        hoaDon.setNgayDatHang(new Date());
+        hoaDon.setHinhThucThanhToan("offline");
+        hoaDon.setPhiVanChuyen(0f);
+        hoaDon.setMaHoaDon(dataUtils.generateBarcode(8));
         if (hoaDonRepository.countByTrangThai(HoaDonStatus.HOA_DON_CHO) < 5) {
             hoaDonRepository.save(hoaDon);
             return true;
@@ -50,6 +59,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         if(hoaDon == null ) {
             return false;
         }
+        hoaDon.setTongTien(BigDecimal.valueOf(banHangService.getTongTien(hoaDon)));
         hoaDon.setTrangThaiThanhToan(HoaDonStatus.DA_THANH_TOAN);
         hoaDon.setTrangThai(HoaDonStatus.HOAN_TAT);
         hoaDon.setNgayDatHang(new Date());
@@ -68,17 +78,17 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public List<HoaDon> getAllHoaDon(String trangThai) {
+    public Page<HoaDon> getAllHoaDon(String trangThai, Pageable pageable) {
         if (trangThai == null || trangThai.isEmpty()) {
-            return hoaDonRepository.findAllHoaDonsOrderByNgayDatHang();  // Lấy tất cả hóa đơn nếu không có trạng thái
+            return hoaDonRepository.findAllHoaDonsOrderByNgayDatHang(pageable);  // Lấy tất cả hóa đơn nếu không có trạng thái
         } else {
             // Chuyển đổi trangThai từ String thành enum
             try {
                 HoaDonStatus status = HoaDonStatus.fromValue(Integer.parseInt(trangThai));
-                return hoaDonRepository.findByTrangThaiDonHang(status);  // Lọc theo trạng thái
+                return hoaDonRepository.findByTrangThaiDonHang(status, pageable);  // Lọc theo trạng thái
             } catch (IllegalArgumentException e) {
                 // Trường hợp trạng thái không hợp lệ, trả về tất cả
-                return hoaDonRepository.findAllHoaDonsOrderByNgayDatHang();
+                return hoaDonRepository.findAllHoaDonsOrderByNgayDatHang(pageable);
             }
         }
     }

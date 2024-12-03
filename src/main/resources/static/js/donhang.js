@@ -33,24 +33,28 @@ function changeLink(pageNo){
 
 
 function choXacNhan(){
-    window.location.href = "/quan-ly/don-hang";
+    window.location.href = "/user/don-hang";
 }
 
 
 function dangXuLy(){
-    window.location.href = "/quan-ly/dang-xu-ly";
+    window.location.href = "/user/dang-xu-ly";
 }
 
 function dangGiaoHang(){
-    window.location.href = "/quan-ly/dang-giao-hang";
+    window.location.href = "/user/dang-giao-hang";
 }
 
 function hoanThanh(){
-    window.location.href = "/quan-ly/hoan-thanh";
+    window.location.href = "/user/hoan-thanh";
+}
+
+function daHuy(){
+    window.location.href = "/user/da-huy";
 }
 
 function donHangChiTiet(id){
-    window.location.href = "/quan-ly/don-hang-chi-tiet-kh?id="+id ;
+    window.location.href = "/user/don-hang-chi-tiet-kh?id="+id ;
 }
 
 

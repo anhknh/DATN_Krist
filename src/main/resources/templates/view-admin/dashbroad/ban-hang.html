@@ -66,11 +66,11 @@
                        onclick="highlightLink(this)">
                         <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
                     </a>
-                    <a href="/qian-ly/ban-hang" class="bg_profile_btn mb-3"
+                    <a href="/quan-ly/ban-hang" class="bg_profile_btn mb-3"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
                         <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
                     </a>
-                    <a href="/quan-ly-san-pham/pagination-san-pham" class="mb-3"
+                    <a href="/quan-ly/pagination-san-pham" class="mb-3"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
                         <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
                     </a>
@@ -84,47 +84,47 @@
                         <ul id="productSubMenu" class="submenu"
                             style="list-style: none; padding-left: 20px; display: none;">
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-danh-muc/pagination-danh-muc"
+                                <a href="/quan-ly/pagination-danh-muc"
                                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Danh
                                     mục</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-chat-lieu/pagination-chat-lieu"
+                                <a href="/quan-ly/pagination-chat-lieu"
                                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Chất liệu</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-mau-sac/pagination-mau-sac"
+                                <a href="/quan-ly/pagination-mau-sac"
                                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Màu sắc</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-size/pagination-size"
+                                <a href="/quan-ly/pagination-size"
                                    style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Size</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-tay-ao/pagination-tay-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Tay
+                                <a href="/quan-ly/pagination-tay-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Tay
                                     áo</a>
                             </li>
                             <li style="padding: 8px 12px;">
-                                <a href="/quan-ly-co-ao/pagination-co-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Cổ
+                                <a href="/quan-ly/pagination-co-ao" style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Cổ
                                     áo</a>
                             </li>
                         </ul>
                     </div>
                     <!--                    Chức năng chưa có đường dẫn là #-->
-                    <a href="#" class="mb-3" onclick="highlightLink(this)"
+                    <a href="/quan-ly/view-don-hang" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-cart-flatbed" style="margin-right: 10px;"></i> Đơn hàng
                     </a>
-                    <a href="/quan-ly-khuyen-mai/pagination-khuyen-mai" class=" mb-3" onclick="highlightLink(this)"
+                    <a href="/quan-ly/pagination-khuyen-mai" class=" mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-tickets-perforated" style="margin-right: 10px;"></i> Khuyến mại
                     </a>
                     <!--                    Chức năng chưa có đường dẫn là #-->
-                    <a href="/quan-ly-khach-hang/pagination-khach-hang" class="mb-3" onclick="highlightLink(this)"
+                    <a href="/quan-ly/pagination-khach-hang" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
                     </a>
-                    <a href="/quan-ly-nhan-vien/phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
+                    <a href="/quan-ly//phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
                     </a>
@@ -166,10 +166,11 @@
                                 <div> Hóa đơn chờ</div>
                                 <a class="btn btn-dark btn-sm" th:href="@{/quan-ly/tao-hoa-don}">Tạo hóa đơn chờ</a>
                             </div>
-                            <div>
+                            <div th:if="hoaDonSelected != null">
                                 <div th:each="hoaDon, iterStat : ${listHoaDon}"
+                                     th:if="${hoaDon != null}"
                                      class="form-check form-check-inline" style="padding: 0; margin-right: 12px;">
-                                    <div th:class="${hoaDon.id == hoaDonSelected.id ? 'form-check-label lable_radio_size selected_radio_size' : 'form-check-label lable_radio_size non_radio_size'}"
+                                    <div th:class="${hoaDon.id == (hoaDonSelected?.id ?: 0) ? 'form-check-label lable_radio_size selected_radio_size' : 'form-check-label lable_radio_size non_radio_size'}"
                                          style="padding: 10px 16px; cursor: pointer; border-radius: 4px;">
                                         <a style="margin: 0; padding: 0; font-size: 12px; text-decoration: none; color: #000; font-weight: 500;"
                                            th:href="@{/quan-ly/ban-hang(idHoaDon=${hoaDon.id})}"
@@ -190,14 +191,14 @@
                                 <table class="table table-hover table-bordered table-sm">
                                     <thead>
                                     <tr>
-                                        <th scope="col">STT</th>
-                                        <th scope="col">Ảnh</th>
-                                        <th scope="col">Tên sản phẩm</th>
-                                        <th scope="col">Màu sắc</th>
-                                        <th scope="col">Size</th>
-                                        <th scope="col">Số lượng</th>
-                                        <th scope="col">Giá bán</th>
-                                        <th scope="col" class="text-center">Thao tác</th>
+                                        <th class="text-center align-middle"  scope="col">STT</th>
+                                        <th class="text-center align-middle"  scope="col">Ảnh</th>
+                                        <th class="text-center align-middle"  scope="col">Tên sản phẩm</th>
+                                        <th class="text-center align-middle"  scope="col">Màu sắc</th>
+                                        <th class="text-center align-middle"  scope="col">Size</th>
+                                        <th class="text-center align-middle"  scope="col">Số lượng</th>
+                                        <th class="text-center align-middle"  scope="col">Giá bán</th>
+                                        <th class="text-center align-middle"  >Thao tác</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -213,12 +214,12 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td th:text="${hoaDonChiTiet.getChiTietSanPham().sanPham.tenSanPham}"></td>
-                                        <td th:text="${hoaDonChiTiet.getChiTietSanPham().mau.maMauSac}"></td>
-                                        <td th:text="${hoaDonChiTiet.getChiTietSanPham().size.tenSize}"></td>
-                                        <td th:text="${hoaDonChiTiet.soLuong}"></td>
-                                        <td th:text="${hoaDonChiTiet.giaTien}"></td>
-                                        <td class="text-center">
+                                        <td class="text-center align-middle" th:text="${hoaDonChiTiet.getChiTietSanPham().sanPham.tenSanPham}"></td>
+                                        <td class="text-center align-middle" th:text="${hoaDonChiTiet.getChiTietSanPham().mau.maMauSac}"></td>
+                                        <td class="text-center align-middle" th:text="${hoaDonChiTiet.getChiTietSanPham().size.tenSize}"></td>
+                                        <td class="text-center align-middle" th:text="${hoaDonChiTiet.soLuong}"></td>
+                                        <td class="text-center align-middle" th:text="${dataUtils.formatCurrency(hoaDonChiTiet.giaTien)}"></td>
+                                        <td class="text-center align-middle">
                                             <div class="d-inline-block me-3" data-bs-toggle="tooltip"
                                                  data-bs-placement="top" title="Cập nhật">
                                                 <div data-bs-toggle="modal" data-bs-target="#modalUpdateCart" th:data-id="${hoaDonChiTiet.id}"
@@ -437,7 +438,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="flex: 1;" class="box ms-3">
+                    <div style="flex: 1;" class="box ms-3" th:if="${hoaDonSelected != null}">
                         <!-- Thông tin hóa đơn -->
                         <div style="font-weight: 600;">Thông tin hóa đơn</div>
                         <div th:text="'Ngày tạo: ' + ${hoaDonSelected.ngayTao}">Ngày tạo</div>
@@ -464,6 +465,7 @@
                             <div class="input-group input-group-sm mb-3">
                                 <span class="input-group-text" id="inputGroup-sizing-sm">Họ Tên</span>
                                 <input type="text" name="tenKhachHang" class="form-control"
+                                       readonly
                                        aria-label="Sizing example input"
                                        aria-describedby="inputGroup-sizing-sm"
                                        placeholder="Nhập họ và tên khách hàng"
@@ -484,13 +486,9 @@
                         <div style="font-weight: 600;">Thông tin Thanh toán</div>
 
                         <!-- Input nhập mã giảm giá và nút Áp dụng -->
-                        <div class="input-group input-group-sm mb-3">
-                            <input type="text" class="form-control" placeholder="Nhập mã giảm giá" id="discountCode">
-                            <button class="btn btn-outline-secondary" type="button" onclick="applyDiscount()">Áp dụng</button>
-                        </div>
 
                         <!-- Nút mở modal danh sách khuyến mại -->
-                        <button class="btn btn-sm btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#promoListModal">Chọn từ danh sách khuyến mại</button>
+                        <button class="btn btn-sm btn-dark mb-3" style="width: 100%" data-bs-toggle="modal" data-bs-target="#promoListModal">Chọn khuyến mại</button>
 
                         <div th:if="${hoaDonSelected.khuyenMai != null}" th:text="'Tên khuyến mại: ' + ${hoaDonSelected.khuyenMai.tenKhuyenMai}">Tên khuyến mại</div>
                         <div th:if="${hoaDonSelected.khuyenMai == null}">Tên khuyến mại: Không có khuyến mại</div>
@@ -498,16 +496,17 @@
                         <div th:if="${hoaDonSelected.khuyenMai != null}" th:text="'Mức giảm: ' + ${hoaDonSelected.khuyenMai.giaTri}">Mức giảm</div>
                         <div th:if="${hoaDonSelected.khuyenMai == null}">Mức giảm: 0</div>
 
-                        <div id="totalAmount" th:text="'Tổng tiền: ' + ${tongTien}">Tổng tiền</div>
-                        <div th:if="${hoaDonSelected.khuyenMai != null}" th:text="'Tổng tiền sau giảm: ' + ${tongTienSauGiam}">Tổng tiền sau giảm</div>
-                        <div th:if="${hoaDonSelected.khuyenMai == null}" th:text="'Tổng tiền: ' + ${tongTien}">Tổng tiền sau giảm</div>
+                        <div id="totalAmount" style="display: none" th:text="'Tổng tiền: ' + ${dataUtils.calculatorTotal2(tongTien, hoaDonSelected.khuyenMai, hoaDonSelected.phiVanChuyen)}">Tổng tiền</div>
+                        <div th:if="${hoaDonSelected.khuyenMai == null}" th:text="'Tổng tiền: ' + ${dataUtils.formatCurrency(tongTien)}">Tổng tiền sau giảm</div>
+                        <div th:if="${hoaDonSelected.khuyenMai != null}" th:text="'Tổng tiền sau giảm: ' + ${dataUtils.calculatorTotal(tongTien, hoaDonSelected.khuyenMai, hoaDonSelected.phiVanChuyen)}">Tổng tiền sau giảm</div>
 
 
                         <!-- Phương thức thanh toán -->
-                        <select class="form-select form-select-sm mt-3" aria-label=".form-select-sm example" id="paymentMethod" onchange="toggleCashFields()">
+                        <div class=" mt-3">Phương thức thanh toán</div>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="paymentMethod" onchange="toggleCashFields()">
                             <option selected hidden>Phương thức thanh toán</option>
                             <option value="1">Trực tiếp</option>
-                            <option value="2">Chuyển khoản</option>
+                            <option value="2" selected>Chuyển khoản</option>
                         </select>
 
                         <!-- Tiền khách đưa và Tiền thừa -->
@@ -522,13 +521,43 @@
 
                         <!-- Nút hành động -->
                         <div class="text-center mt-4">
-                            <div class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#qrModal">Thanh toán</div>
-                            <div class="btn btn-dark btn-sm">Hủy hóa đơn</div>
+                            <div th:if="${listHoaDonChiTiet.size() > 0}" class="btn btn-dark btn-sm" id="payMethodOnline" data-bs-toggle="modal" data-bs-target="#qrModal">Thanh toán</div>
+                            <a th:if="${listHoaDonChiTiet.size() > 0}" class="btn btn-dark btn-sm" id="payMethodOffline" style="color: #fff; text-decoration: none; display: none"
+                                 th:href="@{/quan-ly/thanh-toan-hoa-don}"
+                            >Thanh toán</a>
+                            <div class="btn btn-dark btn-sm btn-cancel-order"
+                                 th:attr="data-order-id=${hoaDonSelected.id}"
+                                 data-bs-toggle="modal"
+                                 data-bs-target="#cancelOrderModal">Hủy hóa đơn</div>
                         </div>
                     </div>
 
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Popup Xác Nhận Hủy -->
+<div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelOrderLabel">Xác Nhận Hủy Đơn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="cancelOrderForm" action="/quan-ly/huy-don-hang" method="POST">
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn hủy đơn hàng này không?</p>
+                    <!-- Hidden Input để truyền ID đơn hàng -->
+                    <input type="hidden" name="orderId" id="hiddenOrderId">
+                </div>
+                <div style="padding: 12px; text-align: center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xác Nhận Hủy</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -572,19 +601,25 @@
             </div>
             <div class="modal-body">
                 <!-- Thẻ chứa khuyến mại -->
-                <div th:each="khuyenMai, iterStat : ${listKM}" style="width: 100%">
-                    <div class="d-flex" style="border: 1px dashed #000; border-radius: 8px; padding: 6px; margin-bottom: 10px; width: 100%">
+                <div  style="width: 100%">
+                    <div class="d-flex"  th:each="khuyenMai, iterStat : ${listKM}"
+                         style="border: 1px dashed #000; border-radius: 8px; padding: 6px; margin-bottom: 10px; width: 100%">
                         <div style="border-right: 1px dashed #000; flex: 1; padding: 18px 0;">
                             <i class="fa-solid fa-tickets-perforated" style="font-size: 36px; padding: 0px 12px;"></i>
                         </div>
                         <div style="flex: 3; padding: 4px; font-size: 14px;">
                             <div th:text="'Khuyến mại: ' + ${khuyenMai.tenKhuyenMai}">Khuyến mại</div>
-                            <div th:text="'Giá trị: ' + ${khuyenMai.giaTri} ">Giá trị - Số lượng</div>
+                            <div th:text="'Giá trị: ' + ${dataUtils.formatCurrency(khuyenMai.giaTri)} +' '
+                                         +  ${khuyenMai.kieuKhuyenMai? '%':'VND'} ">Giá trị - Số lượng
+                            </div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div th:text="'Ngày hết hạn: ' + ${#dates.format(khuyenMai.ngayKetThuc, 'dd-MM-yyyy')}">Ngày hết hạn</div>
-                                <a class="btn btn-dark btn-sm"
+                                <a class="btn btn-dark btn-sm" th:if="${hoaDonSelected.khuyenMai == null || hoaDonSelected.khuyenMai.id != khuyenMai.id}"
                                    th:href="@{/quan-ly/add-khuyen-mai(idKhuyenMai=${khuyenMai.id})}"
                                 >Áp dụng</a>
+                                <a class="btn btn-dark btn-sm" th:if="${hoaDonSelected.khuyenMai != null && hoaDonSelected.khuyenMai.id == khuyenMai.id}"
+                                   th:href="@{/quan-ly/huy-khuyen-mai-ban-hang(idKhuyenMai=${khuyenMai.id})}"
+                                >Hủy</a>
                             </div>
                         </div>
                     </div>
@@ -700,7 +735,7 @@
             <div class="modal-body justify-content-center">
                 <div class="text-center">
                     <img
-                            th:src="@{https://img.vietqr.io/image/970418-2171025740-print.png(amount=${tongTien}, addInfo='THANH TOAN DON HANG - KRISTSHOP', accountName='KIEU NGOC HOANG ANH')}"
+                            th:src="@{https://img.vietqr.io/image/970418-2171025740-print.png(amount=${dataUtils.calculatorTotal2(tongTien, hoaDonSelected.khuyenMai, hoaDonSelected.phiVanChuyen)}, addInfo='THANH TOAN DON HANG - KRISTSHOP', accountName='KIEU NGOC HOANG ANH')}"
                             alt="QR Thanh Toán"
                             class="qr-image"
                     />
@@ -796,6 +831,18 @@
 <script src="/js/ProductDetail.js"></script>
 
 <script>
+    document.querySelectorAll('.btn-cancel-order').forEach(button => {
+        button.addEventListener('click', function () {
+            // Lấy ID đơn hàng từ thuộc tính data
+            const orderId = this.getAttribute('data-order-id');
+
+            // Gán ID vào input ẩn trong modal
+            document.getElementById('hiddenOrderId').value = orderId;
+        });
+    });
+</script>
+
+<script>
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -841,33 +888,63 @@
     });
 </script>
 
-<!--tien thua-->
 <script>
+    // Hàm ẩn/hiện các trường và nút
     function toggleCashFields() {
         var paymentMethod = document.getElementById("paymentMethod").value;
         var cashGivenField = document.getElementById("cashGivenField");
         var changeField = document.getElementById("changeField");
+        var btnPayOnline = document.getElementById("payMethodOnline");
+        var btnPayOffline = document.getElementById("payMethodOffline");
 
         if (paymentMethod === "1") { // "Trực tiếp"
             cashGivenField.style.display = "block";
             changeField.style.display = "block";
+            btnPayOnline.style.display = "none";
+            btnPayOffline.style.display = "inline-block"; // Hiện nút offline
+            calculateChange()
         } else { // "Chuyển khoản"
             cashGivenField.style.display = "none";
             changeField.style.display = "none";
+            btnPayOnline.style.display = "inline-block";
+            btnPayOffline.style.display = "none"; // Ẩn nút offline
         }
     }
 
+    // Hàm tính tiền thừa và kiểm tra đủ tiền
     function calculateChange() {
         // Lấy tổng tiền từ phần tử HTML
         var totalAmountText = document.getElementById("totalAmount").textContent;
-        var totalAmount = parseFloat(totalAmountText.replace('Tổng tiền: ', '').replace(',', ''));
+        var totalAmount = parseFloat(totalAmountText.replace('Tổng tiền: ', '').replace(/\./g, '').replace(',', '.'));
 
-        var cashGiven = document.getElementById("cashGiven").value;
+        // Lấy số tiền khách đưa
+        var cashGiven = parseFloat(document.getElementById("cashGiven").value.replace(/\./g, '').replace(',', '.')) || 0;
+
+        // Tính tiền thừa
         var changeAmount = cashGiven - totalAmount;
 
-        document.getElementById("changeAmount").value = changeAmount > 0 ? changeAmount : 0;
+        // Hiển thị tiền thừa hoặc thông báo chưa đủ
+        var changeField = document.getElementById("changeAmount");
+        changeField.value = changeAmount >= 0 ? formatCurrency(changeAmount) : "Chưa đủ tiền thanh toán";
+
+        // Kiểm tra đủ tiền và cập nhật trạng thái nút thanh toán offline
+        var btnPayOffline = document.getElementById("payMethodOffline");
+        if (changeAmount < 0) {
+            btnPayOffline.style.pointerEvents = "none"; // Vô hiệu hóa click
+            btnPayOffline.style.opacity = "0.6"; // Giảm độ mờ
+        } else {
+            btnPayOffline.style.pointerEvents = "auto"; // Bật click
+            btnPayOffline.style.opacity = "1"; // Phục hồi độ mờ
+        }
+    }
+
+    // Hàm định dạng tiền Việt Nam
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
     }
 </script>
+
+
 
 
 <script>
@@ -956,7 +1033,7 @@
 
             // Gọi API để lấy chi tiết sản phẩm
             $.ajax({
-                url: '/quan-ly/chi-tiet-san-pham/' + productId,
+                url: '/quan-ly/user/chi-tiet-san-pham/' + productId,
                 method: 'GET',
                 success: function (productDetails) {
                     if (productDetails && productDetails.length > 0) {
@@ -1099,7 +1176,7 @@
             html5QrCode.start(
                 { facingMode: "environment" },
                 {
-                    fps: 10,    // Số lần quét mỗi giây
+                    fps: 30,    // Số lần quét mỗi giây
                     qrbox: { width: 250, height: 250 } // Kích thước vùng quét
                 },
                 (decodedText) => {
@@ -1146,6 +1223,7 @@
 <script type="text/javascript">
     function thanhToanVaInHoaDon(element) {
         const hoaDonSelected = element.getAttribute('data-id-order');
+        console.log("hiohi")
 
         $.ajax({
             url: '/quan-ly/thanh-toan-hoa-don',
@@ -1202,6 +1280,14 @@
                         // Thay đổi nút "Thêm nhanh khách hàng" thành nút "Xóa"
                         const addButton = document.getElementById('addCustomerButton');
                         addButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
+                        fetch(`/quan-ly/add-tra-khach-hang?soDienThoai=${soDienThoai}`)
+                            .then(response => response.json())
+                            .then(data => {
+
+                            })
+                            .catch(error => {
+                                console.error('Lỗi khi thêm khách hàng:', error);
+                            });
                         addButton.setAttribute('onclick', 'clearCustomerFields()');  // Gán hành động cho nút xóa
 
                         // Hiển thị thông báo tìm khách hàng thành công
@@ -1256,8 +1342,17 @@
     // Hàm xóa thông tin khách hàng
     function clearCustomerFields() {
         // Xóa nội dung các ô input mà không ẩn ô input
-        document.getElementById('soDienThoaiInput').value = '';
-        document.getElementById('tenKhachHangInput').value = '';
+        fetch(`/quan-ly/huy-khach-hang`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('soDienThoaiInput').value = '';
+                document.getElementById('tenKhachHangInput').value = '';
+            })
+            .catch(error => {
+                console.error('Lỗi khi kiểm tra số điện thoại:', error);
+            });
+
+
 
         // Hiển thị lại nút "Thêm khách hàng"
         const addButton = document.getElementById('addCustomerButton');

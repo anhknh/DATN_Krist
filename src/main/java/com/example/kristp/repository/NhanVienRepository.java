@@ -1,6 +1,8 @@
 package com.example.kristp.repository;
 
 import com.example.kristp.entity.NhanVien;
+import com.example.kristp.entity.TaiKhoan;
+import com.example.kristp.enums.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +21,6 @@ public interface NhanVienRepository extends JpaRepository<NhanVien, Integer> {
 
     @Query("from NhanVien n where n.trangThai = 1 ")
     List<NhanVien> findAllNhanVien();
+
+    NhanVien findByTaiKhoanAndTrangThai(TaiKhoan taiKhoan, Status trangThai);
 }

@@ -9,7 +9,9 @@ public interface BanHangService {
     Float getTongTien(HoaDon hoaDon);
 
     boolean addKhuyenMai(Integer idKhuyenMai, HoaDon hoaDon);
+    boolean huyKhuyenMai(Integer idKhuyenMai, HoaDon hoaDon);
     boolean addKhachHang(Integer idKhachHang,String soDienThoai,String tenKhachHang, HoaDon hoaDon);
+    boolean huyKhachHang(HoaDon hoaDon);
     boolean huyDonHang(Integer idHoaDon);
 
     Float findTongTienKhuyenMai(HoaDon hoaDon);

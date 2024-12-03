@@ -1,7 +1,10 @@
 package com.example.kristp.controller.user;
 
 import com.example.kristp.entity.KhachHang;
+import com.example.kristp.entity.NhanVien;
 import com.example.kristp.entity.TaiKhoan;
+import com.example.kristp.enums.Status;
+import com.example.kristp.repository.NhanVienRepository;
 import com.example.kristp.service.KhachHangService;
 import com.example.kristp.service.TaiKhoanService;
 import com.example.kristp.utils.Authen;
@@ -22,6 +25,18 @@ public class AuthenController {
     TaiKhoanService taiKhoanService;
     @Autowired
     KhachHangService khachHangService;
+    @Autowired
+    NhanVienRepository nhanVienRepository;
+
+    @GetMapping("/")
+    public String home(Model model,HttpSession session) {
+        // Kiểm tra xem người dùng đã đăng nhập hay chưa
+        if (Authen.isLoginKhachHang(session)) {
+            return "redirect:/user/trang-chu"; // Chuyển hướng đến trang chính sau khi đăng nhập
+        } else {
+            return "redirect:/dang-nhap"; // Chuyển hướng đến trang đăng nhập
+        }
+    }
 
     @GetMapping("/dang-nhap")
     public String dangNhapView() {
@@ -42,17 +57,30 @@ public class AuthenController {
         // Kiểm tra đăng nhập trong `taiKhoanService`
         TaiKhoan taiKhoan = taiKhoanService.dangNhap(tenDangNhap, matKhau);
         if (taiKhoan != null) {
-            // Tìm `Customer` dựa trên `taiKhoan`
-            KhachHang khachHang = khachHangService.getKHByUserId(taiKhoan);
-            session.setAttribute("khachHang", khachHang);
-            Authen.khachHang = (KhachHang) session.getAttribute("khachHang");
+            if(taiKhoan.getChucVu().equals("user")) {
+                // Tìm `Customer` dựa trên `taiKhoan`
+                KhachHang khachHang = khachHangService.getKHByUserId(taiKhoan);
+                session.setAttribute("khachHang", khachHang);
+                Authen.khachHang = (KhachHang) session.getAttribute("khachHang");
 
-            // Đặt thông báo đăng nhập thành công
-            redirectAttributes.addFlashAttribute("message", "Đăng Nhập thành công!");
-            redirectAttributes.addFlashAttribute("messageType", "alert-success");
-            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+                // Đặt thông báo đăng nhập thành công
+                redirectAttributes.addFlashAttribute("message", "Đăng Nhập thành công!");
+                redirectAttributes.addFlashAttribute("messageType", "alert-success");
+                redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
 
-            return "redirect:/trang-chu";
+                return "redirect:/user/trang-chu";
+            } else {
+                NhanVien nhanVien = nhanVienRepository.findByTaiKhoanAndTrangThai(taiKhoan, Status.ACTIVE);
+                session.setAttribute("nhanVien", nhanVien);
+                Authen.nhanVien = (NhanVien) session.getAttribute("nhanVien");
+
+                // Đặt thông báo đăng nhập thành công
+                redirectAttributes.addFlashAttribute("message", "Đăng Nhập thành công!");
+                redirectAttributes.addFlashAttribute("messageType", "alert-success");
+                redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+
+                return "redirect:/quan-ly/thong-ke";
+            }
         } else {
             // Đăng nhập thất bại
             redirectAttributes.addFlashAttribute("message", "Kiểm tra lại thông tin đăng nhập!");

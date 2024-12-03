@@ -21,7 +21,7 @@
                 <div class="d-flex align-items-center">
                     <img style="height: 36px; margin-right: 8px;" src="/img/logo.png" alt="logo">
                     <p class="title d-inline p-0 m-0">
-                        <a style="color: #000; text-decoration: none" href="/trang-chu">Krist</a>
+                        <a style="color: #000; text-decoration: none" href="/user/trang-chu">Krist</a>
                     </p>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                             <div class="navbar-nav" style="width: 100%; justify-content: space-between;">
                                 <div>
                                     <li class="nav-item">
-                                        <a class="nav-link cl-black s-18" href="/trang-chu">Trang chủ</a>
+                                        <a class="nav-link cl-black s-18" href="/user/trang-chu">Trang chủ</a>
                                     </li>
                                 </div>
                                 <div>
@@ -48,7 +48,7 @@
                                                     <hr>
                                                     <div class="p-2 hover-effect" th:each="item : ${listDanhMuc}">
                                                         <a th:if="${listDanhMuc.size() > 0}"
-                                                           th:href="@{/danh-sach-san-pham(danhMucId=${item.id})}"
+                                                           th:href="@{/user/danh-sach-san-pham(danhMucId=${item.id})}"
                                                            style="text-decoration: none ; color : black">
                                                             <span  th:text="${item.getTenDanhMuc()}"></span></a>
                                                     </div>
@@ -61,7 +61,7 @@
                                                     <div class="p-2 hover-effect" th:each="item : ${listCoAo}">
                                                         <a th:if="${listCoAo.size() > 0}"
 
-                                                           th:href="@{/danh-sach-san-pham(coAoId=${item.id})}"
+                                                           th:href="@{/user/danh-sach-san-pham(coAoId=${item.id})}"
                                                            style="text-decoration: none ; color : black"><span  th:text="${item.getKieuCoAo()}"></span></a>
                                                     </div>
                                                     <h5 th:unless="${listCoAo.size() > 0}" style="color: gray;">Hiện tại không có cổ áo nào</h5>
@@ -70,7 +70,7 @@
                                                     <p class="font-blod">Tay áo</p>
                                                     <hr>
                                                     <div th:if="${listTayAo.size() > 0}" class="p-2 hover-effect" th:each="item : ${listTayAo}">
-                                                        <a th:href="@{/danh-sach-san-pham(tayAoId=${item.id})}" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuTayAo()}"></span></a>
+                                                        <a th:href="@{/user/danh-sach-san-pham(tayAoId=${item.id})}" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuTayAo()}"></span></a>
                                                     </div>
                                                     <h5 th:unless="${listTayAo.size() > 0}" style="color: gray;">Hiện tại không có tay áo nào</h5>
                                                 </div>
@@ -101,7 +101,7 @@
             <div style="flex: 1;">
                 <div class="header_right d-flex align-items-center justify-content-end" style="height: 100%;">
                     <div>
-                        <a class="cl-black" href="/danh-sach-san-pham"><i
+                        <a class="cl-black" href="/user/danh-sach-san-pham"><i
                                 class="fa-regular s-18 fa-magnifying-glass"></i></a>
                     </div>
                     <div style="margin: 0px 46px;">
@@ -109,7 +109,7 @@
                                 class="fa-sharp s-18 fa-regular fa-heart"></i></a>
                     </div>
                     <div class="me-4 position-relative cart-container">
-                        <a class="cl-black" href="/gio-hang-chi-tiet">
+                        <a class="cl-black" href="/user/gio-hang-chi-tiet">
                             <i class="fa-regular s-18 fa-cart-minus"></i>
                             <!-- Hiển thị tổng số lượng -->
                             <span th:if="${totalCartItem > 0}"
@@ -158,12 +158,12 @@
                                     <div style="font-size: 14px; font-weight: 500;" th:text="${convertMoney.formatCurrency(tongTien)}">
                                     </div>
                                 </div>
-                                <a href="/gio-hang-chi-tiet" class="btn btn-dark w-100">Thanh toán</a>
+                                <a href="/user/gio-hang-chi-tiet" class="btn btn-dark w-100">Thanh toán</a>
                             </div>
                         </div>
                     </div>
                     <div style="margin-left: 14px" th:if="khachHang != null">
-                        <a class="cl-black" href="/quan-ly/ca-nhan"><i class="fa-regular s-18 fa-user"></i></a>
+                        <a class="cl-black" href="/user/ca-nhan"><i class="fa-regular s-18 fa-user"></i></a>
                     </div>
                     <div th:if="khachHang == null">
                         <a href="/dang-nhap" class="btn btn-dark">Đăng nhập</a>
@@ -232,36 +232,14 @@
         <div>
             <div class="heading-1 mb-5">Danh mục sản phẩm</div>
             <div class="d-flex justify-content-between">
-                <div>
+                <div th:each="item : ${top4DanhMuc}">
                     <div class="p-4 d-flex align-items-end" style="
                         width: 260px; height: 340px; border-radius: 4px;
                             background-image: url('/img/Category_img.png');
                             background-size: cover; background-color: #F3F3F3;">
-                        <button type="button" style="width: 210px; height: 42px;" class="btn bg-white">Danh mục</button>
-                    </div>
-                </div>
-                <div>
-                    <div class="p-4 d-flex align-items-end" style="
-                        width: 260px; height: 340px; border-radius: 4px;
-                            background-image: url('/img/Category_img.png');
-                            background-size: cover; background-color: #F3F3F3;">
-                        <button type="button" style="width: 210px; height: 42px;" class="btn bg-white">Danh mục</button>
-                    </div>
-                </div>
-                <div>
-                    <div class="p-4 d-flex align-items-end" style="
-                        width: 260px; height: 340px; border-radius: 4px;
-                            background-image: url('/img/Category_img.png');
-                            background-size: cover; background-color: #F3F3F3;">
-                        <button type="button" style="width: 210px; height: 42px;" class="btn bg-white">Danh mục</button>
-                    </div>
-                </div>
-                <div>
-                    <div class="p-4 d-flex align-items-end" style="
-                        width: 260px; height: 340px; border-radius: 4px;
-                            background-image: url('/img/Category_img.png');
-                            background-size: cover; background-color: #F3F3F3;">
-                        <button type="button" style="width: 210px; height: 42px;" class="btn bg-white">Danh mục</button>
+                        <a style="width: 210px; height: 42px; text-decoration: none; color: #000" class="btn bg-white"
+                           th:href="@{/user/danh-sach-san-pham(danhMucId=${item.id})}"
+                                th:text="${item.tenDanhMuc}">Danh mục</a>
                     </div>
                 </div>
             </div>
@@ -290,72 +268,28 @@
     <div class="container">
         <!-- best seller -->
         <div class="heading-1 text-center" style="margin: 80px 0 40px 0;">
-            Sản phẩm bán chạy nhất
+            Sản phẩm bán mới nhất
         </div>
         <div>
             <div class="d-flex flex-wrap">
-                <div class="cart">
+                <div class="cart" th:each="product : ${top4SanPham}"
+                     th:if="${product.getChiTietSanPham().size() > 0}">
                     <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                        <img src="/img/monochrome_tees.png" alt="Product Image">
+                        <img th:src="${product.chiTietSanPham.size() > 0 ? '/img/' + product.chiTietSanPham[0].getAnhSanPham() : '/img/monochrome.png'}"
+                             alt="Product Image">
                     </div>
                     <button class="wishlist-btn">
                         <i class="fa-sharp fa-regular fa-heart"></i>
                     </button>
-                    <button class="btn-add__cart">
-                        thêm vào gỏ hàng
-                    </button>
+                    <a th:href="@{/gio-hang/add(idChiTietSanPham=${product.chiTietSanPham.get(0).id})}"
+                       class="btn-add__cart text-center" style="text-decoration: none; color: #fff">
+                        Thêm vào gỏ hàng
+                    </a>
                     <div class="cart-content">
-                        <div class="category-name">Áo phông trơn</div>
-                        <div class="product-name">Áo phông cộc tay</div>
-                        <div class="price">500,000₫</div>
-                    </div>
-                </div>
-                <div class="cart">
-                    <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                        <img src="/img/monochrome_tees.png" alt="Product Image">
-                    </div>
-                    <button class="wishlist-btn">
-                        <i class="fa-sharp fa-regular fa-heart"></i>
-                    </button>
-                    <button class="btn-add__cart">
-                        thêm vào gỏ hàng
-                    </button>
-                    <div class="cart-content">
-                        <div class="category-name">Áo phông trơn</div>
-                        <div class="product-name">Áo phông cộc tay</div>
-                        <div class="price">500,000₫</div>
-                    </div>
-                </div>
-                <div class="cart">
-                    <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                        <img src="/img/monochrome_tees.png" alt="Product Image">
-                    </div>
-                    <button class="wishlist-btn">
-                        <i class="fa-sharp fa-regular fa-heart"></i>
-                    </button>
-                    <button class="btn-add__cart">
-                        thêm vào gỏ hàng
-                    </button>
-                    <div class="cart-content">
-                        <div class="category-name">Áo phông trơn</div>
-                        <div class="product-name">Áo phông cộc tay</div>
-                        <div class="price">500,000₫</div>
-                    </div>
-                </div>
-                <div class="cart">
-                    <div class="text-center" style="height: 300px; background-color: #F3F3F3;">
-                        <img src="/img/monochrome_tees.png" alt="Product Image">
-                    </div>
-                    <button class="wishlist-btn">
-                        <i class="fa-sharp fa-regular fa-heart"></i>
-                    </button>
-                    <button class="btn-add__cart">
-                        thêm vào gỏ hàng
-                    </button>
-                    <div class="cart-content">
-                        <div class="category-name">Áo phông trơn</div>
-                        <div class="product-name">Áo phông cộc tay</div>
-                        <div class="price">500,000₫</div>
+                        <div class="category-name" th:text="${product.getDanhMuc().getTenDanhMuc()}"></div>
+                        <a class="product-name cl-black" style="text-decoration: none" th:text="${product.getTenSanPham()}" th:href="@{/user/chi-tiet-san-pham(idSanPham=${product.id})}">Áo phông cộc tay</a>
+                        <div class="price"
+                             th:text="${product.chiTietSanPham.size() > 0 ? dataUtils.formatCurrency(product.chiTietSanPham[0].donGia) : 'N/A'}"></div>
                     </div>
                 </div>
             </div>
@@ -421,7 +355,7 @@
             </div>
             <div style=" margin-right: 72px; display: inline-block;">
                 <p class="cl-white" style="font-size: 14px; font-weight: 500; margin-bottom: 40px;"> CỬA HÀNG </p>
-                <p><a href="/quan-ly/ca-nhan" class="cl-white"
+                <p><a href="/user/ca-nhan" class="cl-white"
                       style="text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px;">Tài khoản
                    </a></p>
                 <p><a href="/dang-ki" class="cl-white"
@@ -543,7 +477,7 @@
                         </div>
                     </div>
                     <button class="btn bg-black" style="font-size: 14px; font-weight: 500; width: 100%; height: 40px;">
-                        <a href="/gio-hang-chi-tiet" style="text-decoration: none; color: #fff;">Thanh toán</a>
+                        <a href="/user/gio-hang-chi-tiet" style="text-decoration: none; color: #fff;">Thanh toán</a>
                     </button>
                 </div>
             </div>

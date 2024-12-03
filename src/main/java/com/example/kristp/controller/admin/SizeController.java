@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/quan-ly-size/")
+@RequestMapping("/quan-ly/")
 public class SizeController {
     @Autowired
     private SizeService sizeService ;
@@ -43,20 +43,20 @@ public class SizeController {
             attributes.addFlashAttribute("message" , "Thêm mới size không thành công .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-size/pagination-size";
+            return "redirect:/quan-ly/pagination-size";
         }
         else if(sizeService.addSize(size) == null){
             attributes.addFlashAttribute("size" , size);
             attributes.addFlashAttribute("message" , "Tên của size đã tồn tại .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-size/pagination-size";
+            return "redirect:/quan-ly/pagination-size";
         }
         sizeService.addSize(size);
         attributes.addFlashAttribute("message" , "Thêm mới size thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-size/pagination-size";
+        return "redirect:/quan-ly/pagination-size";
     }
     @PostMapping("/update-size")
     private String updateSize(@Valid @ModelAttribute("size")Size size , BindingResult result , RedirectAttributes attributes , @RequestParam("id")Integer idSize){
@@ -65,21 +65,21 @@ public class SizeController {
             attributes.addFlashAttribute("message" , "Cập nhật size không thành công .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-size/pagination-size";
+            return "redirect:/quan-ly/pagination-size";
         }
         else if(sizeService.updateSize(size , idSize) == null){
             attributes.addFlashAttribute("size", size);
             attributes.addFlashAttribute("message" , "Tên của size đã tồn tại .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-size/pagination-size";
+            return "redirect:/quan-ly/pagination-size";
         }
 
         sizeService.updateSize(size , idSize) ;
         attributes.addFlashAttribute("message" , "Cập nhật size thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-size/pagination-size";
+        return "redirect:/quan-ly/pagination-size";
     }
     @GetMapping("/delete-size/{id}")
     private String deleteSize(@PathVariable("id")Integer idSize ,  RedirectAttributes attributes){
@@ -87,10 +87,10 @@ public class SizeController {
         attributes.addFlashAttribute("message" , "Thay đổi trạng thái size thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-size/pagination-size";
+        return "redirect:/quan-ly/pagination-size";
     }
 
-    @GetMapping("/tim-kiem-tat-ca-theo-ten")
+    @GetMapping("/tim-kiem-tat-ca-theo-ten-size")
     private String timKiemTatCaTheoTen(@RequestParam("tenTimKiem")String ten ,@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo, Model model){
         Page<Size> sizes = sizeService.timTatCaTheoTen(pageNo,"%"+ten+"%");
         model.addAttribute("sizeList" , sizes.getContent());

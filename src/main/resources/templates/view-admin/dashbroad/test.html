@@ -42,7 +42,7 @@
                         th:data-diachi="${diaChi.diaChi}">
                     Cập nhật
                 </button>
-                <a th:href="@{/user-dia-chi/delete-dia-chi/{id}(id=${diaChi.id})}" class="btn btn-danger">Xóa</a>
+                <a th:href="@{/user/delete-dia-chi/{id}(id=${diaChi.id})}" class="btn btn-danger">Xóa</a>
             </td>
         </tr>
         </tbody>
@@ -58,7 +58,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="#" th:action="@{/user-dia-chi/add-dia-chi}" method="post" th:object="${diaChiCre}">
+                <form action="#" th:action="@{/user/add-dia-chi}" method="post" th:object="${diaChiCre}">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="sdt">Số điện thoại</label>
@@ -88,7 +88,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="#" th:action="@{/user-dia-chi/update-dia-chi}" method="post">
+                <form action="#" th:action="@{/user/update-dia-chi}" method="post">
                     <div class="modal-body">
                         <!-- Truyền ID địa chỉ như một trường ẩn -->
                         <input type="hidden" name="id" id="editDiaChiId" />

@@ -9,6 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.Collection;
+import java.util.Collections;
 
 @Getter
 @Setter
@@ -37,5 +42,7 @@ public class KhachHang extends BaseEntity {
 //    @Column(name = "sdt_kh")
 //    private String sdtKh;
 
-
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + taiKhoan.getChucVu().toUpperCase()));
+    }
 }

@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/quan-ly-san-pham/")
+@RequestMapping("/quan-ly/")
 public class SanPhamController {
     @Autowired
     SanPhamService sanPhamService;
@@ -90,7 +90,7 @@ public class SanPhamController {
             attributes.addFlashAttribute("message", "Thêm mới sản phẩm không thành công.");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
-            return "redirect:/quan-ly-san-pham/pagination-san-pham";
+            return "redirect:/quan-ly/pagination-san-pham";
         }
         // Kiểm tra tên sản phẩm đã tồn tại
         if (sanPhamService.isTenExists(sanPham.getTenSanPham().trim())) {
@@ -98,7 +98,7 @@ public class SanPhamController {
             attributes.addFlashAttribute("message", "Tên của sản phẩm đã tồn tại.");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
-            return "redirect:/quan-ly-san-pham/pagination-san-pham";
+            return "redirect:/quan-ly/pagination-san-pham";
         }
 
         // Nếu tên chưa tồn tại, thêm sản phẩm mới
@@ -109,7 +109,7 @@ public class SanPhamController {
         attributes.addFlashAttribute("message", "Thêm mới sản phẩm thành công.");
         attributes.addFlashAttribute("messageType", "alert-success");
         attributes.addFlashAttribute("titleMsg", "Thành công");
-        return "redirect:/quan-ly-san-pham/pagination-san-pham";
+        return "redirect:/quan-ly/pagination-san-pham";
     }
 
 
@@ -123,7 +123,7 @@ public class SanPhamController {
             attributes.addFlashAttribute("message", "Cập nhật sản phẩm không thành công.");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
-            return "redirect:/quan-ly-san-pham/pagination-san-pham";
+            return "redirect:/quan-ly/pagination-san-pham";
         }
         // Đảm bảo rằng các giá trị được thiết lập trước khi cập nhật
         if (idChatLieu != null) {
@@ -133,7 +133,7 @@ public class SanPhamController {
             attributes.addFlashAttribute("message", "Chưa chọn chất liệu!");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
-            return "redirect:/quan-ly-san-pham/pagination-san-pham"; // Chuyển hướng trở lại nếu có lỗi
+            return "redirect:/quan-ly/pagination-san-pham"; // Chuyển hướng trở lại nếu có lỗi
         }
 
         if (idDanhMuc != null) {
@@ -143,7 +143,7 @@ public class SanPhamController {
             attributes.addFlashAttribute("message", "Chưa chọn danh mục!");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
-            return "redirect:/quan-ly-san-pham/pagination-san-pham"; // Chuyển hướng trở lại nếu có lỗi
+            return "redirect:/quan-ly/pagination-san-pham"; // Chuyển hướng trở lại nếu có lỗi
         }
 
         // Cập nhật sản phẩm nếu không trùng lặp
@@ -151,7 +151,7 @@ public class SanPhamController {
         attributes.addFlashAttribute("message", "Cập nhật sản phẩm thành công.");
         attributes.addFlashAttribute("messageType", "alert-success");
         attributes.addFlashAttribute("titleMsg", "Thành công");
-        return "redirect:/quan-ly-san-pham/pagination-san-pham";
+        return "redirect:/quan-ly/pagination-san-pham";
     }
 
 
@@ -161,11 +161,11 @@ public class SanPhamController {
         attributes.addFlashAttribute("message" , "Đổi trạng thái sản phẩm thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-san-pham/pagination-san-pham";
+        return "redirect:/quan-ly/pagination-san-pham";
 
     }
 
-    @GetMapping("/tim-kiem-tat-ca-theo-ten")
+    @GetMapping("/tim-kiem-tat-ca-theo-ten-san-pham")
     private String timKiemTatCaTheoTen(@RequestParam("tenTimKiem")String ten ,@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo, Model model){
         Page<SanPham> coaos = sanPhamService.timTatCaTheoTen(pageNo,"%"+ten+"%");
         model.addAttribute("sanPhamList" , coaos.getContent());

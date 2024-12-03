@@ -8,7 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 @Getter
@@ -36,4 +40,9 @@ public class NhanVien extends BaseEntity{
     @OneToOne
     @JoinColumn(name = "id_tai_khoan")
     private TaiKhoan taiKhoan;
+
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + taiKhoan.getChucVu().toUpperCase()));
+    }
 }

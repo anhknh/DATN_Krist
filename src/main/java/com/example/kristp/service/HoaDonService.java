@@ -5,6 +5,7 @@ import com.example.kristp.entity.KhachHang;
 import com.example.kristp.enums.HoaDonStatus;
 import com.example.kristp.enums.HoaDonStatus;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,7 +17,7 @@ public interface HoaDonService {
     Boolean thanhToanHoaDon(HoaDon hoaDon);
     List<HoaDon> findAllHoaDonCho();
     HoaDon findHoaDonById(Integer id);
-    List<HoaDon> getAllHoaDon(String trangThai);
+    Page<HoaDon> getAllHoaDon(String trangThai, Pageable pageable);
     List<HoaDon> timKiemHoaDon(Integer id, LocalDateTime ngayBatDau, LocalDateTime ngayKetThuc);
     Integer getCountByTrangThai(HoaDonStatus hoaDonStatus);
 

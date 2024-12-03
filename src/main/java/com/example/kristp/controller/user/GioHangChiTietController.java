@@ -19,6 +19,7 @@ import java.util.Map;
 
 
 @Controller
+@RequestMapping("/user/")
 public class GioHangChiTietController {
     @Autowired
     private GioHangChiTietService gioHangChiTietService;
@@ -137,6 +138,6 @@ public class GioHangChiTietController {
 
         // chuyền danh sách id đã chọn sang trang đặt hàng
         String productCheckParam = String.join(",", selectedIds);
-        return "redirect:/dat-hang/dia-chi-giao-hang?productCheck=" + productCheckParam;
+        return "redirect:/user/dia-chi-giao-hang?productCheck=" + productCheckParam;
     }
 }

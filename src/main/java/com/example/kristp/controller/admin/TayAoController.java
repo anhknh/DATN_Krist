@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/quan-ly-tay-ao/")
+@RequestMapping("/quan-ly/")
 public class TayAoController {
     @Autowired
     TayAoService tayAoService ;
@@ -43,20 +43,20 @@ public class TayAoController {
             attributes.addFlashAttribute("message" , "Thêm mới tay ao không thành công .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-tay-ao/pagination-tay-ao";
+            return "redirect:/quan-ly/pagination-tay-ao";
         }
         else if(tayAoService.addTayAo(tayAo) == null){
             attributes.addFlashAttribute("tayAo" , tayAo);
             attributes.addFlashAttribute("message" , "Tên của tay áo đã tồn tại .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-tay-ao/pagination-tay-ao";
+            return "redirect:/quan-ly/pagination-tay-ao";
         }
         tayAoService.addTayAo(tayAo);
         attributes.addFlashAttribute("message" , "Thêm mới tay áo thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-tay-ao/pagination-tay-ao";
+        return "redirect:/quan-ly/pagination-tay-ao";
     }
 
     @PostMapping("/update-tay-ao")
@@ -66,21 +66,21 @@ public class TayAoController {
             attributes.addFlashAttribute("message" , "Cập nhật tay á0 không thành công .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-tay-ao/pagination-tay-ao";
+            return "redirect:/quan-ly/pagination-tay-ao";
         }
         else if(tayAoService.updateTayAo(tayAo , idTayAo) == null){
             attributes.addFlashAttribute("tayAo", tayAo);
             attributes.addFlashAttribute("message" , "Tên của tay áo đã tồn tại .");
             attributes.addFlashAttribute("messageType" , "alert-danger");
             attributes.addFlashAttribute("titleMsg" , "Thất bại");
-            return "redirect:/quan-ly-tay-ao/pagination-tay-ao";
+            return "redirect:/quan-ly/pagination-tay-ao";
         }
 
         tayAoService.updateTayAo(tayAo , idTayAo) ;
         attributes.addFlashAttribute("message" , "Cập nhật tay áo thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-tay-ao/pagination-tay-ao";
+        return "redirect:/quan-ly/pagination-tay-ao";
     }
 
     @GetMapping("/delete-tay-ao/{id}")
@@ -89,11 +89,11 @@ public class TayAoController {
         attributes.addFlashAttribute("message" , "Thay đổi trạng thái tay áo thành công .");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly-tay-ao/pagination-tay-ao";
+        return "redirect:/quan-ly/pagination-tay-ao";
 
     }
 
-    @GetMapping("/tim-kiem-tat-ca-theo-ten")
+    @GetMapping("/tim-kiem-tat-ca-theo-ten-tay-ao")
     private String timKiemTatCaTheoTen(@RequestParam("tenTimKiem")String ten ,@RequestParam(name = "pageNo" , defaultValue = "0")Integer pageNo, Model model){
         Page<TayAo> tayaos= tayAoService.timTatCaTheoTen(pageNo,"%"+ten+"%");
         model.addAttribute("tayAoList" , tayaos.getContent());

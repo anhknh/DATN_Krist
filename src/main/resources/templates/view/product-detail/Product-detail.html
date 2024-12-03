@@ -22,7 +22,7 @@
             <div class="d-flex align-items-center">
                 <img style="height: 36px; margin-right: 8px;" src="/img/logo.png" alt="logo">
                 <p class="title d-inline p-0 m-0">
-                    <a style="color: #000; text-decoration: none" href="/trang-chu">Krist</a>
+                    <a style="color: #000; text-decoration: none" href="/user/trang-chu">Krist</a>
                 </p>
             </div>
         </div>
@@ -33,7 +33,7 @@
                         <div class="navbar-nav" style="width: 100%; justify-content: space-between;">
                             <div>
                                 <li class="nav-item">
-                                    <a class="nav-link cl-black s-18" href="/trang-chu">Trang chủ</a>
+                                    <a class="nav-link cl-black s-18" href="/user/trang-chu">Trang chủ</a>
                                 </li>
                             </div>
                             <div>
@@ -50,7 +50,7 @@
                                                 <hr>
                                                 <div class="p-2 hover-effect" th:each="item : ${listDanhMuc}">
                                                     <a th:if="${listDanhMuc.size() > 0}"
-                                                       th:href="@{/danh-sach-san-pham(danhMucId=${item.id})}"
+                                                       th:href="@{/user/danh-sach-san-pham(danhMucId=${item.id})}"
                                                        style="text-decoration: none ; color : black">
                                                         <span th:text="${item.getTenDanhMuc()}"></span></a>
                                                 </div>
@@ -64,7 +64,7 @@
                                                 <div class="p-2 hover-effect" th:each="item : ${listCoAo}">
                                                     <a th:if="${listCoAo.size() > 0}"
 
-                                                       th:href="@{/danh-sach-san-pham(coAoId=${item.id})}"
+                                                       th:href="@{/user/danh-sach-san-pham(coAoId=${item.id})}"
                                                        style="text-decoration: none ; color : black"><span
                                                             th:text="${item.getKieuCoAo()}"></span></a>
                                                 </div>
@@ -76,7 +76,7 @@
                                                 <hr>
                                                 <div th:if="${listTayAo.size() > 0}" class="p-2 hover-effect"
                                                      th:each="item : ${listTayAo}">
-                                                    <a th:href="@{/danh-sach-san-pham(tayAoId=${item.id})}"
+                                                    <a th:href="@{/user/danh-sach-san-pham(tayAoId=${item.id})}"
                                                        style="text-decoration: none ; color : black"><span
                                                             th:text="${item.getKieuTayAo()}"></span></a>
                                                 </div>
@@ -110,7 +110,7 @@
         <div style="flex: 1;">
             <div class="header_right d-flex align-items-center justify-content-end" style="height: 100%;">
                 <div>
-                    <a class="cl-black" href="/danh-sach-san-pham"><i
+                    <a class="cl-black" href="/user/danh-sach-san-pham"><i
                             class="fa-regular s-18 fa-magnifying-glass"></i></a>
                 </div>
                 <div style="margin: 0px 46px;">
@@ -118,7 +118,7 @@
                             class="fa-sharp s-18 fa-regular fa-heart"></i></a>
                 </div>
                 <div class="me-4 position-relative cart-container">
-                    <a class="cl-black" href="/gio-hang-chi-tiet">
+                    <a class="cl-black" href="/user/gio-hang-chi-tiet">
                         <i class="fa-regular s-18 fa-cart-minus"></i>
                         <!-- Hiển thị tổng số lượng -->
                         <span th:if="${totalCartItem > 0}"
@@ -171,12 +171,12 @@
                                      th:text="${convertMoney.formatCurrency(tongTien)}">
                                 </div>
                             </div>
-                            <a href="/gio-hang-chi-tiet" class="btn btn-dark w-100">Thanh toán</a>
+                            <a href="/user/gio-hang-chi-tiet" class="btn btn-dark w-100">Thanh toán</a>
                         </div>
                     </div>
                 </div>
                 <div style="margin-left: 14px" th:if="khachHang != null">
-                    <a class="cl-black" href="/quan-ly/don-hang"><i class="fa-regular s-18 fa-user"></i></a>
+                    <a class="cl-black" href="/user/don-hang"><i class="fa-regular s-18 fa-user"></i></a>
                 </div>
                 <div th:if="khachHang == null">
                     <a href="/dang-nhap" class="btn btn-dark">Đăng nhập</a>
@@ -613,10 +613,97 @@
     </div>
 </div>
 
+<!-- Alert thông báo thất bại -->
+<div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage"
+     style="display: none; z-index: 1060;">
+    <strong>Thất bại!</strong> <span id="alertBody">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage2"
+     style="display: none;  z-index: 1060;">
+    <strong>Thành công!</strong> <span id="alertBody2">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<!-- Alert thông báo từ backend -->
+<div th:if="${message}" th:class="${messageType} + ' alert alert-dismissible fade show position-fixed top-0 end-0 m-3'" id="successAlert" role="alert">
+    <strong th:text="${titleMsg}">Tiêu đề</strong> <span th:text="${message}">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/ProductDetail.js"></script>
+
+<script>
+    (function () {
+        'use strict';
+        // Fetch all forms with class 'needs-validation'
+        var forms = document.querySelectorAll('.needs-validation');
+
+        // Loop over forms and prevent submission if validation fails
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    showAlert( "error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
+                }
+                form.classList.add('was-validated');
+            }, false);
+
+            // Add 'change' event listener for all inputs to validate them dynamically
+            var inputs = form.querySelectorAll('input');
+            Array.prototype.slice.call(inputs).forEach(function (input) {
+                input.addEventListener('change', function () {
+                    if (input.checkValidity()) {
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+                    } else {
+                        input.classList.remove('is-valid');
+                        input.classList.add('is-invalid');
+                        showAlert("error","Dữ liệu không hợp lệ trong " + input.placeholder);
+                    }
+                });
+            });
+        });
+
+        // thông báo
+        window.showAlert = function(type, message) {
+            let alertElement;
+
+            if (type === 'success') {
+                alertElement = document.getElementById('alertMessage2');
+                alertElement.querySelector('#alertBody2').textContent = message; // Thiết lập nội dung thông báo thành công
+                alertElement.style.display = 'block'; // Hiển thị thông báo thành công
+            } else if (type === 'error') {
+                alertElement = document.getElementById('alertMessage');
+                alertElement.querySelector('#alertBody').textContent = message; // Thiết lập nội dung thông báo lỗi
+                alertElement.style.display = 'block'; // Hiển thị thông báo lỗi
+            }
+
+            // Tự động ẩn thông báo sau 5 giây
+            setTimeout(() => {
+                if (alertElement) {
+                    var bootstrapAlert = new bootstrap.Alert(alertElement);
+                    bootstrapAlert.close();
+                }
+            }, 5000);
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Kiểm tra và ẩn thông báo thành công nếu có
+            var successAlert = document.getElementById('successAlert');
+            if (successAlert && successAlert.style.display !== 'none') {
+                setTimeout(function () {
+                    var bootstrapAlert = new bootstrap.Alert(successAlert);
+                    bootstrapAlert.close();
+                }, 5000);
+            }
+        });
+
+    })();
+</script>
 
 <script>
     $(document).ready(function () {
@@ -638,7 +725,7 @@
 
             // Gọi API để lấy danh sách kích thước tương ứng với màu được chọn
             $.ajax({
-                url: '/product-detail/find-size',
+                url: '/user/product-detail/find-size',
                 method: 'GET',
                 data: {colorId: selectedColor},
                 success: function (response) {
@@ -691,7 +778,7 @@
                 }
 
                 $.ajax({
-                    url: '/product-detail/find-detail',
+                    url: '/user/product-detail/find-detail',
                     type: 'GET',
                     data: {sizeId: size, colorId: color},
                     success: function (response) {

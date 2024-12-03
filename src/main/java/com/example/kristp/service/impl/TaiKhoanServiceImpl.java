@@ -48,7 +48,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     @Override
     public TaiKhoan taoTaiKhoan(TaiKhoan taiKhoan, String tenKhachHang, String sdtKh) {
-        taiKhoan.setChucVu("KhachHang");
+        taiKhoan.setChucVu("user");
         taiKhoan.setTrangThai(Status.ACTIVE);
         TaiKhoan taiKhoanNew = taiKhoanRepository.save(taiKhoan);
 
