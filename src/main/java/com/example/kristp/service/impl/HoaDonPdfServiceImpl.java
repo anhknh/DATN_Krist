@@ -152,18 +152,19 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
                     }
 
                     myTextClass.addSingleLineText("Tổng tiền: " + currencyFormat.format(tongTien) + " VNĐ", 50, yPosition - 20, font, 14, Color.BLACK);
-                    myTextClass.addSingleLineText("Tên khuyến mại: " + tenKhuyenMai, 50, yPosition - 40, font, 14, Color.BLACK);
-                    if(hoaDon.getKhuyenMai().getKieuKhuyenMai()) {
-                        myTextClass.addSingleLineText("Giảm giá: " + currencyFormat.format(giamGia) + " %", 50, yPosition - 60, font, 14, Color.BLACK);
-                    } else {
-                        myTextClass.addSingleLineText("Giảm giá: " + currencyFormat.format(giamGia) + " VNĐ", 50, yPosition - 60, font, 14, Color.BLACK);
+                    if(hoaDon.getKhuyenMai() != null) {
+                        myTextClass.addSingleLineText("Tên khuyến mại: " + tenKhuyenMai, 50, yPosition - 40, font, 14, Color.BLACK);
+                        if(hoaDon.getKhuyenMai().getKieuKhuyenMai()) {
+                            myTextClass.addSingleLineText("Giảm giá: " + currencyFormat.format(giamGia) + " %", 50, yPosition - 60, font, 14, Color.BLACK);
+                        } else {
+                            myTextClass.addSingleLineText("Giảm giá: " + currencyFormat.format(giamGia) + " VNĐ", 50, yPosition - 60, font, 14, Color.BLACK);
+                        }
                     }
                     myTextClass.addSingleLineText("Tổng sau giảm: " + currencyFormat.format(tongSauGiam) + " VNĐ", 50, yPosition - 80, font, 14, Color.BLACK);
                     if(hoaDon.getDiaChi() == null) {
                         myTextClass.addSingleLineText("Phương thức thanh toán: Tại quầy", 50, yPosition - 100, font, 14, Color.BLACK);
                     } else {
                         myTextClass.addSingleLineText("Phương thức thanh toán: " + phuongThucThanhToan, 50, yPosition - 100, font, 14, Color.BLACK);
-
                     }
                 } catch (IOException e) {
                     log.error("Lỗi khi tải font: " + e.getMessage());

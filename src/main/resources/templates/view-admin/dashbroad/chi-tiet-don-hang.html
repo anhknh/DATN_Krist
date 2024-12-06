@@ -322,7 +322,7 @@
                             <div th:if="${hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).HOAN_TAT &&
                             hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).DA_HUY}">
                                 <a class="btn btn-dark" style="color: #fff; text-decoration: none"
-                                   th:href="@{/quan-ly//doi-trang-thai(idHoaDon=${idHoaDonSelected})}">
+                                   th:href="@{/quan-ly/doi-trang-thai(idHoaDon=${idHoaDonSelected})}">
                                     <i class="fa-sharp fa-regular fa-arrow-right"></i> Chuyển trạng thái
                                 </a>
                             </div>
