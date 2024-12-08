@@ -52,7 +52,7 @@
                 <div style="height: 72px; margin-bottom: 42px;"
                      class="d-flex align-items-center justify-content-center">
                     <div>
-                        <img style="width: 78%" src="/img/logo.png" alt="logo">
+                        <img style="width: 78%" src="/uploadImage/logo.png" alt="logo">
                     </div>
                     <div style="font-size: 20px; font-weight: 800; margin-left: 12px;">
                         Krist
@@ -209,13 +209,16 @@
                                             <div class="d-flex justify-content-center align-items-center"
                                                  style="background-color: #f6f6f6; border-radius: 4px;">
                                                 <div>
-                                                    <div th:style="|width: 46px; height: 46px; background: url('/img/${hoaDonChiTiet.getChiTietSanPham().anhSanPham}') no-repeat center center / cover; border: none;|">
+                                                    <div th:style="|width: 46px; height: 46px; background: url('/uploadImage/${hoaDonChiTiet.getChiTietSanPham().anhSanPham}') no-repeat center center / cover; border: none;|">
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="text-center align-middle" th:text="${hoaDonChiTiet.getChiTietSanPham().sanPham.tenSanPham}"></td>
-                                        <td class="text-center align-middle" th:text="${hoaDonChiTiet.getChiTietSanPham().mau.maMauSac}"></td>
+                                        <td class="text-center align-middle">
+                                            <div th:style="|width: 42px; margin: 0 auto; height: 12px; background-color: ${hoaDonChiTiet.getChiTietSanPham().mau.maMauSac}; border: 1px solid black|"></div>
+
+                                        </td>
                                         <td class="text-center align-middle" th:text="${hoaDonChiTiet.getChiTietSanPham().size.tenSize}"></td>
                                         <td class="text-center align-middle" th:text="${hoaDonChiTiet.soLuong}"></td>
                                         <td class="text-center align-middle" th:text="${dataUtils.formatCurrency(hoaDonChiTiet.giaTien)}"></td>
@@ -238,7 +241,7 @@
                                     </tbody>
                                 </table>
 
-                                <div class="d-flex justify-content-end">
+                                <div th:if="${hoaDonSelected != null}" class="d-flex justify-content-end">
                                     <div>
                                         <!-- Pagination for SanPham -->
                                         <nav aria-label="Page navigation example">
@@ -278,7 +281,7 @@
                         </div>
                         <div class="box mt-2">
                             <div class="mb-2"> Danh sách sản phẩm -
-                                <a class="d-inline-block btn" data-bs-toggle="tooltip" data-bs-placement="top"
+                                <a  th:if="${hoaDonSelected != null}" class="d-inline-block btn" data-bs-toggle="tooltip" data-bs-placement="top"
                                    th:href="@{/quan-ly/ban-hang(page=0, idHoaDon=${hoaDonSelected.id})}"
                                      title="Làm mới">
                                     <i class="fa-regular fa-repeat"></i>
@@ -286,7 +289,7 @@
                             </div>
                             <div>
                                 <form action="/quan-ly/ban-hang" method="get">
-                                    <input type="hidden" name="idHoaDon" th:value="${hoaDonSelected.id}"/>
+                                    <input  th:if="${hoaDonSelected != null}" type="hidden" name="idHoaDon" th:value="${hoaDonSelected.id}"/>
                                     <div>
                                         <div class="input-group input-group-sm mb-3">
                                             <span class="input-group-text" id="inputGroup-sizing-smm">Tên sản phẩm</span>
@@ -376,7 +379,7 @@
                                             <div class="d-flex justify-content-center align-items-center"
                                                  style="background-color: #f6f6f6; border-radius: 4px;">
                                                 <div>
-                                                    <div th:style="|width: 46px; height: 46px; background: url('/img/${chiTietSanPhamService.findFristProductDetail(sanPham).anhSanPham}') no-repeat center center / cover; border: none;|">
+                                                    <div th:style="|width: 46px; height: 46px; background: url('/uploadImage/${chiTietSanPhamService.findFristProductDetail(sanPham).anhSanPham}') no-repeat center center / cover; border: none;|">
                                                     </div>
                                                 </div>
                                             </div>
@@ -400,7 +403,7 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                <div class="d-flex justify-content-end">
+                                <div th:if="${hoaDonSelected != null}" class="d-flex justify-content-end">
                                     <div>
                                         <!-- Pagination for SanPham -->
                                         <nav aria-label="Page navigation example">
@@ -441,7 +444,7 @@
                     <div style="flex: 1;" class="box ms-3" th:if="${hoaDonSelected != null}">
                         <!-- Thông tin hóa đơn -->
                         <div style="font-weight: 600;">Thông tin hóa đơn</div>
-                        <div th:text="'Ngày tạo: ' + ${hoaDonSelected.ngayTao}">Ngày tạo</div>
+                        <div th:text="'Ngày tạo: ' + ${#dates.format(hoaDonSelected.ngayTao, 'dd-MM-yyyy')}">Ngày tạo</div>
                         <div th:text="'Người tạo: ' + ${hoaDonSelected.nhanVien.tenNhanVien}">Người tạo</div>
 
                         <!-- Thông tin Khách hàng -->
@@ -601,7 +604,7 @@
             </div>
             <div class="modal-body">
                 <!-- Thẻ chứa khuyến mại -->
-                <div  style="width: 100%">
+                <div  th:if="${hoaDonSelected != null}"  style="width: 100%">
                     <div class="d-flex"  th:each="khuyenMai, iterStat : ${listKM}"
                          style="border: 1px dashed #000; border-radius: 8px; padding: 6px; margin-bottom: 10px; width: 100%">
                         <div style="border-right: 1px dashed #000; flex: 1; padding: 18px 0;">
@@ -651,13 +654,13 @@
                         </div>
                         <div class="carousel-inner text-center" style="padding: 28px;">
                             <div class="carousel-item active">
-                                <img src="/img/monochrome_tees.png" style="width: 80%;" alt="...">
+                                <img src="/uploadImage/monochrome_tees.png" style="width: 80%;" alt="...">
                             </div>
                             <div class="carousel-item">
-                                <img src="/img/monochrome_tees.png" style="width: 80%;" alt="...">
+                                <img src="/uploadImage/monochrome_tees.png" style="width: 80%;" alt="...">
                             </div>
                             <div class="carousel-item">
-                                <img src="/img/monochrome_tees.png" style="width: 80%;" alt="...">
+                                <img src="/uploadImage/monochrome_tees.png" style="width: 80%;" alt="...">
                             </div>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -725,7 +728,7 @@
     </div>
 </div>
 <!-- Modal thanh toán-->
-<div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
+<div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true"  th:if="${hoaDonSelected != null}">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="width: 600px; margin: 0; padding: 0">
             <div class="modal-header">
@@ -735,7 +738,7 @@
             <div class="modal-body justify-content-center">
                 <div class="text-center">
                     <img
-                            th:src="@{https://img.vietqr.io/image/970418-2171025740-print.png(amount=${dataUtils.calculatorTotal2(tongTien, hoaDonSelected.khuyenMai, hoaDonSelected.phiVanChuyen)}, addInfo='THANH TOAN DON HANG - KRISTSHOP', accountName='KIEU NGOC HOANG ANH')}"
+                            th:src="@{https://uploadImage.vietqr.io/image/970418-2171025740-print.png(amount=${dataUtils.calculatorTotal2(tongTien, hoaDonSelected.khuyenMai, hoaDonSelected.phiVanChuyen)}, addInfo='THANH TOAN DON HANG - KRISTSHOP', accountName='KIEU NGOC HOANG ANH')}"
                             alt="QR Thanh Toán"
                             class="qr-image"
                     />
@@ -1048,7 +1051,7 @@
                         productDetails.forEach(function(detail, index) {
                             images += `
                             <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                                <img src="/img/${detail.anhSanPham}" class="d-block w-100" alt="${product.tenSanPham}">
+                                <img src="/uploadImage/${detail.anhSanPham}" class="d-block w-100" alt="${product.tenSanPham}">
                             </div>`;
 
                             // Tạo các tùy chọn màu và kích thước

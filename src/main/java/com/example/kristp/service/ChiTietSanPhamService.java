@@ -4,9 +4,14 @@ import com.example.kristp.entity.ChiTietSanPham;
 import com.example.kristp.entity.MauSac;
 import com.example.kristp.entity.SanPham;
 import com.example.kristp.entity.Size;
+import com.example.kristp.entity.dto.ChiTietSanPhamDto;
+import com.example.kristp.entity.dto.ChiTietSanPhamDtoEdit;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,5 +31,11 @@ public interface ChiTietSanPhamService {
 
     ChiTietSanPham getByColorAndSize(Integer colorId, Integer sizeId, Integer productId);
 
+    boolean addChioTietSanPham (List<ChiTietSanPhamDto> chiTietSanPham, Integer idSanPham) throws IOException;
+    boolean updateChiTietSanPham (ChiTietSanPhamDtoEdit chiTietSanPham, Integer idChiTiet, Integer idSanPham) throws IOException;
+
+    Page<ChiTietSanPham> getPageChiTietSanPham(Integer idSanPham, Pageable pageable);
+    boolean changeStatus(Integer idChiTiet);
+    Page<ChiTietSanPham> getAllChiTietSanPham(int page, int size);
 
 }

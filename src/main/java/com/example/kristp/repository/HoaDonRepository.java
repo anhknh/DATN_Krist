@@ -22,7 +22,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
     Integer countByTrangThai(HoaDonStatus trangThai);
 
 
-    @Query("SELECT h FROM HoaDon h WHERE h.trangThai = :trangThai ORDER BY h.ngayDatHang DESC")
+    @Query("SELECT h FROM HoaDon h WHERE h.trangThai = :trangThai ORDER BY h.ngayDatHang ASC ")
     Page<HoaDon> findByTrangThaiDonHang(@Param("trangThai") HoaDonStatus trangThai, Pageable pageable);
 
     // tìm kiếm đơn hàng

@@ -39,7 +39,7 @@
         <div style="height: 72px; margin-bottom: 42px;"
              class="d-flex align-items-center justify-content-center">
           <div>
-            <img style="width: 78%" src="/img/logo.png" alt="logo">
+            <img style="width: 78%" src="/uploadImage/logo.png" alt="logo">
           </div>
           <div style="font-size: 20px; font-weight: 800; margin-left: 12px;">
             Krist
@@ -265,10 +265,10 @@
                   <span th:case="true">Giảm theo %</span>
                   <span th:case="false">Giảm theo VNĐ</span>
                 </td>
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${DataUtils.formatCurrency(khuyenMai.mucGiamToiDa)}">
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${DataUtils.formatCurrency(khuyenMai.giaTri)}">
                     th:class="valueDes">
                 </td>
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${DataUtils.formatCurrency(khuyenMai.giaTri)}">
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${DataUtils.formatCurrency(khuyenMai.mucGiamToiDa)}">
                     th:class="valueDes">
                 </td>
 

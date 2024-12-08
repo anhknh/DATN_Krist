@@ -15,11 +15,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
@@ -50,7 +49,7 @@ public class DonHangController {
 
         // Nếu không có giá trị trangThai, mặc định hiển thị tất cả
         if (trangThai == null || trangThai.isEmpty()) {
-            trangThai = "on";  // Mặc định là "Tất cả"
+            trangThai = "0";  // Mặc định là "Tất cả"
         }
 
         System.out.println("Trạng thái: " + trangThai); // Log để kiểm tra
@@ -119,6 +118,93 @@ public class DonHangController {
             redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
         } else {
             redirectAttributes.addFlashAttribute("message", "Đơn đã hoàn tất hoặc có lỗi xảy ra!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+        }
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
+    }
+
+    @PostMapping("/doi-phi-van-chuyen")
+    public String doiOhiVanChuyen(@RequestParam("orderId") Integer idHoaDon,
+                               @RequestParam("shippingFee") double shippingFee,
+                               Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        if(hoaDonService.changePhiVanChuyen(idHoaDon, shippingFee)) {
+            redirectAttributes.addFlashAttribute("message", "Cập nhật phí vận chuyển thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Trạng thái đã tahy đổi!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+        }
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
+    }
+
+    //logic mới
+
+    @PostMapping("/cap-nhat-so-luong-don")
+    public String capNhatSoLuong(@RequestParam("inHoaDonChiTiet") Integer idHoaDonChiTiet,
+                                 @RequestParam("soLuong") Integer soLuong,
+                                 Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        if(hoaDonService.capNhatSoLuong(idHoaDonChiTiet, soLuong)) {
+            redirectAttributes.addFlashAttribute("message", "Cập nhật đơn hàng thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Vượt quá số lượng hoặc trạng thái đã thay đổi!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+        }
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
+    }
+
+    @GetMapping("/xoa-san-pham-don")
+    public String xoaSanPham(@RequestParam Integer id,
+                             Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        if(hoaDonService.xoaSanPham(id)) {
+            redirectAttributes.addFlashAttribute("message", "Xóa sản phẩm đơn hàng thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Không tìm thấy hoặc Trạng thái đã thay đổi!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+        }
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
+    }
+
+    @GetMapping("/lay-thong-tin")
+    public ResponseEntity<HoaDon> layThongTinHoaDon(@RequestParam Integer hoaDonId) {
+        HoaDon hoaDon = hoaDonService.findHoaDonById(hoaDonId);
+        if(hoaDon.getTrangThai() != HoaDonStatus.CHO_XAC_NHAN) {
+            return ResponseEntity.badRequest().build();
+        }
+        // Logic lấy thông tin hóa đơn cập nhật
+        return ResponseEntity.ok(hoaDon);
+    }
+
+    @GetMapping("/add-san-pham-don")
+    public String addSanPhamDon(@RequestParam("idHoaDon") Integer idHoaDon,
+                             @RequestParam("idChiTiet") Integer idChiTiet,
+                             Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        if(hoaDonService.themSanPhamDon(idHoaDon, idChiTiet)) {
+            redirectAttributes.addFlashAttribute("message", "Thêm sản phẩm vào đơn thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Vượt quá số lượng hoặc Trạng thái đã thay đổi!");
             redirectAttributes.addFlashAttribute("messageType", "alert-danger");
             redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
         }
