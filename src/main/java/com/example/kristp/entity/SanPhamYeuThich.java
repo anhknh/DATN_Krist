@@ -1,14 +1,14 @@
 package com.example.kristp.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "sanPhamYeuThich")
 public class SanPhamYeuThich extends BaseEntity {
@@ -21,6 +21,6 @@ public class SanPhamYeuThich extends BaseEntity {
     private KhachHang khachHang ;
 
     @ManyToOne
-    @JoinColumn(name = "id_hoa_don_chi_tiet")
-    private HoaDonChiTiet hoaDonChiTiet ;
+    @JoinColumn(name = "id_san_pham")
+    private SanPham sanPham ;
 }

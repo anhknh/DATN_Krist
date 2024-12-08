@@ -50,6 +50,8 @@ public class ProductDetailController {
     GioHangChiTietService gioHangChiTietService;
     @Autowired
     DanhGiaService danhGiaService;
+    @Autowired
+    SanPhamYeuThichService sanPhamYeuThichService;
 
 
     Integer idProductPage = 0;
@@ -95,6 +97,7 @@ public class ProductDetailController {
         //hàm format
         model.addAttribute("convertMoney", dataUtils);
         model.addAttribute("listDanhGia", listDanhGia.getContent());
+        model.addAttribute("sanPhamYeuThichService", sanPhamYeuThichService);
 
         return "view/product-detail/Product-detail";
     }

@@ -46,6 +46,8 @@ public class HomeController {
     DataUtils dataUtils;
     @Autowired
     DanhMucRepository danhMucRepository;
+    @Autowired
+    SanPhamYeuThichService sanPhamYeuThichService;
 
 
     @GetMapping("/trang-chu")
@@ -85,6 +87,7 @@ public class HomeController {
         model.addAttribute("top4DanhMuc", danhMucRepository.findTop4ByTrangThaiOrderByNgayTaoDesc(Status.ACTIVE));
         model.addAttribute("top4SanPham", sanPhamRepository.finTop4SanPhamMoi());
         model.addAttribute("dataUtils", dataUtils);
+        model.addAttribute("sanPhamYeuThichService", sanPhamYeuThichService);
         return "view/home/home-page";
     }
 

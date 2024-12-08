@@ -26,24 +26,26 @@ class SecurityConfig{
                 .addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET,"/", "/user/trang-chu", "/dang-nhap", "/dang-ki", "/resources/**",
-                                "/css/**", "/js/**", "/img/**", "/error", "/favicon.ico").permitAll()
+                                "/css/**", "/js/**", "/uploadImage/**", "/error", "/favicon.ico", "/uploadImage/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/dang-nhap-khach-hang", "/dang-ki-tai-khoan").permitAll()
                         .requestMatchers(HttpMethod.GET, "/user/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/user/**").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/admin/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/quan-ly/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/quan-ly/**").hasRole("USER")
                         .anyRequest().authenticated()
-
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/dang-nhap")
                         .defaultSuccessUrl("/user/trang-chu", true)
                         .permitAll()
                 )
-                .logout(logout -> logout.permitAll()
-                ).csrf(csrf -> csrf.disable()
-                );
+                .logout(logout -> logout.permitAll())
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            // Khi lỗi 403, chuyển hướng về trang đăng nhập
+                            response.sendRedirect("/dang-nhap");
+                        })
+                )
+                .csrf(csrf -> csrf.disable());
         return http.build();
     }
 }

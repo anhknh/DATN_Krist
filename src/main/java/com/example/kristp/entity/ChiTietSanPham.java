@@ -1,6 +1,7 @@
 package com.example.kristp.entity;
 
 
+import com.example.kristp.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -44,4 +45,8 @@ public class ChiTietSanPham {
 
     private String anhSanPham ;
     private String qrCode;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "trang_thai")
+    private Status trangThai;
 }

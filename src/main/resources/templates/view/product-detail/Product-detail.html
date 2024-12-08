@@ -20,7 +20,7 @@
     <div style="display: flex;">
         <div style="flex: 1;">
             <div class="d-flex align-items-center">
-                <img style="height: 36px; margin-right: 8px;" src="/img/logo.png" alt="logo">
+                <img style="height: 36px; margin-right: 8px;" src="/uploadImage/logo.png" alt="logo">
                 <p class="title d-inline p-0 m-0">
                     <a style="color: #000; text-decoration: none" href="/user/trang-chu">Krist</a>
                 </p>
@@ -136,7 +136,7 @@
                         <div class="cart-popup-body">
                             <div class="cart_product_row" th:each="item : ${gioHangChiTietList}">
                                 <div class="img_product_cart">
-                                    <div th:style="|background: url('/img/${item.chiTietSanPham.anhSanPham}') no-repeat center / cover; width: 100%; height: 100%;|">
+                                    <div th:style="|background: url('/uploadImage/${item.chiTietSanPham.anhSanPham}') no-repeat center / cover; width: 100%; height: 100%;|">
                                     </div>
                                 </div>
                                 <div class="product_cart">
@@ -217,7 +217,7 @@
             <div class="carousel-inner" style="padding: 28px;">
                 <th:block th:each="image, indexStat : ${listCTSP}">
                     <div class="carousel-item text-center" th:classappend="${indexStat.index == 0} ? 'active'">
-                        <img th:src="'/img/' + ${image.anhSanPham}" style="width: 80%;" alt="Chi tiết sản phẩm">
+                        <img th:src="'/uploadImage/' + ${image.anhSanPham}" style="width: 80%;" alt="Chi tiết sản phẩm">
                     </div>
                 </th:block>
             </div>
@@ -335,9 +335,16 @@
                         vào giỏ hàng</a>
                 </div>
                 <div style="display: inline-block;">
-                    <a href="#"
-                       style="color: #000; text-decoration: none;border: 1px solid #E6E7E8; font-weight: 500; border-radius: 4px; padding: 10px 12px"><i
-                            class="fa-regular fa-heart btn_whish_add" style=" font-size: 18px;"></i></a>
+                    <a  th:if="${!sanPhamYeuThichService.checkSanPhamYeuThich(sanPham.id)}"
+                       th:href="@{/user/them-san-pham-yeu-thich(idSanPham=${sanPham.id})}"
+                       style="color: #000; text-decoration: none;border: 1px solid #E6E7E8; font-weight: 500; border-radius: 4px; padding: 10px 12px">
+                        <i class="fa-sharp fa-regular fa-heart btn_whish_add" style=" font-size: 18px;"></i>
+                    </a>
+                    <a th:if="${sanPhamYeuThichService.checkSanPhamYeuThich(sanPham.id)}"
+                       th:href="@{/user/xoa-san-pham-yeu-thich(idSanPham=${sanPham.id})}"
+                       style="color: #000; text-decoration: none;border: 1px solid #E6E7E8; font-weight: 500; border-radius: 4px; padding: 10px 12px">
+                        <i class="fa-sharp fa-solid fa-heart btn_whish_add" style=" font-size: 18px;"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -385,7 +392,7 @@
              th:each="danhGia : ${listDanhGia}">
             <div>
                 <div class="d-inline-block mb-4 me-3"
-                     style="background-color: #F0F1FF; width: 48px; height: 48px; border-radius: 50%; background-image: url('/img/khachHang.png'); background-size: cover">
+                     style="background-color: #F0F1FF; width: 48px; height: 48px; border-radius: 50%; background-image: url('/uploadImage/khachHang.png'); background-size: cover">
                 </div>
                 <div class="d-inline-block" style="margin-right: 52px;">
                     <!-- Tên khách hàng -->
@@ -452,7 +459,7 @@
     <div style="width: 272px; margin-right: 142px;">
         <div class="d-flex align-items-center" style="margin-bottom: 12px;">
             <div style="padding: 8px 14px; margin-right: 8px; border-radius: 5px; border: 1px solid #E6E7E8; background-color: #fff;">
-                <img src="/img/logo.png" alt="logo">
+                <img src="/uploadImage/logo.png" alt="logo">
             </div>
             <div>
                 <div class="cl-white" style="font-size: 20px; font-weight: 600;">Krist</div>

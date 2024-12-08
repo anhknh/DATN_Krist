@@ -39,7 +39,7 @@
         <div style="height: 72px; margin-bottom: 42px;"
              class="d-flex align-items-center justify-content-center">
           <div>
-            <img style="width: 78%" src="/img/logo.png" alt="logo">
+            <img style="width: 78%" src="/uploadImage/logo.png" alt="logo">
           </div>
           <div style="font-size: 20px; font-weight: 800; margin-left: 12px;">
             Krist
@@ -48,7 +48,7 @@
         <!-- Main Menu Items -->
         <div style="padding: 0px 22px 28px; border-bottom: 1px solid #E9E9EB;" class="mb-4">
           <!--                    Hiện tại vẫn chưa có tính năng doanh thu đường dẫn là #-->
-          <a href="#" class=" mb-3"
+          <a href="/quan-ly/thong-ke" class=" mb-3"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;"
              onclick="highlightLink(this)">
             <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
@@ -57,7 +57,7 @@
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
             <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
           </a>
-          <a href="/quan-ly/pagination-san-pham" class="bg_profile_btn mb-3"
+          <a href="/quan-ly/pagination-san-pham" class=" mb-3"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;" onclick="highlightLink(this)">
             <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
           </a>
@@ -98,11 +98,11 @@
             </ul>
           </div>
           <!--                    Chức năng chưa có đường dẫn là #-->
-          <a href="#" class="mb-3" onclick="highlightLink(this)"
+          <a href="/quan-ly/view-don-hang" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-cart-flatbed" style="margin-right: 10px;"></i> Đơn hàng
           </a>
-          <a href="/quan-ly/pagination-khuyen-mai" class="mb-3" onclick="highlightLink(this)"
+          <a href="/quan-ly/pagination-khuyen-mai" class="bg_profile_btn mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-tickets-perforated" style="margin-right: 10px;"></i> Khuyến mại
           </a>
@@ -111,7 +111,7 @@
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
           </a>
-          <a href="/quan-ly//phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
+          <a href="/quan-ly/phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
           </a>
@@ -265,10 +265,10 @@
                   <span th:case="true">Giảm theo %</span>
                   <span th:case="false">Giảm theo VNĐ</span>
                 </td>
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${DataUtils.formatCurrency(khuyenMai.mucGiamToiDa)}">
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${DataUtils.formatCurrency(khuyenMai.giaTri)}">
                     th:class="valueDes">
                 </td>
-                <td style="padding: 12px 6px; line-height: 305%;" th:text="${DataUtils.formatCurrency(khuyenMai.giaTri)}">
+                <td style="padding: 12px 6px; line-height: 305%;" th:text="${DataUtils.formatCurrency(khuyenMai.mucGiamToiDa)}">
                     th:class="valueDes">
                 </td>
 

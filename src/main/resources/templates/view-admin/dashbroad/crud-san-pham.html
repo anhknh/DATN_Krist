@@ -36,7 +36,7 @@
             <div class="col-2" style="height: 100vh;">
                 <div style="height: 72px; margin-bottom: 42px;" class="d-flex align-items-center justify-content-center">
                     <div>
-                        <img style="width: 78%" src="/img/logo.png" alt="logo">
+                        <img style="width: 78%" src="/uploadImage/logo.png" alt="logo">
                     </div>
                     <div style="font-size: 20px; font-weight: 800; margin-left: 12px;">
                         Krist
@@ -46,7 +46,7 @@
                 <!-- Main Menu Items -->
                 <div style="padding: 0px 22px 28px; border-bottom: 1px solid #E9E9EB;" class="mb-4">
                     <!--                    Hiện tại vẫn chưa có tính năng doanh thu đường dẫn là #-->
-                    <a href="#" class=" mb-3"
+                    <a href="/quan-ly/thong-ke" class=" mb-3"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;"
                        onclick="highlightLink(this)">
                         <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
@@ -96,7 +96,7 @@
                         </ul>
                     </div>
                     <!--                    Chức năng chưa có đường dẫn là #-->
-                    <a href="#" class="mb-3" onclick="highlightLink(this)"
+                    <a href="/quan-ly/view-don-hang" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-cart-flatbed" style="margin-right: 10px;"></i> Đơn hàng
                     </a>
@@ -109,7 +109,7 @@
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
                     </a>
-                    <a href="/quan-ly//phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
+                    <a href="/quan-ly/phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
                     </a>
@@ -206,7 +206,12 @@
 
                                 <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">
                                     <div class="d-flex justify-content-center">
-                                        <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top" title="Chi tiết sản phẩm">
+
+                                        <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top"  title="Chi tiết sản phẩm">
+                                            <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly/chi-tiet-san-pham(idSanPham=${sanPham.id})}" >
+                                                <i class="fa-light fa-layer-group"></i></a>
+                                        </div>
+                                        <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top" title="Cập nhật">
                                             <div  style="display: inline-block;"
                                                   data-bs-toggle="modal"
                                                   data-bs-target="#modalCategories"
@@ -234,7 +239,7 @@
                             </tr>
                             </tbody>
                         </table>
-                    </div>``
+                    </div>
                     <div>
                         <!-- page_number -->
                         <nav aria-label="Page navigation example">
