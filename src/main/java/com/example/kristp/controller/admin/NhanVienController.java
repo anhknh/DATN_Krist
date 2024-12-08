@@ -46,13 +46,13 @@ public class NhanVienController {
             attributes.addFlashAttribute("message", "Mã nhân viên đã tồn tại");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
-            return "redirect:/quan-ly//phan-trang-nhan-vien";
+            return "redirect:/quan-ly/phan-trang-nhan-vien";
         }
         nhanVienService.addNhanVien(nhanVien);
         attributes.addFlashAttribute("message" , "Thêm mới thành công");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly//phan-trang-nhan-vien";
+        return "redirect:/quan-ly/phan-trang-nhan-vien";
     }
 
     @PostMapping("/update-nhan-vien")
@@ -64,13 +64,13 @@ public class NhanVienController {
             attributes.addFlashAttribute("message", "Mã nhân viên đã tồn tại");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
-            return "redirect:/quan-ly//phan-trang-nhan-vien";
+            return "redirect:/quan-ly/phan-trang-nhan-vien";
         }
         nhanVienService.updateNhanVien(nhanVien, idNV);
         attributes.addFlashAttribute("message" , "Update nhân viên thành công");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly//phan-trang-nhan-vien";
+        return "redirect:/quan-ly/phan-trang-nhan-vien";
     }
 
     @GetMapping("/delete-nhan-vien/{id}")
@@ -79,7 +79,7 @@ public class NhanVienController {
         attributes.addFlashAttribute("message" , "Đổi trạng thái nhân viên thành công");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly//phan-trang-nhan-vien";
+        return "redirect:/quan-ly/phan-trang-nhan-vien";
     }
 
     @GetMapping("/tim-ma-nhan-vien")
