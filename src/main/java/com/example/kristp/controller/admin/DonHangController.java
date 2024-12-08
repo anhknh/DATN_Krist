@@ -195,5 +195,23 @@ public class DonHangController {
         return ResponseEntity.ok(hoaDon);
     }
 
+    @GetMapping("/add-san-pham-don")
+    public String addSanPhamDon(@RequestParam("idHoaDon") Integer idHoaDon,
+                             @RequestParam("idChiTiet") Integer idChiTiet,
+                             Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        if(hoaDonService.themSanPhamDon(idHoaDon, idChiTiet)) {
+            redirectAttributes.addFlashAttribute("message", "Thêm sản phẩm vào đơn thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Vượt quá số lượng hoặc Trạng thái đã thay đổi!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+        }
+        //get url request
+        String referer = request.getHeader("referer");
+        //reload page
+        return "redirect:" +referer;
+    }
 
 }

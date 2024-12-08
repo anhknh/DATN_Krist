@@ -5,6 +5,7 @@ import com.example.kristp.entity.ChiTietSanPham;
 import com.example.kristp.entity.MauSac;
 import com.example.kristp.entity.SanPham;
 import com.example.kristp.entity.Size;
+import com.example.kristp.enums.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -71,5 +72,8 @@ public interface ChiTietSanPhamRepository extends JpaRepository<ChiTietSanPham, 
             @Param("sizeId") Integer sizeId,
             @Param("qrCode") String qrCode,
             @Param("id") Integer id);
+
+
+    Page<ChiTietSanPham> findAllByTrangThai(Status trangThai, Pageable pageable);
 
 }

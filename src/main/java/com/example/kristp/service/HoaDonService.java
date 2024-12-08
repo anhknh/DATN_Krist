@@ -45,4 +45,5 @@ public interface HoaDonService {
 
     boolean xoaSanPham(Integer idHoaDon);
     boolean capNhatSoLuong(Integer idHoaDonChiTiet, int soLuongMoi);
+    boolean themSanPhamDon(Integer idHoaDon, Integer idChiTiet);
 }

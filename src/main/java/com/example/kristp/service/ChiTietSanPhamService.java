@@ -36,4 +36,6 @@ public interface ChiTietSanPhamService {
 
     Page<ChiTietSanPham> getPageChiTietSanPham(Integer idSanPham, Pageable pageable);
     boolean changeStatus(Integer idChiTiet);
+    Page<ChiTietSanPham> getAllChiTietSanPham(int page, int size);
+
 }

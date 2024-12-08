@@ -278,6 +278,45 @@ public class HoaDonServiceImpl implements HoaDonService {
         return false; // Không tìm thấy hóa đơn chi tiết hoặc trạng thái không phù hợp
     }
 
+    @Override
+    public boolean themSanPhamDon(Integer idHoaDon, Integer idChiTiet) {
+        HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).orElse(null);
+        if(hoaDon != null && hoaDon.getTrangThai() == HoaDonStatus.CHO_XAC_NHAN) {
+            ChiTietSanPham chiTietSanPham = chiTietSanPhamRepository.findById(idChiTiet).orElse(null);
+            if(hoaDonChiTietRepo.existsByHoaDon_IdAndChiTietSanPham_Id(idHoaDon, idChiTiet)) {
+                HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietRepo.findByHoaDonAndChiTietSanPham(hoaDon, chiTietSanPham);
+                hoaDonChiTiet.setSoLuong(hoaDonChiTiet.getSoLuong() + 1);
+                hoaDon.setTongTien(BigDecimal.valueOf(Float.parseFloat(hoaDon.getTongTien() + "") + hoaDonChiTiet.getGiaTien()));
+                if(chiTietSanPham.getSoLuong() >= 1) {
+                    chiTietSanPham.setSoLuong(chiTietSanPham.getSoLuong() - 1);
+                } else {
+                    return false;
+                }
+                hoaDonRepository.save(hoaDon);
+                chiTietSanPhamRepository.save(chiTietSanPham);
+                hoaDonChiTietRepo.save(hoaDonChiTiet);
+                return true;
+
+            } else {
+                HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
+                hoaDonChiTiet.setHoaDon(hoaDon);
+                hoaDonChiTiet.setChiTietSanPham(chiTietSanPham);
+                hoaDonChiTiet.setGiaTien(chiTietSanPham.getDonGia());
+                hoaDonChiTiet.setSoLuong(1);
+                hoaDon.setTongTien(BigDecimal.valueOf(Float.parseFloat(hoaDon.getTongTien() + "") + chiTietSanPham.getDonGia()));
+                if(chiTietSanPham.getSoLuong() >= 1) {
+                    chiTietSanPham.setSoLuong(chiTietSanPham.getSoLuong() - 1);
+                } else {
+                    return false;
+                }
+                hoaDonChiTietRepo.save(hoaDonChiTiet);
+                chiTietSanPhamRepository.save(chiTietSanPham);
+                hoaDonRepository.save(hoaDon);
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }

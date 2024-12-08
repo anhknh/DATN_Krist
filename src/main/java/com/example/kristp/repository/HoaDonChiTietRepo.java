@@ -23,5 +23,7 @@ public interface HoaDonChiTietRepo extends JpaRepository<HoaDonChiTiet, Integer>
     HoaDonChiTiet findByHoaDonAndChiTietSanPham(@Param("hoaDon") HoaDon hoaDon, @Param("chiTietSanPham") ChiTietSanPham chiTietSanPham);
 
     boolean existsByHoaDon_KhachHang_IdAndChiTietSanPham_Id(Integer khachHangId, Integer chiTietSanPhamId);
+    boolean existsByHoaDon_IdAndChiTietSanPham_Id(Integer idHoaDon, Integer chiTietSanPhamId);
+
 
 }

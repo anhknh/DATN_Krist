@@ -359,10 +359,10 @@
 
                             <div th:if="${hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).HOAN_TAT &&
                             hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).DA_HUY}">
-                                <a class="btn btn-dark" style="color: #fff; text-decoration: none"
-                                   th:href="@{/quan-ly/doi-trang-thai(idHoaDon=${idHoaDonSelected})}">
+                                <div data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-dark" style="color: #fff; text-decoration: none"
+                                   >
                                     <i class="fa-sharp fa-regular fa-arrow-right"></i> Chuyển trạng thái
-                                </a>
+                                </div>
                             </div>
 
                         </div>
@@ -401,13 +401,24 @@
 
                 <div class="box mt-2">
                     <div style="font-size: 18px; font-weight: 700; margin: 12px">Chi tiết sản phẩm - đơn hàng</div>
-                    <div style="display: flex; justify-content: end; margin: 16px" th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN}">
-                        <div class="btn btn-dark"
-                             th:attr="data-order-id=${hoaDon.id}"
-                             data-bs-toggle="modal"
-                             data-bs-target="#cancelOrderModal"
-                        >
-                            <i class="fa-sharp fa-regular fa-xmark"></i> Hủy đơn hàng
+                    <div style="text-align: end">
+                        <div style="display: flex; justify-content: end; margin: 16px" class="d-inline-block" th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN}">
+                            <div class="btn btn-dark"
+                                 th:attr="data-order-id-add=${hoaDon.id}"
+                                 data-bs-toggle="modal" data-bs-target="#productModal"
+                                 id="addProductButton"
+                            >
+                                <i class="fa-light fa-cart-plus"></i> Thêm sản phẩm
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: end; margin: 16px" class="d-inline-block" th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN}">
+                            <div class="btn btn-dark"
+                                 th:attr="data-order-id=${hoaDon.id}"
+                                 data-bs-toggle="modal"
+                                 data-bs-target="#cancelOrderModal"
+                            >
+                                <i class="fa-sharp fa-regular fa-xmark"></i> Hủy đơn hàng
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -457,16 +468,10 @@
                                     <!-- Cột Số lượng -->
                                     <td style="text-align: center; vertical-align: middle;">
                                         <div class="d-flex justify-content-between align-items-center"
-                                             style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px;
+                                             style="padding: 8px 18px; border-radius: 4px;
                                               width: 107px; height: 40px; margin: 0 auto">
-                                            <button type="button" style="background-color: #fff; border: none;"
-                                                    onclick="capNhatSoLuong(this, -1)" th:data-id="${item.id}">&#8722;
-                                            </button>
                                             <span th:id="'soLuong-' + ${item.id}" th:text="${item.soLuong}"
                                                   class="product-quantity"></span>
-                                            <button type="button" style="background-color: #fff; border: none;"
-                                                    onclick="capNhatSoLuong(this, 1)" th:data-id="${item.id}">&#43;
-                                            </button>
                                         </div>
                                     </td>
                                     <!-- Cột Tổng cộng -->
@@ -548,6 +553,26 @@
     </div>
 </div>
 
+<!--modal xác nhận chuyển traạng thái-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 500px; margin: 0 auto">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xác nhận chuyển trạng thái</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Sau khi chuyển trạng thái sẽ không thể quay lại!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">Hủy</button>
+                <a  class="btn btn-dark" style="color: #fff; text-decoration: none"  th:href="@{/quan-ly/doi-trang-thai(idHoaDon=${idHoaDonSelected})}">Xác nhận</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Popup Xác Nhận Hủy -->
 <div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="justify-content: center">
@@ -602,6 +627,43 @@
     </div>
 </div>
 
+<!--modal thêm sản phẩm-->
+<div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Danh sách sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding-bottom: 0">
+                <div style="width: 100%">
+                    <div>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Ảnh</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Màu sắc</th>
+                                <th>Size</th>
+                                <th>Tay áo</th>
+                                <th>Cổ áo</th>
+                                <th>Số lượng</th>
+                                <th>Giá tiền</th>
+                                <th class="text-center">Thao tác</th>
+                            </tr>
+                            </thead>
+                            <tbody id="productTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <ul class="pagination justify-content-end" id="paginationControls"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Alert thông báo thất bại -->
 <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage" style="display: none;">
@@ -616,6 +678,103 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const productModal = document.getElementById("productModal");
+        const productTableBody = document.getElementById("productTableBody");
+        const pagination = document.getElementById("paginationControls");
+        const addProductButton = document.getElementById("addProductButton");
+        const orderId = addProductButton.getAttribute("data-order-id-add");
+
+
+
+        let currentPage = 1;
+        const pageSize = 5;
+
+        // Fetch dữ liệu từ API
+        const fetchProducts = (page = 1) => {
+            fetch(`/quan-ly/fetch-san-pham?page=${page}&size=5`)
+                .then(response => response.json())
+                .then(data => {
+                    renderProducts(data.content); // Render danh sách sản phẩm
+                    renderPagination(data.totalPages, page); // Render phân trang
+                })
+                .catch(error => console.error("Error fetching products:", error));
+        };
+
+        // Render danh sách sản phẩm
+        const renderProducts = (products) => {
+            productTableBody.innerHTML = "";
+            products.forEach(product => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                <td>
+                    <div class="d-flex justify-content-center align-items-center"
+                         style="background-color: #f6f6f6; border-radius: 4px;">
+                        <div style="width: 46px; height: 46px; background: url('/uploadImage/${product.anhSanPham}') no-repeat center center / cover;">
+                        </div>
+                    </div>
+                </td>
+                <td>${product.sanPham.tenSanPham}</td>
+                <td>
+                    <div style="width: 42px; height: 12px; background-color: ${product.mau.maMauSac}; border: 1px solid black;"></div>
+                </td>
+                <td>${product.size.tenSize}</td>
+                <td>${product.tayAo.kieuTayAo}</td>
+                <td>${product.coAo.kieuCoAo}</td>
+                <td>${product.soLuong}</td>
+                <td>${formatCurrency(product.donGia)}</td>
+                <td class="text-center">
+                    <a class="btn btn-dark btn-sm"
+                    href="/quan-ly/add-san-pham-don?idHoaDon=${orderId}&idChiTiet=${product.id}"
+                    style="color: #fff;text-decoration: none">
+                        Thêm
+                    </a>
+                </td>
+            `;
+                productTableBody.appendChild(row);
+            });
+        };
+
+        // Render phân trang
+        const renderPagination = (totalPages, currentPage) => {
+            pagination.innerHTML = "";
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageItem = document.createElement("li");
+                pageItem.className = `page-item ${i === currentPage ? "active" : ""}`;
+                pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                pageItem.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    fetchProducts(i);
+                });
+                pagination.appendChild(pageItem);
+            }
+        };
+
+        // Định dạng tiền tệ
+        const formatCurrency = (amount) => {
+            return new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND"
+            }).format(amount);
+        };
+
+        // Thêm sản phẩm vào đơn hàng
+        const addToOrder = (productId) => {
+            console.log("Thêm sản phẩm ID:", productId);
+            // Gửi yêu cầu thêm vào đơn hàng tại đây
+            // fetch(`/api/order/add/${productId}`, { method: "POST" });
+        };
+
+        // Lắng nghe sự kiện mở modal và tải dữ liệu
+        productModal.addEventListener("show.bs.modal", () => {
+            fetchProducts(currentPage);
+        });
+    });
+
+
+
 
     document.addEventListener('DOMContentLoaded', function () {
         const updateDivs = document.querySelectorAll('div[data-bs-target="#modalUpdateCart"]');

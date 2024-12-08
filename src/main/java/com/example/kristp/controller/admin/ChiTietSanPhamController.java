@@ -4,6 +4,8 @@ import com.example.kristp.entity.*;
 import com.example.kristp.entity.dto.ChiTietSanPhamDto;
 import com.example.kristp.entity.dto.ChiTietSanPhamDtoEdit;
 import com.example.kristp.entity.dto.ChiTietSanPhamForm;
+import com.example.kristp.enums.Status;
+import com.example.kristp.repository.ChiTietSanPhamRepository;
 import com.example.kristp.service.*;
 import com.example.kristp.utils.DataUtils;
 import com.example.kristp.utils.FileUpload;
@@ -21,9 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/quan-ly/")
@@ -43,6 +43,8 @@ public class ChiTietSanPhamController {
     FileUpload fileUpload;
     @Autowired
     ChiTietSanPhamService chiTietSanPhamService;
+    @Autowired
+    ChiTietSanPhamRepository chiTietSanPhamRepository;
     @Autowired
     DataUtils dataUtils;
 
@@ -156,6 +158,25 @@ public class ChiTietSanPhamController {
             //reload page
             return "redirect:" +referer;
         }
+    }
+
+    //modal add don hang
+
+    @GetMapping("/fetch-san-pham")
+    @ResponseBody
+    public ResponseEntity<?> getAllChiTietSanPham(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<ChiTietSanPham> productPage = chiTietSanPhamRepository.findAllByTrangThai(Status.ACTIVE,pageable);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("content", productPage.getContent());
+        response.put("totalPages", productPage.getTotalPages());
+        response.put("totalElements", productPage.getTotalElements());
+        response.put("currentPage", productPage.getNumber() + 1); // Bắt đầu từ 1
+
+        return ResponseEntity.ok(response);
     }
 
 }

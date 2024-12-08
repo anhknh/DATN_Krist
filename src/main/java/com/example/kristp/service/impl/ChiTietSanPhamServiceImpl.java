@@ -9,6 +9,7 @@ import com.example.kristp.service.ChiTietSanPhamService;
 import com.example.kristp.utils.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -187,5 +188,11 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Page<ChiTietSanPham> getAllChiTietSanPham(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return chiTietSanPhamRepository.findAll(pageRequest);
     }
 }
