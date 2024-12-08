@@ -47,6 +47,8 @@ public class ListProductController {
     ChiTietSanPhamService chiTietSanPhamService;
     @Autowired
     GioHangChiTietService gioHangChiTietService;
+    @Autowired
+    SanPhamYeuThichService sanPhamYeuThichService;
 
 
     @GetMapping("/danh-sach-san-pham")
@@ -109,6 +111,7 @@ public class ListProductController {
         model.addAttribute("khachHang", Authen.khachHang);
         //hàm format
         model.addAttribute("convertMoney", dataUtils);
+        model.addAttribute("sanPhamYeuThichService", sanPhamYeuThichService);
         return "view/list-product/list-product-page";
     }
 }

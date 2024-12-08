@@ -1,11 +1,17 @@
 package com.example.kristp.service.impl;
 
+import com.example.kristp.entity.ChiTietSanPham;
 import com.example.kristp.entity.HoaDon;
+import com.example.kristp.entity.HoaDonChiTiet;
 import com.example.kristp.entity.KhachHang;
 import com.example.kristp.enums.HoaDonStatus;
+import com.example.kristp.repository.ChiTietSanPhamRepository;
+import com.example.kristp.repository.HoaDonChiTietRepo;
 import com.example.kristp.repository.HoaDonRepository;
 import com.example.kristp.repository.NhanVienRepository;
 import com.example.kristp.service.BanHangService;
+import com.example.kristp.service.ChiTietSanPhamService;
+import com.example.kristp.service.HoaDonChiTietService;
 import com.example.kristp.service.HoaDonService;
 import com.example.kristp.utils.Authen;
 import com.example.kristp.utils.DataUtils;
@@ -30,9 +36,15 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Autowired
     HoaDonRepository hoaDonRepository;
     @Autowired
+    HoaDonChiTietService hoaDonChiTietService;
+    @Autowired
+    HoaDonChiTietRepo hoaDonChiTietRepo;
+    @Autowired
     NhanVienRepository nhanVienRepository;
     @Autowired
     BanHangService banHangService;
+    @Autowired
+    ChiTietSanPhamRepository chiTietSanPhamRepository;
     @Autowired
     DataUtils dataUtils;
 
@@ -183,10 +195,89 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
+    public boolean changePhiVanChuyen(Integer id, double phiVanChuyen) {
+        HoaDon hoaDon = hoaDonRepository.findById(id).orElse(null);
+        if(hoaDon != null) {
+            if(hoaDon.getTrangThai() == HoaDonStatus.CHO_XAC_NHAN || hoaDon.getTrangThai() == HoaDonStatus.DANG_XU_LY) {
+                hoaDon.setPhiVanChuyen((float) phiVanChuyen);
+                hoaDonRepository.save(hoaDon);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public List<Integer> getNamCoTrongHoaDon() {
         List<Integer> integers = hoaDonRepository.getNamDonHang();
         return integers;
     }
+
+    @Override
+    public boolean xoaSanPham(Integer idHoaDon) {
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietRepo.findById(idHoaDon).orElse(null);
+        if(hoaDonChiTiet != null && hoaDonChiTiet.getHoaDon().getTrangThai() == HoaDonStatus.CHO_XAC_NHAN) {
+
+            ChiTietSanPham chiTietSanPham = hoaDonChiTiet.getChiTietSanPham();
+            HoaDon hoaDon = hoaDonChiTiet.getHoaDon();
+            chiTietSanPham .setSoLuong(hoaDonChiTiet.getSoLuong() + chiTietSanPham.getSoLuong());
+            double tienTru = (Float.parseFloat(hoaDon.getTongTien() + "") -  (hoaDonChiTiet.getGiaTien() * hoaDonChiTiet.getSoLuong()));
+            if(tienTru < 0) {
+                hoaDon.setTongTien(BigDecimal.valueOf(0));
+            } else {
+                hoaDon.setTongTien(BigDecimal.valueOf(tienTru));
+            }
+            chiTietSanPhamRepository.save(chiTietSanPham);
+            hoaDonRepository.save(hoaDon);
+            hoaDonChiTietRepo.delete(hoaDonChiTiet);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean capNhatSoLuong(Integer idHoaDonChiTiet, int soLuongMoi) {
+        // Tìm hóa đơn chi tiết
+        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietRepo.findById(idHoaDonChiTiet).orElse(null);
+
+        // Kiểm tra hóa đơn chi tiết và trạng thái hóa đơn
+        if (hoaDonChiTiet != null && hoaDonChiTiet.getHoaDon().getTrangThai() == HoaDonStatus.CHO_XAC_NHAN) {
+            ChiTietSanPham chiTietSanPham = hoaDonChiTiet.getChiTietSanPham();
+            HoaDon hoaDon = hoaDonChiTiet.getHoaDon();
+
+            int soLuongCu = hoaDonChiTiet.getSoLuong();
+
+            // Tính số lượng chênh lệch
+            int chenhLechSoLuong = soLuongMoi - soLuongCu;
+
+            // Kiểm tra nếu số lượng mới không khả dụng trong kho
+            if (chenhLechSoLuong > 0 && chiTietSanPham.getSoLuong() < chenhLechSoLuong) {
+                return false; // Không đủ hàng trong kho
+            }
+
+            // Cập nhật số lượng sản phẩm trong kho
+            chiTietSanPham.setSoLuong(chiTietSanPham.getSoLuong() - chenhLechSoLuong);
+
+            // Cập nhật số lượng trong hóa đơn chi tiết
+            hoaDonChiTiet.setSoLuong(soLuongMoi);
+
+            // Cập nhật tổng tiền hóa đơn
+            double tongTienCu = hoaDon.getTongTien().doubleValue();
+            double tongTienMoi = tongTienCu + (hoaDonChiTiet.getGiaTien() * chenhLechSoLuong);
+            hoaDon.setTongTien(BigDecimal.valueOf(Math.max(tongTienMoi, 0))); // Tổng tiền không được âm
+
+            // Lưu cập nhật vào cơ sở dữ liệu
+            chiTietSanPhamRepository.save(chiTietSanPham);
+            hoaDonChiTietRepo.save(hoaDonChiTiet);
+            hoaDonRepository.save(hoaDon);
+
+            return true; // Cập nhật thành công
+        }
+
+        return false; // Không tìm thấy hóa đơn chi tiết hoặc trạng thái không phù hợp
+    }
+
 
 
 }

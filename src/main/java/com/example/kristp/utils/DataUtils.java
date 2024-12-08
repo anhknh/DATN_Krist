@@ -26,21 +26,23 @@ public class DataUtils {
         double finalAmount = tongTien; // Tổng tiền ban đầu
 
         if (khuyenMai != null && khuyenMai.getKieuKhuyenMai() != null) {
-            double discountValue = khuyenMai.getGiaTri();
+            double discountValue = khuyenMai.getGiaTri(); // Giá trị khuyến mại
+            double maxDiscount = khuyenMai.getMucGiamToiDa(); // Mức giảm cố hữu (giới hạn)
 
             if (khuyenMai.getKieuKhuyenMai()) {
                 // Giảm theo phần trăm
                 if (discountValue > 0 && discountValue <= 100) {
-                    finalAmount -= (finalAmount * discountValue / 100);
+                    double percentDiscount = finalAmount * discountValue / 100;
+                    // Giảm theo phần trăm nhưng không vượt quá mức giảm cố hữu
+                    finalAmount -= Math.min(percentDiscount, maxDiscount);
                 }
-
-            } else  {
+            } else {
                 // Giảm theo số tiền cố định
-                finalAmount -= discountValue;
+                finalAmount -= Math.min(discountValue, maxDiscount); // Không giảm quá mức giảm cố hữu
             }
         }
 
-        // Luôn thêm phí vận chuyển 30,000
+        // Luôn thêm phí vận chuyển
         finalAmount += phiVanChuyen;
 
         // Đảm bảo tổng tiền không âm
@@ -53,25 +55,28 @@ public class DataUtils {
 
 
 
-    public static double calculatorTotal2(double tongTien, KhuyenMai khuyenMai , Float phiVanChuyen) {
+
+    public static double calculatorTotal2(double tongTien, KhuyenMai khuyenMai, Float phiVanChuyen) {
         double finalAmount = tongTien; // Tổng tiền ban đầu
 
         if (khuyenMai != null && khuyenMai.getKieuKhuyenMai() != null) {
-            double discountValue = khuyenMai.getGiaTri();
+            double discountValue = khuyenMai.getGiaTri(); // Giá trị khuyến mại
+            double maxDiscount = khuyenMai.getMucGiamToiDa(); // Mức giảm cố hữu (giới hạn)
 
             if (khuyenMai.getKieuKhuyenMai()) {
                 // Giảm theo phần trăm
                 if (discountValue > 0 && discountValue <= 100) {
-                    finalAmount -= (finalAmount * discountValue / 100);
+                    double percentDiscount = finalAmount * discountValue / 100;
+                    // Giảm theo phần trăm nhưng không vượt quá mức giảm cố hữu
+                    finalAmount -= Math.min(percentDiscount, maxDiscount);
                 }
-
-            } else  {
+            } else {
                 // Giảm theo số tiền cố định
-                finalAmount -= discountValue;
+                finalAmount -= Math.min(discountValue, maxDiscount); // Không giảm quá mức giảm cố hữu
             }
         }
 
-        // Luôn thêm phí vận chuyển 30,000
+        // Luôn thêm phí vận chuyển
         finalAmount += phiVanChuyen;
 
         // Đảm bảo tổng tiền không âm

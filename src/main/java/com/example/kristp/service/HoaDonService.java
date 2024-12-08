@@ -38,6 +38,11 @@ public interface HoaDonService {
     List<Integer> trangThaiDonHang();
 
     boolean changeStatus(Integer id);
+    boolean changePhiVanChuyen(Integer id, double phiVanChuyen);
 
     List<Integer> getNamCoTrongHoaDon();
+
+
+    boolean xoaSanPham(Integer idHoaDon);
+    boolean capNhatSoLuong(Integer idHoaDonChiTiet, int soLuongMoi);
 }

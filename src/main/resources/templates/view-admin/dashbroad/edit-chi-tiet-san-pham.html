@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản Phẩm</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
+    <link rel="stylesheet" href="/css/StyleHomePage.css">
+    <link rel="stylesheet" href="/css/LoginStyle.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Ẩn thanh cuộn của body */
+        }
+
+        .main {
+            height: 100%;
+            display: flex;
+        }
+
+        .col-10 {
+            height: 100vh; /* Đảm bảo chiều cao bằng chiều cao màn hình */
+            overflow-y: auto; /* Cho phép cuộn nội dung khi vượt quá chiều cao */
+            padding: 12px 32px 48px;
+            background-color: #f6f6f6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main">
+    <div class="container-fluid g-0">
+        <div class="row g-0">
+            <div class="col-2" style="height: 100vh;">
+                <div style="height: 72px; margin-bottom: 42px;"
+                     class="d-flex align-items-center justify-content-center">
+                    <div>
+                        <img style="width: 78%" src="/uploadImage/logo.png" alt="logo">
+                    </div>
+                    <div style="font-size: 20px; font-weight: 800; margin-left: 12px;">
+                        Krist
+                    </div>
+                </div>
+
+                <!-- Main Menu Items -->
+                <div style="padding: 0px 22px 28px; border-bottom: 1px solid #E9E9EB;" class="mb-4">
+                    <!--                    Hiện tại vẫn chưa có tính năng doanh thu đường dẫn là #-->
+                    <a href="#" class=" mb-3"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;"
+                       onclick="highlightLink(this)">
+                        <i class="fa-light fa-objects-column" style="margin-right: 10px;"></i>Doanh thu
+                    </a>
+                    <a href="/quan-ly/ban-hang" class="mb-3"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;"
+                       onclick="highlightLink(this)">
+                        <i class="fa-light fa-cart-shopping" style="margin-right: 10px;"></i> Bán hàng
+                    </a>
+                    <a href="/quan-ly/pagination-san-pham" class="bg_profile_btn mb-3"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;"
+                       onclick="highlightLink(this)">
+                        <i class="fa-regular fa-shirt" style="margin-right: 10px;"></i> Sản phẩm
+                    </a>
+                    <!-- Product Management Tree Menu -->
+                    <div class="menu-item mb-3">
+                        <p style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: #000; display: flex; align-items: center; cursor: pointer;"
+                           onclick="toggleSubmenu('productSubMenu')">
+                            <i class="fa-regular fa-box-archive" style="margin-right: 10px;"></i> Thuộc tính
+                            <i class="fa fa-chevron-down" style="margin-left:auto;"></i>
+                        </p>
+                        <ul id="productSubMenu" class="submenu"
+                            style="list-style: none; padding-left: 20px; display: none;">
+                            <li style="padding: 8px 12px;">
+                                <a href="/quan-ly/pagination-danh-muc"
+                                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Danh
+                                    mục</a>
+                            </li>
+                            <li style="padding: 8px 12px;">
+                                <a href="/quan-ly/pagination-chat-lieu"
+                                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Chất
+                                    liệu</a>
+                            </li>
+                            <li style="padding: 8px 12px;">
+                                <a href="/quan-ly/pagination-mau-sac"
+                                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Màu sắc</a>
+                            </li>
+                            <li style="padding: 8px 12px;">
+                                <a href="/quan-ly/pagination-size"
+                                   style="text-decoration: none; color: #000;" onclick="highlightLink(this)">Size</a>
+                            </li>
+                            <li style="padding: 8px 12px;">
+                                <a href="/quan-ly/pagination-tay-ao" style="text-decoration: none; color: #000;"
+                                   onclick="highlightLink(this)">Tay
+                                    áo</a>
+                            </li>
+                            <li style="padding: 8px 12px;">
+                                <a href="/quan-ly/pagination-co-ao" style="text-decoration: none; color: #000;"
+                                   onclick="highlightLink(this)">Cổ
+                                    áo</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--                    Chức năng chưa có đường dẫn là #-->
+                    <a href="#" class="mb-3" onclick="highlightLink(this)"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                        <i class="fa-light fa-cart-flatbed" style="margin-right: 10px;"></i> Đơn hàng
+                    </a>
+                    <a href="/quan-ly/pagination-khuyen-mai" class="mb-3" onclick="highlightLink(this)"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                        <i class="fa-light fa-tickets-perforated" style="margin-right: 10px;"></i> Khuyến mại
+                    </a>
+                    <!--                    Chức năng chưa có đường dẫn là #-->
+                    <a href="/quan-ly/pagination-khach-hang" class="mb-3" onclick="highlightLink(this)"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                        <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
+                    </a>
+                    <a href="/quan-ly/phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                        <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
+                    </a>
+                    <!--                    Chức năng chưa có đường dẫn là #-->
+
+                    <a href="#" class="mb-3" onclick="highlightLink(this)"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                        <i class="fa-light fa-star" style="margin-right: 10px;"></i> Đánh giá
+                    </a>
+                    <!--                    Chức năng chưa có đường dẫn là #-->
+                    <a href="#" class="mb-3" onclick="highlightLink(this)"
+                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
+                        <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
+                    </a>
+                </div>
+            </div>
+            <div class="col-10">
+                <!-- navigator_link -->
+                <div class="d-flex justify-content-between align-items-center"
+                     style="height: 72px; margin-bottom: 18px;">
+                    <div>
+                        <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb">
+                            <ol class="breadcrumb" style="height: 40px; margin: 0px;">
+                                <li class="breadcrumb-item "><a href="/quan-ly/pagination-san-pham" class="nav_link">Sản
+                                    phẩm</a></li>
+                                <li class="breadcrumb-item "><a href="/quan-ly/chi-tiet-san-pham" class="nav_link">Chi
+                                    tiết sản phẩm</a></li>
+                                <li class="breadcrumb-item "><a href="/quan-ly/them-chi-tiet-san-pham" class="nav_link">Thêm
+                                    chi tiết sản phẩm</a></li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div>
+                        <a href="/dang-nhap" style="text-decoration: none; color: #000; font-size: 20px;"><i
+                                class="fa-thin fa-arrow-right-from-bracket"></i></a>
+                    </div>
+                </div>
+                <div style="background-color: #fff; border-radius: 6px; padding: 24px 40px; border: 1px solid #f6f7f8;">
+                    <div class="mb-2">
+                        <h4>Thêm chi tiết sản phẩm</h4>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <div class="d-flex justify-content-between">
+                            <div style="font-weight: bold" th:text="${'Tên sản phẩm: ' + sanPham.tenSanPham}">Tên sản
+                                phẩm
+                            </div>
+                            <div style="font-weight: bold" th:text="${'Danh mục: ' + sanPham.danhMuc.tenDanhMuc}">Danh
+                                mục
+                            </div>
+                            <div style="font-weight: bold" th:text="${'Chất liệu: ' + sanPham.chatLieu.tenChatLieu}">
+                                Chất liệu
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <form id="chiTietSanPhamForm"
+                              action="/quan-ly/update-chi-tiet-san-pham"
+                              enctype="multipart/form-data"
+                              method="POST"
+                              class="needs-validation">
+                            <div class="d-flex" style="gap: 20px; align-items: flex-start;">
+                                <!-- Hình ảnh sản phẩm -->
+                                <div style="flex: 1; text-align: center;">
+                                    <label for="anhSanPham">Hình ảnh sản phẩm:</label>
+                                    <div class="mb-3">
+                                        <img th:src="@{'/uploadImage/' + ${chiTietSanPham.anhSanPham}}"
+                                             alt="Ảnh sản phẩm"
+                                             style="max-width: 100%; height: auto; border: 1px solid #ccc; padding: 5px; border-radius: 5px;" />
+                                    </div>
+                                    <input type="file" id="anhSanPham" name="anhSanPham" accept="image/*" class="form-control" />
+                                </div>
+
+                                <!-- Form nhập liệu -->
+                                <div style="flex: 2;">
+                                    <input type="hidden" name="idSanPham" th:value="${sanPham.id}" />
+                                    <input type="hidden" name="idChiTiet" th:value="${chiTietSanPham.id}" />
+
+                                    <!-- Thuộc tính sản phẩm -->
+                                    <div class="d-flex justify-content-between mb-3" style="gap: 12px;">
+                                        <!-- Màu sắc -->
+                                        <div style="flex: 1;">
+                                            <label for="selectMau">Màu sắc:</label>
+                                            <select id="selectMau" name="idMauSac" class="form-select" required>
+                                                <option hidden disabled selected value="">Vui lòng chọn màu</option>
+                                                <option th:each="mauSac : ${listMausac}"
+                                                        th:style="'color:' + ${mauSac.maMauSac}"
+                                                        th:value="${mauSac.id}"
+                                                        th:text="${mauSac.maMauSac}"
+                                                        th:selected="${mauSac.id == chiTietSanPham.mau.id}"></option>
+                                            </select>
+                                            <div class="invalid-feedback">Vui lòng chọn màu.</div>
+                                        </div>
+
+                                        <!-- Size -->
+                                        <div style="flex: 1;">
+                                            <label for="selectSize">Size:</label>
+                                            <select id="selectSize" name="idSize" class="form-select" required>
+                                                <option hidden disabled selected value="">Vui lòng chọn size</option>
+                                                <option th:each="size : ${listSize}"
+                                                        th:value="${size.id}"
+                                                        th:text="${size.tenSize}"
+                                                        th:selected="${size.id == chiTietSanPham.size.id}"></option>
+                                            </select>
+                                            <div class="invalid-feedback">Vui lòng chọn size.</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between mb-3" style="gap: 12px;">
+                                        <!-- Tay áo -->
+                                        <div style="flex: 1;">
+                                            <label for="selectTayAo">Tay áo:</label>
+                                            <select id="selectTayAo" name="idTayAo" class="form-select" required>
+                                                <option hidden disabled selected value="">Vui lòng chọn tay áo</option>
+                                                <option th:each="tayAo : ${listTayAo}"
+                                                        th:value="${tayAo.id}"
+                                                        th:text="${tayAo.kieuTayAo}"
+                                                        th:selected="${tayAo.id == chiTietSanPham.tayAo.id}"></option>
+                                            </select>
+                                            <div class="invalid-feedback">Vui lòng chọn tay áo.</div>
+                                        </div>
+
+                                        <!-- Cổ áo -->
+                                        <div style="flex: 1;">
+                                            <label for="selectCoAo">Cổ áo:</label>
+                                            <select id="selectCoAo" name="idCoAo" class="form-select" required>
+                                                <option hidden disabled selected value="">Vui lòng chọn cổ áo</option>
+                                                <option th:each="coAo : ${listCoAo}"
+                                                        th:value="${coAo.id}"
+                                                        th:text="${coAo.kieuCoAo}"
+                                                        th:selected="${coAo.id == chiTietSanPham.coAo.id}"></option>
+                                            </select>
+                                            <div class="invalid-feedback">Vui lòng chọn cổ áo.</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Giá và số lượng -->
+                                    <div class="mb-3">
+                                        <label for="donGia">Đơn giá:</label>
+                                        <input type="number" id="donGia" name="donGia" class="form-control"
+                                               th:value="${chiTietSanPham.donGia}" min="10000" required />
+                                        <div class="invalid-feedback">Đơn giá phải lớn hơn hoặc bằng 10,000.</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="soLuong">Số lượng:</label>
+                                        <input type="number" id="soLuong" name="soLuong" class="form-control"
+                                               th:value="${chiTietSanPham.soLuong}" min="1" required />
+                                        <div class="invalid-feedback">Số lượng phải lớn hơn hoặc bằng 1.</div>
+                                    </div>
+
+                                    <!-- Trạng thái -->
+                                    <div class="mb-3">
+                                        <label for="selectTrangThai">Trạng thái:</label>
+                                        <select id="selectTrangThai" name="trangThai" class="form-select" required>
+                                            <option hidden disabled selected value="">Chọn trạng thái</option>
+                                            <option value="1" th:selected="${chiTietSanPham.trangThai == T(com.example.kristp.enums.Status).ACTIVE}">Hoạt động</option>
+                                            <option value="0" th:selected="${chiTietSanPham.trangThai == T(com.example.kristp.enums.Status).INACTIVE}">Ngừng hoạt động</option>
+                                        </select>
+                                        <div class="invalid-feedback">Vui lòng chọn trạng thái.</div>
+                                    </div>
+
+                                    <!-- Mã QR -->
+                                    <div class="mb-3">
+                                        <label for="qrCode">Mã QR:</label>
+                                        <input type="text" id="qrCode" name="qrCode" class="form-control"
+                                               th:value="${chiTietSanPham.qrCode}" readonly />
+                                    </div>
+
+                                    <!-- Nút Cập nhật -->
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-dark w-100">Cập nhật chi tiết sản phẩm</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Alert thông báo thất bại -->
+<div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert"
+     id="alertMessage"
+     style="display: none; z-index: 1060;">
+    <strong>Thất bại!</strong> <span id="alertBody">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert"
+     id="alertMessage2"
+     style="display: none;  z-index: 1060;">
+    <strong>Thành công!</strong> <span id="alertBody2">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<!-- Alert thông báo từ backend -->
+<div th:if="${message}" th:class="${messageType} + ' alert alert-dismissible fade show position-fixed top-0 end-0 m-3'"
+     id="successAlert" role="alert">
+    <strong th:text="${titleMsg}">Tiêu đề</strong> <span th:text="${message}">Thông báo này sẽ hiển thị kết quả.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!--gen chi tiet san pham-->
+<script>
+    // Thông báo
+    (function () {
+        'use strict';
+        // Fetch all forms with class 'needs-validation'
+        var forms = document.querySelectorAll('.needs-validation');
+
+        // Loop over forms and prevent submission if validation fails
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    showAlert( "error", "Đã có lỗi xảy ra. Vui lòng kiểm tra lại.");
+                }
+                form.classList.add('was-validated');
+            }, false);
+
+            // Add 'change' event listener for all inputs to validate them dynamically
+            var inputs = form.querySelectorAll('input');
+            Array.prototype.slice.call(inputs).forEach(function (input) {
+                input.addEventListener('change', function () {
+                    if (input.checkValidity()) {
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+                    } else {
+                        input.classList.remove('is-valid');
+                        input.classList.add('is-invalid');
+                        showAlert("error","Dữ liệu không hợp lệ" );
+                    }
+                });
+            });
+        });
+
+        // thông báo
+        window.showAlert = function(type, message) {
+            let alertElement;
+
+            if (type === 'success') {
+                alertElement = document.getElementById('alertMessage2');
+                alertElement.querySelector('#alertBody2').textContent = message; // Thiết lập nội dung thông báo thành công
+                alertElement.style.display = 'block'; // Hiển thị thông báo thành công
+            } else if (type === 'error') {
+                alertElement = document.getElementById('alertMessage');
+                alertElement.querySelector('#alertBody').textContent = message; // Thiết lập nội dung thông báo lỗi
+                alertElement.style.display = 'block'; // Hiển thị thông báo lỗi
+            }
+
+            // Tự động ẩn thông báo sau 5 giây
+            setTimeout(() => {
+                if (alertElement) {
+                    var bootstrapAlert = new bootstrap.Alert(alertElement);
+                    bootstrapAlert.close();
+                }
+            }, 5000);
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Kiểm tra và ẩn thông báo thành công nếu có
+            var successAlert = document.getElementById('successAlert');
+            if (successAlert && successAlert.style.display !== 'none') {
+                setTimeout(function () {
+                    var bootstrapAlert = new bootstrap.Alert(successAlert);
+                    bootstrapAlert.close();
+                }, 5000);
+            }
+        });
+
+    })();
+</script>
+
+
+</body>
+</html>

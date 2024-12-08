@@ -84,7 +84,7 @@
                 <div style="height: 72px; margin-bottom: 42px;"
                      class="d-flex align-items-center justify-content-center">
                     <div>
-                        <img style="width: 78%" src="/img/logo.png" alt="logo">
+                        <img style="width: 78%" src="/uploadImage/logo.png" alt="logo">
                     </div>
                     <div style="font-size: 20px; font-weight: 800; margin-left: 12px;">
                         Krist
@@ -226,43 +226,81 @@
                         <div>
                             <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                                 <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Mã đơn hàng:</div>
-                                <div style="font-size: 16px; font-weight: 500;"><span th:text="${hoaDon.maHoaDon}">30.000</span></div>
+                                <div style="font-size: 16px; font-weight: 500;">
+                                    <span th:text="${hoaDon.maHoaDon}"></span>
+                                </div>
                             </div>
                             <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                                 <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Trạng thái đơn hàng:</div>
-                                <div style="font-size: 16px; font-weight: 500;"><span th:text="${convertMoney.formatStatus(hoaDon.trangThai)}">30.000</span></div>
+                                <div style="font-size: 16px; font-weight: 500;">
+                                    <span th:text="${convertMoney.formatStatus(hoaDon.trangThai)}"></span>
+                                </div>
                             </div>
                             <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                                 <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Thông tin thanh toán:</div>
-                                <div style="font-size: 16px; font-weight: 500;"><span th:text="${convertMoney.formatStatus(hoaDon.trangThaiThanhToan)}">30.000</span></div>
+                                <div style="font-size: 16px; font-weight: 500;">
+                                    <span th:text="${convertMoney.formatStatus(hoaDon.trangThaiThanhToan)}"></span>
+                                </div>
                             </div>
                             <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between" style="margin-bottom: 18px;">
-                            <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Tên khuyến mại:</div>
-                            <div style="font-size: 16px; font-weight: 500;"><span th:text="${hoaDon.khuyenMai.tenKhuyenMai}"></span></div>
-                        </div>
-
+                                <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Tên khuyến mại:</div>
+                                <div style="font-size: 16px; font-weight: 500;">
+                                    <span th:text="${hoaDon.khuyenMai.tenKhuyenMai}"></span>
+                                </div>
+                            </div>
                             <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between" style="margin-bottom: 18px;">
                                 <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Mức giảm:</div>
-                                <div style="font-size: 16px; font-weight: 500;"><span th:text="${convertMoney.formatCurrency(hoaDon.khuyenMai.giaTri)} + ' ' + ${hoaDon.khuyenMai.kieuKhuyenMai? '%':'VND'}"></span></div>
+                                <div style="font-size: 16px; font-weight: 500;">
+                                    <span th:text="${convertMoney.formatCurrency(hoaDon.khuyenMai.giaTri)} + ' ' + ${hoaDon.khuyenMai.kieuKhuyenMai ? '%' : 'VND'}"></span>
+                                </div>
                             </div>
                             <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
                                 <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Tổng tiền:</div>
-                                <div style="font-size: 16px; font-weight: 500;"><span th:text="${convertMoney.formatCurrency(hoaDon.tongTien)}">30.000</span></div>
+                                <div style="font-size: 16px; font-weight: 500;">
+                                    <span th:text="${convertMoney.formatCurrency(hoaDon.tongTien)}"></span>
+                                </div>
                             </div>
-                            <div class="d-flex justify-content-between" style="margin-bottom: 18px;">
+
+                            <!-- Form chỉnh sửa phí vận chuyển -->
+                            <div th:if="${hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN &&
+                            hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).DANG_XU_LY }"
+                                    class="d-flex justify-content-between" style="margin-bottom: 18px;">
                                 <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
                                 <div style="font-size: 16px; font-weight: 500;"><span id="shipping-fee" th:text="${hoaDon.phiVanChuyen}">30.000</span></div>
                             </div>
-                            <div class="d-flex justify-content-between">
+                            <form th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN ||
+                            hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).DANG_XU_LY }"
+                                    id="formShip" class="needs-validation" novalidate th:action="@{/quan-ly/doi-phi-van-chuyen}" method="post">
+                                <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 18px;">
+                                    <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
+                                    <input type="hidden" name="orderId" th:value="${hoaDon.id}">
+                                    <div>
+                                        <input type="number" min="0" class="form-control" name="shippingFee" style="width: 150px;"
+                                               th:value="${hoaDon.phiVanChuyen}" required>
+                                        <div class="invalid-feedback">Phí giao hàng phải từ 0 trở lên</div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="d-flex justify-content-between" style="margin-top: 18px;">
                                 <div style="font-size: 16px; font-weight: bold;">Tổng tiền sau giảm:</div>
-                                <div style="font-size: 16px; font-weight: bold;"><span id="final-total" th:text="${convertMoney.calculatorTotal(hoaDon.tongTien, hoaDon.khuyenMai, hoaDon.phiVanChuyen)}">0.00</span></div>
+                                <div style="font-size: 16px; font-weight: bold;">
+                                    <span id="final-total" th:text="${convertMoney.calculatorTotal(hoaDon.tongTien, hoaDon.khuyenMai, hoaDon.phiVanChuyen)}"></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="mt-3 mb-3" style="text-align: center">
-                            <button class="btn btn-dark btn-sm" th:onclick="'inHoaDon(' + ${idHoaDonSelected} + ')'">In hóa đơn</button>
-
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="mt-3 mb-3 me-3" style="text-align: center">
+                                <button class="btn btn-dark btn-sm" th:onclick="'inHoaDon(' + ${idHoaDonSelected} + ')'">In hóa đơn</button>
+                            </div>
+                            <div th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN ||
+                            hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).DANG_XU_LY }"
+                                    style="text-align: center;">
+                                <button id="btn-submit-ship" class="btn btn-dark btn-sm">Lưu câp nhật</button>
+                            </div>
                         </div>
                     </div>
+
                     <div class="box" style="flex: 2">
                         <div class="d-flex align-items-center"
                              th:if="${hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).DA_HUY}"
@@ -373,15 +411,102 @@
                         </div>
                     </div>
                     <div>
+
+                        <div th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN}">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th style="width: 10%; text-align: center;">Ảnh</th>
+                                    <th style="width: 20%; text-align: center;">Thông tin</th>
+                                    <th style="width: 15%; text-align: center;">Giá</th>
+                                    <th style="width: 15%; text-align: center;">Số lượng</th>
+                                    <th style="width: 15%; text-align: center;">Tổng cộng</th>
+                                    <th style="width: 20%; text-align: center;">Hành động</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="item : ${hoaDonChiTiet}">
+
+                                    <!-- Cột Hình ảnh -->
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <div class="d-flex justify-content-center align-items-center"
+                                             style="background-color: #f6f6f6; border-radius: 4px; width: 46px; height: 46px; margin: 0 auto">
+                                            <div th:style="|width: 46px; height: 46px; background: url('/img/${item.chiTietSanPham.anhSanPham}') no-repeat center center / cover;|">
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <!-- Cột Thông tin -->
+                                    <td>
+                                        <!-- Tên sản phẩm -->
+                                        <p style="font-size: 16px; font-weight: 500; text-align: center"
+                                           th:text="${item.getChiTietSanPham().sanPham.tenSanPham}"></p>
+                                        <!-- Màu sắc và kích thước -->
+                                        <div class="d-flex align-items-center" style="margin-top: 8px;">
+                                            <span style="margin-right: 8px;">Color:</span>
+                                            <div th:style="'padding: 8px; border-radius: 50%; background-color: ' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
+                                            <span style="margin-left: 16px;">Size: <span
+                                                    th:text="${item.getChiTietSanPham().size.tenSize}"></span></span>
+                                        </div>
+                                    </td>
+                                    <!-- Cột Giá -->
+                                    <td style="text-align: center; vertical-align: middle;">
+                                <span th:text="${convertMoney.formatCurrency(item.getChiTietSanPham().donGia)}"
+                                      class="product-price" th:id="'gia-' + ${item.id}"></span>
+                                    </td>
+                                    <!-- Cột Số lượng -->
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <div class="d-flex justify-content-between align-items-center"
+                                             style="padding: 8px 18px; border: 1px solid #E6E7E8; border-radius: 4px;
+                                              width: 107px; height: 40px; margin: 0 auto">
+                                            <button type="button" style="background-color: #fff; border: none;"
+                                                    onclick="capNhatSoLuong(this, -1)" th:data-id="${item.id}">&#8722;
+                                            </button>
+                                            <span th:id="'soLuong-' + ${item.id}" th:text="${item.soLuong}"
+                                                  class="product-quantity"></span>
+                                            <button type="button" style="background-color: #fff; border: none;"
+                                                    onclick="capNhatSoLuong(this, 1)" th:data-id="${item.id}">&#43;
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <!-- Cột Tổng cộng -->
+                                    <td style="text-align: center; vertical-align: middle;">
+                                <span th:text="${convertMoney.formatCurrency(item.getChiTietSanPham().donGia * item.soLuong)}"
+                                      th:id="'tong-' + ${item.id}"
+                                      class="product-total"></span>
+                                    </td>
+                                    <!-- Cột Hành động -->
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <div class="d-inline-block me-3" data-bs-toggle="tooltip"
+                                             data-bs-placement="top" title="Cập nhật">
+                                            <div data-bs-toggle="modal" data-bs-target="#modalUpdateCart" th:data-id="${item.id}"
+                                                 th:data-quantity="${item.soLuong}">
+                                                <i class="fa-sharp fa-regular fa-pen-to-square"></i>
+                                            </div>
+                                        </div>
+                                        <div class="d-inline-block">
+                                            <a style="color: #e10a0a; text-decoration: none;" data-bs-toggle="tooltip"
+                                               data-bs-placement="top" title="Xóa"
+                                               th:href="@{/quan-ly/xoa-san-pham-don(id=${item.id})}">
+                                                <i class="fa-regular fa-trash-can"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
                         <!-- Danh sách sản phẩm -->
-                        <div class="product-list">
+                        <div class="product-list"  th:if="${hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN}">
                             <div class="product-item d-flex align-items-start"
                                  th:each="item : ${hoaDonChiTiet}"
                                  style="border: 1px solid #e6e7e8; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
                                 <!-- Hình ảnh sản phẩm -->
                                 <div style="flex: 1; max-width: 80px;">
                                     <div style="width: 80px; height: 80px; border-radius: 8px; background-color: #f6f6f6;">
-                                        <div th:style="|width: 100%; height: 100%; background: url('/img/${item.chiTietSanPham.anhSanPham}') no-repeat center center / cover;|">
+                                        <div th:style="|width: 100%; height: 100%; background: url('/uploadImage/${item.chiTietSanPham.anhSanPham}') no-repeat center center / cover;|">
                                         </div>
                                     </div>
                                 </div>
@@ -446,6 +571,38 @@
     </div>
 </div>
 
+
+<!--modal cập nhật giỏ hàng-->
+<div class="modal fade" id="modalUpdateCart" tabindex="-1" aria-labelledby="modalCategoriesLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="width: 500px; margin: 0 auto">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCategoriesLabel">Cập nhật số lượng trong giỏ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"  style="padding:0; display: block">
+                <div>
+                    <form class="needs-validation" novalidate th:action="@{/quan-ly/cap-nhat-so-luong-don}" method="post">
+                        <!-- Hidden ID Field -->
+                        <input type="hidden" id="productId" name="inHoaDonChiTiet">
+
+                        <!-- Quantity (Editable) -->
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Số lượng:</label>
+                            <input type="number" class="form-control" id="quantity" name="soLuong" min="1" required>
+                            <div class="invalid-feedback">Số lượng không hợp lệ</div>
+                        </div>
+                        <div style="text-align: end;">
+                            <button type="submit" class="btn btn-dark">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Alert thông báo thất bại -->
 <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage" style="display: none;">
     <strong>Thất bại!</strong> <span id="alertBody">Thông báo này sẽ hiển thị kết quả.</span>
@@ -459,6 +616,42 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const updateDivs = document.querySelectorAll('div[data-bs-target="#modalUpdateCart"]');
+
+        updateDivs.forEach(div => {
+            div.addEventListener('click', function () {
+                // Lấy dữ liệu từ các thuộc tính `data-*`
+                const productId = div.getAttribute('data-id');
+                const quantity = div.getAttribute('data-quantity');
+
+                // Kiểm tra giá trị
+                console.log('Product ID:', productId);  // Xem giá trị ID trong console
+                console.log('Quantity:', quantity);      // Xem số lượng trong console
+
+                // Gán giá trị vào các input trong modal
+                document.getElementById('productId').value = productId;
+                document.getElementById('quantity').value = quantity;
+            });
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const submitButton = document.getElementById("btn-submit-ship");
+        const form = document.getElementById("formShip");
+
+        submitButton.addEventListener("click", function (event) {
+            event.preventDefault(); // Ngăn chặn hành vi submit mặc định nếu cần kiểm tra dữ liệu
+            if (form.checkValidity()) {
+                form.submit(); // Gửi form nếu dữ liệu hợp lệ
+            } else {
+                form.reportValidity(); // Hiển thị thông báo lỗi nếu dữ liệu không hợp lệ
+            }
+        });
+    });
+
+
     document.querySelectorAll('.btn-cancel-order').forEach(button => {
         button.addEventListener('click', function () {
             // Lấy ID đơn hàng từ thuộc tính data
@@ -573,7 +766,7 @@
                     } else {
                         input.classList.remove('is-valid');
                         input.classList.add('is-invalid');
-                        showAlert("error","Dữ liệu không hợp lệ trong " + input.placeholder);
+                        showAlert("error","Dữ liệu không hợp lệ");
                     }
                 });
             });
