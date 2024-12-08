@@ -31,7 +31,10 @@ class SecurityConfig{
                         .requestMatchers(HttpMethod.GET, "/user/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/user/**").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/quan-ly/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/quan-ly/**").hasRole("USER")
                         .anyRequest().authenticated()
+
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/dang-nhap")
