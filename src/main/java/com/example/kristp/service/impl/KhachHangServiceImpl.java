@@ -33,6 +33,9 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     @Override
     public KhachHang saveKhachHang(String tenKhachHang, TaiKhoan taiKhoan, String sdtKh) {
+        if(khachHangRepository.existsBySoDienThoai(sdtKh)) {
+            return null;
+        }
         KhachHang khachHang = new KhachHang();
         khachHang.setTaiKhoan(taiKhoan);
         khachHang.setTenKhachHang(tenKhachHang);

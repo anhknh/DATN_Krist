@@ -30,7 +30,8 @@ class SecurityConfig{
                         .requestMatchers(HttpMethod.POST, "/dang-nhap-khach-hang", "/dang-ki-tai-khoan").permitAll()
                         .requestMatchers(HttpMethod.GET, "/user/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/user/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/quan-ly/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/quan-ly/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
