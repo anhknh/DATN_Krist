@@ -23,4 +23,9 @@ public interface TaiKhoanRepository extends JpaRepository<TaiKhoan,Integer> {
                                @Param("mat_khau") String matKhau,
                                @Param("email") String email);
 
+
+    @Query("SELECT COUNT(t) > 0 FROM TaiKhoan t WHERE t.tenDangNhap = :tenDangNhap OR t.email = :email")
+    boolean existsByTenDangNhapOrEmail(@Param("tenDangNhap") String tenDangNhap, @Param("email") String email);
+
+
 }

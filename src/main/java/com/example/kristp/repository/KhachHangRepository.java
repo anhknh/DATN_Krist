@@ -29,5 +29,9 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, Integer> {
 
     @Query("from KhachHang kh where kh.trangThai = 1")
     List<KhachHang> findAllKhachHang();
+
+    @Query("SELECT COUNT(k) > 0 FROM KhachHang k WHERE k.soDienThoai = :soDienThoai")
+    boolean existsBySoDienThoai(@Param("soDienThoai") String soDienThoai);
+
 }
 
