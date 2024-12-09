@@ -94,11 +94,15 @@ public class AuthenController {
     @PostMapping("/dang-ki-tai-khoan")
     public String dangKyForm(@ModelAttribute("taiKhoan")TaiKhoan taiKhoan, Model model,
                          HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        TaiKhoan taiKhoanNew = taiKhoanService.taoTaiKhoan(taiKhoan, request.getParameter("tenKhachHang"), request.getParameter("sdtKh"));
+        TaiKhoan taiKhoanNew = taiKhoanService.taoTaiKhoan(taiKhoan, request.getParameter("tenKhachHang"), request.getParameter("soDienThoai"));
         if (taiKhoanNew != null) {
             redirectAttributes.addFlashAttribute("message", "Đăng ký thành công!");
             redirectAttributes.addFlashAttribute("messageType", "alert-success");
             redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Thông tin đăng ký đã tồn tại!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
         }
         return "redirect:/dang-ki";
     }
