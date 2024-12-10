@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -106,9 +107,10 @@ public class GioHangChiTietController {
         Integer increment = Integer.valueOf(payload.get("increment").toString());
 
         // Cập nhật số lượng
-        int newQuantity = gioHangChiTietService.capNhatSoLuong(id, increment);
+        Integer newQuantity = gioHangChiTietService.capNhatSoLuong(id, increment);
 
-        return ResponseEntity.ok(Map.of("newQuantity", newQuantity));
+        return ResponseEntity.ok(Collections.singletonMap("newQuantity", newQuantity));
+
     }
 
     // Xóa giỏ hàng chi tiết

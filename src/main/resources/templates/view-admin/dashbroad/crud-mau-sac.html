@@ -409,11 +409,10 @@
 
             // Tự động ẩn thông báo sau 5 giây
             setTimeout(() => {
-                if (alertElement) {
-                    var bootstrapAlert = new bootstrap.Alert(alertElement);
-                    bootstrapAlert.close();
-                }
-            }, 5000);
+    if (alertElement) {
+        alertElement.style.display = 'none'; // Ẩn thông báo
+    }
+}, 5000);
         }
 
         document.addEventListener('DOMContentLoaded', function (){

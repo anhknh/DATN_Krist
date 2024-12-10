@@ -86,10 +86,14 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findById(id).orElse(null);
 
         if (gioHangChiTiet != null) {
+            ChiTietSanPham chiTietSanPham = gioHangChiTiet.getChiTietSanPham();
             // Cập nhật số lượng
             int newQuantity = gioHangChiTiet.getSoLuong() + increment;
+            if(chiTietSanPham.getSoLuong() < newQuantity) {
+                return null;
+            }
             if (newQuantity <= 0) {
-                throw new IllegalArgumentException("Số lượng không thể nhỏ hơn hoặc bằng 0!");
+                return null;
             }
 
             gioHangChiTiet.setSoLuong(newQuantity);
