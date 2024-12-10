@@ -152,7 +152,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="cart-popup-footer">
                                 <div class="d-flex justify-content-between"
                                      style="border-top: 2px solid #F6F6F6; padding: 12px;">
@@ -295,7 +294,9 @@
                                     </div>
                                 </div>
                                 <div class="order-price">
-                                    <span th:text="${convertMoney.calculatorTotal(order.tongTien, order.khuyenMai, order.phiVanChuyen)}"></span>
+                                    <span th:if="${order.khuyenMai != null}" th:text="${convertMoney.calculatorTotal(order.tongTien, order.khuyenMai, order.phiVanChuyen)}"></span>
+                                    <span th:unless="${order.khuyenMai != null}" th:text="${convertMoney.formatCurrency(order.tongTien + order.phiVanChuyen)}"></span>
+
                                 </div>
                                 <div class="order-actions">
                                     <button class="view-order" th:attr="onclick=|donHangChiTiet('${order.getId()}')|">

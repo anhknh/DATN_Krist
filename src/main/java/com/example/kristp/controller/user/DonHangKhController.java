@@ -52,6 +52,7 @@ public class DonHangKhController {
         model.addAttribute("HoaDonList" , hoaDons.getContent());
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
+        System.out.println(hoaDons.getTotalPages() + "Số trang hiện có");
         model.addAttribute("check" , "choXacNhan");
         Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
         model.addAttribute("khachHang1" , khachHang.get());
@@ -93,6 +94,7 @@ public class DonHangKhController {
         model.addAttribute("HoaDonList" , hoaDons.getContent());
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , hoaDons.getTotalPages());
+
         model.addAttribute("check" , "dangXuLy");
         Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
         model.addAttribute("khachHang1" , khachHang.get());
@@ -245,7 +247,6 @@ public class DonHangKhController {
             }
             model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
         }
-
         model.addAttribute("tongTien", tongTien);
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
 
