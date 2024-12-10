@@ -187,6 +187,16 @@ public class DatHangController {
                              @RequestParam(value = "shipFee", required = false) Float ship,
                              RedirectAttributes attributes,
                              HttpServletRequest request) {
+        if (diaChiSelected == null) {
+            attributes.addFlashAttribute("message", "Chưa chọn địa chỉ vận chuyển");
+            attributes.addFlashAttribute("messageType", "alert-danger");
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
+            //get url request
+            String referer = request.getHeader("referer");
+            //reload page
+            return "redirect:" + referer;
+        }
+
         idDiaChiSelected = diaChiSelected;
         phiVanChuyen = ship;
         return "redirect:/user/phuong-thuc-thanh-toan";
