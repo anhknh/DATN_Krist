@@ -63,7 +63,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
 //    List<String> thongKeTungThang(@Param("year") int year);
 
     @Query(nativeQuery = true, value = "SELECT \n" +
-            "    ISNULL(SUM(hd.tong_tien + hd.phi_van_chuyen), 0) AS TongDoanhThu \n" +
+            "    ISNULL(SUM(hd.tong_tien), 0) AS TongDoanhThu \n" +
             "FROM \n" +
             "    master.dbo.spt_values spt_values \n" +
             "LEFT JOIN \n" +
@@ -81,24 +81,22 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
             "    FORMAT(DATEFROMPARTS(:year, spt_values.number, 1), 'MM-yyyy');\n")
     List<String> thongKeTungThang(@Param("year") int year);
 
-
-
     @Query("select hd from HoaDon hd order by hd.id desc ")
     Page<HoaDon> findTop5(Pageable pageable );
 
-
-    @Query("select SUM(hd.tongTien) from HoaDon hd where cast(hd.ngaySua as DATE ) = current date AND  hd.trangThaiThanhToan = :trangthai")
+    @Query("select SUM(hd.tongTien) from HoaDon hd where cast(hd.ngayTao as DATE ) = current date AND  hd.trangThaiThanhToan = :trangthai and hd.trangThai = :trangthai")
     Double getDoanhThuHomNay(@Param("trangthai")HoaDonStatus status);
-
-    @Query("SELECT COUNT(ctsp.id) " +
+// sửa lại
+    @Query("SELECT SUM (hdct.soLuong) " +
             "FROM HoaDon hd " +
             "JOIN HoaDonChiTiet hdct ON hd.id = hdct.hoaDon.id " +
             "JOIN ChiTietSanPham ctsp ON hdct.chiTietSanPham.id = ctsp.id " +
             "WHERE hd.trangThaiThanhToan = :trangthai " +
-            "AND FUNCTION('MONTH', hd.ngaySua) = FUNCTION('MONTH', CURRENT_DATE)")
+            "AND hd.trangThai = :trangthai "+
+            "AND FUNCTION('MONTH', hd.ngayTao) = FUNCTION('MONTH', CURRENT_DATE)")
     Integer getSanPhamBanTrongThang(@Param("trangthai")HoaDonStatus status);
 
-    @Query("select SUM(hd.tongTien) from HoaDon hd where FUNCTION('YEAR', hd.ngaySua) = FUNCTION('YEAR', CURRENT_DATE) AND  hd.trangThaiThanhToan = :trangthai")
+    @Query("select SUM(hd.tongTien) from HoaDon hd where FUNCTION('YEAR', hd.ngayTao) = FUNCTION('YEAR', CURRENT_DATE) AND  hd.trangThaiThanhToan = :trangthai")
     Double getDoanhThuTrongNam(@Param("trangthai")HoaDonStatus status);
 
     @Query(value = "SELECT \n" +
