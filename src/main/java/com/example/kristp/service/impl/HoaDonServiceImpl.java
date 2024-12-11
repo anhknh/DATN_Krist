@@ -145,19 +145,19 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Override
     public Double doanhThuHomNay() {
-        Double doanhThDouble= hoaDonRepository.getDoanhThuHomNay(HoaDonStatus.DA_THANH_TOAN);
+        Double doanhThDouble= hoaDonRepository.getDoanhThuHomNay(HoaDonStatus.DA_THANH_TOAN , HoaDonStatus.HOAN_TAT);
         return doanhThDouble;
     }
 
     @Override
     public Integer soSanPhamBanTrongThang() {
-        Integer doanhThDouble= hoaDonRepository.getSanPhamBanTrongThang(HoaDonStatus.DA_THANH_TOAN);
+        Integer doanhThDouble= hoaDonRepository.getSanPhamBanTrongThang(HoaDonStatus.DA_THANH_TOAN, HoaDonStatus.HOAN_TAT);
         return doanhThDouble;
     }
 
     @Override
     public Double doanhThuTrongNam() {
-        Double doanhThDouble= hoaDonRepository.getDoanhThuTrongNam(HoaDonStatus.DA_THANH_TOAN);
+        Double doanhThDouble= hoaDonRepository.getDoanhThuTrongNam(HoaDonStatus.DA_THANH_TOAN ,  HoaDonStatus.HOAN_TAT);
         return doanhThDouble;
     }
 
