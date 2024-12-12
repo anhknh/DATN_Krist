@@ -39,13 +39,11 @@ public class GioHangChiTietController {
 
     HoaDon hoaDonSelected = null;
 
-
     @Autowired
     private DanhMucService danhMucService ;
 
     @Autowired
     private TayAoService tayAoService ;
-
 
     @Autowired
     private CoAoService coAoService ;
@@ -60,6 +58,7 @@ public class GioHangChiTietController {
         System.out.println(hoaDons.get(0).getId());
         if (hoaDonSelected == null) {
             hoaDonSelected = hoaDons.get(0);
+
         } else {
             if (idHoaDon != null) {
                 hoaDonSelected = hoaDonService.findHoaDonById(idHoaDon);

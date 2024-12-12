@@ -47,9 +47,7 @@ public class TrangCaNhanController {
 
 
     @GetMapping("/ca-nhan")
-    public String caNhan(Model model, HttpSession session){
-//        KhachHang khachHang = khachHangService.getKHByUserId(Authen.khachHang.getTaiKhoan());
-//        Chưa lấy được id của khách hàng
+    public String caNhan(Model model){
 
         Optional<KhachHang> khachHang = khachHangRepository.findById(Authen.khachHang.getId());
         model.addAttribute("khachHang1" , khachHang.get());
@@ -75,16 +73,15 @@ public class TrangCaNhanController {
         model.addAttribute("tongTien", tongTien);
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
 
-        model.addAttribute("khachHang", Authen.khachHang);
+        model.addAttribute("khachHang", khachHang.get());
         //hàm format
         model.addAttribute("convertMoney", new DataUtils());
-
-
         return "profile-ca-nhan";
     }
 
     @PostMapping("/update-thong-tin-kh")
     public String updateThongTin(@ModelAttribute("khachHang")KhachHang khachHang){
+        System.out.println("Đã cập nhật" + khachHang.getId());
         khachHangService.updateKhachHang(khachHang);
         return "redirect:/user/ca-nhan";
     }
