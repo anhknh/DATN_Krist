@@ -118,7 +118,7 @@
 
 
           <!--                    Chức năng chưa có đường dẫn là #-->
-          <a href="#" class="mb-3" onclick="highlightLink(this)"
+          <a href="/quan-ly/setting" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
           </a>
@@ -153,7 +153,7 @@
             </nav>
           </div>
           <div>
-            <a href="../login.html" style="text-decoration: none; color: #000; font-size: 20px;"><i
+            <a href="/logout" style="text-decoration: none; color: #000; font-size: 20px;"><i
                     class="fa-thin fa-arrow-right-from-bracket"></i></a>
           </div>
         </div>
@@ -173,12 +173,12 @@
               <div class="w-100">
                 <div class="modal-body" style="padding:30px">
                   <div>
-                    <form th:action="@{/quan-ly/update-khuyen-mai/{id}(id=${khuyenMaiCre.id})}" th:object="${khuyenMaiCre}" method="post" class="needs-validation">
+                    <form th:action="@{/quan-ly/update-khuyen-mai/{id}(id=${khuyenMaiCre.id})}" novalidate th:object="${khuyenMaiCre}" method="post" class="needs-validation">
                       <div class="row">
                         <!-- Cột bên trái -->
                         <div class="col-md-6">
                           <div class="display_none">
-                            <input type="text" class="form-control" id="idKhuyenMai" name="idKhuyenMai" th:field="*{id}">
+                            <input type="text"  class="form-control" id="idKhuyenMai" name="idKhuyenMai" th:field="*{id}">
                           </div>
                           <div class="mb-4">
                             <label for="maKhuyenMai" class="form-label">Mã khuyến mại</label>
@@ -212,7 +212,7 @@
                             <div class="form-group">
                               <label style="font-weight: bold" for="trangThai" class="form-label">Trạng thái:</label>
                               <select class="form-select" th:field="*{trangThai}" id="trangThai" required>
-                                <option value="">Chọn trạng thái</option>
+                                <option value="" disabled selected >Chọn trạng thái</option>
                                 <option value="Chưa kích hoạt">Chưa kích hoạt</option>
                                 <option value="Đang hoạt động">Đang hoạt động</option>
                                 <option value="Hết hạn">Hết hạn</option>
@@ -260,18 +260,13 @@
                   </div>
                 </div>
               </div>
-
               <!-- Nút hành động dưới cùng form -->
-
-            </form>
-
           </div>
         </div>
       </div>
     </div>
 
   </div>
-</div>
 </div>
 
 

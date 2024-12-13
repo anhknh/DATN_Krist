@@ -127,7 +127,7 @@
 
 
                     <!--                    Chức năng chưa có đường dẫn là #-->
-                    <a href="#" class="mb-3" onclick="highlightLink(this)"
+                    <a href="/quan-ly/setting" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
                     </a>
@@ -146,14 +146,14 @@
                         </nav>
                     </div>
                     <div>
-                        <a href="../login.html" style="text-decoration: none; color: #000; font-size: 20px;"><i class="fa-thin fa-arrow-right-from-bracket"></i></a>
+                        <a href="/logout" style="text-decoration: none; color: #000; font-size: 20px;"><i class="fa-thin fa-arrow-right-from-bracket"></i></a>
                     </div>
                 </div>
 <!--                content-->
                 <div class="box">
 <!--                    tìm kiếm đơn hàng-->
                     <div class="order-filter-box">
-                        <form th:action="@{/quan-ly//tim-kiem-don-hang}" method="get" style="width: 100%">
+                        <form th:action="@{/quan-ly/tim-kiem-don-hang}" method="get" style="width: 100%">
                             <div class="filter-container">
                                 <div class="filter-item">
                                     <label for="id">Mã đơn hàng</label>
