@@ -738,7 +738,7 @@
             <div class="modal-body justify-content-center">
                 <div class="text-center">
                     <img
-                            th:src="@{https://uploadImage.vietqr.io/image/970418-2171025740-print.png(amount=${dataUtils.calculatorTotal2(tongTien, hoaDonSelected.khuyenMai, hoaDonSelected.phiVanChuyen)}, addInfo='THANH TOAN DON HANG - KRISTSHOP', accountName='KIEU NGOC HOANG ANH')}"
+                            th:src="@{https://img.vietqr.io/image/970418-2171025740-print.png(amount=${dataUtils.calculatorTotal2(tongTien, hoaDonSelected.khuyenMai, hoaDonSelected.phiVanChuyen)}, addInfo='THANH TOAN DON HANG - KRISTSHOP', accountName='KIEU NGOC HOANG ANH')}"
                             alt="QR Thanh Toán"
                             class="qr-image"
                     />
@@ -1028,277 +1028,127 @@
 
     })();
 
-
-
-    let productId = 0;
     $(document).ready(function () {
-        // Khi modal được hiển thị
-        $('#productModal').on('show.bs.modal', function (e) {
-            var button = $(e.relatedTarget);
-            productId = button.data('id');
-
-            // Gọi API để lấy thông tin chi tiết sản phẩm
-            fetchProductDetails(productId, function (error, productDetails) {
-                if (error) {
-                    showAlert('error', error);
-                } else {
-                    // Cập nhật modal với dữ liệu sản phẩm
-                    updateProductModal(productDetails);
-
-                    // Gắn sự kiện cho các tùy chọn màu và kích thước
-                    bindColorSizeEvents(productDetails);
-                }
-            });
-        });
-
-        // Khi modal bị đóng
-        $('#productModal').on('hidden.bs.modal', function () {
-            location.reload(); // Reload lại trang sau khi modal đóng
-        });
-    });
-
-    function fetchProductDetails(productId, callback) {
-        $.ajax({
-            url: '/quan-ly/user/chi-tiet-san-pham/' + productId,
-            method: 'GET',
-            success: function (productDetails) {
-                if (productDetails && productDetails.length > 0) {
-                    callback(null, productDetails);
-                } else {
-                    callback('Không có dữ liệu sản phẩm.');
-                }
-            },
-            error: function (err) {
-                callback('Lỗi khi lấy thông tin sản phẩm: ' + err.statusText);
-            }
-        });
-    }
-
-    function updateProductModal(productDetails) {
-        var product = productDetails[0].sanPham;
-        var images = '';
-        var colorSizeOptions = '';
-
-        // Cập nhật tên sản phẩm
-        $('#productName').text(product.tenSanPham);
-
-        // Carousel hình ảnh
-        productDetails.forEach(function (detail, index) {
-            images += `
-        <div class="carousel-item ${index === 0 ? 'active' : ''}">
-            <img src="/uploadImage/${detail.anhSanPham}" class="d-block w-100" alt="${product.tenSanPham}">
-        </div>`;
-
-            // Tạo các tùy chọn màu và kích thước
-            colorSizeOptions += `
-        <div class="form-check form-check-inline color-size-option" data-color="${detail.mau.id}" data-size="${detail.size.id}" data-detail-id="${detail.id}" style="margin-right: 12px;">
-            <label class="form-check-label" style="width: 68px">
-            <div style="display: flex; align-items: center; justify-content: space-around">
-                <div style="margin: 0; background-color: ${detail.mau.maMauSac}; width: 20px; height: 20px; display: inline-block; border-radius: 50%;"></div>
-                <div>&#8211;</div>
-                <div style="margin-left: 8px;">${detail.size.tenSize}</div>
-            </div>
-            </label>
-        </div>`;
-        });
-
-        $('.carousel-inner').html(images);
-        $('#colorSizeOptions').html(colorSizeOptions);
-
-        // Cập nhật giá và số lượng ban đầu
-        $('#productPrice').text(productDetails[0].donGia + ' VNĐ');
-        $('#productQuantity').text('Số lượng hiện có: ' + productDetails[0].soLuong);
-
-        // Mặc định chọn tùy chọn đầu tiên
-        selectColorSizeOption(productDetails, $('.color-size-option').first());
-    }
-
-    function bindColorSizeEvents(productDetails) {
-        // Gắn sự kiện click cho các tùy chọn màu và kích thước
-        $('.color-size-option').off('click').on('click', function () {
-            selectColorSizeOption(productDetails, $(this));
-        });
-
-        // Gắn sự kiện thêm vào giỏ hàng
-        $('.add-to-cart-button').off('click').on('click', function () {
-            var quantity = $('#exampleInputEmail1').val();
-            var selectedDetailId = $('.color-size-option.selected').data('detail-id');
-            addToCart(selectedDetailId, quantity, productDetails);
-        });
-    }
-
-    function selectColorSizeOption(productDetails, selectedOption) {
-        $('.color-size-option').removeClass('selected');
-        selectedOption.addClass('selected');
-
-        var selectedColor = selectedOption.data('color');
-        var selectedSize = selectedOption.data('size');
-
-        var selectedDetail = productDetails.find(function (detail) {
-            return detail.mau.id == selectedColor && detail.size.id == selectedSize;
-        });
-
-        if (selectedDetail) {
-            $('#productPrice').text(selectedDetail.donGia + ' VNĐ');
-            $('#productQuantity').text('Số lượng hiện có: ' + selectedDetail.soLuong);
-        }
-    }
-
-    function addToCart(selectedDetailId, quantity, productDetails) {
-        if (quantity > 0) {
-            $.ajax({
-                url: '/quan-ly/them-gio-hang2',
-                method: 'POST',
-                contentType: 'application/x-www-form-urlencoded',
-                data: {
-                    chiTietSanPhamId: selectedDetailId,
-                    soLuong: quantity
-                },
-                success: function (response) {
-                    showAlert('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
-                    // Cập nhật modal sau khi thêm giỏ hàng thành công
-                    fetchProductDetails(productId, function (error, updatedDetails) {
-                        if (!error) {
-                            updateProductModal(updatedDetails);
-                            bindColorSizeEvents(updatedDetails); // Gắn lại sự kiện cho các tùy chọn
-                        }
-                    });
-                },
-                error: function (err) {
-                    showAlert('error', 'Chưa chọn hóa đơn hoặc số lượng không hợp lệ');
-                }
-            });
-        } else {
-            showAlert('error', 'Vui lòng nhập số lượng hợp lệ.');
-        }
-    }
-
-
-    // Hàm lấy thông tin sản phẩm
-    function fetchProductDetails(productId) {
-        return new Promise((resolve, reject) => {
+        const reloadModalData = (productId) => {
+            // Gọi API để lấy chi tiết sản phẩm
             $.ajax({
                 url: '/quan-ly/user/chi-tiet-san-pham/' + productId,
                 method: 'GET',
                 success: function (productDetails) {
                     if (productDetails && productDetails.length > 0) {
-                        resolve(productDetails);
-                    } else {
-                        reject('Không có dữ liệu sản phẩm.');
+                        const product = productDetails[0].sanPham;
+                        let images = '';
+                        let colorSizeOptions = '';
+
+                        // Cập nhật tên sản phẩm
+                        $('#productName').text(product.tenSanPham);
+
+                        // Carousel hình ảnh
+                        productDetails.forEach((detail, index) => {
+                            images += `
+                        <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                            <img src="/uploadImage/${detail.anhSanPham}" class="d-block w-100" alt="${product.tenSanPham}">
+                        </div>`;
+
+                            // Tạo các tùy chọn màu và kích thước
+                            colorSizeOptions += `
+                        <div class="form-check form-check-inline color-size-option"
+                             data-color="${detail.mau.id}"
+                             data-size="${detail.size.id}"
+                             data-detail-id="${detail.id}"
+                             style="margin-right: 12px;">
+                            <label class="form-check-label" style="width: 68px">
+                                <div style="display: flex; align-items: center; justify-content: space-around">
+                                    <div style="margin: 0; background-color: ${detail.mau.maMauSac}; width: 20px; height: 20px; display: inline-block; border-radius: 50%;"></div>
+                                    <div>&#8211;</div>
+                                    <div style="margin-left: 8px;">${detail.size.tenSize}</div>
+                                </div>
+                            </label>
+                        </div>`;
+                        });
+
+                        $('.carousel-inner').html(images);
+                        $('#colorSizeOptions').html(colorSizeOptions);
+
+                        // Cập nhật giá và số lượng ban đầu
+                        $('#productPrice').text(productDetails[0].donGia + ' VNĐ');
+                        $('#productQuantity').text('Số lượng hiện có: ' + productDetails[0].soLuong);
+
+                        // Mặc định chọn tùy chọn đầu tiên
+                        const firstOption = $('.color-size-option').first();
+                        firstOption.addClass('selected');
+
+                        // Cập nhật thông tin sản phẩm đã chọn
+                        updateSelectedDetail(productDetails, firstOption);
+
+                        // Gán sự kiện chọn màu và kích thước
+                        $('.color-size-option').on('click', function () {
+                            $('.color-size-option').removeClass('selected');
+                            $(this).addClass('selected');
+                            updateSelectedDetail(productDetails, $(this));
+                        });
                     }
                 },
-                error: function (err) {
-                    reject('Lỗi khi lấy thông tin sản phẩm: ' + err.statusText);
-                }
-            });
-        });
-    }
-
-    // Hàm cập nhật modal sản phẩm
-    function updateProductModal(productDetails) {
-        const product = productDetails[0].sanPham;
-        let images = '';
-        let colorSizeOptions = '';
-
-        // Cập nhật tên sản phẩm
-        $('#productName').text(product.tenSanPham);
-
-        // Tạo carousel hình ảnh và tùy chọn màu/kích thước
-        productDetails.forEach((detail, index) => {
-            images += `
-            <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                <img src="/uploadImage/${detail.anhSanPham}" class="d-block w-100" alt="${product.tenSanPham}">
-            </div>`;
-            colorSizeOptions += `
-            <div class="form-check form-check-inline color-size-option"
-                 data-color="${detail.mau.id}"
-                 data-size="${detail.size.id}"
-                 data-detail-id="${detail.id}"
-                 style="margin-right: 12px;">
-                <label class="form-check-label" style="width: 68px">
-                    <div style="display: flex; align-items: center; justify-content: space-around">
-                        <div style="background-color: ${detail.mau.maMauSac}; width: 20px; height: 20px; border-radius: 50%;"></div>
-                        <div>&#8211;</div>
-                        <div style="margin-left: 8px;">${detail.size.tenSize}</div>
-                    </div>
-                </label>
-            </div>`;
-        });
-
-        $('.carousel-inner').html(images);
-        $('#colorSizeOptions').html(colorSizeOptions);
-
-        // Hiển thị giá và số lượng mặc định
-        $('#productPrice').text(productDetails[0].donGia + ' VNĐ');
-        $('#productQuantity').text('Số lượng hiện có: ' + productDetails[0].soLuong);
-
-        // Chọn tùy chọn đầu tiên làm mặc định
-        selectColorSizeOption(productDetails, $('.color-size-option').first());
-    }
-
-    // Hàm xử lý chọn màu và kích thước
-    function selectColorSizeOption(productDetails, selectedOption) {
-        $('.color-size-option').removeClass('selected');
-        selectedOption.addClass('selected');
-
-        const selectedColor = selectedOption.data('color');
-        const selectedSize = selectedOption.data('size');
-
-        const selectedDetail = productDetails.find(detail => detail.mau.id === selectedColor && detail.size.id === selectedSize);
-
-        if (selectedDetail) {
-            $('#productPrice').text(selectedDetail.donGia + ' VNĐ');
-            $('#productQuantity').text('Số lượng hiện có: ' + selectedDetail.soLuong);
-        }
-    }
-
-    // Hàm thêm vào giỏ hàng
-    function addToCart(selectedDetailId, quantity) {
-        if (quantity > 0) {
-            $.ajax({
-                url: '/quan-ly/them-gio-hang2',
-                method: 'POST',
-                contentType: 'application/x-www-form-urlencoded',
-                data: {
-                    chiTietSanPhamId: selectedDetailId,
-                    soLuong: quantity
-                },
-                success: function () {
-                    showAlert('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
-                    // Cập nhật lại modal sau khi thêm vào giỏ hàng
-                    fetchProductDetails(productId)
-                        .then((productDetails) => updateProductModal(productDetails))
-                        .catch((error) => showAlert('error', error));
-                },
                 error: function () {
-                    showAlert('error', 'Chưa chọn hóa đơn hoặc số lượng không hợp lệ.');
+                    showAlert('error', 'Không thể lấy thông tin sản phẩm. Vui lòng thử lại.');
                 }
             });
-        } else {
-            showAlert('error', 'Vui lòng nhập số lượng hợp lệ.');
-        }
-    }
+        };
 
-    // Gắn sự kiện cho các nút trong modal
-    function attachEventListeners(productDetails) {
-        // Sự kiện chọn màu/kích thước
-        $('.color-size-option').off('click').on('click', function () {
-            selectColorSizeOption(productDetails, $(this));
+        const updateSelectedDetail = (productDetails, selectedOption) => {
+            const selectedColor = selectedOption.data('color');
+            const selectedSize = selectedOption.data('size');
+            const selectedDetail = productDetails.find(detail => detail.mau.id === selectedColor && detail.size.id === selectedSize);
+
+            if (selectedDetail) {
+                $('#productPrice').text(selectedDetail.donGia + ' VNĐ');
+                $('#productQuantity').text('Số lượng hiện có: ' + selectedDetail.soLuong);
+            }
+        };
+
+        $('#productModal').on('show.bs.modal', function (e) {
+            const button = $(e.relatedTarget);
+            const productId = button.data('id');
+
+            // Tải lại dữ liệu chi tiết sản phẩm
+            reloadModalData(productId);
+
+            // Xử lý nút thêm vào giỏ hàng
+            $('.add-to-cart-button').off('click').on('click', function () {
+                const quantity = $('#exampleInputEmail1').val();
+                const selectedOption = $('.color-size-option.selected');
+                const selectedDetailId = selectedOption.data('detail-id');
+
+                if (quantity > 0) {
+                    // Gửi dữ liệu đến server
+                    $.ajax({
+                        url: '/quan-ly/them-gio-hang2',
+                        method: 'POST',
+                        contentType: 'application/x-www-form-urlencoded',
+                        data: {
+                            chiTietSanPhamId: selectedDetailId,
+                            soLuong: quantity
+                        },
+                        success: function () {
+                            showAlert('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
+                            reloadModalData(productId); // Cập nhật dữ liệu modal
+                        },
+                        error: function () {
+                            showAlert('error', 'Chưa chọn hóa đơn hoặc số lượng không hợp lệ.');
+                            reloadModalData(productId); // Cập nhật dữ liệu modal
+                        }
+                    });
+                } else {
+                    showAlert('error', 'Vui lòng nhập số lượng hợp lệ.');
+                }
+            });
         });
 
-        // Sự kiện thêm vào giỏ hàng
-        $('.add-to-cart-button').off('click').on('click', function () {
-            const quantity = $('#exampleInputEmail1').val();
-            const selectedDetailId = $('.color-size-option.selected').data('detail-id');
-            addToCart(selectedDetailId, quantity);
+        $('#productModal').on('hidden.bs.modal', function () {
+            // Reload lại trang khi đóng modal
+            location.reload();
         });
-    }
-
-
-
-
-
-
+    });
 
     function toggleSubmenu(id) {
         const submenu = document.getElementById(id);
