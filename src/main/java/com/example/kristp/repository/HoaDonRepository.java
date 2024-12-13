@@ -84,7 +84,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
     @Query("select hd from HoaDon hd order by hd.id desc ")
     Page<HoaDon> findTop5(Pageable pageable );
 
-    @Query("select SUM(hd.tongTien) from HoaDon hd where cast(hd.ngayTao as DATE ) = current date AND  hd.trangThaiThanhToan = :trangthai and hd.trangThai = :trangthai1")
+    @Query("select SUM(hd.tongTien) from HoaDon hd where cast(hd.ngaySua as DATE ) = current date AND  hd.trangThaiThanhToan = :trangthai AND hd.ngaySua IS NOT NULL and hd.trangThai = :trangthai1")
     Double getDoanhThuHomNay(@Param("trangthai")HoaDonStatus status , @Param("trangthai1")HoaDonStatus status1);
 // sửa lại
     @Query("SELECT SUM (hdct.soLuong) " +
