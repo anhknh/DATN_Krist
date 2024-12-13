@@ -373,7 +373,7 @@
 
                     </tbody>
                 </table>
-                <nav aria-label="Page navigation example">
+                <nav th:if="${totalPage > 0}" aria-label="Page navigation example">
                     <ul class="pagination justify-content-end">
                         <!-- Nút Previous -->
                         <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">

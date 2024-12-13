@@ -106,4 +106,16 @@ public class AuthenController {
         }
         return "redirect:/dang-ki";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
+        System.out.println("check");
+        session.invalidate();
+        Authen.nhanVien = null;
+        Authen.khachHang = null;
+        redirectAttributes.addFlashAttribute("message", "Đăng xuất thành công!");
+        redirectAttributes.addFlashAttribute("messageType", "alert-success");
+        redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        return "redirect:/dang-nhap";
+    }
 }

@@ -256,75 +256,7 @@
                 <!-- bắt đầu col-9 -->
                 <div class="col-9">
                     <div class="content">
-                        <div class="mb-4">
-                            <h4>
-                                Danh sách yêu thích
-                            </h4>
-                        </div>
-                        <div>
-                            <!-- Wishlist_card_product -->
-                            <div th:each="item : ${listYeuThich}"
-                                    style="width: 670px; padding: 24px 0px; border-bottom: 1px solid #E6E7E8;">
-                                <div style="margin-top: 24px;" class="d-flex  align-items-center">
-                                    <div class="text-center me-3" style="width: 80px ; height: 80px; background-color: #F6F6F6;">
-                                        <img style="width: 75%;"
-                                             th:src="'/uploadImage/' + ${item.sanPham.chiTietSanPham.get(0).anhSanPham}"
-                                             alt="">
-                                    </div>
-
-                                    <div>
-                                        <p style="font-size: 16px; font-weight: 500; margin-bottom: 8px;" th:text="${item.sanPham.tenSanPham}">
-                                        </p>
-                                        <!-- product_cart_color -->
-                                        <div style="width: 205px ; height:  24px;">
-                                            <div style="font-size: 12px; font-weight: 500; color: #5C5F6A;" th:text="'Ngày yêu thích: ' + ${#dates.format(item.ngayTao, 'dd-MM-yyyy')}">
-                                            </div>
-                                        </div>
-                                        <div style="width: 154px ; height:  24px;">
-                                            <a th:href="@{/user/xoa-san-pham-yeu-thich(idSanPham=${item.sanPham.id})}"
-                                               style="color: #000; text-decoration: none; font-size: 12px; font-weight: 500;">
-                                                Gỡ yêu thích
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div th:if="${totalPage > 0}" class="d-flex justify-content-end">
-                            <div>
-                                <!-- Pagination for SanPham -->
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination justify-content-end">
-                                        <!-- Link to the first page -->
-                                        <li class="page-item">
-                                            <a class="page-link" th:style="'color: #5C5F6A'"
-                                               th:href="@{/user/view-yeu-thich(page=0)}" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                        <!-- Loop through each page number in the pagination -->
-                                        <li th:each="p : ${pagination}"
-                                            th:classappend="${page.number == p} ? 'active' : ''">
-                                            <a class="page-link"
-                                               th:style="${page.number == p} ? 'color: #ffffff; background-color: #5C5F6A' : 'color: #5C5F6A'"
-                                               th:href="@{/user/view-yeu-thich(page=${p})}">
-                                                <span th:text="${p + 1}">1</span>
-                                            </a>
-                                        </li>
-
-                                        <!-- Link to the last page -->
-                                        <li class="page-item">
-                                            <a class="page-link" th:style="'color: #5C5F6A'"
-                                               th:href="@{/user/view-yeu-thich(page=${totalPage})}"
-                                               aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-
-                            </div>
-                        </div>
+                        <a class="btn btn-dark" style="color: #fff; text-decoration: none" href="/logout">Đăng xuất</a>
                     </div>
                 </div>
                 <!-- kết thúc col-9 -->

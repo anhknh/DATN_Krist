@@ -152,7 +152,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="cart-popup-footer">
                                 <div class="d-flex justify-content-between"
                                      style="border-top: 2px solid #F6F6F6; padding: 12px;">
@@ -190,7 +189,7 @@
                         <div class="d-flex align-items-center" style="padding: 10px 18px;">
                             <!-- Hình ảnh người dùng -->
                             <div class="text-center"
-                                 style="width: 100px; height: 80px; background-color: #F6F6F6; border-radius: 50%; overflow: hidden;">
+                                 style="width: 80px; height: 80px; background-color: #F6F6F6; border-radius: 50%; overflow: hidden;">
                                 <img style="width: 100%;" src="/uploadImage/khachHang.png" alt="">
                             </div>
                             <!-- Tên và tiểu sử người dùng -->
@@ -245,7 +244,7 @@
                             </div>
                             <div class="d-flex justify-content-between align-items-center btn btn-block "
                                  style="background-color: #ffffff; width: 100%;" onclick="highlightLink(this)">
-                                <a href="" class="d-flex align-items-center item-hover"
+                                <a href="/user/setting" class="d-flex align-items-center item-hover"
                                    style="color: #070707; padding: 10px; text-decoration: none; width: 100%;">
                                     <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
                                 </a>
@@ -295,7 +294,9 @@
                                     </div>
                                 </div>
                                 <div class="order-price">
-                                    <span th:text="${convertMoney.calculatorTotal(order.tongTien, order.khuyenMai, order.phiVanChuyen)}"></span>
+                                    <span th:if="${order.khuyenMai != null}" th:text="${convertMoney.calculatorTotal(order.tongTien, order.khuyenMai, order.phiVanChuyen)}"></span>
+                                    <span th:unless="${order.khuyenMai != null}" th:text="${convertMoney.formatCurrency(order.tongTien + order.phiVanChuyen)}"></span>
+
                                 </div>
                                 <div class="order-actions">
                                     <button class="view-order" th:attr="onclick=|donHangChiTiet('${order.getId()}')|">
@@ -318,7 +319,7 @@
                             <!--            list danh sách kết thúc-->
                         </div>
                         <!-- Bắt đầu phân trang , cần thêm dữ liệu phân trang -->
-                        <div class="pagination justify-content-end" >
+                        <div th:if="${totalPage > 0}" class="pagination justify-content-end" >
                             <!-- page_number -->
                             <nav aria-label="Page navigation e1xample">
                                 <ul class="pagination justify-content-end">

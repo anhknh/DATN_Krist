@@ -63,14 +63,14 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
 //    List<String> thongKeTungThang(@Param("year") int year);
 
     @Query(nativeQuery = true, value = "SELECT \n" +
-            "    ISNULL(SUM(hd.tong_tien + hd.phi_van_chuyen), 0) AS TongDoanhThu \n" +
+            "    ISNULL(SUM(hd.tong_tien), 0) AS TongDoanhThu \n" +
             "FROM \n" +
             "    master.dbo.spt_values spt_values \n" +
             "LEFT JOIN \n" +
             "    hoa_don hd ON FORMAT(hd.ngay_tao, 'MM-yyyy') = FORMAT(DATEFROMPARTS(:year, spt_values.number, 1), 'MM-yyyy') \n" +
             "    AND YEAR(hd.ngay_tao) = :year \n" +
             "    AND hd.trang_thai_thanh_toan = 'DA_THANH_TOAN' \n" +
-            "    AND hd.trang_thai = 'DA_THANH_TOAN' \n" +
+            "    AND hd.trang_thai = 'HOAN_TAT' \n" +
             "WHERE \n" +
             "    spt_values.type = 'P' \n" +
             "    AND spt_values.number BETWEEN 1 AND 12 \n" +
@@ -81,25 +81,23 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
             "    FORMAT(DATEFROMPARTS(:year, spt_values.number, 1), 'MM-yyyy');\n")
     List<String> thongKeTungThang(@Param("year") int year);
 
-
-
     @Query("select hd from HoaDon hd order by hd.id desc ")
     Page<HoaDon> findTop5(Pageable pageable );
 
-
-    @Query("select SUM(hd.tongTien) from HoaDon hd where cast(hd.ngaySua as DATE ) = current date AND  hd.trangThaiThanhToan = :trangthai")
-    Double getDoanhThuHomNay(@Param("trangthai")HoaDonStatus status);
-
-    @Query("SELECT COUNT(ctsp.id) " +
+    @Query("select SUM(hd.tongTien) from HoaDon hd where cast(hd.ngaySua as DATE ) = current date AND  hd.trangThaiThanhToan = :trangthai AND hd.ngaySua IS NOT NULL and hd.trangThai = :trangthai1")
+    Double getDoanhThuHomNay(@Param("trangthai")HoaDonStatus status , @Param("trangthai1")HoaDonStatus status1);
+// sửa lại
+    @Query("SELECT SUM (hdct.soLuong) " +
             "FROM HoaDon hd " +
             "JOIN HoaDonChiTiet hdct ON hd.id = hdct.hoaDon.id " +
             "JOIN ChiTietSanPham ctsp ON hdct.chiTietSanPham.id = ctsp.id " +
             "WHERE hd.trangThaiThanhToan = :trangthai " +
-            "AND FUNCTION('MONTH', hd.ngaySua) = FUNCTION('MONTH', CURRENT_DATE)")
-    Integer getSanPhamBanTrongThang(@Param("trangthai")HoaDonStatus status);
+            "AND hd.trangThai = :trangthai1 "+
+            "AND FUNCTION('MONTH', hd.ngayTao) = FUNCTION('MONTH', CURRENT_DATE)")
+    Integer getSanPhamBanTrongThang(@Param("trangthai")HoaDonStatus status, @Param("trangthai1")HoaDonStatus status1);
 
-    @Query("select SUM(hd.tongTien) from HoaDon hd where FUNCTION('YEAR', hd.ngaySua) = FUNCTION('YEAR', CURRENT_DATE) AND  hd.trangThaiThanhToan = :trangthai")
-    Double getDoanhThuTrongNam(@Param("trangthai")HoaDonStatus status);
+    @Query("select SUM(hd.tongTien) from HoaDon hd where FUNCTION('YEAR', hd.ngayTao) = FUNCTION('YEAR', CURRENT_DATE) AND  hd.trangThaiThanhToan = :trangthai AND  hd.trangThai = :trangthai1")
+    Double getDoanhThuTrongNam(@Param("trangthai")HoaDonStatus status , @Param("trangthai1")HoaDonStatus status1);
 
     @Query(value = "SELECT \n" +
             "    COALESCE(COUNT(hd.trang_thai), 0) AS count\n" +

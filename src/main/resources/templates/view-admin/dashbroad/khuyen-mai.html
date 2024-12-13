@@ -117,12 +117,9 @@
           </a>
           <!--                    Chức năng chưa có đường dẫn là #-->
 
-          <a href="#" class="mb-3" onclick="highlightLink(this)"
-             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
-            <i class="fa-light fa-star" style="margin-right: 10px;"></i> Đánh giá
-          </a>
+
           <!--                    Chức năng chưa có đường dẫn là #-->
-          <a href="#" class="mb-3" onclick="highlightLink(this)"
+          <a href="/quan-ly/setting" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
           </a>
@@ -151,13 +148,12 @@
           <div>
             <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb">
               <ol class="breadcrumb" style="height: 40px; margin: 0px;">
-                <li class="breadcrumb-item "><a href="#" class="nav_link">Admin</a></li>
                 <li class="breadcrumb-item "><a href="/quan-ly/pagination-khuyen-mai" class="nav_link_active">Khuyến Mại</a></li>
               </ol>
             </nav>
           </div>
           <div>
-            <a href="../login.html" style="text-decoration: none; color: #000; font-size: 20px;"><i
+            <a href="/logout" style="text-decoration: none; color: #000; font-size: 20px;"><i
                     class="fa-thin fa-arrow-right-from-bracket"></i></a>
           </div>
         </div>
@@ -287,8 +283,6 @@
                 </td>
                 <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">
                   <div class="d-flex justify-content-center">
-
-
                     <!-- Nút Update -->
                     <div class="d-inline-block me-3 "  title="Cập nhật">
                       <a th:href="@{/quan-ly/pagination-update-khuyen-mai/{id}(id=${khuyenMai.id})}"><i class="fa-solid fa-pen-to-square" style="color: black;"></i></a>
@@ -297,8 +291,6 @@
                     <div class="d-inline-block me-3 "  title="Xóa">
                       <a  th:href="@{/quan-ly/delete-khuyen-mai/{id}(id=${khuyenMai.id})}"><i class="fa-sharp-duotone fa-regular fa-swap-arrows" style="color: black;"></i></a>
                     </div>
-
-
                     <!--                    &lt;!&ndash; Nút Detail &ndash;&gt;-->
 <!--                    <div class="d-inline-block me-3 "  title="Xem chi tiết">-->
 <!--                      <a th:href="@{/quan-ly/pagination-detail-khuyen-mai/{id}(id=${khuyenMai.id})}"><i class="fa-solid fa-eye" style="color: black;"></i></a>-->

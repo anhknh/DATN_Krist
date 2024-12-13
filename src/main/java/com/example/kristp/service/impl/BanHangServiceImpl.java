@@ -48,6 +48,11 @@ public class BanHangServiceImpl implements BanHangService {
         } else {
             chiTietSanPham = chiTietSanPhamService.getCTSPById(idChiTietSanPham);
         }
+
+        if(chiTietSanPham.getSoLuong() < soLuong) {
+            return null;
+        }
+
         HoaDonChiTiet chiTiet  = hoaDonChiTietRepo.findByHoaDonAndChiTietSanPham(hoaDon, chiTietSanPham);
         if (chiTiet == null) {
             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();

@@ -35,12 +35,6 @@ public class NhanVienController {
 
     @PostMapping("/add-nhan-vien")
     private String addNhanVien(@Valid @ModelAttribute("nhanvien") NhanVien nhanVien, BindingResult result, RedirectAttributes attributes){
-        System.out.println("Thông tin nhân viên: ");
-        System.out.println("Mã nhân viên: " + nhanVien.getMaNhanVien());
-        System.out.println("Tên nhân viên: " + nhanVien.getTenNhanVien());
-        System.out.println("Số điện thoại: " + nhanVien.getSoDienThoai());
-        System.out.println("Ngày sinh: " + nhanVien.getNgaySinh());
-        System.out.println("Địa chỉ: " + nhanVien.getDiaChi());
         if (nhanVienService.addNhanVien(nhanVien) == null){
             attributes.addFlashAttribute("nhanvien", nhanVien);
             attributes.addFlashAttribute("message", "Mã nhân viên đã tồn tại");
