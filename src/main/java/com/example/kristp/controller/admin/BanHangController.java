@@ -196,18 +196,56 @@ public class BanHangController {
         System.out.println("qrcode: " + qrCode);
 
         if (hoaDonSelected == null) {
+            // Không có hóa đơn được chọn
             redirectAttributes.addFlashAttribute("message", "Vui lòng chọn hóa đơn thao tác!");
             redirectAttributes.addFlashAttribute("messageType", "alert-danger");
             redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
-
         } else {
-            banHangService.addGioHang(hoaDonSelected, chiTietSanPhamId, qrCode, soLuong);
+            // Gọi dịch vụ thêm vào giỏ hàng
+            HoaDonChiTiet hoaDonChiTiet = banHangService.addGioHang(hoaDonSelected, chiTietSanPhamId, qrCode, soLuong);
+
+            if (hoaDonChiTiet == null) {
+                // Thêm không thành công
+                redirectAttributes.addFlashAttribute("message", "Không thể thêm sản phẩm vào giỏ hàng. Vui lòng kiểm tra lại số lượng hoặc sản phẩm.");
+                redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+                redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+            } else {
+                // Thêm thành công
+                redirectAttributes.addFlashAttribute("message", "Sản phẩm đã được thêm vào giỏ hàng thành công!");
+                redirectAttributes.addFlashAttribute("messageType", "alert-success");
+                redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+            }
         }
-        //get url request
+
+        // Lấy URL của trang trước
         String referer = request.getHeader("referer");
-        //reload page
-        return "redirect:" +referer;
+        // Reload lại trang
+        return "redirect:" + referer;
     }
+
+    @PostMapping("/them-gio-hang2")
+    public ResponseEntity<?> themGioHang(
+            @RequestParam(value = "chiTietSanPhamId", required = false) Integer chiTietSanPhamId,
+            @RequestParam(value = "qrCode", required = false) String qrCode,
+            @RequestParam("soLuong") Integer soLuong) {
+
+        // Kiểm tra nếu hóa đơn chưa được chọn
+        if (hoaDonSelected == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // Gọi dịch vụ thêm vào giỏ hàng
+        HoaDonChiTiet hoaDonChiTiet = banHangService.addGioHang(hoaDonSelected, chiTietSanPhamId, qrCode, soLuong);
+
+        // Kiểm tra nếu không thêm được sản phẩm
+        if (hoaDonChiTiet == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // Trả về phản hồi thành công
+        return ResponseEntity.ok(hoaDonChiTiet);
+    }
+
 
     @PostMapping("/them-khach-hang")
     public String themKhachHang(HttpServletRequest request, Model model,
