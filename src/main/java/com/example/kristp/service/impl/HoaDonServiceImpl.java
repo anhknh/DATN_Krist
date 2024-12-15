@@ -180,6 +180,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                     break;
                 case DANG_GIAO_HANG:
                     hoaDon.setTrangThai(HoaDonStatus.HOAN_TAT);
+                    hoaDon.setTrangThaiThanhToan(HoaDonStatus.DA_THANH_TOAN);
                     break;
                 case HOAN_TAT:
                     // Trạng thái đã hoàn tất, không cần thay đổi.

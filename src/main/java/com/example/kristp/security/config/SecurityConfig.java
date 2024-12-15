@@ -25,8 +25,9 @@ class SecurityConfig{
         http
                 .addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET,"/", "/user/trang-chu", "/dang-nhap", "/dang-ki", "/resources/**",
-                                "/css/**", "/js/**", "/uploadImage/**", "/error", "/favicon.ico", "/uploadImage/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/", "/user/trang-chu", "/dang-nhap", "/dang-ki", "/resources/**", "/logout",
+                                "/css/**", "/js/**", "/uploadImage/**", "/error", "/favicon.ico", "/uploadImage/**", "/quan-ly/huy-don-hang").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/quan-ly/huy-don-hang").permitAll()
                         .requestMatchers(HttpMethod.POST, "/dang-nhap-khach-hang", "/dang-ki-tai-khoan").permitAll()
                         .requestMatchers(HttpMethod.GET, "/user/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/user/**").hasRole("USER")

@@ -115,12 +115,9 @@
           </a>
           <!--                    Chức năng chưa có đường dẫn là #-->
 
-          <a href="#" class="mb-3" onclick="highlightLink(this)"
-             style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
-            <i class="fa-light fa-star" style="margin-right: 10px;"></i> Đánh giá
-          </a>
+
           <!--                    Chức năng chưa có đường dẫn là #-->
-          <a href="#" class="mb-3" onclick="highlightLink(this)"
+          <a href="/quan-ly/setting" class="mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
           </a>
@@ -137,7 +134,7 @@
             </nav>
           </div>
           <div>
-            <a href="../login.html" style="text-decoration: none; color: #000; font-size: 20px;"><i class="fa-thin fa-arrow-right-from-bracket"></i></a>
+            <a href="/logout" style="text-decoration: none; color: #000; font-size: 20px;"><i class="fa-thin fa-arrow-right-from-bracket"></i></a>
           </div>
         </div>
         <div style="background-color: #fff; border-radius: 6px; padding: 24px 40px; border: 1px solid #f6f7f8;">
@@ -150,7 +147,7 @@
 
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <form action="/quan-ly//tim-ma-nhan-vien" method="GET">
+                  <form action="/quan-ly/tim-ma-nhan-vien" method="GET">
                     <div class="input-group flex-nowrap" style="width: 400px;">
                                         <span class="input-group-text" id="addon-wrapping" style="background-color: #fff;">
                                             <i class="fa-solid fa-magnifying-glass" style="color: #5C5F6A;"></i>
@@ -210,14 +207,14 @@
                         <i class="fa-solid fa-pen-to-square" ></i>
                       </div>
                       <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top"  title="Thay đổi trạng thái">
-                        <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly//delete-nhan-vien/{id}(id=${nhanvien.id})}" ><i class="fa-solid fa-swap-arrows"></i></a>
+                        <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly/delete-nhan-vien/{id}(id=${nhanvien.id})}" ><i class="fa-solid fa-swap-arrows"></i></a>
                       </div>
                     </div>
                   </div>
                 </td>
                 <!--                <td style="padding: 12px 0px 12px 24px; line-height: 305%; cursor: pointer;">-->
                 <!--                  <div class="d-flex justify-content-center">-->
-                <!--                    <a th:href="@{/quan-ly//delete-nhan-vien/{id}(id=${nhanvien.id})}" class="btn btn-outline-secondary me-2">Delete</a>-->
+                <!--                    <a th:href="@{/quan-ly/delete-nhan-vien/{id}(id=${nhanvien.id})}" class="btn btn-outline-secondary me-2">Delete</a>-->
                 <!--                    <div class="btn btn-outline-secondary" style="display: inline-block;" data-bs-toggle="modal"-->
                 <!--                         data-bs-target="#modalCategories" th:attr="onclick=|saveIdOrder('${nhanvien.id}','${stat.index}' , '${nhanvien.trangThai}' )|" >Update-->
                 <!--                    </div>-->
@@ -235,7 +232,7 @@
                 <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}"
                     style="border-color: #A0A0A0;">
                   <a class="page-link"
-                     th:href="@{/quan-ly//pagination-nhan-vien(pageNo=0)}"
+                     th:href="@{/quan-ly/pagination-nhan-vien(pageNo=0)}"
                      aria-label="Previous"
                      style="color: #5C5F6A; background-color: transparent; border-color: #5C5F6A;">
                     <span aria-hidden="true">&laquo;</span>
@@ -248,7 +245,7 @@
                     class="page-item"
                     style="border-color: #5C5F6A;">
                   <a class="page-link"
-                     th:href="@{/quan-ly//pagination-nhan-vien(pageNo=${i - 1})}"
+                     th:href="@{/quan-ly/pagination-nhan-vien(pageNo=${i - 1})}"
                      th:text="${i}"
                      th:styleappend="${currentPage == i - 1 ? 'color: #FFFFFF; background-color: #5C5F6A;' : 'color: #5C5F6A; background-color: transparent; border-color: #5C5F6A;'}">
                   </a>
@@ -259,7 +256,7 @@
                     th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}"
                     style="border-color: #A0A0A0;">
                   <a class="page-link"
-                     th:href="@{/quan-ly//pagination-nhan-vien(pageNo=${totalPage - 1})}"
+                     th:href="@{/quan-ly/pagination-nhan-vien(pageNo=${totalPage - 1})}"
                      aria-label="Next"
                      style="color: #5C5F6A; background-color: transparent; border-color: #5C5F6A;">
                     <span aria-hidden="true">&raquo;</span>
@@ -313,14 +310,6 @@
               <input type="text" class="form-control" name="diaChi" id="diachiCate" placeholder="Địa chỉ nhân viên" th:field="*{diaChi}" required >
               <div class="invalid-feedback">Địa chỉ nhân viên không hợp lệ</div>
             </div>
-
-            <!--            <div class="mb-4 display_none" id="statusSection">-->
-            <!--              <label class="form-label">Trạng thái</label><br>-->
-            <!--              <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">-->
-            <!--              <label for="active">Đang hoạt động</label><br>-->
-            <!--              <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">-->
-            <!--              <label for="inactive">Ngừng hoạt động</label>-->
-            <!--            </div>-->
             <div>
               <button type="submit" class="btn btn-dark">Lưu</button>
             </div>
@@ -394,7 +383,7 @@
       // }
 
       // Thay đổi hành động của form
-      document.getElementById("form_submit").action = '/quan-ly//update-nhan-vien';
+      document.getElementById("form_submit").action = '/quan-ly/update-nhan-vien';
     } else {
       // Nếu không có index (thêm mới)
       // statusSection.classList.add('display_none');
@@ -404,7 +393,7 @@
       sdtCate.value = "";
       ngaysinhCate.value = "";  // Xóa trường ngày sinh
       diachiCate.value = "";
-      document.getElementById("form_submit").action = '/quan-ly//add-nhan-vien';
+      document.getElementById("form_submit").action = '/quan-ly/add-nhan-vien';
     }
   }
 

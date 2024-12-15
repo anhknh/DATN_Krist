@@ -115,12 +115,9 @@
                     </a>
                     <!--                    Chức năng chưa có đường dẫn là #-->
 
-                    <a href="#" class="mb-3" onclick="highlightLink(this)"
-                       style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
-                        <i class="fa-light fa-star" style="margin-right: 10px;"></i> Đánh giá
-                    </a>
+
                     <!--                    Chức năng chưa có đường dẫn là #-->
-                    <a href="#" class="mb-3" onclick="highlightLink(this)"
+                    <a href="/quan-ly/setting" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-gear" style="margin-right: 10px;"></i> Cài đặt
                     </a>
@@ -137,7 +134,7 @@
                         </nav>
                     </div>
                     <div>
-                        <a href="../login.html" style="text-decoration: none; color: #000; font-size: 20px;"><i class="fa-thin fa-arrow-right-from-bracket"></i></a>
+                        <a href="/logout" style="text-decoration: none; color: #000; font-size: 20px;"><i class="fa-thin fa-arrow-right-from-bracket"></i></a>
                     </div>
                 </div>
                 <div style="background-color: #fff; border-radius: 6px; padding: 24px 40px; border: 1px solid #f6f7f8;">
@@ -290,8 +287,8 @@
 
 <div class="modal fade" id="modalCategories" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content" style="margin-top: 100px;">
-            <div class="modal-header">`
+        <div class="modal-content" style="margin-top: 100px;width: 700px">
+            <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -303,7 +300,7 @@
                         <div class="mb-4">
                             <label for="idDanhMuc" class="form-label">Tên Danh Mục</label>
                             <select class="form-select" id="idDanhMuc" name="idDanhMuc" required>
-                                <option value="" disabled selected>Chọn danh mục</option>
+                                <option value="" disabled selected >Chọn danh mục</option>
                                 <option th:each="danhMuc : ${danhMucList}"
                                         th:value="${danhMuc.id}"
                                         th:text="${danhMuc.tenDanhMuc}"></option>
@@ -334,15 +331,15 @@
                             <textarea class="form-control" name="describe" id="desCate" placeholder="Nhập mô tả" th:field="*{moTa}" required style="font-size: 1.2rem; width: 100%; height: 100px;"></textarea>
                             <div class="invalid-feedback">Mô tả không hợp lệ.</div>
                         </div>
-                                                <div class="mb-4  display_none" id="statusSection" style="display: none;">
-                                                    <label class="form-label">Trạng thái</label><br>
-                                                    <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">
-                                                    <label for="active">Active</label><br>
-                                                    <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">
-                                                    <label for="inactive">Inactive</label>
-                                                    <div class="invalid-feedback" >Trạng thái không hợp lệ</div>
+                            <div class="mb-4  display_none" id="statusSection" style="display: none;">
+                                <label class="form-label">Trạng thái</label><br>
+                                <input type="radio" th:field="*{trangThai}" id="active" th:value="${T(com.example.kristp.enums.Status).ACTIVE}">
+                                <label for="active">Active</label><br>
+                                <input type="radio" th:field="*{trangThai}" id="inactive" th:value="${T(com.example.kristp.enums.Status).INACTIVE}">
+                                <label for="inactive">Inactive</label>
+                                <div class="invalid-feedback" >Trạng thái không hợp lệ</div>
 
-                                                </div>
+                            </div>
 
                         <div>
                             <button type="submit" class="btn btn-dark">Lưu</button>
@@ -389,10 +386,6 @@
             // Cập nhật giá trị danh mục và chất liệu vào select
             document.getElementById("idDanhMuc").value = idDanhMuc;
             document.getElementById("idChatLieu").value = idChatLieu;
-
-            // Hiển thị phần chọn trạng thái
-            document.getElementById("statusSection").classList.remove('display_none');
-            document.getElementById("statusSection").style.display = "block";
 
             // Cập nhật trạng thái dựa trên `status`
             if (status == 'ACTIVE') {
