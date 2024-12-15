@@ -128,18 +128,72 @@
             <div style="flex: 1;">
                 <div class="header_right d-flex align-items-center justify-content-end" style="height: 100%;">
                     <div>
-                        <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
+                        <a class="cl-black" href="/user/danh-sach-san-pham"><i
                                 class="fa-regular s-18 fa-magnifying-glass"></i></a>
                     </div>
                     <div style="margin: 0px 46px;">
                         <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
                                 class="fa-sharp s-18 fa-regular fa-heart"></i></a>
                     </div>
-                    <div class="me-4">
-                        <a class="cl-black" href="./profileOrder.html"><i class="fa-regular s-18 fa-cart-minus"></i></a>
+                    <div class="me-4 position-relative cart-container">
+                        <a class="cl-black" href="/user/gio-hang-chi-tiet">
+                            <i class="fa-regular s-18 fa-cart-minus"></i>
+                            <!-- Hiển thị tổng số lượng -->
+                            <span th:if="${totalCartItem > 0}"
+                                  th:text="${totalCartItem}" style="background-color: red"
+                                  class="badge badge-danger position-absolute top-0 start-100 translate-middle">
+                            </span>
+                        </a>
+                        <!-- Popup cart -->
+                        <div class="cart-popup position-absolute bg-white shadow p-3 display_none"
+                             style=" width: 370px; right: -16px; top: 20px; z-index: 10;">
+                            <div class="cart-popup-header">
+                                <p class="modal-title" th:text="'Bạn có ' + ${totalCartItem} + ' sản phẩm trong giỏ hàng'">Bạn có </p>
+                            </div>
+                            <div class="cart-popup-body">
+                                <div class="cart_product_row" th:each="item : ${gioHangChiTietList}">
+                                    <div class="img_product_cart">
+                                        <div th:style="|background: url('/uploadImage/${item.chiTietSanPham.anhSanPham}') no-repeat center / cover; width: 100%; height: 100%;|">
+                                        </div>
+                                    </div>
+                                    <div class="product_cart">
+                                        <!-- Tên sản phẩm -->
+                                        <p th:text="${item.getChiTietSanPham().sanPham.tenSanPham}"></p>
+
+                                        <!-- Màu sắc và kích thước -->
+                                        <div class="product-info">
+                                            <div>
+                                                <span>Color:</span>
+                                                <div class="color-indicator" th:style="'background-color:' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
+                                            </div>
+                                            <span>Size: <span th:text="${item.getChiTietSanPham().size.tenSize}"></span></span>
+                                        </div>
+
+                                        <!-- Giá tiền và số lượng -->
+                                        <div class="price-quantity">
+                                            <p th:text="'Giá: ' + ${convertMoney.formatCurrency(item.getChiTietSanPham().donGia)}"></p>
+                                            <p th:text="'Số lượng: ' + ${item.soLuong}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cart-popup-footer">
+                                <div class="d-flex justify-content-between"
+                                     style="border-top: 2px solid #F6F6F6; padding: 12px;">
+                                    <div style="font-size: 14px; font-weight: 500;">Tổng tiền</div>
+                                    <div style="font-size: 14px; font-weight: 500;" th:text="${convertMoney.formatCurrency(tongTien)}">
+                                    </div>
+                                </div>
+                                <a href="/user/gio-hang-chi-tiet" class="btn btn-dark w-100">Thanh toán</a>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <button type="button" class="btn btn-dark">Đăng nhập</button>
+                    <div style="margin-left: 14px" th:if="khachHang != null">
+                        <a class="cl-black" href="/user/don-hang"><i class="fa-regular s-18 fa-user"></i></a>
+                    </div>
+                    <div th:if="khachHang == null">
+                        <a href="/dang-nhap" class="btn btn-dark">Đăng nhập</a>
                     </div>
                 </div>
             </div>
@@ -229,7 +283,7 @@
                         <hr style="color: #5b5c64; border-width: 1px; margin-bottom: 18px;">
 
                         <!-- Nút mở modal danh sách khuyến mại -->
-                        <div style="max-height: 300px; overflow-y: hidden;">
+                        <div style="max-height: 300px; overflow-y: auto;">
                             <!-- Thẻ chứa khuyến mại -->
                             <div th:each="khuyenMai, iterStat : ${listKM}" style="width: 100%">
                                 <div class="d-flex"
@@ -241,7 +295,7 @@
                                     <div style="flex: 3; padding: 4px; font-size: 14px;">
                                         <div th:text="'Khuyến mại: ' + ${khuyenMai.tenKhuyenMai}">Khuyến mại</div>
                                         <div th:text="'Giá trị: ' + ${convertMoney.formatCurrency(khuyenMai.giaTri)} +' '
-                                         +  ${khuyenMai.kieuKhuyenMai? '%':'VND'} ">Giá trị - Số lượng
+                                         +  ${khuyenMai.kieuKhuyenMai? '%':'VND'} + ' - ' + 'Tối đa: ' + ${convertMoney.formatCurrency(khuyenMai.mucGiamToiDa)} + 'VNĐ'">Giá trị - Mức giảm tối đa
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div th:text="'Ngày hết hạn: ' + ${#dates.format(khuyenMai.ngayKetThuc, 'dd-MM-yyyy')}">

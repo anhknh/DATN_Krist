@@ -124,7 +124,7 @@
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
                     </a>
-                    <a href="/quan-ly/phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
+                    <a href="/quan-ly-admin/phan-trang-nhan-vien" class="mb-3" onclick="highlightLink(this)"
                        style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
                         <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
                     </a>
@@ -610,7 +610,7 @@
                         <div style="flex: 3; padding: 4px; font-size: 14px;">
                             <div th:text="'Khuyến mại: ' + ${khuyenMai.tenKhuyenMai}">Khuyến mại</div>
                             <div th:text="'Giá trị: ' + ${dataUtils.formatCurrency(khuyenMai.giaTri)} +' '
-                                         +  ${khuyenMai.kieuKhuyenMai? '%':'VND'} ">Giá trị - Số lượng
+                                         +  ${khuyenMai.kieuKhuyenMai? '%':'VND'} + ' - ' + 'Tối đa: ' + ${dataUtils.formatCurrency(khuyenMai.mucGiamToiDa)} + 'VNĐ'">Giá trị - Mức giảm tối đa
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div th:text="'Ngày hết hạn: ' + ${#dates.format(khuyenMai.ngayKetThuc, 'dd-MM-yyyy')}">Ngày hết hạn</div>

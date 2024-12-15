@@ -45,7 +45,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
     @Override
     public TaiKhoan dangNhap(String tenDangNhap, String matKhau) {
-        return taiKhoanRepository.findByTenDangNhapAndMatKhau(tenDangNhap, matKhau);
+        return taiKhoanRepository.findByTenDangNhapAndMatKhauAndTrangThai(tenDangNhap, matKhau, Status.ACTIVE);
     }
 
 
@@ -68,5 +68,15 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
         gioHang.setTrangThai(Status.ACTIVE);
         gioHangRepository.save(gioHang);
         return taiKhoanNew;
+    }
+
+    @Override
+    public TaiKhoan taoTaiKhoanAdmin(TaiKhoan taiKhoan) {
+        if(taiKhoanRepository.existsByTenDangNhapOrEmail(taiKhoan.getTenDangNhap(), taiKhoan.getEmail())){
+            return null;
+        }
+        taiKhoan.setChucVu("staff");
+        taiKhoan.setTrangThai(Status.ACTIVE);
+        return taiKhoanRepository.save(taiKhoan);
     }
 }

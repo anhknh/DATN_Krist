@@ -10,4 +10,5 @@ public interface TaiKhoanService {
     TaiKhoan getUserId(Integer id);
     TaiKhoan dangNhap(String tenDangNhap, String matKhau);
     TaiKhoan taoTaiKhoan(TaiKhoan taiKhoan, String tenKhachHang, String sdtKh);
+    TaiKhoan taoTaiKhoanAdmin(TaiKhoan taiKhoan);
 }

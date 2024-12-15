@@ -29,10 +29,17 @@ class SecurityConfig{
                                 "/css/**", "/js/**", "/uploadImage/**", "/error", "/favicon.ico", "/uploadImage/**", "/quan-ly/huy-don-hang").permitAll()
                         .requestMatchers(HttpMethod.POST, "/quan-ly/huy-don-hang").permitAll()
                         .requestMatchers(HttpMethod.POST, "/dang-nhap-khach-hang", "/dang-ki-tai-khoan").permitAll()
+                        // Vai trò USER có thể truy cập vào các đường dẫn /user/**
                         .requestMatchers(HttpMethod.GET, "/user/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/user/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/quan-ly/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/quan-ly/**").hasRole("ADMIN")
+
+                        // Vai trò ADMIN hoặc STAFF có thể truy cập vào các đường dẫn /quan-ly/**
+                        .requestMatchers(HttpMethod.GET, "/quan-ly/**").hasAnyRole("ADMIN", "STAFF")
+                        .requestMatchers(HttpMethod.POST, "/quan-ly/**").hasAnyRole("ADMIN", "STAFF")
+
+                        // Vai trò ADMIN có thể truy cập vào các đường dẫn /quan-ly-admin/**
+                        .requestMatchers(HttpMethod.GET, "/quan-ly-admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/quan-ly-admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
