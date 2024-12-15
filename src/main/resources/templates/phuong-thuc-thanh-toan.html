@@ -54,7 +54,9 @@
             <div style="flex: 1;">
                 <div class="d-flex align-items-center">
                     <img style="height: 36px; margin-right: 8px;" src="/uploadImage/logo.png" alt="logo">
-                    <p class="title d-inline p-0 m-0">Krist</p>
+                    <p class="title d-inline p-0 m-0">
+                        <a style="color: #000; text-decoration: none" href="/user/trang-chu">Krist</a>
+                    </p>
                 </div>
             </div>
             <div style="flex: 2;">
@@ -64,7 +66,7 @@
                             <div class="navbar-nav" style="width: 100%; justify-content: space-between;">
                                 <div>
                                     <li class="nav-item">
-                                        <a class="nav-link cl-black s-18" href="#">Trang chủ</a>
+                                        <a class="nav-link cl-black s-18" href="/user/trang-chu">Trang chủ</a>
                                     </li>
                                 </div>
                                 <div>
@@ -73,14 +75,16 @@
                                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Danh mục
                                         </a>
-                                        <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;"
-                                            aria-labelledby="navbarDropdown">
+                                        <ul class="dropdown-menu" style="width: 800px; left: -240px; top: 55px;" aria-labelledby="navbarDropdown">
                                             <div class="d-flex">
                                                 <div class="text-center" style="flex: 1; border-right: 1px solid #000;">
                                                     <p class="font-blod">Danh mục</p>
                                                     <hr>
                                                     <div class="p-2 hover-effect" th:each="item : ${listDanhMuc}">
-                                                        <a th:if="${listDanhMuc.size() > 0}" href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getTenDanhMuc()}"></span></a>
+                                                        <a th:if="${listDanhMuc.size() > 0}"
+                                                           th:href="@{/user/danh-sach-san-pham(danhMucId=${item.id})}"
+                                                           style="text-decoration: none ; color : black">
+                                                            <span  th:text="${item.getTenDanhMuc()}"></span></a>
                                                     </div>
                                                     <h5 th:unless="${listDanhMuc.size() > 0}" style="color: gray;">Hiện tại không có danh mục nào</h5>
 
@@ -89,7 +93,10 @@
                                                     <p class="font-blod">Cổ áo</p>
                                                     <hr>
                                                     <div class="p-2 hover-effect" th:each="item : ${listCoAo}">
-                                                        <a th:if="${listCoAo.size() > 0}" href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuCoAo()}"></span></a>
+                                                        <a th:if="${listCoAo.size() > 0}"
+
+                                                           th:href="@{/user/danh-sach-san-pham(coAoId=${item.id})}"
+                                                           style="text-decoration: none ; color : black"><span  th:text="${item.getKieuCoAo()}"></span></a>
                                                     </div>
                                                     <h5 th:unless="${listCoAo.size() > 0}" style="color: gray;">Hiện tại không có cổ áo nào</h5>
                                                 </div>
@@ -97,7 +104,7 @@
                                                     <p class="font-blod">Tay áo</p>
                                                     <hr>
                                                     <div th:if="${listTayAo.size() > 0}" class="p-2 hover-effect" th:each="item : ${listTayAo}">
-                                                        <a href="#" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuTayAo()}"></span></a>
+                                                        <a th:href="@{/user/danh-sach-san-pham(tayAoId=${item.id})}" style="text-decoration: none ; color : black"><span  th:text="${item.getKieuTayAo()}"></span></a>
                                                     </div>
                                                     <h5 th:unless="${listTayAo.size() > 0}" style="color: gray;">Hiện tại không có tay áo nào</h5>
                                                 </div>
@@ -128,18 +135,71 @@
             <div style="flex: 1;">
                 <div class="header_right d-flex align-items-center justify-content-end" style="height: 100%;">
                     <div>
-                        <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
+                        <a class="cl-black" href="/user/danh-sach-san-pham"><i
                                 class="fa-regular s-18 fa-magnifying-glass"></i></a>
                     </div>
                     <div style="margin: 0px 46px;">
                         <a class="cl-black" href="#" data-bs-toggle="modal" data-bs-target="#modal_cart"><i
                                 class="fa-sharp s-18 fa-regular fa-heart"></i></a>
                     </div>
-                    <div class="me-4">
-                        <a class="cl-black" href="./profileOrder.html"><i class="fa-regular s-18 fa-cart-minus"></i></a>
+                    <div class="me-4 position-relative cart-container">
+                        <a class="cl-black" href="/user/gio-hang-chi-tiet">
+                            <i class="fa-regular s-18 fa-cart-minus"></i>
+                            <!-- Hiển thị tổng số lượng -->
+                            <span th:if="${totalCartItem > 0}"
+                                  th:text="${totalCartItem}" style="background-color: red"
+                                  class="badge badge-danger position-absolute top-0 start-100 translate-middle">
+                            </span>
+                        </a>
+                        <!-- Popup cart -->
+                        <div class="cart-popup position-absolute bg-white shadow p-3 display_none"
+                             style=" width: 370px; right: -16px; top: 20px; z-index: 10;">
+                            <div class="cart-popup-header">
+                                <p class="modal-title" th:text="'Bạn có ' + ${totalCartItem} + ' sản phẩm trong giỏ hàng'">Bạn có </p>
+                            </div>
+                            <div class="cart-popup-body">
+                                <div class="cart_product_row" th:each="item : ${gioHangChiTietList}">
+                                    <div class="img_product_cart">
+                                        <div th:style="|background: url('/uploadImage/${item.chiTietSanPham.anhSanPham}') no-repeat center / cover; width: 100%; height: 100%;|">
+                                        </div>
+                                    </div>
+                                    <div class="product_cart">
+                                        <!-- Tên sản phẩm -->
+                                        <p th:text="${item.getChiTietSanPham().sanPham.tenSanPham}"></p>
+
+                                        <!-- Màu sắc và kích thước -->
+                                        <div class="product-info">
+                                            <div>
+                                                <span>Color:</span>
+                                                <div class="color-indicator" th:style="'background-color:' + ${item.getChiTietSanPham().mau.maMauSac}"></div>
+                                            </div>
+                                            <span>Size: <span th:text="${item.getChiTietSanPham().size.tenSize}"></span></span>
+                                        </div>
+
+                                        <!-- Giá tiền và số lượng -->
+                                        <div class="price-quantity">
+                                            <p th:text="'Giá: ' + ${convertMoney.formatCurrency(item.getChiTietSanPham().donGia)}"></p>
+                                            <p th:text="'Số lượng: ' + ${item.soLuong}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cart-popup-footer">
+                                <div class="d-flex justify-content-between"
+                                     style="border-top: 2px solid #F6F6F6; padding: 12px;">
+                                    <div style="font-size: 14px; font-weight: 500;">Tổng tiền</div>
+                                    <div style="font-size: 14px; font-weight: 500;" th:text="${convertMoney.formatCurrency(tongTien)}">
+                                    </div>
+                                </div>
+                                <a href="/user/gio-hang-chi-tiet" class="btn btn-dark w-100">Thanh toán</a>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <button type="button" class="btn btn-dark">Đăng nhập</button>
+                    <div style="margin-left: 14px" th:if="khachHang != null">
+                        <a class="cl-black" href="/user/don-hang"><i class="fa-regular s-18 fa-user"></i></a>
+                    </div>
+                    <div th:if="khachHang == null">
+                        <a href="/dang-nhap" class="btn btn-dark">Đăng nhập</a>
                     </div>
                 </div>
             </div>
