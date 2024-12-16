@@ -81,10 +81,14 @@ public class DonHangController {
 
     @GetMapping("/tim-kiem-don-hang")
     public String timKiemHoaDon(
-            @RequestParam(required = false) Integer id,
+            @RequestParam(required = false) String id,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime ngayBatDau,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime ngayKetThuc,
+            @RequestParam("page") Optional<Integer> page,
             Model model) {
+
+        Pagination pagination = new Pagination();
+        Pageable pageable = PageRequest.of(page.orElse(0), 10);
 
         // Xử lý giá trị mặc định cho ngày bắt đầu và ngày kết thúc
         if (ngayBatDau == null) {
@@ -94,8 +98,19 @@ public class DonHangController {
             ngayKetThuc = LocalDateTime.now(); // Ngày hiện tại
         }
 
-        List<HoaDon> danhSachHoaDon = hoaDonService.timKiemHoaDon(id, ngayBatDau, ngayKetThuc);
-        model.addAttribute("hoaDons", danhSachHoaDon);
+        Page<HoaDon> danhSachHoaDon = hoaDonService.timKiemHoaDon(id, ngayBatDau, ngayKetThuc, pageable);
+        model.addAttribute("hoaDons", danhSachHoaDon.getContent());
+        model.addAttribute("totalPage", danhSachHoaDon.getTotalPages() - 1);
+        model.addAttribute("page", danhSachHoaDon);
+        model.addAttribute("pagination", pagination.getPage(danhSachHoaDon.getNumber(), danhSachHoaDon.getTotalPages()));
+        //count trang thái
+        model.addAttribute("trangThaiCho", hoaDonService.getCountByTrangThai(HoaDonStatus.CHO_XAC_NHAN));
+        model.addAttribute("trangThaiXuLy", hoaDonService.getCountByTrangThai(HoaDonStatus.DANG_XU_LY));
+        model.addAttribute("trangThaiGiao", hoaDonService.getCountByTrangThai(HoaDonStatus.DANG_GIAO_HANG));
+        model.addAttribute("trangThaiHT", hoaDonService.getCountByTrangThai(HoaDonStatus.HOAN_TAT));
+        model.addAttribute("trangThaiHUY", hoaDonService.getCountByTrangThai(HoaDonStatus.DA_HUY));
+        model.addAttribute("trangThaiAll", hoaDonRepository.count());
+        model.addAttribute("dataUtils", dataUtils);
         return "view-admin/dashbroad/don-hang";
     }
 

@@ -514,6 +514,13 @@
             contentType: false, // Không thiết lập content-type
             success: function (data) {
                 showAlert("success", "Lưu chi tiết sản phẩm thành công.");
+                // Lấy giá trị idSanPham từ input ẩn
+                const idSanPham = $('input[name="idSanPham"]').val();
+
+                // Chuyển hướng đến trang chi tiết sản phẩm
+                if (idSanPham) {
+                    window.location.href = `/quan-ly/chi-tiet-san-pham?idSanPham=${idSanPham}`;
+                }
             },
             error: function (xhr, status, error) {
                 showAlert("error", "Không tìm thấy sản phẩm hoặc chi tiết đã tồng tại.");

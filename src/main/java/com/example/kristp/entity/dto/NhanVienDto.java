@@ -1,6 +1,7 @@
 package com.example.kristp.entity.dto;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -16,6 +17,8 @@ public class NhanVienDto {
     private String maNhanVien;
     private String tenNhanVien;
     private String soDienThoai;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngaySinh;
     private String diaChi;
 

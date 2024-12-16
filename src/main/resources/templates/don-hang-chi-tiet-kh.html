@@ -429,6 +429,12 @@
                     </div>
                     <hr style="color: #5b5c64; border-width: 1px; margin-bottom: 18px;">
 
+                    <div  class="d-flex justify-content-between"
+                         style="margin-bottom: 18px;">
+                        <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Mã đơn hàng:</div>
+                        <div style="font-size: 16px; font-weight: 500;"><span
+                                th:text="${hoaDon.maHoaDon}"></span></div>
+                    </div>
                     <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between"
                          style="margin-bottom: 18px;">
                         <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Tên khuyến mại:</div>
@@ -441,6 +447,13 @@
                         <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Mức giảm:</div>
                         <div style="font-size: 16px; font-weight: 500;"><span
                                 th:text="${convertMoney.formatCurrency(hoaDon.khuyenMai.giaTri)} + ' ' + ${hoaDon.khuyenMai.kieuKhuyenMai? '%':'VND'}"></span>
+                        </div>
+                    </div>
+                    <div th:if="${hoaDon.khuyenMai != null}" class="d-flex justify-content-between"
+                         style="margin-bottom: 18px;">
+                        <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Mức giảm tối đa:</div>
+                        <div style="font-size: 16px; font-weight: 500;"><span
+                                th:text="${convertMoney.formatCurrency(hoaDon.khuyenMai.mucGiamToiDa)} + ' VND'"></span>
                         </div>
                     </div>
 
