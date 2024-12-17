@@ -298,7 +298,7 @@
                             <hr style="color: #5b5c64; border-width: 1px; margin-bottom: 18px;">
 
                             <!-- Nút mở modal danh sách khuyến mại -->
-                            <div style="max-height: 300px; overflow-y: hidden;">
+                            <div style="max-height: 300px; overflow-y: auto;">
                                 <!-- Thẻ chứa khuyến mại -->
                                 <div th:each="khuyenMai, iterStat : ${listKM}" style="width: 100%">
                                     <div class="d-flex"
@@ -309,8 +309,8 @@
                                         </div>
                                         <div style="flex: 3; padding: 4px; font-size: 14px;">
                                             <div th:text="'Khuyến mại: ' + ${khuyenMai.tenKhuyenMai}">Khuyến mại</div>
-                                            <div th:text="${convertMoney.formatCurrency(khuyenMai.giaTri)} + ' '
-                                         + ${khuyenMai.kieuKhuyenMai? '%':'VND'}">Giá trị - Số lượng
+                                            <div th:text="'Giá trị: ' + ${convertMoney.formatCurrency(khuyenMai.giaTri)} +' '
+                                         +  ${khuyenMai.kieuKhuyenMai? '%':'VND'} + ' - ' + 'Tối đa: ' + ${convertMoney.formatCurrency(khuyenMai.mucGiamToiDa)} + 'VNĐ'">Giá trị - Mức giảm tối đa
                                             </div>
                                             <div class="d-flex justify-content-start align-items-center">
                                                 <div th:text="'Ngày hết hạn: ' + ${#dates.format(khuyenMai.ngayKetThuc, 'dd-MM-yyyy')}">

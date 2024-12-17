@@ -6,6 +6,8 @@ import com.example.kristp.enums.HoaDonStatus;
 import com.example.kristp.enums.Status;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -150,7 +152,7 @@ public class DataUtils {
      * @param danhGiaList Danh sách các đối tượng đánh giá
      * @return Tổng điểm đánh giá đã làm tròn (nếu không có đánh giá hợp lệ trả về 0)
      */
-    public static int tinhTongDiemDanhGia(List<DanhGia> danhGiaList) {
+    public static float tinhTongDiemDanhGia(List<DanhGia> danhGiaList) {
         if (danhGiaList == null || danhGiaList.isEmpty()) {
             return 0;
         }
@@ -161,7 +163,16 @@ public class DataUtils {
                 .mapToInt(DanhGia::getMucDoDanhGia) // Lấy điểm đánh giá
                 .sum();
 
-        return tongDiem; // Trả về tổng điểm
+        // Đảm bảo phép chia trả về giá trị kiểu float (hoặc double)
+        float totalPointReview = (float) tongDiem / danhGiaList.size();
+
+// Làm tròn đến 1 chữ số sau dấu thập phân
+        BigDecimal rounded = new BigDecimal(totalPointReview).setScale(1, RoundingMode.HALF_UP);
+
+// Chuyển đổi lại về kiểu float
+        totalPointReview = rounded.floatValue();
+
+        return totalPointReview; // Trả về tổng điểm
     }
 
     public static String generateBarcode(int length) {

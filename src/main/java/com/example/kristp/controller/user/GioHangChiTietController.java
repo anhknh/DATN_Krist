@@ -55,15 +55,6 @@ public class GioHangChiTietController {
         List<GioHangChiTiet> gioHangChiTietList = gioHangChiTietService.getGioHangChiTietByGioHangId(gioHang.getId());
         model.addAttribute("gioHangChiTietList", gioHangChiTietList);
         List<HoaDon> hoaDons = hoaDonService.findAllHoaDonCho();
-        System.out.println(hoaDons.get(0).getId());
-        if (hoaDonSelected == null) {
-            hoaDonSelected = hoaDons.get(0);
-
-        } else {
-            if (idHoaDon != null) {
-                hoaDonSelected = hoaDonService.findHoaDonById(idHoaDon);
-            }
-        }
         model.addAttribute("hoaDonSelected", hoaDonSelected);
 
         //khuyến mại

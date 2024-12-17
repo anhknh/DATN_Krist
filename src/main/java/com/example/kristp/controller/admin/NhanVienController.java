@@ -1,10 +1,12 @@
 package com.example.kristp.controller.admin;
 
 import com.example.kristp.entity.NhanVien;
+import com.example.kristp.entity.dto.NhanVienDto;
 import com.example.kristp.service.NhanVienService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/quan-ly/")
+@RequestMapping("/quan-ly-admin/")
 public class NhanVienController {
     @Autowired
     NhanVienService nhanVienService;
@@ -29,28 +31,29 @@ public class NhanVienController {
         model.addAttribute("NVList" , nhanViens.getContent());
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , nhanViens.getTotalPages());
-        model.addAttribute("NVCre" , new NhanVien() );
+        model.addAttribute("NVCre" , new NhanVienDto() );
         return "view-admin/dashbroad/crud-nhan-vien";
     }
 
     @PostMapping("/add-nhan-vien")
-    private String addNhanVien(@Valid @ModelAttribute("nhanvien") NhanVien nhanVien, BindingResult result, RedirectAttributes attributes){
+    private String addNhanVien(@Valid @ModelAttribute("nhanvien") NhanVienDto nhanVien, BindingResult result, RedirectAttributes attributes){
+        System.out.println(nhanVien.toString());
         if (nhanVienService.addNhanVien(nhanVien) == null){
             attributes.addFlashAttribute("nhanvien", nhanVien);
             attributes.addFlashAttribute("message", "Mã nhân viên đã tồn tại");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
-            return "redirect:/quan-ly/phan-trang-nhan-vien";
+            return "redirect:/quan-ly-admin/phan-trang-nhan-vien";
         }
         nhanVienService.addNhanVien(nhanVien);
         attributes.addFlashAttribute("message" , "Thêm mới thành công");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly/phan-trang-nhan-vien";
+        return "redirect:/quan-ly-admin/phan-trang-nhan-vien";
     }
 
     @PostMapping("/update-nhan-vien")
-    private String updateNV(@Valid @ModelAttribute("nhanvien") NhanVien nhanVien, BindingResult result, RedirectAttributes attributes, @RequestParam("id") Integer idNV){
+    private String updateNV(@Valid @ModelAttribute("nhanvien") NhanVienDto nhanVien, BindingResult result, RedirectAttributes attributes, @RequestParam("id") Integer idNV){
 
         System.out.println("Ngày sinh: " + nhanVien.getNgaySinh());
         if (nhanVienService.updateNhanVien(nhanVien, idNV) == null){
@@ -58,13 +61,13 @@ public class NhanVienController {
             attributes.addFlashAttribute("message", "Mã nhân viên đã tồn tại");
             attributes.addFlashAttribute("messageType", "alert-danger");
             attributes.addFlashAttribute("titleMsg", "Thất bại");
-            return "redirect:/quan-ly/phan-trang-nhan-vien";
+            return "redirect:/quan-ly-admin/phan-trang-nhan-vien";
         }
         nhanVienService.updateNhanVien(nhanVien, idNV);
         attributes.addFlashAttribute("message" , "Update nhân viên thành công");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly/phan-trang-nhan-vien";
+        return "redirect:/quan-ly-admin/phan-trang-nhan-vien";
     }
 
     @GetMapping("/delete-nhan-vien/{id}")
@@ -73,7 +76,7 @@ public class NhanVienController {
         attributes.addFlashAttribute("message" , "Đổi trạng thái nhân viên thành công");
         attributes.addFlashAttribute("messageType" , "alert-success");
         attributes.addFlashAttribute("titleMsg" , "Thành công");
-        return "redirect:/quan-ly/phan-trang-nhan-vien";
+        return "redirect:/quan-ly-admin/phan-trang-nhan-vien";
     }
 
     @GetMapping("/tim-ma-nhan-vien")
@@ -82,7 +85,12 @@ public class NhanVienController {
         model.addAttribute("NVList" , nhanViens.getContent());
         model.addAttribute("currentPage" , pageNo);
         model.addAttribute("totalPage" , nhanViens.getTotalPages());
-        model.addAttribute("NVCre" , new NhanVien() );
+        model.addAttribute("NVCre" , new NhanVienDto() );
         return "view-admin/dashbroad/crud-nhan-vien";
+    }
+    @GetMapping("/tim-ma-nhan-vien-fetch")
+    @ResponseBody
+    private ResponseEntity<NhanVienDto> timKiemMaNVFetch(@RequestParam("maNhanVien")String ma){
+        return ResponseEntity.ok(nhanVienService.fetchNhanVien(ma));
     }
 }

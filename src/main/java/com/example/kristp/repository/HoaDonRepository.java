@@ -27,12 +27,13 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
 
     // tìm kiếm đơn hàng
     @Query("SELECT h FROM HoaDon h WHERE " +
-            "(:id IS NULL OR h.id = :id) AND " +
+            "(:id IS NULL OR h.maHoaDon = :id) AND " +
             "(h.ngayDatHang BETWEEN :ngayBatDau AND :ngayKetThuc)")
-    List<HoaDon> findByFilters(
-            @Param("id") Integer id,
+    Page<HoaDon> findByFilters(
+            @Param("id") String id,
             @Param("ngayBatDau") LocalDateTime ngayBatDau,
-            @Param("ngayKetThuc") LocalDateTime ngayKetThuc
+            @Param("ngayKetThuc") LocalDateTime ngayKetThuc,
+            Pageable pageable
     );
 
       //count
@@ -84,9 +85,28 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Integer> {
     @Query("select hd from HoaDon hd order by hd.id desc ")
     Page<HoaDon> findTop5(Pageable pageable );
 
-    @Query("select SUM(hd.tongTien) from HoaDon hd where cast(hd.ngaySua as DATE ) = current date AND  hd.trangThaiThanhToan = :trangthai AND hd.ngaySua IS NOT NULL and hd.trangThai = :trangthai1")
-    Double getDoanhThuHomNay(@Param("trangthai")HoaDonStatus status , @Param("trangthai1")HoaDonStatus status1);
-// sửa lại
+    @Query("""
+    select SUM(hd.tongTien - 
+        CASE 
+            WHEN km.kieuKhuyenMai = true THEN 
+                LEAST(hd.tongTien * km.giaTri / 100, km.mucGiamToiDa)
+            WHEN km.kieuKhuyenMai = false THEN 
+                km.giaTri
+            ELSE 0
+        END
+    ) 
+        from HoaDon hd 
+        left join KhuyenMai km on hd.khuyenMai.id = km.id 
+        where cast(hd.ngaySua as DATE) = current_date 
+          AND hd.trangThaiThanhToan = :trangthai 
+          AND hd.ngaySua IS NOT NULL 
+          AND hd.trangThai = :trangthai1
+    """)
+    Double getDoanhThuHomNay(@Param("trangthai") HoaDonStatus trangThai,
+                             @Param("trangthai1") HoaDonStatus trangThai1);
+
+
+    // sửa lại
     @Query("SELECT SUM (hdct.soLuong) " +
             "FROM HoaDon hd " +
             "JOIN HoaDonChiTiet hdct ON hd.id = hdct.hoaDon.id " +

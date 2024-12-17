@@ -109,7 +109,7 @@
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-user-group" style="margin-right: 10px;"></i> Khách hàng
           </a>
-          <a href="/quan-ly/phan-trang-nhan-vien" class="bg_profile_btn mb-3" onclick="highlightLink(this)"
+          <a href="/quan-ly-admin/phan-trang-nhan-vien" class="bg_profile_btn mb-3" onclick="highlightLink(this)"
              style="padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; color: #000; display:block;">
             <i class="fa-light fa-user" style="margin-right: 10px;"></i> Nhân viên
           </a>
@@ -129,7 +129,7 @@
           <div>
             <nav style="--bs-breadcrumb-divider: '>'; line-height: 40px;" aria-label="breadcrumb" >
               <ol class="breadcrumb" style="height: 40px; margin: 0px;">
-                <li class="breadcrumb-item "><a href="/quan-ly/phan-trang-nhan-vien" class="nav_link">Nhân viên</a></li>
+                <li class="breadcrumb-item "><a href="/quan-ly-admin/phan-trang-nhan-vien" class="nav_link">Nhân viên</a></li>
               </ol>
             </nav>
           </div>
@@ -147,7 +147,7 @@
 
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <form action="/quan-ly/tim-ma-nhan-vien" method="GET">
+                  <form action="/quan-ly-admin/tim-ma-nhan-vien" method="GET">
                     <div class="input-group flex-nowrap" style="width: 400px;">
                                         <span class="input-group-text" id="addon-wrapping" style="background-color: #fff;">
                                             <i class="fa-solid fa-magnifying-glass" style="color: #5C5F6A;"></i>
@@ -207,7 +207,7 @@
                         <i class="fa-solid fa-pen-to-square" ></i>
                       </div>
                       <div class="d-inline-block me-3 " data-bs-toggle="tooltip" data-bs-placement="top"  title="Thay đổi trạng thái">
-                        <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly/delete-nhan-vien/{id}(id=${nhanvien.id})}" ><i class="fa-solid fa-swap-arrows"></i></a>
+                        <a class="d-block" style="color: #000; text-decoration: none" th:href="@{/quan-ly-admin/delete-nhan-vien/{id}(id=${nhanvien.id})}" ><i class="fa-solid fa-swap-arrows"></i></a>
                       </div>
                     </div>
                   </div>
@@ -232,7 +232,7 @@
                 <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}"
                     style="border-color: #A0A0A0;">
                   <a class="page-link"
-                     th:href="@{/quan-ly/pagination-nhan-vien(pageNo=0)}"
+                     th:href="@{/quan-ly-admin/phan-trang-nhan-vien(pageNo=0)}"
                      aria-label="Previous"
                      style="color: #5C5F6A; background-color: transparent; border-color: #5C5F6A;">
                     <span aria-hidden="true">&laquo;</span>
@@ -245,7 +245,7 @@
                     class="page-item"
                     style="border-color: #5C5F6A;">
                   <a class="page-link"
-                     th:href="@{/quan-ly/pagination-nhan-vien(pageNo=${i - 1})}"
+                     th:href="@{/quan-ly-admin/phan-trang-nhan-vien(pageNo=${i - 1})}"
                      th:text="${i}"
                      th:styleappend="${currentPage == i - 1 ? 'color: #FFFFFF; background-color: #5C5F6A;' : 'color: #5C5F6A; background-color: transparent; border-color: #5C5F6A;'}">
                   </a>
@@ -256,7 +256,7 @@
                     th:classappend="${currentPage == totalPage - 1 ? 'disabled' : ''}"
                     style="border-color: #A0A0A0;">
                   <a class="page-link"
-                     th:href="@{/quan-ly/pagination-nhan-vien(pageNo=${totalPage - 1})}"
+                     th:href="@{/quan-ly-admin/phan-trang-nhan-vien(pageNo=${totalPage - 1})}"
                      aria-label="Next"
                      style="color: #5C5F6A; background-color: transparent; border-color: #5C5F6A;">
                     <span aria-hidden="true">&raquo;</span>
@@ -274,51 +274,102 @@
 
 <div class="modal fade" id="modalCategories" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content" style="margin-top: 100px;">
-      <div class="modal-header">`
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
+    <div class="modal-content" style="margin: 0 auto; width: 900px">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thông tin nhân viên</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body"  style="padding:30px">
-        <div>
-          <form  method="post"  id="form_submit" novalidate th:object="${NVCre}" class="needs-validation">
-            <div class="display_none">
-              <input type="text" class="form-control" id="idCustomer" name="id" value="" th:field="*{id}">
+      <div class="modal-body" style="padding:30px">
+        <form method="post" id="form_submit" novalidate th:object="${NVCre}" class="needs-validation">
+          <div class="row">
+            <!-- Thông tin nhân viên -->
+            <div class="col-md-6">
+              <h6>Thông tin nhân viên</h6>
+              <div class="mb-3 " style="display: none">
+                <input type="text" class="form-control" id="idCustomer" name="id" value="" th:field="*{id}">
+              </div>
+              <div>
+                <label for="maCate" class="form-label">Mã nhân viên</label>
+                <input type="text" class="form-control" id="maCate" placeholder="Mã nhân viên" name="maNhanVien"
+                       th:field="*{maNhanVien}" required pattern="[A-Za-z0-9]{3,}"
+                       title="Mã nhân viên phải từ 3 ký tự trở lên, chỉ gồm chữ và số.">
+                <div class="invalid-feedback">Mã nhân viên không hợp lệ. Vui lòng nhập ít nhất 3 ký tự, chỉ gồm chữ và số.</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="nameCate" class="form-label">Tên nhân viên</label>
+                <input type="text" class="form-control" name="tenNhanVien" id="nameCate" placeholder="Tên nhân viên"
+                       th:field="*{tenNhanVien}" minlength="2"
+                       title="Tên nhân viên phải gồm ít nhất 2 ký tự và chỉ chứa chữ cái.">
+                <div class="invalid-feedback">Tên nhân viên không hợp lệ. Vui lòng nhập ít nhất 2 ký tự chỉ chứa chữ cái.</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="sdtCate" class="form-label">Số điện thoại</label>
+                <input type="text" class="form-control" name="soDienThoai" id="sdtCate" placeholder="Số điện thoại nhân viên"
+                       th:field="*{soDienThoai}" required pattern="\d{10,11}"
+                       title="Số điện thoại phải là 10-11 chữ số.">
+                <div class="invalid-feedback">Số điện thoại không hợp lệ. Vui lòng nhập 10-11 chữ số.</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="ngaysinhCate" class="form-label">Ngày sinh</label>
+                <input type="date" class="form-control" name="ngaySinh" id="ngaysinhCate" placeholder="Ngày sinh nhân viên"
+                       th:value="${#dates.format(NVCre.ngaySinh, 'yyyy-MM-dd')}" required
+                       th:field="*{ngaySinh}"
+                       max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+                       title="Ngày sinh không được vượt quá ngày hiện tại.">
+                <div class="invalid-feedback">Ngày sinh không hợp lệ. Ngày sinh không được vượt quá ngày hiện tại.</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="diachiCate" class="form-label">Địa chỉ</label>
+                <input type="text" class="form-control" name="diaChi" id="diachiCate" placeholder="Địa chỉ nhân viên"
+                       th:field="*{diaChi}" required minlength="5"
+                       title="Địa chỉ phải dài ít nhất 5 ký tự.">
+                <div class="invalid-feedback">Địa chỉ nhân viên không hợp lệ. Vui lòng nhập ít nhất 5 ký tự.</div>
+              </div>
             </div>
-            <div class="mb-4">
-              <label for="maCate" class="form-label">Mã nhân viên</label>
-              <input type="text" class="form-control" id="maCate" placeholder="Mã nhân viên" name="maNhanVien" th:field="*{maNhanVien}" required>
-              <div class="invalid-feedback">Mã nhân viên không hợp lệ</div>
+
+            <!-- Thông tin tài khoản -->
+            <div class="col-md-6">
+              <h6>Thông tin tài khoản</h6>
+              <div class="mb-3">
+                <label for="username" class="form-label">Tên đăng nhập</label>
+                <input type="text" class="form-control" id="username" name="tenDangNhap" placeholder="Tên đăng nhập"
+                       th:field="*{tenDangNhap}" required minlength="5"
+                       title="Tên đăng nhập phải gồm ít nhất 5 ký tự.">
+                <div class="invalid-feedback">Tên đăng nhập không hợp lệ. Vui lòng nhập ít nhất 5 ký tự.</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <div class="input-group">
+                  <input type="password" class="form-control" id="password" name="matKhau" placeholder="Mật khẩu"
+                         th:field="*{matKhau}" required minlength="6"
+                         title="Mật khẩu phải gồm ít nhất 6 ký tự.">
+                  <button type="button" class="btn btn-outline-secondary" id="togglePassword">Hiện</button>
+                </div>
+                <div class="invalid-feedback">Mật khẩu không hợp lệ. Vui lòng nhập ít nhất 6 ký tự.</div>
+              </div>
+              <div class="mb-3">
+                <label for="emailCate" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" id="emailCate" placeholder="Email nhân viên"
+                       th:field="*{email}" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                       title="Vui lòng nhập một địa chỉ email hợp lệ.">
+                <div class="invalid-feedback">Email không hợp lệ. Vui lòng nhập một địa chỉ email hợp lệ.</div>
+              </div>
             </div>
-            <div class="mb-4">
-              <label for="nameCate" class="form-label">Tên nhân viên</label>
-              <input type="text" class="form-control" name="tenNhanVien" id="nameCate" placeholder="Tên nhân viên" th:field="*{tenNhanVien}" required >
-              <div class="invalid-feedback">Tên nhân viên không hợp lệ</div>
-            </div>
-            <div class="mb-4">
-              <label for="sdtCate" class="form-label">Số điện thoại</label>
-              <input type="text" class="form-control" name="soDienThoai" id="sdtCate" placeholder="số điện thoại nhân viên" th:field="*{soDienThoai}" required >
-              <div class="invalid-feedback">Số điện thoại không hợp lệ</div>
-            </div>
-            <div class="mb-4">
-              <label for="ngaysinhCate" class="form-label">Ngày sinh</label>
-              <input type="date" class="form-control" name="ngaySinh" id="ngaysinhCate" placeholder="Ngày sinh nhân viên"  th:value="${#dates.format(NVCre.ngaySinh, 'yyyy-MM-dd')}"  required >
-              <div class="invalid-feedback">Ngày sinh không hợp lệ</div>
-            </div>
-            <div class="mb-4">
-              <label for="diachiCate" class="form-label">Địa chỉ</label>
-              <input type="text" class="form-control" name="diaChi" id="diachiCate" placeholder="Địa chỉ nhân viên" th:field="*{diaChi}" required >
-              <div class="invalid-feedback">Địa chỉ nhân viên không hợp lệ</div>
-            </div>
-            <div>
-              <button type="submit" class="btn btn-dark">Lưu</button>
-            </div>
-          </form>
-        </div>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-dark">Lưu</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
+
 <!-- Alert thông báo thất bại -->
 <div class="alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 m-3" role="alert" id="alertMessage" style="display: none;">
   <strong>Thất bại!</strong> <span id="alertBody">Thông báo này sẽ hiển thị kết quả.</span>
@@ -329,6 +380,7 @@
   <strong th:text="${titleMsg}">Tiêu đề</strong> <span th:text="${message}">Thông báo này sẽ hiển thị kết quả.</span>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   // Khởi tạo Bootstrap tooltips
@@ -338,6 +390,13 @@
   });
 </script>
 <script>
+  document.getElementById('togglePassword').addEventListener('click', function () {
+    const passwordField = document.getElementById('password');
+    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordField.setAttribute('type', type);
+    this.textContent = type === 'password' ? 'Hiện' : 'Ẩn';
+  });
+
 
   const idCustomer = document.getElementById("idCustomer");
   const valueMa = document.querySelectorAll(".valueMa");
@@ -353,49 +412,85 @@
   const ngaysinhCate = document.getElementById('ngaysinhCate');
   const diachiCate = document.getElementById('diachiCate');
   const statusSection = document.getElementById('statusSection');
+  const formSubmit = document.getElementById('form_submit');
+  const modalTitle = document.getElementById('exampleModalLabel');
+  const username = document.getElementById('username');
+  const password = document.getElementById('password');
+  const emailCate = document.getElementById('emailCate');
 
+
+  // Hàm fetch thông tin nhân viên từ server qua API
+  function fetchEmployeeData(maNhanVien) {
+    $.ajax({
+      url: `/quan-ly-admin/tim-ma-nhan-vien-fetch?maNhanVien=${maNhanVien}`, // Gọi API theo mã nhân viên
+      method: 'GET',
+      success: function(response) {
+        console.log(response);
+        if (response) {
+          const data = response;
+
+          // Cập nhật các trường modal với dữ liệu trả về từ API
+          maCate.value = data.maNhanVien;
+          nameCate.value = data.tenNhanVien;
+          sdtCate.value = data.soDienThoai;
+          ngaysinhCate.value = data.ngaySinh ? data.ngaySinh : ""; // Kiểm tra ngày sinh hợp lệ
+          diachiCate.value = data.diaChi;
+          username.value = data.tenDangNhap || ""; // Kiểm tra tên đăng nhập hợp lệ
+          password.value = ""; // Không hiển thị mật khẩu (bảo mật)
+          emailCate.value = data.email || "";
+
+          // Cập nhật tiêu đề modal và URL hành động của form
+          modalTitle.innerText = 'Cập nhật nhân viên';
+          formSubmit.action = `/quan-ly-admin/update-nhan-vien?id=${data.id}`;
+        } else {
+          alert('Không tìm thấy nhân viên!');
+        }
+      },
+      error: function() {
+        alert('Có lỗi xảy ra trong quá trình lấy dữ liệu!');
+      }
+    });
+  }
+
+  // Hàm saveIdOrder
   function saveIdOrder(id, index, hanhDong) {
+    // Cập nhật idCustomer
     idCustomer.value = id;
 
     if (index !== null) {
-      // Kiểm tra ngày sinh có hợp lệ không, nếu có thì cập nhật
-      let ngaySinh = valueNgaySinh[index].textContent.trim();
+      username.setAttribute('disabled', 'true');
+      password.setAttribute('disabled', 'true');
+      emailCate.setAttribute('disabled', 'true');
+      const maNhanVien = valueMa[index]?.textContent.trim(); // Lấy mã nhân viên từ bảng
 
-      // Nếu ngày sinh là hợp lệ (theo định dạng yyyy-MM-dd)
-      if (ngaySinh) {
-        ngaysinhCate.value = ngaySinh;  // Cập nhật vào trường ngày sinh
+      if (maNhanVien) {
+        // Gọi API để lấy thông tin nhân viên
+        fetchEmployeeData(maNhanVien);
       }
 
-      maCate.value = valueMa[index].textContent.trim();
-      nameCate.value = valueName[index].textContent.trim();
-      sdtCate.value = valueSDT[index].textContent.trim();
-      diachiCate.value = valueDiaChi[index].textContent.trim();
-
-      // Hiển thị phần chọn trạng thái
-      // statusSection.classList.remove('display_none');
-      document.getElementById('exampleModalLabel').innerText = 'Cập nhật nhân viên';
-
-      // Kiểm tra trạng thái và chọn radio button tương ứng
-      // if (hanhDong == "ACTIVE") {
-      //   document.getElementById('active').checked = true;
-      // } else {
-      //   document.getElementById('inactive').checked = true;
-      // }
-
-      // Thay đổi hành động của form
-      document.getElementById("form_submit").action = '/quan-ly/update-nhan-vien';
+      // Đặt tiêu đề modal
+      modalTitle.innerText = 'Cập nhật nhân viên';
+      formSubmit.action = '/quan-ly-admin/update-nhan-vien';
     } else {
-      // Nếu không có index (thêm mới)
-      // statusSection.classList.add('display_none');
-      document.getElementById('exampleModalLabel').innerText = 'Thêm nhân viên';
+      // Thêm mới nhân viên
+      modalTitle.innerText = 'Thêm nhân viên';
+
+      // Reset các trường
       maCate.value = "";
       nameCate.value = "";
       sdtCate.value = "";
-      ngaysinhCate.value = "";  // Xóa trường ngày sinh
+      ngaysinhCate.value = "";
       diachiCate.value = "";
-      document.getElementById("form_submit").action = '/quan-ly/add-nhan-vien';
+      username.value = "";
+      password.value = "";
+      emailCate.value = "";
+
+      // Đặt URL hành động cho form
+      formSubmit.action = '/quan-ly-admin/add-nhan-vien';
     }
   }
+
+
 
   (function () {
     'use strict';

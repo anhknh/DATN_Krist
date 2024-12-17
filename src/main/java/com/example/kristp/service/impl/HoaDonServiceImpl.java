@@ -106,7 +106,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public List<HoaDon> timKiemHoaDon(Integer id, LocalDateTime ngayBatDau, LocalDateTime ngayKetThuc) {
+    public Page<HoaDon> timKiemHoaDon(String id, LocalDateTime ngayBatDau, LocalDateTime ngayKetThuc, Pageable pageable) {
         // Đảm bảo giá trị mặc định cho ngày bắt đầu và ngày kết thúc
         if (ngayBatDau == null) {
             ngayBatDau = LocalDateTime.of(2000, 1, 1, 0, 0);
@@ -114,7 +114,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         if (ngayKetThuc == null) {
             ngayKetThuc = LocalDateTime.now();
         }
-        return hoaDonRepository.findByFilters(id, ngayBatDau, ngayKetThuc);
+        return hoaDonRepository.findByFilters(id, ngayBatDau, ngayKetThuc, pageable);
     }
 
     @Override

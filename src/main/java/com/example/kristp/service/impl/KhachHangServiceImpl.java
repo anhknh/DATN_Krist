@@ -80,11 +80,14 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public void deleteKhachHang(Integer idKhachHang) {
         KhachHang khachHang = getKhachHangById(idKhachHang);
+        TaiKhoan taiKhoan = khachHang.getTaiKhoan();
         // Chuyển trạng thái giữa ACTIVE và INACTIVE
         if (khachHang.getTrangThai() == Status.INACTIVE) {
             khachHang.setTrangThai(Status.ACTIVE);
+            taiKhoan.setTrangThai(Status.ACTIVE);
         } else {
             khachHang.setTrangThai(Status.INACTIVE);
+            taiKhoan.setTrangThai(Status.INACTIVE);
         }
         khachHangRepository.save(khachHang);
     }

@@ -1,6 +1,7 @@
 package com.example.kristp.repository;
 
 import com.example.kristp.entity.TaiKhoan;
+import com.example.kristp.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +13,7 @@ public interface TaiKhoanRepository extends JpaRepository<TaiKhoan,Integer> {
 
     TaiKhoan findByTenDangNhap(String tenDangNhap);
 
-    TaiKhoan findByTenDangNhapAndMatKhau(String tenDangNhap, String matKhau);
+    TaiKhoan findByTenDangNhapAndMatKhauAndTrangThai(String tenDangNhap, String matKhau, Status trangThai);
 
     @Query(value = "DECLARE @id INT; " +
             "INSERT INTO  [dbo].[tai_khoan] ([ten_dang_nhap], [mat_khau], [email], [trang_thai], [chuc_vu], [ngay_tao], [ngay_sua]) " +

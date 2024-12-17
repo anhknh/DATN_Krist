@@ -18,7 +18,7 @@ public interface HoaDonService {
     List<HoaDon> findAllHoaDonCho();
     HoaDon findHoaDonById(Integer id);
     Page<HoaDon> getAllHoaDon(String trangThai, Pageable pageable);
-    List<HoaDon> timKiemHoaDon(Integer id, LocalDateTime ngayBatDau, LocalDateTime ngayKetThuc);
+    Page<HoaDon> timKiemHoaDon(String id, LocalDateTime ngayBatDau, LocalDateTime ngayKetThuc, Pageable pageable);
     Integer getCountByTrangThai(HoaDonStatus hoaDonStatus);
 
     Page<HoaDon> getPaginationHoaDon(Integer pageNo , HoaDonStatus trangThai , Integer idKhachHang );

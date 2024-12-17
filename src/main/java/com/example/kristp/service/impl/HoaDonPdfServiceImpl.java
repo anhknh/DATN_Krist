@@ -71,21 +71,22 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
             Page<HoaDonChiTiet> listHDCT = hoaDonChiTietService.getHoaDonChiTietByHoaDon(hoaDon, null);
 
             try (PDPageContentStream luoiNoiDung = new PDPageContentStream(taiLieu, trang)) {
-                Integer maHoaDon = hoaDon.getId();
+                String maHoaDon = hoaDon.getMaHoaDon();
+                String phiVanChuyen = dataUtils.formatCurrency(hoaDon.getPhiVanChuyen());
                 String tenNhanVien = hoaDon.getNhanVien() == null ? "" : hoaDon.getNhanVien().getTenNhanVien();
                 String tenKhachHang;
                 String sdt;
-                if(hoaDon.getDiaChi() != null) {
-                     tenKhachHang = hoaDon.getDiaChi().getTenKhachHang();
+                if (hoaDon.getDiaChi() != null) {
+                    tenKhachHang = hoaDon.getDiaChi().getTenKhachHang();
 
-                     sdt = hoaDon.getDiaChi().getSdt();
+                    sdt = hoaDon.getDiaChi().getSdt();
                 } else {
                     KhachHang khachHang = hoaDon.getKhachHang();
-                     tenKhachHang = (khachHang != null && khachHang.getTenKhachHang() != null && !khachHang.getTenKhachHang().isBlank())
+                    tenKhachHang = (khachHang != null && khachHang.getTenKhachHang() != null && !khachHang.getTenKhachHang().isBlank())
                             ? khachHang.getTenKhachHang()
                             : "Khách vãng lai";
 
-                     sdt = (khachHang != null && khachHang.getSoDienThoai() != null && !khachHang.getSoDienThoai().isBlank())
+                    sdt = (khachHang != null && khachHang.getSoDienThoai() != null && !khachHang.getSoDienThoai().isBlank())
                             ? khachHang.getSoDienThoai()
                             : "N/A";
                 }
@@ -113,6 +114,7 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
                         ? "Không"
                         : hoaDon.getKhuyenMai().getTenKhuyenMai();
                 double giamGia = hoaDon.getKhuyenMai() == null ? 0 : hoaDon.getKhuyenMai().getGiaTri(); // Giảm giá 10%
+                double giamGiaToiDa = hoaDon.getKhuyenMai() == null ? 0 : hoaDon.getKhuyenMai().getMucGiamToiDa(); // Giảm giá 10%
 
                 double tongSauGiam = dataUtils.calculatorTotal2(tongTienDouble, hoaDon.getKhuyenMai(), hoaDon.getPhiVanChuyen());
                 String phuongThucThanhToan = hoaDon.getHinhThucThanhToan().equals("online") ? "VNPay" : "Khi nhận hàng";
@@ -127,45 +129,76 @@ public class HoaDonPdfServiceImpl implements HoaDonPdfService {
                     }
                     PDFont font = PDType0Font.load(taiLieu, fontStream);
 
-                    myTextClass.addSingleLineText("KRIST CẢM ƠN", 200, 750, font, 24, Color.BLACK);
-                    myTextClass.addSingleLineText("Mã hóa đơn: " + maHoaDon, 50, 710, font, 14, Color.BLACK);
-                    myTextClass.addSingleLineText("Tên nhân viên: " + tenNhanVien, 50, 690, font, 14, Color.BLACK);
-                    myTextClass.addSingleLineText("Tên khách hàng: " + tenKhachHang, 50, 670, font, 14, Color.BLACK);
-                    myTextClass.addSingleLineText("Số điện thoại: " + sdt, 50, 650, font, 14, Color.BLACK);
-                    myTextClass.addSingleLineText("Ngày tạo: " + ngayTao, 50, 630, font, 14, Color.BLACK);
+                    int yPosition = 750; // Điểm bắt đầu in văn bản
+                    int rowHeight = 20;  // Khoảng cách giữa các dòng
 
-                    myTextClass.addSingleLineText("Sản phẩm", 50, 600, font, 14, Color.BLACK);
-                    myTextClass.addSingleLineText("Số lượng", 200, 600, font, 14, Color.BLACK);
-                    myTextClass.addSingleLineText("Đơn giá", 300, 600, font, 14, Color.BLACK);
-                    myTextClass.addSingleLineText("Tổng tiền", 400, 600, font, 14, Color.BLACK);
+// Thông tin tiêu đề
+                    myTextClass.addSingleLineText("KRIST CẢM ƠN", 200, yPosition, font, 24, Color.BLACK);
+                    yPosition -= rowHeight * 2;
 
-                    int yPosition = 580;
-                    int rowHeight = 20;
+                    myTextClass.addSingleLineText("Mã hóa đơn: " + maHoaDon, 50, yPosition, font, 14, Color.BLACK);
+                    yPosition -= rowHeight;
+                    myTextClass.addSingleLineText("Tên nhân viên: " + tenNhanVien, 50, yPosition, font, 14, Color.BLACK);
+                    yPosition -= rowHeight;
+                    myTextClass.addSingleLineText("Tên khách hàng: " + tenKhachHang, 50, yPosition, font, 14, Color.BLACK);
+                    yPosition -= rowHeight;
+                    myTextClass.addSingleLineText("Số điện thoại: " + sdt, 50, yPosition, font, 14, Color.BLACK);
+                    yPosition -= rowHeight;
+                    myTextClass.addSingleLineText("Ngày tạo: " + ngayTao, 50, yPosition, font, 14, Color.BLACK);
+                    yPosition -= rowHeight * 2;
 
+// In tiêu đề cột
+                    myTextClass.addSingleLineText("Sản phẩm", 50, yPosition, font, 14, Color.BLACK);
+                    myTextClass.addSingleLineText("Số lượng", 200, yPosition, font, 14, Color.BLACK);
+                    myTextClass.addSingleLineText("Đơn giá", 300, yPosition, font, 14, Color.BLACK);
+                    myTextClass.addSingleLineText("Tổng tiền", 400, yPosition, font, 14, Color.BLACK);
+                    yPosition -= rowHeight;
+
+// In danh sách sản phẩm
                     for (int i = 0; i < sanPhamList.size(); i++) {
                         myTextClass.addSingleLineText(sanPhamList.get(i), 50, yPosition, font, 14, Color.BLACK);
                         myTextClass.addSingleLineText(String.valueOf(soLuongList.get(i)), 200, yPosition, font, 14, Color.BLACK);
                         myTextClass.addSingleLineText(currencyFormat.format(giaBanList.get(i)), 300, yPosition, font, 14, Color.BLACK);
                         myTextClass.addSingleLineText(currencyFormat.format(soLuongList.get(i) * giaBanList.get(i)), 400, yPosition, font, 14, Color.BLACK);
-
                         yPosition -= rowHeight;
                     }
 
-                    myTextClass.addSingleLineText("Tổng tiền: " + currencyFormat.format(tongTien) + " VNĐ", 50, yPosition - 20, font, 14, Color.BLACK);
-                    if(hoaDon.getKhuyenMai() != null) {
-                        myTextClass.addSingleLineText("Tên khuyến mại: " + tenKhuyenMai, 50, yPosition - 40, font, 14, Color.BLACK);
-                        if(hoaDon.getKhuyenMai().getKieuKhuyenMai()) {
-                            myTextClass.addSingleLineText("Giảm giá: " + currencyFormat.format(giamGia) + " %", 50, yPosition - 60, font, 14, Color.BLACK);
+// Tổng tiền trước giảm giá
+                    yPosition -= rowHeight;
+                    myTextClass.addSingleLineText("Tổng tiền: " + currencyFormat.format(tongTien) + " VNĐ", 50, yPosition, font, 14, Color.BLACK);
+
+// Phí giao hàng
+                    yPosition -= rowHeight;
+                    myTextClass.addSingleLineText("Phí giao hàng: " + phiVanChuyen + " VNĐ", 50, yPosition, font, 14, Color.BLACK);
+
+// Khuyến mãi
+                    if (hoaDon.getKhuyenMai() != null) {
+                        yPosition -= rowHeight;
+                        myTextClass.addSingleLineText("Tên khuyến mại: " + tenKhuyenMai, 50, yPosition, font, 14, Color.BLACK);
+
+                        yPosition -= rowHeight;
+                        if (hoaDon.getKhuyenMai().getKieuKhuyenMai()) {
+                            myTextClass.addSingleLineText("Giảm giá: " + currencyFormat.format(giamGia) + " %", 50, yPosition, font, 14, Color.BLACK);
+                            yPosition -= rowHeight;
+                            myTextClass.addSingleLineText("Tối đa: " + currencyFormat.format(giamGiaToiDa) + " VNĐ", 50, yPosition, font, 14, Color.BLACK);
                         } else {
-                            myTextClass.addSingleLineText("Giảm giá: " + currencyFormat.format(giamGia) + " VNĐ", 50, yPosition - 60, font, 14, Color.BLACK);
+                            myTextClass.addSingleLineText("Giảm giá: " + currencyFormat.format(giamGia) + " VNĐ", 50, yPosition, font, 14, Color.BLACK);
                         }
                     }
-                    myTextClass.addSingleLineText("Tổng sau giảm: " + currencyFormat.format(tongSauGiam) + " VNĐ", 50, yPosition - 80, font, 14, Color.BLACK);
-                    if(hoaDon.getDiaChi() == null) {
-                        myTextClass.addSingleLineText("Phương thức thanh toán: Tại quầy", 50, yPosition - 100, font, 14, Color.BLACK);
+
+// Tổng tiền sau giảm giá (đã cộng phí giao hàng)
+                    yPosition -= rowHeight * 2;
+                    myTextClass.addSingleLineText("Tổng sau giảm: " + currencyFormat.format(tongSauGiam) + " VNĐ", 50, yPosition, font, 14, Color.BLACK);
+
+// Phương thức thanh toán
+                    yPosition -= rowHeight * 2;
+                    if (hoaDon.getDiaChi() == null) {
+                        myTextClass.addSingleLineText("Phương thức thanh toán: Tại quầy", 50, yPosition, font, 14, Color.BLACK);
                     } else {
-                        myTextClass.addSingleLineText("Phương thức thanh toán: " + phuongThucThanhToan, 50, yPosition - 100, font, 14, Color.BLACK);
+                        myTextClass.addSingleLineText("Phương thức thanh toán: " + phuongThucThanhToan, 50, yPosition, font, 14, Color.BLACK);
                     }
+
+
                 } catch (IOException e) {
                     log.error("Lỗi khi tải font: " + e.getMessage());
                 }
