@@ -421,7 +421,7 @@
                                     <td style="text-align: center; vertical-align: middle;">
                                         <div class="d-flex justify-content-center align-items-center"
                                              style="background-color: #f6f6f6; border-radius: 4px; width: 46px; height: 46px; margin: 0 auto">
-                                            <div th:style="|width: 46px; height: 46px; background: url('/img/${item.chiTietSanPham.anhSanPham}') no-repeat center center / cover;|">
+                                            <div th:style="|width: 46px; height: 46px; background: url('/uploadImage/${item.chiTietSanPham.anhSanPham}') no-repeat center center / cover;|">
                                             </div>
                                         </div>
                                     </td>
@@ -483,7 +483,8 @@
                         </div>
 
                         <!-- Danh sách sản phẩm -->
-                        <div class="product-list"  th:if="${hoaDon.trangThaiThanhToan != T(com.example.kristp.enums.HoaDonStatus).CHUA_THANH_TOAN}">
+                        <div class="product-list"  th:if="${hoaDon.trangThaiThanhToan != T(com.example.kristp.enums.HoaDonStatus).CHUA_THANH_TOAN ||
+                                                    hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN} ">
                             <div class="product-item d-flex align-items-start"
                                  th:each="item : ${hoaDonChiTiet}"
                                  style="border: 1px solid #e6e7e8; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
