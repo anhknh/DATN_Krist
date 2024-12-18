@@ -21,6 +21,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/user/")
@@ -63,62 +64,74 @@ public class DatHangController {
     Float phiVanChuyen = 0f;
 
     @GetMapping("/dia-chi-giao-hang")
-    public String helloDiachigiaohang(Model model, @RequestParam(name = "productCheck", required = false) List<String> productCheck) {
-        //lưu biến toàn cục những sản phẩm đã chọn
-        listProductDetailSelectedInCart = productCheck;
-        ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
-        for (int i = 0; i < productCheck.size(); i++) {
-            Integer idCartDetailItem = Integer.parseInt(productCheck.get(i));
-            listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
-        }
-        //lưu biến toàn cục tổng tiền sản phẩm đã chọn
-        totalPrice = 0f;
-        for (GioHangChiTiet gioHangChiTiet : listCartDetailItem) {
-            totalPrice = totalPrice + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
-        }
+    public String helloDiachigiaohang(Model model, @RequestParam(name = "productCheck", required = false) List<String> productCheck, RedirectAttributes attributes,
+                                      HttpServletRequest request) {
+        try {
+            //lưu biến toàn cục những sản phẩm đã chọn
+            listProductDetailSelectedInCart = productCheck;
+            ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
+            for (int i = 0; i < productCheck.size(); i++) {
+                Integer idCartDetailItem = Integer.parseInt(productCheck.get(i));
+                listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
+            }
+            //lưu biến toàn cục tổng tiền sản phẩm đã chọn
+            totalPrice = 0f;
+            for (GioHangChiTiet gioHangChiTiet : listCartDetailItem) {
+                totalPrice = totalPrice + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            }
+            if(listCartDetailItem.isEmpty()) {
+                throw new RuntimeException("gio hang da cap nhat");
+            }
 
-        //danh sách sản phẩm đã chọn
-        model.addAttribute("listSpSelected", listCartDetailItem);
-        //tổng tiền
-        model.addAttribute("totalPrice", totalPrice);
+            //danh sách sản phẩm đã chọn
+            model.addAttribute("listSpSelected", listCartDetailItem);
+            //tổng tiền
+            model.addAttribute("totalPrice", totalPrice);
 
-        //hiển thị địa chỉ
-        List<DiaChi> diachis = diaChiService.getAllActiveDiaChiByUser(Authen.khachHang);
-        model.addAttribute("diaChiList", diachis);
-        model.addAttribute("diaChiCre", new DiaChi());
+            //hiển thị địa chỉ
+            List<DiaChi> diachis = diaChiService.getAllActiveDiaChiByUser(Authen.khachHang);
+            model.addAttribute("diaChiList", diachis);
+            model.addAttribute("diaChiCre", new DiaChi());
 
-        //Hiển thị khuyến mại
-        model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
-        //hàm format
+            //Hiển thị khuyến mại
+            model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
+            //hàm format
 //        Các dữ liệu cần cho header
 // Hiển thị danh mục
-        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
-        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
-        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+            List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+            List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+            List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
 
-        model.addAttribute("listDanhMuc" , danhMucs);
-        model.addAttribute("listCoAo" , listCoAo);
-        model.addAttribute("listTayAo" , listTayAo);
+            model.addAttribute("listDanhMuc" , danhMucs);
+            model.addAttribute("listCoAo" , listCoAo);
+            model.addAttribute("listTayAo" , listTayAo);
 
-        float tongTien = 0;
-        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
-        if(Authen.khachHang != null) {
-            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
-            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
-            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
-                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+            float tongTien = 0;
+            ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+            if(Authen.khachHang != null) {
+                GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+                gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+                for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                    tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+                }
+                model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
             }
-            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+
+            model.addAttribute("tongTien", tongTien);
+            model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+            model.addAttribute("khachHang", Authen.khachHang);
+            //hàm format
+            model.addAttribute("convertMoney", new DataUtils());
+            // các hàm cho phần header
+            return "dia-chi-giao-hang";
+        } catch (Exception e) {
+            attributes.addFlashAttribute("message", "Giỏ hàng đã thay đổi");
+            attributes.addFlashAttribute("messageType", "alert-danger");
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
+            //reload page
+            return "redirect:/user/gio-hang-chi-tiet";
         }
-
-        model.addAttribute("tongTien", tongTien);
-        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
-
-        model.addAttribute("khachHang", Authen.khachHang);
-        //hàm format
-        model.addAttribute("convertMoney", new DataUtils());
-        // các hàm cho phần header
-        return "dia-chi-giao-hang";
     }
 
     @PostMapping("/add-dia-chi-dat-hang")
@@ -203,53 +216,71 @@ public class DatHangController {
     }
 
     @GetMapping("/phuong-thuc-thanh-toan")
-    public String helloPhuongthucthanhtoan(Model model) {
-        ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
-        for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
-            Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
-            listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
-        }
-
-        //danh sách sản phẩm đã chọn
-        model.addAttribute("listSpSelected", listCartDetailItem);
-        //tổng tiền
-        model.addAttribute("totalPrice", totalPrice);
-
-
-        //Hiển thị khuyến mại
-        model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
-        //khuyến mại đã chọn
-        model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
-        //phí vận chuyển
-        model.addAttribute("phiVanChuyen", phiVanChuyen);
-        //hàm format
-
-        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
-        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
-        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
-
-        model.addAttribute("listDanhMuc" , danhMucs);
-        model.addAttribute("listCoAo" , listCoAo);
-        model.addAttribute("listTayAo" , listTayAo);
-
-        float tongTien = 0;
-        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
-        if(Authen.khachHang != null) {
-            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
-            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
-            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
-                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+    public String helloPhuongthucthanhtoan(Model model, RedirectAttributes attributes,
+                                           HttpServletRequest request) {
+        try {
+            ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
+            for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
+                Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
+                listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
             }
-            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+
+            if (listCartDetailItem == null || listCartDetailItem.isEmpty()) {
+                throw new RuntimeException("Giỏ hàng đã cập nhật");
+            }
+
+// Kiểm tra nếu danh sách chứa phần tử null
+            if (listCartDetailItem.stream().anyMatch(Objects::isNull)) {
+                throw new RuntimeException("Giỏ hàng có phần tử null");
+            }
+
+            //danh sách sản phẩm đã chọn
+            model.addAttribute("listSpSelected", listCartDetailItem);
+            //tổng tiền
+            model.addAttribute("totalPrice", totalPrice);
+
+
+            //Hiển thị khuyến mại
+            model.addAttribute("listKM", khuyenMaiService.getAllKhuyenMai());
+            //khuyến mại đã chọn
+            model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
+            //phí vận chuyển
+            model.addAttribute("phiVanChuyen", phiVanChuyen);
+            //hàm format
+
+            List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+            List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+            List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+            model.addAttribute("listDanhMuc" , danhMucs);
+            model.addAttribute("listCoAo" , listCoAo);
+            model.addAttribute("listTayAo" , listTayAo);
+
+            float tongTien = 0;
+            ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+            if(Authen.khachHang != null) {
+                GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+                gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+                for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                    tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+                }
+                model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+            }
+
+            model.addAttribute("tongTien", tongTien);
+            model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+            model.addAttribute("khachHang", Authen.khachHang);
+            //hàm format
+            model.addAttribute("convertMoney", new DataUtils());
+            return "phuong-thuc-thanh-toan";
+        } catch (Exception e) {
+            attributes.addFlashAttribute("message", "Giỏ hàng đã thay đổi");
+            attributes.addFlashAttribute("messageType", "alert-danger");
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
+            //reload page
+            return "redirect:/user/gio-hang-chi-tiet";
         }
-
-        model.addAttribute("tongTien", tongTien);
-        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
-
-        model.addAttribute("khachHang", Authen.khachHang);
-        //hàm format
-        model.addAttribute("convertMoney", new DataUtils());
-        return "phuong-thuc-thanh-toan";
     }
 
     @PostMapping("/chon-thanh-toan")
@@ -264,9 +295,19 @@ public class DatHangController {
                                @RequestParam Integer idKhuyenMai,
                                Model model, RedirectAttributes redirectAttributes) {
         khuyenMaiSelected = khuyenMaiService.getKhuyenMaiById(idKhuyenMai);
-        //khuyến mại đã chọn
-        model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
 
+        if (khuyenMaiSelected.getTrangThai().equals("Đang hoạt động")) {
+            //khuyến mại đã chọn
+            model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
+            redirectAttributes.addFlashAttribute("message", "Áp dụng khuyến mại thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-success");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+        } else {
+            khuyenMaiSelected = null;
+            redirectAttributes.addFlashAttribute("message", "Áp dụng khuyến mại thất bại!");
+            redirectAttributes.addFlashAttribute("messageType", "alert-danger");
+            redirectAttributes.addFlashAttribute("titleMsg", "Thất bại");
+        }
         //get url request
         String referer = request.getHeader("referer");
         //reload page
@@ -288,120 +329,153 @@ public class DatHangController {
     }
 
     @GetMapping("/review")
-    public String helloReview(Model model) {
-        ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
-        for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
-            Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
-            listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
-        }
-
-        //danh sách sản phẩm đã chọn
-        model.addAttribute("listSpSelected", listCartDetailItem);
-        //tổng tiền
-        model.addAttribute("totalPrice", totalPrice);
-
-        //hiển thị địa chỉ đã chọn
-        DiaChi diaChiselected = diaChiService.getDiaChiById(idDiaChiSelected);
-        model.addAttribute("diaChi", diaChiselected);
-        //khuyến mại đã chọn
-        model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
-        //hàm format
-        //phương thức thanh toán đã chọn
-        model.addAttribute("payMethod", thanhToanSelected);
-        //phis vaanj chuyen
-        model.addAttribute("phiVanChuyen", phiVanChuyen);
-        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
-        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
-        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
-
-        model.addAttribute("listDanhMuc" , danhMucs);
-        model.addAttribute("listCoAo" , listCoAo);
-        model.addAttribute("listTayAo" , listTayAo);
-        float tongTien = 0;
-        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
-        if(Authen.khachHang != null) {
-            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
-            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
-            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
-                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+    public String helloReview(Model model, RedirectAttributes attributes,
+                              HttpServletRequest request) {
+        try {
+            ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
+            for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
+                Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
+                listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
             }
-            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+            if (listCartDetailItem == null || listCartDetailItem.isEmpty()) {
+                throw new RuntimeException("Giỏ hàng đã cập nhật");
+            }
+
+// Kiểm tra nếu danh sách chứa phần tử null
+            if (listCartDetailItem.stream().anyMatch(Objects::isNull)) {
+                throw new RuntimeException("Giỏ hàng có phần tử null");
+            }
+
+            //danh sách sản phẩm đã chọn
+            model.addAttribute("listSpSelected", listCartDetailItem);
+            //tổng tiền
+            model.addAttribute("totalPrice", totalPrice);
+
+            //hiển thị địa chỉ đã chọn
+            DiaChi diaChiselected = diaChiService.getDiaChiById(idDiaChiSelected);
+            model.addAttribute("diaChi", diaChiselected);
+            //khuyến mại đã chọn
+            model.addAttribute("khuyenMaiSelected", khuyenMaiSelected);
+            //hàm format
+            //phương thức thanh toán đã chọn
+            model.addAttribute("payMethod", thanhToanSelected);
+            //phis vaanj chuyen
+            model.addAttribute("phiVanChuyen", phiVanChuyen);
+            List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+            List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+            List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+
+            model.addAttribute("listDanhMuc" , danhMucs);
+            model.addAttribute("listCoAo" , listCoAo);
+            model.addAttribute("listTayAo" , listTayAo);
+            float tongTien = 0;
+            ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+            if(Authen.khachHang != null) {
+                GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+                gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+                for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                    tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+                }
+                model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+            }
+
+            model.addAttribute("tongTien", tongTien);
+            model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+            model.addAttribute("khachHang", Authen.khachHang);
+            //hàm format
+            model.addAttribute("convertMoney", new DataUtils());
+
+            return "review";
+        } catch (Exception e) {
+            attributes.addFlashAttribute("message", "Giỏ hàng đã thay đổi");
+            attributes.addFlashAttribute("messageType", "alert-danger");
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
+            //reload page
+            return "redirect:/user/gio-hang-chi-tiet";
         }
-
-        model.addAttribute("tongTien", tongTien);
-        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
-
-        model.addAttribute("khachHang", Authen.khachHang);
-        //hàm format
-        model.addAttribute("convertMoney", new DataUtils());
-
-        return "review";
     }
 
     @GetMapping("/dat-hang-online")
     public String datHangOnline(Model model, HttpServletRequest reqs,
                                 HttpServletResponse response, RedirectAttributes attributes) throws Exception {
-        ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
+       try {
+           ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
 //        dành cho header
-        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
-        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
-        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
-        model.addAttribute("listDanhMuc" , danhMucs);
-        model.addAttribute("listCoAo" , listCoAo);
-        model.addAttribute("listTayAo" , listTayAo);
-        float tongTien = 0;
-        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
-        if(Authen.khachHang != null) {
-            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
-            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
-            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
-                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
-            }
-            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
-        }
+           List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+           List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+           List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+           model.addAttribute("listDanhMuc" , danhMucs);
+           model.addAttribute("listCoAo" , listCoAo);
+           model.addAttribute("listTayAo" , listTayAo);
+           float tongTien = 0;
+           ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+           if(Authen.khachHang != null) {
+               GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+               gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+               for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                   tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+               }
+               model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+           }
 
-        model.addAttribute("tongTien", tongTien);
-        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+           model.addAttribute("tongTien", tongTien);
+           model.addAttribute("gioHangChiTietList", gioHangChiTietList);
 
-        model.addAttribute("khachHang", Authen.khachHang);
-        //hàm format
-        model.addAttribute("convertMoney", new DataUtils());
+           model.addAttribute("khachHang", Authen.khachHang);
+           //hàm format
+           model.addAttribute("convertMoney", new DataUtils());
 //        kết thúc dành cho header
-        for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
-            Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
-            listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
-        }
-        if (thanhToanSelected.equals("offline")) {
-            boolean check;
-            if(khuyenMaiSelected == null) {
-                 check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, null, thanhToanSelected, totalPrice, phiVanChuyen);
-            } else {
-                 check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, khuyenMaiSelected.getId(), thanhToanSelected, totalPrice, phiVanChuyen);
-            }
-            if (check) {
+           for (int i = 0; i < listProductDetailSelectedInCart.size(); i++) {
+               Integer idCartDetailItem = Integer.parseInt(listProductDetailSelectedInCart.get(i));
+               listCartDetailItem.add(gioHangChiTietService.getCartItemByCartItemId(idCartDetailItem));
+           }
+           if (listCartDetailItem == null || listCartDetailItem.isEmpty()) {
+               throw new RuntimeException("Giỏ hàng đã cập nhật");
+           }
 
-                return "SuscessOrder";
-            } else {
-                attributes.addFlashAttribute("message", "Vui lòng kiểm tra lại số lượng.");
-                attributes.addFlashAttribute("messageType", "alert-danger");
-                attributes.addFlashAttribute("titleMsg", "Thất bại");
+// Kiểm tra nếu danh sách chứa phần tử null
+           if (listCartDetailItem.stream().anyMatch(Objects::isNull)) {
+               throw new RuntimeException("Giỏ hàng có phần tử null");
+           }
+           if (thanhToanSelected.equals("offline")) {
+               boolean check;
+               if(khuyenMaiSelected == null) {
+                   check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, null, thanhToanSelected, totalPrice, phiVanChuyen);
+               } else {
+                   check = datHangService.datHangOnline(listCartDetailItem, idDiaChiSelected, khuyenMaiSelected.getId(), thanhToanSelected, totalPrice, phiVanChuyen);
+               }
+               if (check) {
 
-                return "FailOrder";
-            }
-        } else {
-            VNPayRequest request = new VNPayRequest();
-            float amount = (float) DataUtils.calculatorTotal2(totalPrice, khuyenMaiSelected, phiVanChuyen);
-            DecimalFormat df = new DecimalFormat("#.##"); // Định dạng số thập phân với tối đa hai chữ số sau dấu chấm
-            String formattedTotalAmount = df.format(amount);
-            request.setAmount(formattedTotalAmount);
-            //request.setBankCode("NCB");
+                   return "SuscessOrder";
+               } else {
+                   attributes.addFlashAttribute("message", "Vui lòng kiểm tra lại số lượng.");
+                   attributes.addFlashAttribute("messageType", "alert-danger");
+                   attributes.addFlashAttribute("titleMsg", "Thất bại");
+
+                   return "FailOrder";
+               }
+           } else {
+               VNPayRequest request = new VNPayRequest();
+               float amount = (float) DataUtils.calculatorTotal2(totalPrice, khuyenMaiSelected, phiVanChuyen);
+               DecimalFormat df = new DecimalFormat("#.##"); // Định dạng số thập phân với tối đa hai chữ số sau dấu chấm
+               String formattedTotalAmount = df.format(amount);
+               request.setAmount(formattedTotalAmount);
+               //request.setBankCode("NCB");
 //            request.setOrderIdSuccess(String.valueOf(idOrder));
-            // Gán các giá trị khác cho request
-            String paymentUrl = vnpayService.createPayment(request, reqs);
-            response.sendRedirect(paymentUrl);
-        }
+               // Gán các giá trị khác cho request
+               String paymentUrl = vnpayService.createPayment(request, reqs);
+               response.sendRedirect(paymentUrl);
+           }
 
-        return "FailOrder";
+           return "FailOrder";
+       } catch (Exception e) {
+           attributes.addFlashAttribute("message", "Giỏ hàng đã thay đổi");
+           attributes.addFlashAttribute("messageType", "alert-danger");
+           attributes.addFlashAttribute("titleMsg", "Thất bại");
+           //reload page
+           return "redirect:/user/gio-hang-chi-tiet";
+       }
     }
 
     @GetMapping("/payment-info")
@@ -412,30 +486,6 @@ public class DatHangController {
                               @RequestParam("vnp_OrderInfo") String vnp_OrderInfo
 
     ) {
-        List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
-        List<CoAo> listCoAo = coAoService.getAllCoAoHD();
-        List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
-        model.addAttribute("listDanhMuc" , danhMucs);
-        model.addAttribute("listCoAo" , listCoAo);
-        model.addAttribute("listTayAo" , listTayAo);
-        float tongTien = 0;
-        ArrayList<GioHangChiTiet> gioHangChiTietList = null;
-        if(Authen.khachHang != null) {
-            GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
-            gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
-            for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
-                tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
-            }
-            model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
-        }
-
-        model.addAttribute("tongTien", tongTien);
-        model.addAttribute("gioHangChiTietList", gioHangChiTietList);
-
-        model.addAttribute("khachHang", Authen.khachHang);
-        //hàm format
-        model.addAttribute("convertMoney", new DataUtils());
-
 
         if (status.equals("00")) {
             ArrayList<GioHangChiTiet> listCartDetailItem = new ArrayList<>();
@@ -451,6 +501,29 @@ public class DatHangController {
             }
             if(check) {
                 totalPrice = 0f;
+                List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+                List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+                List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+                model.addAttribute("listDanhMuc" , danhMucs);
+                model.addAttribute("listCoAo" , listCoAo);
+                model.addAttribute("listTayAo" , listTayAo);
+                float tongTien = 0;
+                ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+                if(Authen.khachHang != null) {
+                    GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+                    gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+                    for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                        tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+                    }
+                    model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+                }
+
+                model.addAttribute("tongTien", tongTien);
+                model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+                model.addAttribute("khachHang", Authen.khachHang);
+                //hàm format
+                model.addAttribute("convertMoney", new DataUtils());
 
                 return "SuscessOrder";
             } else {
@@ -459,6 +532,29 @@ public class DatHangController {
                 attributes.addFlashAttribute("titleMsg", "Thất bại");
                 totalPrice = 0f;
                 khuyenMaiSelected = null;
+                List<DanhMuc> danhMucs = danhMucService.getAllDanhMucHD();
+                List<CoAo> listCoAo = coAoService.getAllCoAoHD();
+                List<TayAo> listTayAo = tayAoService.getAllTayAoHD();
+                model.addAttribute("listDanhMuc" , danhMucs);
+                model.addAttribute("listCoAo" , listCoAo);
+                model.addAttribute("listTayAo" , listTayAo);
+                float tongTien = 0;
+                ArrayList<GioHangChiTiet> gioHangChiTietList = null;
+                if(Authen.khachHang != null) {
+                    GioHang gioHang = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+                    gioHangChiTietList = gioHangChiTietService.getAllGioHangChiTiet(gioHang.getId());
+                    for (GioHangChiTiet gioHangChiTiet : gioHangChiTietList) {
+                        tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
+                    }
+                    model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
+                }
+
+                model.addAttribute("tongTien", tongTien);
+                model.addAttribute("gioHangChiTietList", gioHangChiTietList);
+
+                model.addAttribute("khachHang", Authen.khachHang);
+                //hàm format
+                model.addAttribute("convertMoney", new DataUtils());
 
                 return "FailOrder";
             }

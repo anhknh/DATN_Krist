@@ -13,10 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Controller
@@ -38,6 +35,7 @@ public class GioHangChiTietController {
     DataUtils dataUtils;
 
     HoaDon hoaDonSelected = null;
+    Integer checkSoGioHang = 0;
 
     @Autowired
     private DanhMucService danhMucService ;
@@ -71,21 +69,22 @@ public class GioHangChiTietController {
 
         float tongTien = 0;
         ArrayList<GioHangChiTiet> gioHangChiTietListHeader = null;
+        GioHang gioHangHeader = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
         if(Authen.khachHang != null) {
-            GioHang gioHangHeader = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
             gioHangChiTietListHeader = gioHangChiTietService.getAllGioHangChiTiet(gioHangHeader.getId());
             for (GioHangChiTiet gioHangChiTiet : gioHangChiTietListHeader) {
                 tongTien = tongTien + (gioHangChiTiet.getChiTietSanPham().getDonGia() * gioHangChiTiet.getSoLuong());
             }
             model.addAttribute("totalCartItem", gioHangService.countCartItem()); // trả ra tổng số lượng giỏ hàng chi tiết theo user
         }
+        checkSoGioHang = gioHangChiTietRepository.countGioHangChiTietByGioHang(gioHangHeader);
 
         model.addAttribute("tongTien", tongTien);
         model.addAttribute("gioHangChiTietListHeader", gioHangChiTietListHeader);
 
         model.addAttribute("khachHang", Authen.khachHang);
         //hàm format
-        model.addAttribute("convertMoney", new DataUtils());
+        model.addAttribute("convertMoney", dataUtils);
 
         return "gio-hang";
     }
@@ -118,6 +117,19 @@ public class GioHangChiTietController {
     @PostMapping("/dat-hang")
     public String datHang(@RequestParam(value = "selectedIds", required = false) List<String> selectedIds, RedirectAttributes attributes,
                                      HttpServletRequest request) {
+
+        GioHang gioHangHeader = gioHangService.findGioHangByKhachHangId(Authen.khachHang);
+        if(!Objects.equals(checkSoGioHang, gioHangChiTietRepository.countGioHangChiTietByGioHang(gioHangHeader))) {
+            attributes.addFlashAttribute("message", "Giỏ hàng đã thay đổi");
+            attributes.addFlashAttribute("messageType", "alert-danger");
+            attributes.addFlashAttribute("titleMsg", "Thất bại");
+            //get url request
+            String referer = request.getHeader("referer");
+            //reload page
+            return "redirect:" + referer;
+        }
+
+
         if (selectedIds == null || selectedIds.isEmpty()) {
             attributes.addFlashAttribute("message", "Chưa chọn sản phẩm thao tác");
             attributes.addFlashAttribute("messageType", "alert-danger");

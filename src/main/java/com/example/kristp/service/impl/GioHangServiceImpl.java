@@ -11,6 +11,7 @@ import com.example.kristp.service.GioHangChiTietService;
 import com.example.kristp.service.GioHangService;
 import com.example.kristp.service.KhachHangService;
 import com.example.kristp.utils.Authen;
+import com.example.kristp.utils.DataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,8 @@ public class GioHangServiceImpl implements GioHangService {
     GioHangChiTietService gioHangChiTietService;
     @Autowired
     GioHangChiTietRepository gioHangChiTietRepository;
+    @Autowired
+    DataUtils dataUtils;
 
 
     @Override
@@ -38,14 +41,19 @@ public class GioHangServiceImpl implements GioHangService {
 
     @Override
     public boolean addSanPhamToGioHang(Integer idCTSP, Integer soLuong) {
+        soLuong = Objects.requireNonNullElse(soLuong, 1);
+        if(soLuong > 20) {
+            return false;
+        }
         // Lấy giỏ hàng của khách hàng
         GioHang gioHang = gioHangRepository.findByKhachHangId(Authen.khachHang.getId());
-
+        if(!dataUtils.checkTotalCart(gioHang)) {
+            return false;
+        }
         // Lấy chi tiết sản phẩm
         ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getCTSPById(idCTSP);
         // Kiểm tra số lượng sản phẩm tồn kho
         int soLuongTonKho = chiTietSanPham.getSoLuong();
-        soLuong = Objects.requireNonNullElse(soLuong, 1);
         if (soLuongTonKho < soLuong) {
             return false; // Không đủ hàng để thêm vào giỏ
         }

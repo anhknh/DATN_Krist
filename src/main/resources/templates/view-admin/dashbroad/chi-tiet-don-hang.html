@@ -235,14 +235,16 @@
                             </div>
 
                             <!-- Form chỉnh sửa phí vận chuyển -->
-                            <div th:if="${hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN &&
-                            hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).DANG_XU_LY }"
+                            <div th:if="${hoaDon.trangThaiThanhToan == T(com.example.kristp.enums.HoaDonStatus).DA_THANH_TOAN ||
+                                        !(hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN ||
+                                          hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).DANG_XU_LY)}"
                                     class="d-flex justify-content-between" style="margin-bottom: 18px;">
                                 <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
                                 <div style="font-size: 16px; font-weight: 500;"><span id="shipping-fee" th:text="${convertMoney.formatCurrency(hoaDon.phiVanChuyen)}">30.000</span></div>
                             </div>
-                            <form th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN ||
-                            hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).DANG_XU_LY }"
+                            <form th:if="${hoaDon.trangThaiThanhToan == T(com.example.kristp.enums.HoaDonStatus).CHUA_THANH_TOAN &&
+                                        (hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN || 
+                                         hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).DANG_XU_LY)}"
                                     id="formShip" class="needs-validation" novalidate th:action="@{/quan-ly/doi-phi-van-chuyen}" method="post">
                                 <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 18px;">
                                     <div style="font-size: 16px; font-weight: 500; color: #5C5F6A;">Phí giao hàng:</div>
@@ -266,8 +268,9 @@
                             <div class="mt-3 mb-3 me-3" style="text-align: center">
                                 <button class="btn btn-dark btn-sm" th:onclick="'inHoaDon(' + ${idHoaDonSelected} + ')'">In hóa đơn</button>
                             </div>
-                            <div th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN ||
-                            hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).DANG_XU_LY }"
+                            <div th:if="${hoaDon.trangThaiThanhToan == T(com.example.kristp.enums.HoaDonStatus).CHUA_THANH_TOAN &&
+                                        (hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN ||
+                                         hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).DANG_XU_LY)}"
                                     style="text-align: center;">
                                 <button id="btn-submit-ship" class="btn btn-dark btn-sm">Lưu câp nhật</button>
                             </div>
@@ -375,7 +378,9 @@
                 <div class="box mt-2">
                     <div style="font-size: 18px; font-weight: 700; margin: 12px">Chi tiết sản phẩm - đơn hàng</div>
                     <div style="text-align: end">
-                        <div style="display: flex; justify-content: end; margin: 16px" class="d-inline-block" th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN}">
+                        <div style="display: flex; justify-content: end; margin: 16px" class="d-inline-block"
+                             th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN &&
+                             hoaDon.trangThaiThanhToan == T(com.example.kristp.enums.HoaDonStatus).CHUA_THANH_TOAN}">
                             <div class="btn btn-dark"
                                  th:attr="data-order-id-add=${hoaDon.id}"
                                  data-bs-toggle="modal" data-bs-target="#productModal"
@@ -396,7 +401,8 @@
                     </div>
                     <div>
 
-                        <div th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN}">
+                        <div th:if="${hoaDon.trangThai == T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN &&
+                        hoaDon.trangThaiThanhToan == T(com.example.kristp.enums.HoaDonStatus).CHUA_THANH_TOAN}">
                             <table class="table">
                                 <thead>
                                 <tr>
@@ -477,7 +483,7 @@
                         </div>
 
                         <!-- Danh sách sản phẩm -->
-                        <div class="product-list"  th:if="${hoaDon.trangThai != T(com.example.kristp.enums.HoaDonStatus).CHO_XAC_NHAN}">
+                        <div class="product-list"  th:if="${hoaDon.trangThaiThanhToan != T(com.example.kristp.enums.HoaDonStatus).CHUA_THANH_TOAN}">
                             <div class="product-item d-flex align-items-start"
                                  th:each="item : ${hoaDonChiTiet}"
                                  style="border: 1px solid #e6e7e8; border-radius: 8px; padding: 16px; margin-bottom: 16px;">

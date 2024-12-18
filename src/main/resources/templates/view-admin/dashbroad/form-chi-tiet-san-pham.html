@@ -312,7 +312,7 @@
         const tayAo = getValueAndText("selectTayAo");
         const coAo = getValueAndText("selectCoAo");
 
-        const detailKey = `${mau.value}-${size.value}-${tayAo.value}-${coAo.value}`;
+        const detailKey = `${mau.value}-${size.value}`;
         if (selectedDetails.includes(detailKey)) {
             showAlert("error", "Chi tiết sản phẩm này đã được tạo!");
             return;

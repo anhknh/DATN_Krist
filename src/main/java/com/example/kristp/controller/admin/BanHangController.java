@@ -172,9 +172,11 @@ public class BanHangController {
     @GetMapping("/thanh-toan-hoa-don")
     public String thanhToanHoaDon(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
         if (hoaDonService.thanhToanHoaDon(hoaDonSelected)) {
+            hoaDonSelected = null;
             redirectAttributes.addFlashAttribute("message", "Thanh toán hóa đơn thành công!");
             redirectAttributes.addFlashAttribute("messageType", "alert-success");
             redirectAttributes.addFlashAttribute("titleMsg", "Thành công");
+
 
         } else {
             redirectAttributes.addFlashAttribute("message", "Thanh toán hóa đơn thất bại!");

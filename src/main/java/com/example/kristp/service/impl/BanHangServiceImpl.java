@@ -89,7 +89,7 @@ public class BanHangServiceImpl implements BanHangService {
     @Override
     public boolean addKhuyenMai(Integer idKhuyenMai, HoaDon hoaDon) {
         KhuyenMai khuyenMai = khuyenMaiService.getKhuyenMaiById(idKhuyenMai);
-        if (khuyenMai == null) {
+        if (khuyenMai == null || !khuyenMai.getTrangThai().equals("Đang hoạt động")) {
             return false;
         } else {
             hoaDon.setKhuyenMai(khuyenMai);

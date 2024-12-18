@@ -1,9 +1,12 @@
 package com.example.kristp.utils;
 
 import com.example.kristp.entity.DanhGia;
+import com.example.kristp.entity.GioHang;
 import com.example.kristp.entity.KhuyenMai;
 import com.example.kristp.enums.HoaDonStatus;
 import com.example.kristp.enums.Status;
+import com.example.kristp.repository.GioHangChiTietRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -18,6 +21,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class DataUtils {
+
+    @Autowired
+    GioHangChiTietRepository gioHangChiTietRepository;
 
     public static String formatCurrency(double amount) {
         NumberFormat currencyFormat = NumberFormat.getNumberInstance(new Locale("vi", "VN"));
@@ -193,6 +199,15 @@ public class DataUtils {
         }
 
         return barcode.toString();
+    }
+
+
+    public boolean checkTotalCart(GioHang gioHang) {
+        Integer countCartItem = gioHangChiTietRepository.sumSoLuong(gioHang);
+        if(countCartItem == null || countCartItem < 20) {
+            return true;
+        }
+        return false;
     }
 
 }

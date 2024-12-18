@@ -493,8 +493,11 @@
                         <div th:if="${hoaDonSelected.khuyenMai != null}" th:text="'Tên khuyến mại: ' + ${hoaDonSelected.khuyenMai.tenKhuyenMai}">Tên khuyến mại</div>
                         <div th:if="${hoaDonSelected.khuyenMai == null}">Tên khuyến mại: Không có khuyến mại</div>
 
-                        <div th:if="${hoaDonSelected.khuyenMai != null}" th:text="'Mức giảm: ' + ${hoaDonSelected.khuyenMai.giaTri}">Mức giảm</div>
+                        <div th:if="${hoaDonSelected.khuyenMai != null}" th:text="'Mức giảm: ' + ${dataUtils.formatCurrency(hoaDonSelected.khuyenMai.giaTri)} + ' ' + ${hoaDonSelected.khuyenMai.kieuKhuyenMai? '%':'VND'}">Mức giảm</div>
                         <div th:if="${hoaDonSelected.khuyenMai == null}">Mức giảm: 0</div>
+
+                        <div th:if="${hoaDonSelected.khuyenMai != null}" th:text="'Mức giảm tối đa: ' + ${dataUtils.formatCurrency(hoaDonSelected.khuyenMai.mucGiamToiDa)}">Mức giảm</div>
+                        <div th:if="${hoaDonSelected.khuyenMai == null}">Mức giảm tối đa: 0</div>
 
                         <div id="totalAmount" style="display: none" th:text="'Tổng tiền: ' + ${dataUtils.calculatorTotal2(tongTien, hoaDonSelected.khuyenMai, hoaDonSelected.phiVanChuyen)}">Tổng tiền</div>
                         <div th:if="${hoaDonSelected.khuyenMai == null}" th:text="'Tổng tiền: ' + ${dataUtils.formatCurrency(tongTien)}">Tổng tiền sau giảm</div>
@@ -523,7 +526,7 @@
                         <div class="text-center mt-4">
                             <div th:if="${listHoaDonChiTiet.size() > 0}" class="btn btn-dark btn-sm" id="payMethodOnline" data-bs-toggle="modal" data-bs-target="#qrModal">Thanh toán</div>
                             <a th:if="${listHoaDonChiTiet.size() > 0}" class="btn btn-dark btn-sm" id="payMethodOffline" style="color: #fff; text-decoration: none; display: none"
-                                 th:href="@{/quan-ly/thanh-toan-hoa-don}"
+                               data-bs-toggle="modal" data-bs-target="#thanhToanModal"
                             >Thanh toán</a>
                             <div class="btn btn-dark btn-sm btn-cancel-order"
                                  th:attr="data-order-id=${hoaDonSelected.id}"
@@ -749,6 +752,27 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="thanhToanModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true"  th:if="${hoaDonSelected != null}">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="width: 600px; margin: 0; padding: 0">
+            <div class="modal-header">
+                <h5 class="modal-title" >Xác nhận thanh toán</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body justify-content-center">
+                <div class="text-center">
+                    Xác nhận thanh toán đơn hàng này?
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a class="btn btn-dark" href="#"
+                   th:attr="data-id-order=${hoaDonSelected.id}"
+                   onclick="thanhToanVaInHoaDon(this)">Xác nhận thanh toán</a>
+            </div>
+        </div>
+    </div>
+</div>
 <!--modal quét qr-->
 <div class="modal fade" id="scanModal" tabindex="-1" aria-labelledby="scanModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"> <!-- modal-lg để tăng kích thước modal -->
@@ -840,6 +864,15 @@
             document.getElementById('hiddenOrderId').value = orderId;
         });
     });
+
+    // Dừng Html5-QRCode khi modal đóng
+    document.getElementById('qrModal').addEventListener('hidden.bs.modal', function () {
+        // Reload lại trang khi đóng modal
+        window.location.href = `/quan-ly/ban-hang`;
+    });
+    document.getElementById('thanhToanModal').addEventListener('hidden.bs.modal', function () {
+        window.location.href = `/quan-ly/ban-hang`;
+    });
 </script>
 
 <script>
@@ -916,6 +949,7 @@
         // Lấy tổng tiền từ phần tử HTML
         var totalAmountText = document.getElementById("totalAmount").textContent;
         var totalAmount = parseFloat(totalAmountText.replace('Tổng tiền: ', '').replace(/\./g, '').replace(',', '.'));
+        totalAmount = totalAmount /  10;
 
         // Lấy số tiền khách đưa
         var cashGiven = parseFloat(document.getElementById("cashGiven").value.replace(/\./g, '').replace(',', '.')) || 0;
@@ -929,13 +963,6 @@
 
         // Kiểm tra đủ tiền và cập nhật trạng thái nút thanh toán offline
         var btnPayOffline = document.getElementById("payMethodOffline");
-        if (changeAmount < 0) {
-            btnPayOffline.style.pointerEvents = "none"; // Vô hiệu hóa click
-            btnPayOffline.style.opacity = "0.6"; // Giảm độ mờ
-        } else {
-            btnPayOffline.style.pointerEvents = "auto"; // Bật click
-            btnPayOffline.style.opacity = "1"; // Phục hồi độ mờ
-        }
     }
 
     // Hàm định dạng tiền Việt Nam
@@ -1175,7 +1202,7 @@
             html5QrCode.start(
                 { facingMode: "environment" },
                 {
-                    fps: 30,    // Số lần quét mỗi giây
+                    fps: 5,    // Số lần quét mỗi giây
                     qrbox: { width: 250, height: 250 } // Kích thước vùng quét
                 },
                 (decodedText) => {
@@ -1196,6 +1223,8 @@
             if (html5QrCode) {
                 html5QrCode.stop().catch(err => console.error("Không thể dừng Html5Qrcode", err));
             }
+            // Reload lại trang khi đóng modal
+            location.reload();
         });
 
         function addToCart(qrCode) {

@@ -14,6 +14,7 @@ import com.example.kristp.repository.GioHangChiTietRepository;
 import com.example.kristp.service.GioHangChiTietService;
 import com.example.kristp.service.GioHangService;
 import com.example.kristp.service.GioHangService;
+import com.example.kristp.utils.DataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,8 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     GioHangChiTietRepo gioHangChiTietRepo;
     @Autowired
     private GioHangChiTietRepository gioHangChiTietRepository;
+    @Autowired
+    DataUtils dataUtils;
 
     @Override
     public ArrayList<GioHangChiTiet> getAllGioHangChiTiet(Integer idGioHang) {
@@ -84,7 +87,12 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     @Override
     public Integer capNhatSoLuong(Integer id, int increment) {
         GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findById(id).orElse(null);
-
+        GioHang gioHang = gioHangChiTiet.getGioHang();
+        if(increment > 0) {
+            if( !dataUtils.checkTotalCart(gioHang)) {
+                return null;
+            }
+        }
         if (gioHangChiTiet != null) {
             ChiTietSanPham chiTietSanPham = gioHangChiTiet.getChiTietSanPham();
             // Cập nhật số lượng

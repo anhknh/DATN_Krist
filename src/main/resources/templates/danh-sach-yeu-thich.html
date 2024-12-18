@@ -273,8 +273,10 @@
                                     </div>
 
                                     <div>
-                                        <p style="font-size: 16px; font-weight: 500; margin-bottom: 8px;" th:text="${item.sanPham.tenSanPham}">
-                                        </p>
+                                        <a style="color: #000; text-decoration: none; font-size: 16px; font-weight: 500; margin-bottom: 8px;"
+                                           th:href="@{/user/chi-tiet-san-pham(idSanPham=${item.sanPham.id})}"
+                                           th:text="${item.sanPham.tenSanPham}">
+                                        </a>
                                         <!-- product_cart_color -->
                                         <div style="width: 205px ; height:  24px;">
                                             <div style="font-size: 12px; font-weight: 500; color: #5C5F6A;" th:text="'Ngày yêu thích: ' + ${#dates.format(item.ngayTao, 'dd-MM-yyyy')}">

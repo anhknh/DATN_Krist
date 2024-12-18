@@ -75,7 +75,7 @@ public class GioHangController {
             return "redirect:" + referer;
         }
 
-        attributes.addFlashAttribute("message", "Kiểm tra lại số lượng");
+        attributes.addFlashAttribute("message", "Số lượng trong giỏ đạt tối đa hoặc số lượng thêm không hợp lệ");
         attributes.addFlashAttribute("messageType", "alert-danger");
         attributes.addFlashAttribute("titleMsg", "Thêm giỏ hàng Thất bại");
         //get url request

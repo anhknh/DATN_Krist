@@ -371,6 +371,9 @@
     <!-- view_detail -->
     <div class="display_block" id="view_detail" style=" width: 727px;margin-left: 28px;">
         <h5 style="margin-bottom: 18px;">Thông tin sản phẩm</h5>
+        <p style="font-size: 14px; font-weight: 400; color: #5C5F6A;" id="textTayAo">
+        <p style="font-size: 14px; font-weight: 400; color: #5C5F6A;" id="textCoAo">
+        <p style="font-size: 14px; font-weight: 400; color: #5C5F6A;" th:text="'Chất liệu: ' + ${sanPham.chatLieu.tenChatLieu}">
         <p style="font-size: 14px; font-weight: 400; color: #5C5F6A;" th:text="${sanPham.moTa}">
         </p>
     </div>
@@ -796,6 +799,9 @@
                             .data('product-color', color)
                             .attr('href', "/gio-hang/add?idChiTietSanPham=" + response.id + "&soLuong=1");
                         $('.quantity_number').text('1'); // Reset số lượng khi đổi sản phẩm
+                        // Gán tên tay áo và cổ áo vào các thẻ <p>
+                        $('#textTayAo').text('Kiểu tay áo: ' + response.tayAo.kieuTayAo);  // Gán tên kiểu tay áo
+                        $('#textCoAo').text('Kiểu cổ áo: ' + response.coAo.kieuCoAo);    // Gán tên kiểu cổ áo
                     },
                     error: function (error) {
                         console.log(error);
@@ -818,8 +824,25 @@
             }
         }
 
-        // Sự kiện tăng giảm số lượng
-        $('.btn_Subtrac').click(function () {
+        // Sự kiện giảm số lượng
+        $('.btn_Subtrac').on('mousedown', function () {
+            var quantity = parseInt($('.quantity_number').text());
+            if (quantity > 1) {
+                // Giảm số lượng ngay lập tức khi nhấn giữ
+                var interval = setInterval(function () {
+                    quantity = parseInt($('.quantity_number').text());
+                    if (quantity > 1) {
+                        $('.quantity_number').text(quantity - 1);
+                        updateCartLink(); // Chỉ cập nhật link
+                    }
+                }, 200); // Giảm mỗi 200ms
+
+                // Dừng giảm khi nhả chuột
+                $(this).on('mouseup mouseleave', function () {
+                    clearInterval(interval);
+                });
+            }
+        }).click(function () {
             var quantity = parseInt($('.quantity_number').text());
             if (quantity > 1) {
                 $('.quantity_number').text(quantity - 1);
@@ -827,11 +850,32 @@
             }
         });
 
-        $('.btn_plus').click(function () {
+// Sự kiện tăng số lượng
+        $('.btn_plus').on('mousedown', function () {
             var quantity = parseInt($('.quantity_number').text());
-            $('.quantity_number').text(quantity + 1);
-            updateCartLink(); // Chỉ cập nhật link
+            if (quantity < 20) {
+                // Tăng số lượng ngay lập tức khi nhấn giữ
+                var interval = setInterval(function () {
+                    quantity = parseInt($('.quantity_number').text());
+                    if (quantity < 20) {
+                        $('.quantity_number').text(quantity + 1);
+                        updateCartLink(); // Chỉ cập nhật link
+                    }
+                }, 200); // Tăng mỗi 200ms
+
+                // Dừng tăng khi nhả chuột
+                $(this).on('mouseup mouseleave', function () {
+                    clearInterval(interval);
+                });
+            }
+        }).click(function () {
+            var quantity = parseInt($('.quantity_number').text());
+            if (quantity < 20) {
+                $('.quantity_number').text(quantity + 1);
+                updateCartLink(); // Chỉ cập nhật link
+            }
         });
+
     });
 </script>
 

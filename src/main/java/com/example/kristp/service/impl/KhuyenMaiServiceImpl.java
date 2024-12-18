@@ -30,7 +30,7 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService {
 
     @Override
     public ArrayList<KhuyenMai> getAllKhuyenMai() {
-        return (ArrayList<KhuyenMai>) khuyenMaiRepository.findAll();
+        return (ArrayList<KhuyenMai>) khuyenMaiRepository.findByTrangThai("Đang hoạt động");
     }
 
     @Override
